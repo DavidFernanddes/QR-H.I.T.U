@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace 'com.example.qr_hitu'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.qr_hitu"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -37,7 +37,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion '1.1.1'
+        kotlinCompilerExtensionVersion '1.2.0-rc02'
     }
     packagingOptions {
         resources {
@@ -60,4 +60,15 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
+
+    // Activity Compose
+    implementation "androidx.activity:activity-compose:1.6.1"
+
+    //CameraX
+    implementation "androidx.camera:camera-camera2:1.2.1"
+    implementation "androidx.camera:camera-lifecycle:1.2.1"
+    implementation "androidx.camera:camera-view:1.2.1"
+
+    //Zxing
+    implementation "com.google.zxing:core:3.3.3"
 }
