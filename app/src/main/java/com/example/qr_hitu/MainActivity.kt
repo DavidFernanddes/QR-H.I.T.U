@@ -74,12 +74,6 @@ class MainActivity : ComponentActivity() {
                                     .build()
                                 preview.setSurfaceProvider(previewView.surfaceProvider)
                                 val imageAnalysis = ImageAnalysis.Builder()
-                                    .setTargetResolution(
-                                        Size(
-                                            previewView.width,
-                                            previewView.height
-                                        )
-                                    )
                                     .setBackpressureStrategy(STRATEGY_KEEP_ONLY_LATEST)
                                     .build()
                                 imageAnalysis.setAnalyzer(
