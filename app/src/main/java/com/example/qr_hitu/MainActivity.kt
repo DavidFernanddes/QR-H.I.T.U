@@ -5,10 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Button
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.qr_hitu.ui.theme.QRHITUTheme
+import kotlinx.coroutines.launch
 
 
 class MainActivity : ComponentActivity() {
@@ -39,48 +37,66 @@ fun CreateQrCode(modifier: Modifier = Modifier) {
     var qrName by remember { mutableStateOf("") }
     val context = LocalContext.current
 
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
 
-    Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+    Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+        backgroundColor = Color.White
+    ) {
+        Column(
+            Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
-        CreateQR(content)
+            CreateQR(content)
 
-        Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
-        OutlinedTextField(
-            value = content,
-            onValueChange = {
-                content = it
-            },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-            label = { Text(text = "Escreva texto para conversão", color = Color(0xFFBB86FC)) },
-            placeholder = { Text(text = "Texto a converter", color = Color.LightGray) },
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                unfocusedBorderColor = Color(0xFFBB86FC))
+            OutlinedTextField(
+                value = content,
+                onValueChange = {
+                    content = it
+                },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                label = { Text(text = "Escreva texto para conversão", color = Color(0xFFBB86FC)) },
+                placeholder = { Text(text = "Texto a converter", color = Color.LightGray) },
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    unfocusedBorderColor = Color(0xFFBB86FC)
+                )
 
             )
 
-        Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
-        OutlinedTextField(
-            value = qrName,
-            onValueChange = {
-                qrName = it
-            },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-            label = { Text(text = "Escreva o nome do ficheiro", color = Color(0xFFBB86FC)) },
-            placeholder = { Text(text = "Nome", color = Color.LightGray) },
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                unfocusedBorderColor = Color(0xFFBB86FC))
+            OutlinedTextField(
+                value = qrName,
+                onValueChange = {
+                    qrName = it
+                },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                label = { Text(text = "Escreva o nome do ficheiro", color = Color(0xFFBB86FC)) },
+                placeholder = { Text(text = "Nome", color = Color.LightGray) },
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    unfocusedBorderColor = Color(0xFFBB86FC)
+                )
 
-        )
+            )
 
-        Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
-        Button(onClick = {
-            DownloadQR(content, qrName, context)
-        }) {
-            Text("Download QR Code")
+            Button(onClick = {
+                DownloadQR(content, qrName, context)
+                scope.launch {
+                    snackbarHostState.showSnackbar(
+                        message = "Imagem Transferida!",
+                        duration = SnackbarDuration.Short
+                    )
+                }
+            }) {
+                Text("Download QR Code")
+            }
         }
     }
-
 }
