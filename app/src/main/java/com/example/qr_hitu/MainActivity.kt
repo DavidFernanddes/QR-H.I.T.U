@@ -14,7 +14,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.qr_hitu.ui.theme.QRHITUTheme
-import kotlinx.coroutines.launch
 
 
 class MainActivity : ComponentActivity() {
@@ -41,7 +40,12 @@ fun CreateQrCode(modifier: Modifier = Modifier) {
     val scope = rememberCoroutineScope()
 
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+        snackbarHost = { SnackbarHost(
+            hostState = snackbarHostState,
+            snackbar = {  data ->
+                PopUp(context, data.message, data.actionLabel.toString())
+            }
+        )},
         backgroundColor = Color.White
     ) {
         Column(
@@ -88,12 +92,7 @@ fun CreateQrCode(modifier: Modifier = Modifier) {
 
             Button(onClick = {
                 DownloadQR(content, qrName, context)
-                scope.launch {
-                    snackbarHostState.showSnackbar(
-                        message = "Imagem Transferida!",
-                        duration = SnackbarDuration.Short
-                    )
-                }
+                showPopUp(scope, snackbarHostState)
             }) {
                 Text("Download QR Code")
             }
