@@ -1,4 +1,6 @@
-package com.example.qr_hitu.ui.theme
+/*
+
+package com.example.qr_hitu.screens.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
@@ -26,3 +28,6 @@ val Typography = Typography(
     )
     */
 )
+
+
+ */

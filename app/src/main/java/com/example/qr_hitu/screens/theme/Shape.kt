@@ -1,4 +1,5 @@
-package com.example.qr_hitu.ui.theme
+/*
+package com.example.qr_hitu.screens.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
@@ -9,3 +10,5 @@ val Shapes = Shapes(
     medium = RoundedCornerShape(4.dp),
     large = RoundedCornerShape(0.dp)
 )
+
+ */
