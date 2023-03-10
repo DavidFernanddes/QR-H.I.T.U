@@ -1,4 +1,4 @@
-package com.example.qr_hitu
+package com.example.qr_hitu.functions
 
 import android.graphics.ImageFormat
 import androidx.camera.core.ImageAnalysis
@@ -50,7 +50,7 @@ class QrCodeAnalyzer(
                 false
             )
             // Create a BinaryBitmap object from the PlanarYUVLuminanceSource
-            // Criaçaõ do objeto BinaryBitmap do PlanarYUVLuminanceSource
+            // Criação do objeto BinaryBitmap do PlanarYUVLuminanceSource
             val binaryBitmap = BinaryBitmap(HybridBinarizer(source))
             try{
                 // Decode the QR code in the image using MultiFormatReader
