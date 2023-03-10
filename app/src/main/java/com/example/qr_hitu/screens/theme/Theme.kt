@@ -11,6 +11,11 @@ private val LightColors = lightColorScheme(
     primary = md_theme_light_primary,
     onPrimary = md_theme_light_onPrimary,
     primaryContainer = md_theme_light_primaryContainer,
+    onPrimaryContainer = md_theme_light_onPrimaryContainer,
+    secondary = md_theme_light_secondary,
+    onSecondary = md_theme_light_onSecondary,
+    secondaryContainer = md_theme_light_secondaryContainer,
+    onSecondaryContainer = md_theme_light_onSecondaryContainer
 )
 private val DarkColors = darkColorScheme(
     primary = md_theme_dark_primary,
@@ -21,6 +26,7 @@ private val DarkColors = darkColorScheme(
 
 @Composable
 fun QRHITUTheme(useDarkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+
     val colorSchemecolors =
         if (!useDarkTheme) {
             lightColorScheme()
@@ -29,6 +35,8 @@ fun QRHITUTheme(useDarkTheme: Boolean = isSystemInDarkTheme(), content: @Composa
         }
     MaterialTheme(
         colorScheme = colorSchemecolors,
-        content = content
+        content = content,
+        shapes = replyShapes,
+        typography = replyTypography
     )
 }
