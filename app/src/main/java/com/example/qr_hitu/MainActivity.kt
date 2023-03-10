@@ -30,6 +30,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import com.example.qr_hitu.ui.theme.QRHITUTheme
+import com.example.qr_hitu.screens.theme.QRHITUTheme
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -110,4 +112,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
