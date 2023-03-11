@@ -8,7 +8,8 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.qr_hitu.ui.theme.QRHITUTheme
+import com.example.qr_hitu.screens.theme.QRHITUTheme
+
 
 
 class MainActivity : ComponentActivity() {
@@ -61,4 +62,3 @@ fun DefaultPreview() {
         DB()
     }
 }
-
