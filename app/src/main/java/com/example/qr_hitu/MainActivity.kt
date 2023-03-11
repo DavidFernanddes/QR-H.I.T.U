@@ -3,8 +3,8 @@ package com.example.qr_hitu
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.example.qr_hitu.screens.userScreens.ScannerScreen
 import com.example.qr_hitu.screens.theme.QRHITUTheme
+import com.example.qr_hitu.screens.userScreens.scannerInput
 
 
 class MainActivity : ComponentActivity() {
@@ -12,7 +12,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             QRHITUTheme {
-                ScannerScreen()
+                scannerInput()
             }
         }
     }
