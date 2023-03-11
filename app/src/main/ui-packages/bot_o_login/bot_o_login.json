@@ -1,0 +1,119 @@
+{
+  "name": "bot_o_login",
+  "version": 32,
+  "source-key": {
+    "type": "figma",
+    "file": "A56ShepTFj5wsr3v5dTdHf",
+    "node": "24:2",
+    "version": "3119144508",
+    "component-id": "0025f7f89a16b0e4afa3d45a03361373e0cda23b"
+  },
+  "default": "BotãoLogin",
+  "design": {
+    "atoms": [
+      {
+        "type": "group",
+        "id": "top_level",
+        "root": "true"
+      },
+      {
+        "type": "vector",
+        "id": "Rectangle 3"
+      },
+      {
+        "type": "text",
+        "id": "Login"
+      }
+    ],
+    "modes": {
+      "BotãoLogin": {
+        "rules": [
+          {
+            "id": "top_level",
+            "tap-handler": "$onClick",
+            "is-structured": "false",
+            "children": [
+              "Rectangle 3",
+              "Login"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Rectangle 3",
+            "border-radius": "169.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              }
+            },
+            "vector-content": "rectangle_3.svg"
+          },
+          {
+            "id": "Login",
+            "margin": {
+              "left": "137.0",
+              "top": "13.0",
+              "right": "135.0",
+              "bottom": "13.0"
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              }
+            },
+            "font-weight": "700.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.0"
+            },
+            "text-content": "$Login",
+            "overflow": "visible",
+            "text-align": "left",
+            "text-size": "20.0",
+            "line-height": "1.2102272033691406",
+            "typeface": "Inter"
+          }
+        ]
+      }
+    }
+  },
+  "parameters": {
+    "onClick": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "Login": {
+      "data-type": "text",
+      "required": false,
+      "description": ""
+    }
+  },
+  "previews": [
+    {
+      "design": "BotãoLogin",
+      "size": {
+        "width": 327.0,
+        "height": 50.0
+      },
+      "parameters": {
+        "Login": "Login"
+      }
+    }
+  ],
+  "adin-component-search-paths": [],
+  "image-search-paths": [],
+  "vector-search-paths": []
+}
