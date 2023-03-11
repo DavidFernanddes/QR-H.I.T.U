@@ -24,13 +24,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.screens.theme.QRHITUTheme
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navController: NavController, firestore: FirebaseFirestore,)   {
 
     var emailValue by remember { mutableStateOf("") }
     var passwordValue by remember { mutableStateOf("") }
+    var errorMessage by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
 
@@ -89,19 +93,32 @@ fun LoginScreen() {
             Spacer(modifier = Modifier.padding(10.dp))
 
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {
+                          val query = Firebase.firestore.collection("Utilizadores")
+                              .whereEqualTo("Email", emailValue)
+                              .whereEqualTo("Pass", passwordValue)
+
+
+                    query.get().addOnSuccessListener { documents ->
+                        val doc = documents.documents.firstOrNull()
+                        if(doc != null){
+                            val perm = doc.getLong("Perm")
+                            when(perm){
+                                0L -> navController.navigate("Scanner_Prof")
+                                1L -> navController.navigate("Malfunctions_List")
+                                else -> errorMessage = "Permissão Inválida"
+                            }
+                        } else {
+                            errorMessage = "Email ou Password inválida"
+                        }
+                    }.addOnFailureListener{
+                        errorMessage = "Erro: ${it.message}"
+                    }
+                },
                 Modifier.fillMaxWidth()
             ) {
                 Text(text = "Login")
             }
         }
-    }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-fun PreviewScreen() {
-    QRHITUTheme {
-        LoginScreen()
     }
 }

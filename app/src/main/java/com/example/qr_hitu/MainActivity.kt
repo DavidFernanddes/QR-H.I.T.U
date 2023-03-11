@@ -4,12 +4,20 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Button
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import com.example.qr_hitu.functions.addDispositivo
+import com.example.qr_hitu.functions.delDispositivo
+import com.example.qr_hitu.functions.seeDispositivo
+import com.example.qr_hitu.screens.adminScreens.MalfList
+import com.example.qr_hitu.screens.adminScreens.QrCreateFinal
+import com.example.qr_hitu.screens.adminScreens.QrCreatePhase1
+import com.example.qr_hitu.screens.adminScreens.QrCreatePhase2
+import com.example.qr_hitu.screens.components.QrHituNavHost
 import com.example.qr_hitu.screens.theme.QRHITUTheme
-
 
 
 class MainActivity : ComponentActivity() {
@@ -17,7 +25,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             QRHITUTheme {
-                DB()
+                QrCreateFinal()
+                //QrHituNavHost()
+                //DB()
             }
         }
     }

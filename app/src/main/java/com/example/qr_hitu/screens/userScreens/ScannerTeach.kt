@@ -17,12 +17,12 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavController
 import com.example.qr_hitu.functions.QrCodeAnalyzer
 
-//TODO Navigation
-@Composable
-fun scannerTeachScreen(){
 
+@Composable
+fun ScannerTeachScreen(navController: NavController){
 
     var code by remember { mutableStateOf("") }
     val context = LocalContext.current
@@ -83,14 +83,14 @@ fun scannerTeachScreen(){
                 modifier = Modifier.weight(1f)
             )
             if(code.isNotEmpty()){
-                Dialog(onDialogDismissed = { code = "" })
+                Dialog(onDialogDismissed = { code = "" }, navController = navController )
             }
         }
     }
 }
 
 @Composable
-fun Dialog(onDialogDismissed: () -> Unit) {
+fun Dialog(onDialogDismissed: () -> Unit, navController: NavController, ) {
     val openDialog = remember { mutableStateOf(true) }
 
     if (openDialog.value) {
@@ -106,7 +106,7 @@ fun Dialog(onDialogDismissed: () -> Unit) {
                 Text(text = "Deseja colocar uma avaria ?")
             },
             confirmButton = {
-                TextButton(onClick = { openDialog.value = false }) {
+                TextButton(onClick = { openDialog.value = false; navController.navigate("Scanner_Input") }) {
                     Text(text = "SIM")
                 }
             },
