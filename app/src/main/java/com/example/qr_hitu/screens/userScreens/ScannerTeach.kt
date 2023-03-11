@@ -18,7 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
-import com.example.qr_hitu.functions.QrCodeAnalyzer
+import com.example.qr_hitu.QrCodeAnalyzer
 
 
 @Composable

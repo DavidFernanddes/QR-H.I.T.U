@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.qr_hitu.screens.LoginScreen
 import com.example.qr_hitu.screens.adminScreens.MalfList
+import com.example.qr_hitu.screens.adminScreens.QrCreateFinal
 import com.example.qr_hitu.screens.adminScreens.QrCreatePhase1
 import com.example.qr_hitu.screens.adminScreens.QrCreatePhase2
 import com.example.qr_hitu.screens.userScreens.scannerInput
@@ -45,7 +46,7 @@ fun QrHituNavHost(
             QrCreatePhase2(navController = navController)
         }
         composable("Create_Qr_Final"){
-
+            QrCreateFinal(navController = navController)
         }
 
     }

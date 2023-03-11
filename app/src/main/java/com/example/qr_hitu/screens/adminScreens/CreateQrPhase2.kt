@@ -26,6 +26,7 @@ fun QrCreatePhase2(navController: NavController){
     var ram by remember { mutableStateOf("") }
     var fonte by remember { mutableStateOf("") }
     val focusManager = LocalFocusManager.current
+
 Column(
     horizontalAlignment = Alignment.CenterHorizontally,
     verticalArrangement = Arrangement.Center,
