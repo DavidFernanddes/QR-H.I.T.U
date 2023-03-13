@@ -7,10 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.qr_hitu.screens.LoginScreen
-import com.example.qr_hitu.screens.adminScreens.MalfList
-import com.example.qr_hitu.screens.adminScreens.QrCreateFinal
-import com.example.qr_hitu.screens.adminScreens.QrCreatePhase1
-import com.example.qr_hitu.screens.adminScreens.QrCreatePhase2
+import com.example.qr_hitu.screens.adminScreens.*
 import com.example.qr_hitu.screens.userScreens.scannerInput
 import com.example.qr_hitu.screens.userScreens.ScannerTeachScreen
 import com.google.firebase.firestore.FirebaseFirestore
@@ -18,7 +15,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 @Composable
 fun QrHituNavHost(
-    modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
     startDestination: String = "Login"
 ){
@@ -47,6 +43,9 @@ fun QrHituNavHost(
         }
         composable("Create_Qr_Final"){
             QrCreateFinal(navController = navController)
+        }
+        composable("Scanner_Admin"){
+            ScannerAdminScreen(navController = navController)
         }
 
     }

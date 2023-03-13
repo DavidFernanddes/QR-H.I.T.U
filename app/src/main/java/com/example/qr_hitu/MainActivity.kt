@@ -18,6 +18,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
+import androidx.navigation.compose.rememberNavController
+import com.example.qr_hitu.functions.ScaffoldLayouts
 import com.example.qr_hitu.functions.addDispositivo
 import com.example.qr_hitu.functions.delDispositivo
 import com.example.qr_hitu.functions.seeDispositivo
@@ -31,6 +33,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             QRHITUTheme {
+                //ScaffoldLayouts()
                 QrHituNavHost()
                 //DB()
             }

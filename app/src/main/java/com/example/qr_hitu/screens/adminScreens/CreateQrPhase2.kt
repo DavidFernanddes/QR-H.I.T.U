@@ -22,6 +22,7 @@ import androidx.navigation.NavController
 @Composable
 fun QrCreatePhase2(navController: NavController){
 
+    var nome by remember { mutableStateOf("") }
     var processador by remember { mutableStateOf("") }
     var ram by remember { mutableStateOf("") }
     var fonte by remember { mutableStateOf("") }
@@ -37,6 +38,23 @@ Column(
         .padding(horizontal = 16.dp)
         .background(Color.White)
 ) {
+    OutlinedTextField(
+        value = nome,
+        onValueChange = { nome = it },
+        label = { Text("Nome") },
+        placeholder = { Text("Nome") },
+        singleLine = true,
+        shape = MaterialTheme.shapes.large,
+        modifier = Modifier.fillMaxWidth(),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Text,
+            imeAction = ImeAction.Next
+        ),
+        keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
+    )
+
+    Spacer(modifier = Modifier.padding(10.dp))
+
     OutlinedTextField(
         value = processador,
         onValueChange = { processador = it },
@@ -88,7 +106,7 @@ Column(
 
     Spacer(modifier = Modifier.padding(10.dp))
 
-    if (processador.isNotEmpty() && ram.isNotEmpty() && fonte.isNotEmpty()) {
+    if (nome.isNotEmpty() && processador.isNotEmpty() && ram.isNotEmpty() && fonte.isNotEmpty()) {
         Button(
             onClick = { navController.navigate("Create_QR_Final")},
             Modifier.fillMaxWidth()
