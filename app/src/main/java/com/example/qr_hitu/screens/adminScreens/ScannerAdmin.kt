@@ -19,6 +19,8 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.example.qr_hitu.QrCodeAnalyzer
+import com.example.qr_hitu.screens.components.ScanAdminInfo
+import com.example.qr_hitu.screens.components.ScanInput
 import com.example.qr_hitu.screens.userScreens.Dialog
 
 @Composable
@@ -82,6 +84,9 @@ fun ScannerAdminScreen(navController: NavController){
                 },
                 modifier = Modifier.weight(1f)
             )
+            if(code.isNotEmpty()){
+                navController.navigate(ScanAdminInfo.route)
+            }
         }
     }
 }

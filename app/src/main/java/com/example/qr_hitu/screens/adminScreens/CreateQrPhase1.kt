@@ -20,6 +20,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
+import com.example.qr_hitu.screens.components.Create2
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -50,7 +51,6 @@ fun QrCreatePhase1(navController: NavController) {
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
@@ -190,9 +190,9 @@ fun QrCreatePhase1(navController: NavController) {
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        if(selectedRoom.isNotEmpty()) {
+        if(selectedMachine.isNotEmpty()) {
             Button(
-                onClick = { navController.navigate("Create_QR_Phase2") },
+                onClick = { navController.navigate(Create2.route) },
                 Modifier.fillMaxWidth()
             ) {
                 Text(text = "Continuar")

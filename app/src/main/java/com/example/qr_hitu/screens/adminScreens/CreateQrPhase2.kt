@@ -17,6 +17,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.qr_hitu.screens.components.Create3
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -108,7 +109,7 @@ Column(
 
     if (nome.isNotEmpty() && processador.isNotEmpty() && ram.isNotEmpty() && fonte.isNotEmpty()) {
         Button(
-            onClick = { navController.navigate("Create_QR_Final")},
+            onClick = { navController.navigate(Create3.route)},
             Modifier.fillMaxWidth()
         ) {
             Text(text = "Continuar")

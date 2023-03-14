@@ -16,36 +16,46 @@ import com.google.firebase.firestore.FirebaseFirestore
 @Composable
 fun QrHituNavHost(
     navController: NavHostController = rememberNavController(),
-    startDestination: String = "Login"
+    startDestination: String = Login.route,
+    modifier: Modifier
 ){
     NavHost(
         navController = navController,
         startDestination = startDestination
     ){
 
-        composable("Login"){
+        composable(route = Login.route){
             LoginScreen(navController = navController, firestore = FirebaseFirestore.getInstance())
         }
-        composable("Scanner_Prof"){
+        composable(route = ScanProf.route){
             ScannerTeachScreen(navController = navController)
         }
-        composable("Scanner_Input"){
+        composable(ScanInput.route){
             scannerInput(navController = navController)
         }
-        composable("Malfunctions_List"){
+        composable(MalfList.route){
             MalfList(navController = navController)
         }
-        composable("Create_QR_Phase1"){
+        composable(Create1.route){
             QrCreatePhase1(navController = navController)
         }
-        composable("Create_Qr_Phase2"){
+        composable(Create2.route){
             QrCreatePhase2(navController = navController)
         }
-        composable("Create_Qr_Final"){
+        composable(Create3.route){
             QrCreateFinal(navController = navController)
         }
-        composable("Scanner_Admin"){
+        composable(ScanAdmin.route){
             ScannerAdminScreen(navController = navController)
+        }
+        composable(ScanAdminInfo.route){
+           scannerAdminInfo(navController = navController)
+        }
+        composable(DefOptions.route){
+            settingsOptions(navController = navController)
+        }
+        composable(Manual.route){
+            manual(navController = navController)
         }
 
     }

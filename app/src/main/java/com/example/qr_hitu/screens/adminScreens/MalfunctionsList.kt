@@ -13,6 +13,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.qr_hitu.screens.components.Create1
 
 //TODO
 @Composable
@@ -29,8 +30,5 @@ fun MalfList(navController: NavController){
             .background(Color.White)
     ) {
 
-    }
-    Button(onClick = { navController.navigate("Create_QR_Phase1") }) {
-        Text(text = "Criar QR")
     }
 }

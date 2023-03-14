@@ -23,6 +23,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.qr_hitu.screens.components.MalfList
+import com.example.qr_hitu.screens.components.ScanProf
 import com.example.qr_hitu.screens.theme.QRHITUTheme
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -104,8 +106,8 @@ fun LoginScreen(navController: NavController, firestore: FirebaseFirestore,)   {
                         if(doc != null){
                             val perm = doc.getLong("Perm")
                             when(perm){
-                                0L -> navController.navigate("Scanner_Prof")
-                                1L -> navController.navigate("Malfunctions_List")
+                                0L -> navController.navigate(ScanProf.route)
+                                1L -> navController.navigate(MalfList.route)
                                 else -> errorMessage = "Permissão Inválida"
                             }
                         } else {

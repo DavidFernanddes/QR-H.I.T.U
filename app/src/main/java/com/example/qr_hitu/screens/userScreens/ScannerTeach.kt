@@ -19,6 +19,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.example.qr_hitu.QrCodeAnalyzer
+import com.example.qr_hitu.screens.components.ScanInput
 
 
 @Composable
@@ -106,7 +107,7 @@ fun Dialog(onDialogDismissed: () -> Unit, navController: NavController, ) {
                 Text(text = "Deseja colocar uma avaria ?")
             },
             confirmButton = {
-                TextButton(onClick = { openDialog.value = false; navController.navigate("Scanner_Input") }) {
+                TextButton(onClick = { openDialog.value = false; navController.navigate(ScanInput.route) }) {
                     Text(text = "SIM")
                 }
             },
