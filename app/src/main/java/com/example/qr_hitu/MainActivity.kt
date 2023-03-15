@@ -1,5 +1,10 @@
 package com.example.qr_hitu
 
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,24 +18,36 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.core.app.NotificationManagerCompat
 import com.example.qr_hitu.ui.theme.QRHITUTheme
 
 
 class MainActivity : ComponentActivity() {
+
+    val Channel_ID = "channelID"
+    val Channel_NAME = "channelName"
+    val NOTIFICATION_ID = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             QRHITUTheme {
-                CreateQrCode()
+                val notification = notificationBuilder(this, Channel_ID)
+
+                val notificationManager = NotificationManagerCompat.from(this)
+
+                notificationManager.cancelAll()
+
+                CreateQrCode(notificationManager, NOTIFICATION_ID, notification)
             }
         }
+        createNotificationChannel(Channel_ID, Channel_NAME, this)
     }
 }
 
 
 
 @Composable
-fun CreateQrCode(modifier: Modifier = Modifier) {
+fun CreateQrCode(notificationManager : NotificationManagerCompat, NOTIFICATION_ID : Int, notification : Notification) {
 
     var content by remember { mutableStateOf("") }
     var qrName by remember { mutableStateOf("") }
@@ -95,6 +112,12 @@ fun CreateQrCode(modifier: Modifier = Modifier) {
                 showPopUp(scope, snackbarHostState)
             }) {
                 Text("Download QR Code")
+            }
+
+            Button(onClick = {
+                notificationManager.notify(NOTIFICATION_ID, notification)
+            }) {
+                Text("Show notification")
             }
         }
     }
