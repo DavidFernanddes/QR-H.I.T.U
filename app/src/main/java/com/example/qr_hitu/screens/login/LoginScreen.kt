@@ -1,4 +1,4 @@
-package com.example.qr_hitu.screens
+package com.example.qr_hitu.screens.login
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -20,19 +20,17 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.screens.components.MalfList
 import com.example.qr_hitu.screens.components.ScanProf
-import com.example.qr_hitu.screens.theme.QRHITUTheme
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(navController: NavController, firestore: FirebaseFirestore,)   {
+fun LoginScreen(navController: NavController, firestore: FirebaseFirestore)   {
 
     var emailValue by remember { mutableStateOf("") }
     var passwordValue by remember { mutableStateOf("") }
@@ -104,8 +102,7 @@ fun LoginScreen(navController: NavController, firestore: FirebaseFirestore,)   {
                     query.get().addOnSuccessListener { documents ->
                         val doc = documents.documents.firstOrNull()
                         if(doc != null){
-                            val perm = doc.getLong("Perm")
-                            when(perm){
+                            when(doc.getLong("Perm")){
                                 0L -> navController.navigate(ScanProf.route)
                                 1L -> navController.navigate(MalfList.route)
                                 else -> errorMessage = "Permissão Inválida"

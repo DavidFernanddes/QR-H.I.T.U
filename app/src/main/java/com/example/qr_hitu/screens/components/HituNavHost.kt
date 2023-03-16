@@ -1,29 +1,33 @@
 package com.example.qr_hitu.screens.components
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.qr_hitu.screens.LoginScreen
-import com.example.qr_hitu.screens.adminScreens.*
-import com.example.qr_hitu.screens.userScreens.scannerInput
-import com.example.qr_hitu.screens.userScreens.ScannerTeachScreen
+import com.example.qr_hitu.screens.login.LoginScreen
+import com.example.qr_hitu.screens.adminScreens.malfList.MalfList
+import com.example.qr_hitu.screens.adminScreens.create.QrCreateFinal
+import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase1
+import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase2
+import com.example.qr_hitu.screens.menu.Manual
+import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminScreen
+import com.example.qr_hitu.screens.adminScreens.scannerAdm.scannerAdminInfo
+import com.example.qr_hitu.screens.menu.SettingsOptions
+import com.example.qr_hitu.screens.profScreens.ScannerTeachScreen
+import com.example.qr_hitu.screens.profScreens.ScannerInput
 import com.google.firebase.firestore.FirebaseFirestore
 
 
 @Composable
 fun QrHituNavHost(
     navController: NavHostController = rememberNavController(),
-    startDestination: String = Login.route,
-    modifier: Modifier
+    startDestination: String = Login.route
 ){
     NavHost(
         navController = navController,
         startDestination = startDestination
     ){
-
         composable(route = Login.route){
             LoginScreen(navController = navController, firestore = FirebaseFirestore.getInstance())
         }
@@ -31,7 +35,7 @@ fun QrHituNavHost(
             ScannerTeachScreen(navController = navController)
         }
         composable(ScanInput.route){
-            scannerInput(navController = navController)
+            ScannerInput(navController = navController)
         }
         composable(MalfList.route){
             MalfList(navController = navController)
@@ -52,10 +56,10 @@ fun QrHituNavHost(
            scannerAdminInfo(navController = navController)
         }
         composable(DefOptions.route){
-            settingsOptions(navController = navController)
+            SettingsOptions(navController = navController)
         }
         composable(Manual.route){
-            manual(navController = navController)
+            Manual(navController = navController)
         }
 
     }

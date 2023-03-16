@@ -1,4 +1,4 @@
-package com.example.qr_hitu.screens.adminScreens
+package com.example.qr_hitu.screens.adminScreens.scannerAdm
 
 import androidx.navigation.NavController
 

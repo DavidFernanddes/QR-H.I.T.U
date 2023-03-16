@@ -1,4 +1,4 @@
-package com.example.qr_hitu.screens.adminScreens
+package com.example.qr_hitu.screens.profScreens
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -6,25 +6,27 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
-import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.example.qr_hitu.QrCodeAnalyzer
-import com.example.qr_hitu.screens.components.ScanAdminInfo
 import com.example.qr_hitu.screens.components.ScanInput
-import com.example.qr_hitu.screens.userScreens.Dialog
+
 
 @Composable
-fun ScannerAdminScreen(navController: NavController){
+fun ScannerTeachScreen(navController: NavController){
 
     var code by remember { mutableStateOf("") }
     val context = LocalContext.current
@@ -56,7 +58,7 @@ fun ScannerAdminScreen(navController: NavController){
             AndroidView(
                 factory = { context ->
                     val previewView = PreviewView(context)
-                    val preview = Preview.Builder().build()
+                    val preview = androidx.camera.core.Preview.Builder().build()
                     val selector = CameraSelector.Builder()
                         .requireLensFacing(CameraSelector.LENS_FACING_BACK)
                         .build()
@@ -85,8 +87,41 @@ fun ScannerAdminScreen(navController: NavController){
                 modifier = Modifier.weight(1f)
             )
             if(code.isNotEmpty()){
-                navController.navigate(ScanAdminInfo.route)
+                Dialog(onDialogDismissed = { code = "" }, navController = navController )
             }
         }
     }
 }
+
+@Composable
+fun Dialog(onDialogDismissed: () -> Unit, navController: NavController ) {
+    val openDialog = remember { mutableStateOf(true) }
+
+    if (openDialog.value) {
+        AlertDialog(
+            onDismissRequest = { openDialog.value = false; onDialogDismissed() },
+            title = {
+                Text(
+                    text = "Avaria",
+                    textAlign = TextAlign.Center
+                )
+            },
+            text = {
+                Text(text = "Deseja colocar uma avaria ?")
+            },
+            confirmButton = {
+                TextButton(onClick = { openDialog.value = false; navController.navigate(ScanInput.route) }) {
+                    Text(text = "SIM")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { openDialog.value = false;  onDialogDismissed()}) {
+                    Text(text = "NÃO")
+                }
+            }
+
+        )
+    }
+
+}
+
