@@ -16,17 +16,19 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.qr_hitu.screens.components.Create3
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun QrCreatePhase2(navController: NavController){
+    val viewModel2 = viewModel<QrCreate2ViewModel>()
 
-    var nome by remember { mutableStateOf("") }
-    var processador by remember { mutableStateOf("") }
+    var name by remember { mutableStateOf("") }
+    var processor by remember { mutableStateOf("") }
     var ram by remember { mutableStateOf("") }
-    var fonte by remember { mutableStateOf("") }
+    var powerSupply by remember { mutableStateOf("") }
     val focusManager = LocalFocusManager.current
 
 Column(
@@ -40,8 +42,8 @@ Column(
         .background(Color.White)
 ) {
     OutlinedTextField(
-        value = nome,
-        onValueChange = { nome = it },
+        value = name,
+        onValueChange = { name = it },
         label = { Text("Nome") },
         placeholder = { Text("Nome") },
         singleLine = true,
@@ -57,8 +59,8 @@ Column(
     Spacer(modifier = Modifier.padding(10.dp))
 
     OutlinedTextField(
-        value = processador,
-        onValueChange = { processador = it },
+        value = processor,
+        onValueChange = { processor = it },
         label = { Text("Processador") },
         placeholder = { Text("Processador") },
         singleLine = true,
@@ -91,8 +93,8 @@ Column(
     Spacer(modifier = Modifier.padding(10.dp))
 
     OutlinedTextField(
-        value = fonte,
-        onValueChange = { fonte = it },
+        value = powerSupply,
+        onValueChange = { powerSupply = it },
         label = { Text("Fonte") },
         placeholder = { Text("Fonte") },
         singleLine = true,
@@ -107,9 +109,14 @@ Column(
 
     Spacer(modifier = Modifier.padding(10.dp))
 
-    if (nome.isNotEmpty() && processador.isNotEmpty() && ram.isNotEmpty() && fonte.isNotEmpty()) {
+    if (name.isNotEmpty() && processor.isNotEmpty() && ram.isNotEmpty() && powerSupply.isNotEmpty()) {
         Button(
-            onClick = { navController.navigate(Create3.route)},
+            onClick = { navController.navigate(Create3.route)
+                viewModel2.onNameWtritten(name)
+                viewModel2.onProcessorWtritten(processor)
+                viewModel2.onRamWtritten(ram)
+                viewModel2.onPowerSupplyWtritten(powerSupply)
+                      },
             Modifier.fillMaxWidth()
         ) {
             Text(text = "Continuar")
