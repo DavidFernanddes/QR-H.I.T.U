@@ -47,7 +47,7 @@ fun QrHituNavHost(
             QrCreatePhase2(navController = navController)
         }
         composable(Create3.route){
-            QrCreateFinal(navController = navController)
+            QrCreateFinal(navController = navController, viewModel1 = QrCreate1ViewModel(), viewModel2 = QrCreate2ViewModel())
         }
         composable(ScanAdmin.route){
             ScannerAdminScreen(navController = navController)

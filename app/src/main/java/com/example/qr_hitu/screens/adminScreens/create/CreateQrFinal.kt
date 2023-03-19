@@ -23,13 +23,22 @@ import com.example.qr_hitu.downloadQR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun QrCreateFinal(navController: NavController){
+fun QrCreateFinal(navController: NavController,  viewModel1: QrCreate1ViewModel = viewModel(), viewModel2: QrCreate2ViewModel = viewModel()){
 
-    val viewModel1: QrCreate1ViewModel = viewModel()
-    val viewModel2: QrCreate2ViewModel = viewModel()
+
+
+
     var qrName by remember { mutableStateOf("") }
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
+
+    val selectedBlock = viewModel1.selectedBlock
+    val selectedRoom = viewModel1.selectedRoom
+    val selectedMachine = viewModel1.selectedMachine
+    val name = viewModel2.name
+    val processor = viewModel2.processor
+    val ram = viewModel2.ram
+    val powerSupply = viewModel2.powerSupply
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -42,13 +51,13 @@ fun QrCreateFinal(navController: NavController){
             .background(Color.White)
     ){
 
-        val query = "Block: ${viewModel1.selectedBlock}, " +
-                "Room: ${viewModel1.selectedRoom}, " +
-                "Machine: ${viewModel1.selectedMachine}," +
-                "Name: ${viewModel2.name}, " +
-                "Processor: ${viewModel2.processor}, " +
-                "Ram: ${viewModel2.ram}, " +
-                "Power Supply: ${viewModel2.powerSupply}"
+        val query = "Block: $selectedBlock, " +
+                "Room: $selectedRoom, " +
+                "Machine: $selectedMachine," +
+                "Name: $name, " +
+                "Processor: $processor, " +
+                "Ram: $ram, " +
+                "Power Supply: $powerSupply"
 
 
         CreateQR(query)
