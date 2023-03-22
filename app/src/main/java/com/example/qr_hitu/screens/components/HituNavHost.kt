@@ -6,11 +6,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.qr_hitu.screens.adminScreens.create.*
 import com.example.qr_hitu.screens.login.LoginScreen
 import com.example.qr_hitu.screens.adminScreens.malfList.MalfList
-import com.example.qr_hitu.screens.adminScreens.create.QrCreateFinal
-import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase1
-import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase2
 import com.example.qr_hitu.screens.menu.Manual
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminScreen
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.scannerAdminInfo
@@ -49,7 +47,7 @@ fun QrHituNavHost(
             QrCreatePhase2(navController = navController)
         }
         composable(Create3.route){
-            QrCreateFinal(navController = navController)
+            QrCreateFinal(navController = navController, viewModel1 = QrCreate1ViewModel(), viewModel2 = QrCreate2ViewModel())
         }
         composable(ScanAdmin.route){
             ScannerAdminScreen(navController = navController)

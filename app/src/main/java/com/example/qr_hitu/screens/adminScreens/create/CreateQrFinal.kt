@@ -10,25 +10,35 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.qr_hitu.CreateQR
-import com.example.qr_hitu.DownloadQR
+import com.example.qr_hitu.downloadQR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun QrCreateFinal(navController: NavController){
+fun QrCreateFinal(navController: NavController,  viewModel1: QrCreate1ViewModel = viewModel(), viewModel2: QrCreate2ViewModel = viewModel()){
 
-    var content by remember { mutableStateOf("") }
+
+
+
     var qrName by remember { mutableStateOf("") }
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
+
+    val selectedBlock = viewModel1.selectedBlock
+    val selectedRoom = viewModel1.selectedRoom
+    val selectedMachine = viewModel1.selectedMachine
+    val name = viewModel2.name
+    val processor = viewModel2.processor
+    val ram = viewModel2.ram
+    val powerSupply = viewModel2.powerSupply
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -40,10 +50,20 @@ fun QrCreateFinal(navController: NavController){
             .padding(horizontal = 16.dp)
             .background(Color.White)
     ){
-        CreateQR(content)
+
+        val query = "Block: $selectedBlock, " +
+                "Room: $selectedRoom, " +
+                "Machine: $selectedMachine," +
+                "Name: $name, " +
+                "Processor: $processor, " +
+                "Ram: $ram, " +
+                "Power Supply: $powerSupply"
+
+
+        CreateQR(query)
 
         Spacer(modifier = Modifier.height(20.dp))
-
+/*
         OutlinedTextField(
             value = content,
             onValueChange = {
@@ -55,6 +75,8 @@ fun QrCreateFinal(navController: NavController){
             label = { Text(text = "Escreva texto para conversão") },
             placeholder = { Text(text = "Texto a converter") },
         )
+
+ */
 
         Spacer(modifier = Modifier.height(20.dp))
 
@@ -72,7 +94,7 @@ fun QrCreateFinal(navController: NavController){
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        Button(onClick = { DownloadQR(content, qrName, context) },
+        Button(onClick = { downloadQR(query, qrName, context) },
             modifier = Modifier.fillMaxWidth(),
         ) {
             Text("Download QR Code")

@@ -17,12 +17,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.qr_hitu.screens.components.Create2
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun QrCreatePhase1(navController: NavController) {
+    val viewModel1 = viewModel<QrCreate1ViewModel>()
 
     var expanded by remember { mutableStateOf(false) }
     val blocks = listOf("Bloco A", "Bloco B", "Bloco C", "Bloco D", "Bloco E")
@@ -188,7 +190,11 @@ fun QrCreatePhase1(navController: NavController) {
 
         if(selectedMachine.isNotEmpty()) {
             Button(
-                onClick = { navController.navigate(Create2.route) },
+                onClick = { navController.navigate(Create2.route)
+                    viewModel1.onBlockSelected(selectedBlock)
+                    viewModel1.onRoomSelected(selectedRoom)
+                    viewModel1.onMachineSelected(selectedMachine)
+                          },
                 Modifier.fillMaxWidth()
             ) {
                 Text(text = "Continuar")
