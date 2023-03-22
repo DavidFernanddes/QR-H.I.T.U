@@ -26,7 +26,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 fun QrHituNavHost(
     navController: NavHostController = rememberNavController(),
     startDestination: String = Login.route,
-    viewModel : ViewModel1,
+    viewModel1: ViewModel1,
+    viewModel2: ViewModel2,
     modifier: Modifier
 ){
     NavHost(
@@ -46,13 +47,13 @@ fun QrHituNavHost(
             MalfList(navController = navController)
         }
         composable(Create1.route){
-            QrCreatePhase1(navController = navController, viewModel = viewModel)
+            QrCreatePhase1(navController = navController, viewModel = viewModel1)
         }
         composable(Create2.route){
-            QrCreatePhase2(navController = navController)
+            QrCreatePhase2(navController = navController, viewModel = viewModel2)
         }
         composable(Create3.route){
-            QrCreateFinal(navController = navController, viewModel = viewModel)
+            QrCreateFinal(navController = navController, viewModel1 = viewModel1, viewModel2 = viewModel2)
         }
         composable(ScanAdmin.route){
             ScannerAdminScreen(navController = navController)

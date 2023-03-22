@@ -15,6 +15,7 @@ import com.example.qr_hitu.functions.addDispositivo
 import com.example.qr_hitu.functions.delDispositivo
 import com.example.qr_hitu.functions.seeDispositivo
 import com.example.qr_hitu.screens.adminScreens.create.ViewModel1
+import com.example.qr_hitu.screens.adminScreens.create.ViewModel2
 import com.example.qr_hitu.screens.theme.QRHITUTheme
 
 
@@ -24,8 +25,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             QRHITUTheme {
                 val navController = rememberNavController()
-                val viewModel = viewModel<ViewModel1>()
-                ScaffoldLayouts(navController = navController, viewModel = viewModel)
+                val viewModel1 = viewModel<ViewModel1>()
+                val viewModel2 = viewModel<ViewModel2>()
+                ScaffoldLayouts(navController = navController, viewModel1 = viewModel1, viewModel2 = viewModel2)
             }
         }
     }

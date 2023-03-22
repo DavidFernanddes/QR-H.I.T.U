@@ -2,6 +2,7 @@ package com.example.qr_hitu.screens.adminScreens.scannerAdm
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
@@ -18,11 +19,11 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
-import com.example.qr_hitu.QrCodeAnalyzer
+import com.example.qr_hitu.functions.QrCodeAnalyzer
 import com.example.qr_hitu.screens.components.ScanAdminInfo
 
 @Composable
-fun ScannerAdminScreen(navController: NavController){
+fun ScannerAdminScreen(navController: NavController) {
 
     var code by remember { mutableStateOf("") }
     val context = LocalContext.current
@@ -69,12 +70,15 @@ fun ScannerAdminScreen(navController: NavController){
                         }
                     )
                     try {
-                        cameraProviderFuture.get().bindToLifecycle(
-                            lifecycleOwner,
-                            selector,
-                            preview,
-                            imageAnalysis
-                        )
+                        cameraProviderFuture.addListener({
+                            val cameraProvider = cameraProviderFuture.get()
+                            cameraProvider.bindToLifecycle(
+                                lifecycleOwner,
+                                selector,
+                                preview,
+                                imageAnalysis
+                            )
+                        }, ContextCompat.getMainExecutor(context))
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
@@ -82,7 +86,9 @@ fun ScannerAdminScreen(navController: NavController){
                 },
                 modifier = Modifier.weight(1f)
             )
-            if(code.isNotEmpty()){
+            if (code.isNotEmpty()) {
+                val (block, room, machine) = code.split(",")
+                Log.d("ScannerAdminScreen", "$block, $room, $machine")
                 navController.navigate(ScanAdminInfo.route)
             }
         }

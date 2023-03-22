@@ -16,21 +16,28 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.qr_hitu.CreateQR
-import com.example.qr_hitu.downloadQR
+import com.example.qr_hitu.functions.CreateQR
+import com.example.qr_hitu.functions.downloadQR
+import com.example.qr_hitu.functions.addDispositivo
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun QrCreateFinal(navController: NavController, viewModel : ViewModel1){
+fun QrCreateFinal(navController: NavController, viewModel1 : ViewModel1, viewModel2: ViewModel2){
 
     var content by remember{ mutableStateOf("") }
     var qrName by remember { mutableStateOf("") }
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
 
-    val myData = viewModel.myData.value
+    val myData = viewModel1.myData.value
+    val myData2 = viewModel2.myData.value
+    val esp = hashMapOf(
+        "Nome" to "${myData2?.name}",
+        "Processador" to "${myData2?.processor}",
+        "Ram" to "${myData2?.ram}",
+        "Fonte" to "${myData2?.powerSupply}"
+    )
 
 
     Column(
@@ -44,13 +51,12 @@ fun QrCreateFinal(navController: NavController, viewModel : ViewModel1){
             .background(Color.White)
     ){
 
-
+        if (myData != null) {
+            content = "${myData.block},${myData.room},${myData.machine}"
+            addDispositivo(myData.block, myData.room, myData.machine, esp)
+        }
 
         CreateQR(content)
-
-        if (myData != null) {
-            content = "document(\"${myData.block}\").collection(\"${myData.room}\").document(\"${myData.machine}\")"
-        }
 
         Spacer(modifier = Modifier.height(20.dp))
 

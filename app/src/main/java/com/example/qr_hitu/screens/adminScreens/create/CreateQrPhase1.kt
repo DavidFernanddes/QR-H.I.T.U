@@ -191,7 +191,7 @@ fun QrCreatePhase1(navController: NavController, viewModel : ViewModel1) {
         if(selectedMachine.isNotEmpty()) {
             Button(
                 onClick = {
-                    viewModel.setMyData(selectedBlock, selectedRoom, selectedMachine)
+                    viewModel.setMyData1(selectedBlock, selectedRoom, selectedMachine)
                     navController.navigate(Create2.route) },
                 Modifier.fillMaxWidth()
             ) {
