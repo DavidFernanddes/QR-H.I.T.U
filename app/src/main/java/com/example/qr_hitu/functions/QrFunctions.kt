@@ -18,11 +18,11 @@ import java.nio.ByteBuffer
 
 
 @Composable
-fun CreateQR(query: String){
+fun CreateQR(content: String){
 
-    if (query.isNotEmpty()){
+    if (content.isNotEmpty()){
         val barcodeEncoder = BarcodeEncoder()
-        val bitmap = barcodeEncoder.encodeBitmap(query, BarcodeFormat.QR_CODE, 512, 512)
+        val bitmap = barcodeEncoder.encodeBitmap(content, BarcodeFormat.QR_CODE, 512, 512)
         Image(
             bitmap = bitmap.asImageBitmap(),
             contentDescription = "QrCode"
@@ -30,10 +30,10 @@ fun CreateQR(query: String){
     }
 }
 
-fun downloadQR(query: String, qrName: String, context: Context){
+fun downloadQR(content: String, qrName: String, context: Context){
 
     val barcodeEncoder = BarcodeEncoder()
-    val bitmap = barcodeEncoder.encodeBitmap(query, BarcodeFormat.QR_CODE, 512, 512)
+    val bitmap = barcodeEncoder.encodeBitmap(content, BarcodeFormat.QR_CODE, 512, 512)
     val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
     val imageFile = File(downloadsDir, "$qrName.png")
 

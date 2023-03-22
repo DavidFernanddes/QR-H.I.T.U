@@ -2,6 +2,7 @@ package com.example.qr_hitu.screens.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -9,6 +10,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.qr_hitu.screens.adminScreens.create.*
 import com.example.qr_hitu.screens.login.LoginScreen
 import com.example.qr_hitu.screens.adminScreens.malfList.MalfList
+import com.example.qr_hitu.screens.adminScreens.create.QrCreateFinal
+import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase1
+import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase2
 import com.example.qr_hitu.screens.menu.Manual
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminScreen
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.scannerAdminInfo
@@ -22,6 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 fun QrHituNavHost(
     navController: NavHostController = rememberNavController(),
     startDestination: String = Login.route,
+    viewModel : ViewModel1,
     modifier: Modifier
 ){
     NavHost(
@@ -41,13 +46,13 @@ fun QrHituNavHost(
             MalfList(navController = navController)
         }
         composable(Create1.route){
-            QrCreatePhase1(navController = navController)
+            QrCreatePhase1(navController = navController, viewModel = viewModel)
         }
         composable(Create2.route){
             QrCreatePhase2(navController = navController)
         }
         composable(Create3.route){
-            QrCreateFinal(navController = navController, viewModel1 = QrCreate1ViewModel(), viewModel2 = QrCreate2ViewModel())
+            QrCreateFinal(navController = navController, viewModel = viewModel)
         }
         composable(ScanAdmin.route){
             ScannerAdminScreen(navController = navController)

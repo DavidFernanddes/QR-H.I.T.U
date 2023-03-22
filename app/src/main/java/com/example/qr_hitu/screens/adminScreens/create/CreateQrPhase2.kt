@@ -23,7 +23,6 @@ import com.example.qr_hitu.screens.components.Create3
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun QrCreatePhase2(navController: NavController){
-    val viewModel2 = viewModel<QrCreate2ViewModel>()
 
     var name by remember { mutableStateOf("") }
     var processor by remember { mutableStateOf("") }
@@ -112,10 +111,7 @@ Column(
     if (name.isNotEmpty() && processor.isNotEmpty() && ram.isNotEmpty() && powerSupply.isNotEmpty()) {
         Button(
             onClick = { navController.navigate(Create3.route)
-                viewModel2.onNameWtritten(name)
-                viewModel2.onProcessorWtritten(processor)
-                viewModel2.onRamWtritten(ram)
-                viewModel2.onPowerSupplyWtritten(powerSupply)
+
                       },
             Modifier.fillMaxWidth()
         ) {

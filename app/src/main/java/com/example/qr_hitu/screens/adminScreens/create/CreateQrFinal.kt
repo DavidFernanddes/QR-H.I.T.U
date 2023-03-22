@@ -23,22 +23,15 @@ import com.example.qr_hitu.downloadQR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun QrCreateFinal(navController: NavController,  viewModel1: QrCreate1ViewModel = viewModel(), viewModel2: QrCreate2ViewModel = viewModel()){
+fun QrCreateFinal(navController: NavController, viewModel : ViewModel1){
 
-
-
-
+    var content by remember{ mutableStateOf("") }
     var qrName by remember { mutableStateOf("") }
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
 
-    val selectedBlock = viewModel1.selectedBlock
-    val selectedRoom = viewModel1.selectedRoom
-    val selectedMachine = viewModel1.selectedMachine
-    val name = viewModel2.name
-    val processor = viewModel2.processor
-    val ram = viewModel2.ram
-    val powerSupply = viewModel2.powerSupply
+    val myData = viewModel.myData.value
+
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -51,32 +44,13 @@ fun QrCreateFinal(navController: NavController,  viewModel1: QrCreate1ViewModel 
             .background(Color.White)
     ){
 
-        val query = "Block: $selectedBlock, " +
-                "Room: $selectedRoom, " +
-                "Machine: $selectedMachine," +
-                "Name: $name, " +
-                "Processor: $processor, " +
-                "Ram: $ram, " +
-                "Power Supply: $powerSupply"
 
 
-        CreateQR(query)
+        CreateQR(content)
 
-        Spacer(modifier = Modifier.height(20.dp))
-/*
-        OutlinedTextField(
-            value = content,
-            onValueChange = {
-                content = it
-            },
-            modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
-            keyboardActions = KeyboardActions(onDone = { focusManager.moveFocus(FocusDirection.Down) }),
-            label = { Text(text = "Escreva texto para conversão") },
-            placeholder = { Text(text = "Texto a converter") },
-        )
-
- */
+        if (myData != null) {
+            content = "document(\"${myData.block}\").collection(\"${myData.room}\").document(\"${myData.machine}\")"
+        }
 
         Spacer(modifier = Modifier.height(20.dp))
 
@@ -94,7 +68,7 @@ fun QrCreateFinal(navController: NavController,  viewModel1: QrCreate1ViewModel 
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        Button(onClick = { downloadQR(query, qrName, context) },
+        Button(onClick = { downloadQR(content, qrName, context) },
             modifier = Modifier.fillMaxWidth(),
         ) {
             Text("Download QR Code")

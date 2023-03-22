@@ -19,13 +19,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.qr_hitu.screens.adminScreens.create.ViewModel1
 import com.example.qr_hitu.screens.components.*
 import com.example.qr_hitu.screens.theme.*
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScaffoldLayouts(navController: NavController){
+fun ScaffoldLayouts(navController: NavController, viewModel : ViewModel1){
 
     val scaffoldState = rememberScaffoldState()
     val navController = rememberNavController()
@@ -56,6 +57,7 @@ fun ScaffoldLayouts(navController: NavController){
     ) { innerPadding ->
             QrHituNavHost(
                 navController = navController,
+                viewModel = viewModel,
                 modifier = Modifier.padding(innerPadding)
             )
 

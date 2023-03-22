@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.BlendMode.Companion.Screen
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
@@ -23,8 +24,7 @@ import com.example.qr_hitu.screens.components.Create2
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun QrCreatePhase1(navController: NavController) {
-    val viewModel1 = viewModel<QrCreate1ViewModel>()
+fun QrCreatePhase1(navController: NavController, viewModel : ViewModel1) {
 
     var expanded by remember { mutableStateOf(false) }
     val blocks = listOf("Bloco A", "Bloco B", "Bloco C", "Bloco D", "Bloco E")
@@ -190,11 +190,9 @@ fun QrCreatePhase1(navController: NavController) {
 
         if(selectedMachine.isNotEmpty()) {
             Button(
-                onClick = { navController.navigate(Create2.route)
-                    viewModel1.onBlockSelected(selectedBlock)
-                    viewModel1.onRoomSelected(selectedRoom)
-                    viewModel1.onMachineSelected(selectedMachine)
-                          },
+                onClick = {
+                    viewModel.setMyData(selectedBlock, selectedRoom, selectedMachine)
+                    navController.navigate(Create2.route) },
                 Modifier.fillMaxWidth()
             ) {
                 Text(text = "Continuar")
