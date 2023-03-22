@@ -1,5 +1,8 @@
 package com.example.qr_hitu.screens.login
 
+import android.content.ContentValues.TAG
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.screens.components.MalfList
 import com.example.qr_hitu.screens.components.ScanProf
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -94,25 +98,32 @@ fun LoginScreen(navController: NavController, firestore: FirebaseFirestore)   {
 
             Button(
                 onClick = {
-                          val query = Firebase.firestore.collection("Utilizadores")
-                              .whereEqualTo("Email", emailValue)
-                              .whereEqualTo("Pass", passwordValue)
+                    Firebase.auth.signInWithEmailAndPassword(emailValue, passwordValue)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d(TAG, "signInWithEmail:success")
+                                val db = Firebase.firestore.collection("Admin")
 
+                                val uid = Firebase.auth.currentUser?.uid
 
-                    query.get().addOnSuccessListener { documents ->
-                        val doc = documents.documents.firstOrNull()
-                        if(doc != null){
-                            when(doc.getLong("Perm")){
-                                0L -> navController.navigate(ScanProf.route)
-                                1L -> navController.navigate(MalfList.route)
-                                else -> errorMessage = "Permissão Inválida"
+                                db.document("$uid").get().addOnCompleteListener { task ->
+                                    if (task.isSuccessful){
+                                        val document = task.result
+                                        if (document != null){
+                                            if (document.exists()){
+                                                navController.navigate(MalfList.route)
+                                            }else {
+                                                navController.navigate(ScanProf.route)
+                                            }
+                                        }
+                                    }
+                                }
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w(TAG, "signInWithEmail:failure", task.exception)
                             }
-                        } else {
-                            errorMessage = "Email ou Password inválida"
                         }
-                    }.addOnFailureListener{
-                        errorMessage = "Erro: ${it.message}"
-                    }
                 },
                 Modifier.fillMaxWidth()
             ) {

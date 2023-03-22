@@ -1,6 +1,7 @@
 package com.example.qr_hitu.screens.components
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -22,7 +23,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 @Composable
 fun QrHituNavHost(
     navController: NavHostController = rememberNavController(),
-    startDestination: String = Login.route
+    startDestination: String = Login.route,
+    modifier: Modifier
 ){
     NavHost(
         navController = navController,
