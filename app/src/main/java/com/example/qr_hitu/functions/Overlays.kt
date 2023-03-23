@@ -1,13 +1,8 @@
 package com.example.qr_hitu.functions
 
 import android.annotation.SuppressLint
-import android.graphics.drawable.Icon
-import android.text.style.IconMarginSpan
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -23,6 +18,8 @@ import com.example.qr_hitu.screens.adminScreens.create.ViewModel1
 import com.example.qr_hitu.screens.adminScreens.create.ViewModel2
 import com.example.qr_hitu.screens.components.*
 import com.example.qr_hitu.screens.theme.*
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,6 +41,7 @@ fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewMo
                 destinationRoute.contains(Create3.route) -> TopBar3(navController = navController)
                 destinationRoute.contains(ScanProf.route) || destinationRoute.contains(ScanInput.route) -> TopBarUser(navController = navController)
                 destinationRoute.contains(ScanAdminInfo.route) -> Topbar4(navController = navController)
+                destinationRoute.contains(SettingOptions.route) || destinationRoute.contains(Manual.route) -> TopBarUni(navController = navController)
             }
 
         },
@@ -79,29 +77,8 @@ fun TopBar1(navController: NavController){
             TopAppBar(
                 title = { Text(text = "Admin", color = md_theme_light_onPrimaryContainer) },
                 colors = TopAppBarDefaults.smallTopAppBarColors(md_theme_light_primaryContainer),
-                actions = {
-                    IconButton(onClick = { showMenu = !showMenu }) {
-                        Icon(Icons.Filled.Menu, "Menu", tint = md_theme_light_onPrimaryContainer)
-                    }
-                    DropdownMenu(
-                        expanded = showMenu,
-                        onDismissRequest = { showMenu = false }
-                    ) {
-                        DropdownMenuItem(
-                            text = { Text(text = "Definições") },
-                            onClick = {  navController.navigate(DefOptions.route) },
-                            leadingIcon = {
-                                Icon(Icons.Filled.Settings, null)
-                            }
-                        )
-                        DropdownMenuItem(
-                            text = { Text(text = "Manual") },
-                            onClick = { navController.navigate(Manual.route) },
-                            leadingIcon = {
-                                Icon(Icons.Filled.Book, null)
-                            }
-                        )
-                    }
+                navigationIcon = {
+                    MenuOptions(navController = navController)
                 }
             )
 }
@@ -149,9 +126,7 @@ fun Topbar4(navController: NavController){
         title = { Text(text = "Admin", color = md_theme_light_onPrimaryContainer) },
         colors = TopAppBarDefaults.smallTopAppBarColors(md_theme_light_primaryContainer),
         navigationIcon = {
-            IconButton(onClick = { navController.popBackStack() }) {
-                Icon(Icons.Filled.ArrowBack ,"Back", tint = md_theme_light_onPrimaryContainer)
-            }
+            MenuOptions(navController = navController)
         },
         actions = {
             IconButton(onClick = { /*TODO*/ }) {
@@ -160,27 +135,8 @@ fun Topbar4(navController: NavController){
             IconButton(onClick = { /*TODO*/ }) {
                 Icon(Icons.Filled.Delete, "Delete", tint = md_theme_light_onPrimaryContainer)
             }
-            IconButton(onClick = {  showMenu = !showMenu }) {
-                Icon(Icons.Filled.Menu, "Menu", tint = md_theme_light_onPrimaryContainer)
-            }
-            DropdownMenu(
-                expanded = showMenu,
-                onDismissRequest = { showMenu = false }
-            ) {
-                DropdownMenuItem(
-                    text = { Text(text = "Definições") },
-                    onClick = {  navController.navigate(DefOptions.route) },
-                    leadingIcon = {
-                        Icon(Icons.Filled.Settings, null)
-                    }
-                )
-                DropdownMenuItem(
-                    text = { Text(text = "Manual") },
-                    onClick = { navController.navigate(Manual.route) },
-                    leadingIcon = {
-                        Icon(Icons.Filled.Book, null)
-                    }
-                )
+            IconButton(onClick = { navController.popBackStack() }) {
+                Icon(Icons.Filled.ArrowBack ,"Back", tint = md_theme_light_onPrimaryContainer)
             }
         }
 
@@ -196,8 +152,22 @@ fun TopBarUser(navController: NavController){
         title = { Text(text = "*Nome do Professor*", color = md_theme_light_onPrimaryContainer) },
         colors = TopAppBarDefaults.smallTopAppBarColors(md_theme_light_primaryContainer),
         navigationIcon = {
-            IconButton(onClick = { navController.navigate(MalfList.route) }) {
-                Icon(Icons.Filled.Menu ,"Menu", tint = md_theme_light_onPrimaryContainer)
+           MenuOptions(navController = navController)
+        }
+    )
+
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TopBarUni(navController: NavController){
+
+    TopAppBar(
+        title = { Text(text = "", color = md_theme_light_onPrimaryContainer) },
+        colors = TopAppBarDefaults.smallTopAppBarColors(md_theme_light_primaryContainer),
+        actions = {
+            IconButton(onClick = { navController.popBackStack() }) {
+                Icon(Icons.Filled.ArrowBack ,"Back", tint = md_theme_light_onPrimaryContainer)
             }
         }
     )
@@ -245,4 +215,43 @@ fun BottomBar(navController: NavController){
                     }
                 )
             }
+}
+
+@Composable
+fun MenuOptions(navController: NavController){
+
+    var showMenu by remember { mutableStateOf(false) }
+
+    IconButton(onClick = { showMenu = !showMenu }) {
+        Icon(Icons.Filled.Menu ,"Menu", tint = md_theme_light_onPrimaryContainer)
+    }
+    DropdownMenu(
+        expanded = showMenu,
+        onDismissRequest = { showMenu = false }
+    ) {
+        DropdownMenuItem(
+            text = { Text(text = "Definições") },
+            onClick = {  navController.navigate(SettingOptions.route) },
+            leadingIcon = {
+                Icon(Icons.Filled.Settings, "Settings")
+            }
+        )
+        DropdownMenuItem(
+            text = { Text(text = "Manual") },
+            onClick = { navController.navigate(Manual.route) },
+            leadingIcon = {
+                Icon(Icons.Filled.Book, "Manual")
+            }
+        )
+        DropdownMenuItem(
+            text = { Text(text = "Sair Sessão") },
+            onClick = {
+                Firebase.auth.signOut()
+                navController.navigate(Login.route)
+            },
+            leadingIcon = {
+                Icon(Icons.Filled.Logout, "Logout")
+            }
+        )
+    }
 }

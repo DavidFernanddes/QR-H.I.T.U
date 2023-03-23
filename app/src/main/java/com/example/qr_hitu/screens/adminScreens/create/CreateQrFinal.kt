@@ -18,8 +18,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.functions.CreateQR
-import com.example.qr_hitu.functions.downloadQR
 import com.example.qr_hitu.functions.addDispositivo
+import com.example.qr_hitu.functions.downloadQR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,7 +32,7 @@ fun QrCreateFinal(navController: NavController, viewModel1 : ViewModel1, viewMod
 
     val myData = viewModel1.myData.value
     val myData2 = viewModel2.myData.value
-    val esp = hashMapOf(
+    val spec = hashMapOf(
         "Nome" to "${myData2?.name}",
         "Processador" to "${myData2?.processor}",
         "Ram" to "${myData2?.ram}",
@@ -53,7 +53,7 @@ fun QrCreateFinal(navController: NavController, viewModel1 : ViewModel1, viewMod
 
         if (myData != null) {
             content = "${myData.block},${myData.room},${myData.machine}"
-            addDispositivo(myData.block, myData.room, myData.machine, esp)
+            addDispositivo(myData.block, myData.room, myData.machine, spec)
         }
 
         CreateQR(content)
