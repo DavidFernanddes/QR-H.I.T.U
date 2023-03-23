@@ -42,6 +42,24 @@ fun LoginScreen(navController: NavController, firestore: FirebaseFirestore)   {
     var passwordVisible by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
 
+    val db = Firebase.firestore.collection("Admin")
+    val uid = Firebase.auth.currentUser?.uid
+
+    if (Firebase.auth.currentUser != null){
+        db.document("$uid").get().addOnCompleteListener { task ->
+            if (task.isSuccessful){
+                val document = task.result
+                if (document != null){
+                    if (document.exists()){
+                        navController.navigate(MalfList.route)
+                    }else {
+                        navController.navigate(ScanProf.route)
+                    }
+                }
+            }
+        }
+    }
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -103,9 +121,6 @@ fun LoginScreen(navController: NavController, firestore: FirebaseFirestore)   {
                             if (task.isSuccessful) {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d(TAG, "signInWithEmail:success")
-                                val db = Firebase.firestore.collection("Admin")
-
-                                val uid = Firebase.auth.currentUser?.uid
 
                                 db.document("$uid").get().addOnCompleteListener { task ->
                                     if (task.isSuccessful){
