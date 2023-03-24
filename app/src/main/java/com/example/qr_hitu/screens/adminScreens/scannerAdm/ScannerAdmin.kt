@@ -23,7 +23,7 @@ import com.example.qr_hitu.functions.QrCodeAnalyzer
 import com.example.qr_hitu.screens.components.ScanAdminInfo
 
 @Composable
-fun ScannerAdminScreen(navController: NavController) {
+fun ScannerAdminScreen(navController: NavController, viewModel: ScannerAdminViewModel) {
 
     var code by remember { mutableStateOf("") }
     val context = LocalContext.current
@@ -87,8 +87,7 @@ fun ScannerAdminScreen(navController: NavController) {
                 modifier = Modifier.weight(1f)
             )
             if (code.isNotEmpty()) {
-                val (block, room, machine) = code.split(",")
-                Log.d("ScannerAdminScreen", "$block, $room, $machine")
+                viewModel.setMyData(code)
                 navController.navigate(ScanAdminInfo.route)
             }
         }

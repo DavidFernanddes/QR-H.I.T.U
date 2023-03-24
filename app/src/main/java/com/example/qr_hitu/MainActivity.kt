@@ -16,6 +16,7 @@ import com.example.qr_hitu.functions.delDispositivo
 import com.example.qr_hitu.functions.seeDispositivo
 import com.example.qr_hitu.screens.adminScreens.create.ViewModel1
 import com.example.qr_hitu.screens.adminScreens.create.ViewModel2
+import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminViewModel
 import com.example.qr_hitu.screens.components.MalfList
 import com.example.qr_hitu.screens.components.ScanProf
 import com.example.qr_hitu.screens.theme.QRHITUTheme
@@ -33,8 +34,9 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 val viewModel1 = viewModel<ViewModel1>()
                 val viewModel2 = viewModel<ViewModel2>()
+                val viewModelSA = viewModel<ScannerAdminViewModel>()
 
-                ScaffoldLayouts(navController = navController, viewModel1 = viewModel1, viewModel2 = viewModel2)
+                ScaffoldLayouts(navController = navController, viewModel1, viewModel2, viewModelSA)
             }
         }
     }

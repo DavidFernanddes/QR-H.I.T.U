@@ -16,6 +16,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.qr_hitu.screens.adminScreens.create.ViewModel1
 import com.example.qr_hitu.screens.adminScreens.create.ViewModel2
+import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminViewModel
 import com.example.qr_hitu.screens.components.*
 import com.example.qr_hitu.screens.theme.*
 import com.google.firebase.auth.ktx.auth
@@ -24,7 +25,7 @@ import com.google.firebase.ktx.Firebase
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewModel2: ViewModel2){
+fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewModel2: ViewModel2, viewModelSA : ScannerAdminViewModel){
 
     val scaffoldState = rememberScaffoldState()
     val navController = rememberNavController()
@@ -58,6 +59,7 @@ fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewMo
                 navController = navController,
                 viewModel1 = viewModel1,
                 viewModel2 = viewModel2,
+                viewModelSA = viewModelSA,
                 modifier = Modifier.padding(innerPadding)
             )
 
