@@ -41,6 +41,10 @@ object  ScanAdminInfo: HituDestination {
     override val route = "scanner_admin_info"
 }
 
+object  ScanAdminInfoUpdate: HituDestination {
+    override val route = "scanner_admin_info_update"
+}
+
 object  SettingOptions: HituDestination {
     override val route = "settings_options"
 }
