@@ -36,5 +36,11 @@ val replyTypography = Typography(
         fontSize = 16. sp,
         lineHeight = 24. sp,
         letterSpacing = 0.15.sp
+    ),
+    labelMedium = TextStyle(
+        fontFamily = FontFamily.SansSerif,
+        fontSize = 12. sp,
+        lineHeight = 16. sp,
+        letterSpacing = 0.5.sp
     )
 )

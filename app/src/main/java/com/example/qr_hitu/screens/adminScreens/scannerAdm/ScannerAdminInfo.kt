@@ -25,12 +25,10 @@ import com.example.qr_hitu.screens.theme.md_theme_light_primaryContainer
 @Composable
 fun ScannerAdminInfo(navController: NavController, viewModel: ScannerViewModel){
 
-    viewModel.myData.value?.let { Text(it) }
-
-    val (block, room, machine) = viewModel.myData.toString().split(",")
+    val (block, room, machine) = viewModel.myData.value.toString().split(",")
     val spec = seeDispositivo(block, room, machine)
     val focusManager = LocalFocusManager.current
-    val style = MaterialTheme.typography.titleMedium
+    val style = MaterialTheme.typography.labelMedium
     val name = spec["Nome"]
     val processor = spec["Processador"]
     val ram = spec["Ram"]
@@ -38,7 +36,6 @@ fun ScannerAdminInfo(navController: NavController, viewModel: ScannerViewModel){
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
@@ -46,15 +43,18 @@ fun ScannerAdminInfo(navController: NavController, viewModel: ScannerViewModel){
             .padding(horizontal = 16.dp)
             .background(Color.White)
     ) {
+
+        Spacer(modifier = Modifier.padding(30.dp))
+
         Row() {
-            Text("Bloco: $block", style = style)
-            Text("Sala: $room", style = style)
+            Text("Bloco: $block ", style = style)
+            Text("Sala: $room ", style = style)
             Text("Máquina: $machine", style = style)
         }
 
-        Spacer(modifier = Modifier.padding(10.dp))
+        Spacer(modifier = Modifier.padding(70.dp))
 
-        Text("Especificações: $name", style = style)
+        Text("Especificações: $name", style = MaterialTheme.typography.titleMedium)
 
         Text("Processador: ")
 
@@ -113,4 +113,5 @@ fun ScannerAdminInfo(navController: NavController, viewModel: ScannerViewModel){
         )
 
     }
+
 }
