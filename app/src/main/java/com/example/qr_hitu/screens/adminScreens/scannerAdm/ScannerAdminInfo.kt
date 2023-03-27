@@ -1,24 +1,40 @@
 package com.example.qr_hitu.screens.adminScreens.scannerAdm
 
-import androidx.compose.material3.Text
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.*
 import androidx.navigation.NavController
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.unit.dp
 import com.example.qr_hitu.ViewModels.ScannerViewModel
+import com.example.qr_hitu.functions.seeDispositivo
+import com.example.qr_hitu.screens.theme.md_theme_light_primaryContainer
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScannerAdminInfo(navController: NavController, viewModel: ScannerViewModel){
 
     viewModel.myData.value?.let { Text(it) }
-/*
+
     val (block, room, machine) = viewModel.myData.toString().split(",")
     val spec = seeDispositivo(block, room, machine)
     val focusManager = LocalFocusManager.current
     val style = MaterialTheme.typography.titleMedium
-    var name = spec["Nome"]
-    var processor = spec["Processador"]
-    var ram = spec["Ram"]
-    var powerSupply = spec["Fonte"]
+    val name = spec["Nome"]
+    val processor = spec["Processador"]
+    val ram = spec["Ram"]
+    val powerSupply = spec["Fonte"]
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -43,46 +59,58 @@ fun ScannerAdminInfo(navController: NavController, viewModel: ScannerViewModel){
         Text("Processador: ")
 
         OutlinedTextField(
-            value = name,
-            onValueChange = name,
-            placeholder = { Text(text = "$name")},
+            value = "$processor",
+            onValueChange = {},
+            placeholder = { Text("$processor") },
             singleLine = true,
             readOnly = true,
             shape = MaterialTheme.shapes.large,
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-            keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) })
+            keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = md_theme_light_primaryContainer,
+                focusedLabelColor = md_theme_light_primaryContainer
+            )
         )
 
 
         Text("Ram: ")
-        /*
+
         OutlinedTextField(
-            value = newName,
-            onValueChange = { newName },
-            placeholder = { Text(name) },
+            value = "$ram",
+            onValueChange = {},
+            placeholder = { Text("$ram") },
             singleLine = true,
             readOnly = true,
             shape = MaterialTheme.shapes.large,
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-            keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) })
+            keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = md_theme_light_primaryContainer,
+                focusedLabelColor = md_theme_light_primaryContainer
+            )
         )
-        */
+
 
         Text("Fonte: ")
-        /*
+
         OutlinedTextField(
-            value = newName,
-            onValueChange = { newName },
-            placeholder = { Text(name) },
+            value = "$powerSupply",
+            onValueChange = {},
+            placeholder = { Text("$powerSupply") },
             singleLine = true,
             readOnly = true,
             shape = MaterialTheme.shapes.large,
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-            keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) })
+            keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = md_theme_light_primaryContainer,
+                focusedLabelColor = md_theme_light_primaryContainer
+            )
         )
-        */
-    }*/
+
+    }
 }
