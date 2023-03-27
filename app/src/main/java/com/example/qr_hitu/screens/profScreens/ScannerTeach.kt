@@ -7,10 +7,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageAnalysis
-import androidx.camera.core.ImageProxy
-import androidx.camera.core.Preview
+import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,6 +26,9 @@ import androidx.navigation.NavController
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.screens.components.ScanInput
 import com.example.qr_hitu.screens.components.ScanProf
+import com.example.qr_hitu.screens.theme.md_theme_dark_primary
+import com.example.qr_hitu.screens.theme.md_theme_light_primary
+import com.example.qr_hitu.screens.theme.md_theme_light_primaryContainer
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
@@ -38,7 +38,7 @@ import java.util.concurrent.Executors
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-@androidx.annotation.OptIn(androidx.camera.core.ExperimentalGetImage::class)
+@androidx.annotation.OptIn(ExperimentalGetImage::class)
 @Composable
 fun ScannerTeachScreen(navController: NavController, viewModel: ScannerViewModel){
     var permission = true
@@ -164,7 +164,7 @@ fun ScannerTeachScreen(navController: NavController, viewModel: ScannerViewModel
                 }, navController)
         }
     } else {
-        androidx.compose.material.Text("Permission not Granted")
+        Text("Permissão não foi aceite")
     }
 }
 
@@ -193,7 +193,9 @@ fun Dialog(onDialogDismissed: () -> Unit, navController: NavController ) {
                 TextButton(onClick = { openDialog.value = false;  onDialogDismissed()}) {
                     Text(text = "NÃO")
                 }
-            }
+            },
+            textContentColor = md_theme_light_primaryContainer,
+            titleContentColor = md_theme_light_primary
 
         )
     }

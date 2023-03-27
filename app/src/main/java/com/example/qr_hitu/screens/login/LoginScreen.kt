@@ -2,6 +2,7 @@ package com.example.qr_hitu.screens.login
 
 import android.content.ContentValues.TAG
 import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,14 +19,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.qr_hitu.R
 import com.example.qr_hitu.screens.components.MalfList
 import com.example.qr_hitu.screens.components.ScanProf
+import com.example.qr_hitu.screens.theme.md_theme_light_onPrimaryContainer
+import com.example.qr_hitu.screens.theme.md_theme_light_primaryContainer
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -69,11 +74,20 @@ fun LoginScreen(navController: NavController, firestore: FirebaseFirestore)   {
             .padding(horizontal = 16.dp)
             .background(Color.White)
     ) {
+
+        Spacer(modifier = Modifier.padding(20.dp))
+
         Text(
             text = "QR H.I.T.U",
-            style = MaterialTheme.typography.titleLarge
+            style = MaterialTheme.typography.displayLarge
         )
-        Spacer(modifier = Modifier.padding(28.dp))
+
+        Spacer(modifier = Modifier.padding(25.dp))
+
+        Image(painterResource(R.drawable.qr), "Logo")
+
+        Spacer(modifier = Modifier.padding(35.dp))
+
         Column {
             OutlinedTextField(
                 value = emailValue,
@@ -85,6 +99,10 @@ fun LoginScreen(navController: NavController, firestore: FirebaseFirestore)   {
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email, imeAction = ImeAction.Next),
                 keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = md_theme_light_primaryContainer,
+                    focusedLabelColor = md_theme_light_primaryContainer
+                )
             )
 
             Spacer(modifier = Modifier.padding(10.dp))
@@ -108,7 +126,11 @@ fun LoginScreen(navController: NavController, firestore: FirebaseFirestore)   {
                     IconButton(onClick = { passwordVisible = !passwordVisible }) {
                         Icon(imageVector = image, description)
                     }
-                }
+                },
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = md_theme_light_primaryContainer,
+                    focusedLabelColor = md_theme_light_primaryContainer
+                )
             )
 
             Spacer(modifier = Modifier.padding(10.dp))
@@ -139,9 +161,13 @@ fun LoginScreen(navController: NavController, firestore: FirebaseFirestore)   {
                             }
                         }
                 },
-                Modifier.fillMaxWidth()
+                Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = md_theme_light_primaryContainer,
+                    contentColor = md_theme_light_onPrimaryContainer
+                )
             ) {
-                Text(text = "Login")
+                Text(text = "Login", style = MaterialTheme.typography.bodyLarge)
             }
         }
     }

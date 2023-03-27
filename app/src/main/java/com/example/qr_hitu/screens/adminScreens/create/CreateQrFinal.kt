@@ -20,6 +20,8 @@ import androidx.navigation.NavController
 import com.example.qr_hitu.functions.CreateQR
 import com.example.qr_hitu.functions.addDispositivo
 import com.example.qr_hitu.functions.downloadQR
+import com.example.qr_hitu.screens.theme.md_theme_light_onPrimaryContainer
+import com.example.qr_hitu.screens.theme.md_theme_light_primaryContainer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -70,14 +72,22 @@ fun QrCreateFinal(navController: NavController, viewModel1 : ViewModel1, viewMod
             keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
             label = { Text(text = "Escreva o nome do ficheiro") },
             placeholder = { Text(text = "Nome") },
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = md_theme_light_primaryContainer,
+                focusedLabelColor = md_theme_light_primaryContainer
+            )
         )
 
         Spacer(modifier = Modifier.height(20.dp))
 
         Button(onClick = { downloadQR(content, qrName, context) },
             modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = md_theme_light_primaryContainer,
+                contentColor = md_theme_light_onPrimaryContainer
+            )
         ) {
-            Text("Download QR Code")
+            Text("Download QR Code", style = MaterialTheme.typography.bodyLarge)
         }
     }
 
