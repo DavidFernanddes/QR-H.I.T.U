@@ -81,3 +81,22 @@ fun seeDispositivo (
     return data
 
 }
+
+
+fun addMalfunction (
+    block : String,
+    room : String,
+    machine : String,
+    malfunction : String
+) {
+    val data = hashMapOf(
+        "Bloco" to block,
+        "Sala" to room,
+        "Dispositivo" to machine,
+        "Avaria" to malfunction
+    )
+
+    db.collection("Avarias")
+        .document(machine)
+        .set(data)
+}
