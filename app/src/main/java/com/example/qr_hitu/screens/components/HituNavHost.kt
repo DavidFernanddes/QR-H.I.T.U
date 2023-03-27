@@ -7,21 +7,18 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.qr_hitu.screens.adminScreens.create.*
+import com.example.qr_hitu.screens.login.LoginScreen
 import com.example.qr_hitu.screens.adminScreens.malfList.MalfList
-import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminInfo
-import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminInfoUpdate
+import com.example.qr_hitu.screens.adminScreens.create.QrCreateFinal
+import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase1
+import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase2
+import com.example.qr_hitu.screens.menu.Manual
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminScreen
-<<<<<<< Updated upstream
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.scannerAdminInfo
-=======
-import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminViewModel
-import com.example.qr_hitu.screens.login.LoginScreen
-import com.example.qr_hitu.screens.menu.Manual
->>>>>>> Stashed changes
 import com.example.qr_hitu.screens.menu.SettingsOptions
-import com.example.qr_hitu.screens.profScreens.ScannerInput
 import com.example.qr_hitu.screens.profScreens.ScannerTeachScreen
+import com.example.qr_hitu.screens.profScreens.ScannerInput
 import com.google.firebase.firestore.FirebaseFirestore
 
 
@@ -63,10 +60,7 @@ fun QrHituNavHost(
             ScannerAdminScreen(navController = navController, viewModel = viewModelSA)
         }
         composable(ScanAdminInfo.route){
-           ScannerAdminInfo(navController = navController, viewModelSA)
-        }
-        composable(ScanAdminInfoUpdate.route){
-            ScannerAdminInfoUpdate(navController = navController, viewModel = viewModelSA)
+           scannerAdminInfo(navController = navController, viewModelSA)
         }
         composable(SettingOptions.route){
             SettingsOptions(navController = navController)

@@ -11,7 +11,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -43,7 +42,6 @@ fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewMo
                 destinationRoute.contains(Create3.route) -> TopBar3(navController = navController)
                 destinationRoute.contains(ScanProf.route) || destinationRoute.contains(ScanInput.route) -> TopBarUser(navController = navController)
                 destinationRoute.contains(ScanAdminInfo.route) -> Topbar4(navController = navController)
-                destinationRoute.contains(ScanAdminInfoUpdate.route) -> Topbar5(navController = navController)
                 destinationRoute.contains(SettingOptions.route) || destinationRoute.contains(Manual.route) -> TopBarUni(navController = navController)
             }
 
@@ -133,37 +131,12 @@ fun Topbar4(navController: NavController){
             MenuOptions(navController = navController)
         },
         actions = {
-            IconButton(onClick = { navController.navigate(ScanAdminInfoUpdate.route) }) {
+            IconButton(onClick = { /*TODO*/ }) {
                 Icon(Icons.Filled.Edit, "Edit", tint = md_theme_light_onPrimaryContainer)
             }
-            IconButton(onClick = {
-                //TODO CANNOT CALL DIALOG ON NOT COMPOSABLE
-            }) {
+            IconButton(onClick = { /*TODO*/ }) {
                 Icon(Icons.Filled.Delete, "Delete", tint = md_theme_light_onPrimaryContainer)
             }
-            IconButton(onClick = { navController.popBackStack() }) {
-                Icon(Icons.Filled.ArrowBack ,"Back", tint = md_theme_light_onPrimaryContainer)
-            }
-        }
-
-    )
-
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun Topbar5(navController: NavController){
-
-    var showMenu by remember { mutableStateOf(false) }
-    val context = LocalContext.current
-
-    TopAppBar(
-        title = { Text(text = "Admin", color = md_theme_light_onPrimaryContainer) },
-        colors = TopAppBarDefaults.smallTopAppBarColors(md_theme_light_primaryContainer),
-        navigationIcon = {
-            MenuOptions(navController = navController)
-        },
-        actions = {
             IconButton(onClick = { navController.popBackStack() }) {
                 Icon(Icons.Filled.ArrowBack ,"Back", tint = md_theme_light_onPrimaryContainer)
             }
@@ -283,38 +256,4 @@ fun MenuOptions(navController: NavController){
             }
         )
     }
-}
-
-
-//TODO MIGHT NEED TO CHANGE TO ALERTDIALOG
-@Composable
-fun Dialog(onDialogDismissed: () -> Unit, navController: NavController ) {
-    val openDialog = remember { mutableStateOf(true) }
-
-    if (openDialog.value) {
-        AlertDialog(
-            onDismissRequest = { openDialog.value = false; onDialogDismissed() },
-            title = {
-                Text(
-                    text = "ALERTA",
-                    textAlign = TextAlign.Center
-                )
-            },
-            text = {
-                Text(text = "DESEJA APAGAR ESTA MÁQUINA ?")
-            },
-            confirmButton = {
-                TextButton(onClick = { openDialog.value = false; navController.navigate(ScanInput.route) }) {
-                    Text(text = "SIM")
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { openDialog.value = false;  onDialogDismissed()}) {
-                    Text(text = "NÃO")
-                }
-            }
-
-        )
-    }
-
 }
