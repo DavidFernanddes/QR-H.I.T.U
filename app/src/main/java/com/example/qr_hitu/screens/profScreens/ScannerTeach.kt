@@ -29,6 +29,8 @@ import androidx.navigation.NavController
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.screens.components.ScanInput
 import com.example.qr_hitu.screens.components.ScanProf
+import com.example.qr_hitu.screens.theme.md_theme_light_primary
+import com.example.qr_hitu.screens.theme.md_theme_light_primaryContainer
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
@@ -193,7 +195,9 @@ fun Dialog(onDialogDismissed: () -> Unit, navController: NavController ) {
                 TextButton(onClick = { openDialog.value = false;  onDialogDismissed()}) {
                     Text(text = "NÃO")
                 }
-            }
+            },
+            textContentColor = md_theme_light_primaryContainer,
+            titleContentColor = md_theme_light_primary
 
         )
     }

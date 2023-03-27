@@ -10,6 +10,13 @@ import androidx.compose.ui.unit.sp
 
 
 val replyTypography = Typography(
+    displayLarge = TextStyle(
+        fontWeight = FontWeight.ExtraBold,
+        fontFamily = FontFamily.SansSerif,
+        fontSize = 57. sp,
+        lineHeight = 64. sp,
+        letterSpacing = 0.sp
+    ),
     titleLarge = TextStyle(
         fontWeight = FontWeight.SemiBold,
         fontFamily = FontFamily.SansSerif,

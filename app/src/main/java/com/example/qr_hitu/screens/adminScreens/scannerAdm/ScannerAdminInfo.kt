@@ -7,7 +7,7 @@ import com.example.qr_hitu.ViewModels.ScannerViewModel
 
 
 @Composable
-fun scannerAdminInfo(navController: NavController, viewModel: ScannerViewModel){
+fun ScannerAdminInfo(navController: NavController, viewModel: ScannerViewModel){
 
     viewModel.myData.value?.let { Text(it) }
 /*

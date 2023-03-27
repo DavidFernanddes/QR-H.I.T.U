@@ -21,30 +21,34 @@ import androidx.compose.ui.unit.toSize
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.qr_hitu.screens.components.Create2
+import com.example.qr_hitu.screens.theme.md_theme_light_primaryContainer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun QrCreatePhase1(navController: NavController, viewModel : ViewModel1) {
 
-    var expanded by remember { mutableStateOf(false) }
-    val blocks = listOf("Bloco A", "Bloco B", "Bloco C", "Bloco D", "Bloco E")
-    var selectedBlock by remember { mutableStateOf("") }
-
     var textFiledSize by remember { mutableStateOf(Size.Zero) }
+
+    var expanded3 by remember { mutableStateOf(false) }
+    var expanded2 by remember { mutableStateOf(false) }
+    var expanded by remember { mutableStateOf(false) }
+
+
+    val blocks = listOf("Bloco A", "Bloco B", "Bloco C", "Bloco D", "Bloco E")
+    var rooms by remember { mutableStateOf(listOf<String>()) }
+    val machines = listOf("Computador 1", "Computador 2", "Computador 3", "Computador 4", "Computador 5")
+
+    var selectedBlock by remember { mutableStateOf("") }
+    var selectedRoom by remember { mutableStateOf("") }
+    var selectedMachine by remember { mutableStateOf("") }
+
+
     val icon = if (expanded) {
         Icons.Filled.KeyboardArrowUp
     } else {
         Icons.Filled.KeyboardArrowDown
     }
-
-    var expanded2 by remember { mutableStateOf(false) }
-    var rooms by remember { mutableStateOf(listOf<String>()) }
-    var selectedRoom by remember { mutableStateOf("") }
     val icon2 = Icons.Filled.KeyboardArrowDown
-
-    var expanded3 by remember { mutableStateOf(false) }
-    val machines = listOf("Computador 1", "Computador 2", "Computador 3", "Computador 4", "Computador 5")
-    var selectedMachine by remember { mutableStateOf("") }
     val icon3 = Icons.Filled.KeyboardArrowDown
 
     Column(
@@ -76,7 +80,11 @@ fun QrCreatePhase1(navController: NavController, viewModel : ViewModel1) {
                 label = { Text(text = "Escolha um bloco") },
                 trailingIcon = {
                     Icon(icon, "", Modifier.clickable { expanded = !expanded })
-                }
+                },
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = md_theme_light_primaryContainer,
+                    focusedLabelColor = md_theme_light_primaryContainer
+                )
             )
             ExposedDropdownMenu(
                 expanded = expanded,
@@ -126,7 +134,11 @@ fun QrCreatePhase1(navController: NavController, viewModel : ViewModel1) {
                     label = { Text(text = "Escolha uma sala") },
                     trailingIcon = {
                         Icon(icon2, "", Modifier.clickable { expanded2 = !expanded2 })
-                    }
+                    },
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = md_theme_light_primaryContainer,
+                        focusedLabelColor = md_theme_light_primaryContainer
+                    )
                 )
                 ExposedDropdownMenu(
                     expanded = expanded2,
@@ -167,7 +179,11 @@ fun QrCreatePhase1(navController: NavController, viewModel : ViewModel1) {
                     label = { Text(text = "Escolha uma máquina") },
                     trailingIcon = {
                         Icon(icon3, "", Modifier.clickable { expanded3 = !expanded3 })
-                    }
+                    },
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = md_theme_light_primaryContainer,
+                        focusedLabelColor = md_theme_light_primaryContainer
+                    )
                 )
                 ExposedDropdownMenu(
                     expanded = expanded3,

@@ -15,7 +15,7 @@ import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase2
 import com.example.qr_hitu.screens.menu.Manual
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminScreen
 import com.example.qr_hitu.ViewModels.ScannerViewModel
-import com.example.qr_hitu.screens.adminScreens.scannerAdm.scannerAdminInfo
+import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminInfo
 import com.example.qr_hitu.screens.menu.SettingsOptions
 import com.example.qr_hitu.screens.profScreens.ScannerTeachScreen
 import com.example.qr_hitu.screens.profScreens.ScannerInput
@@ -60,7 +60,7 @@ fun QrHituNavHost(
             ScannerAdminScreen(navController = navController, viewModel = viewModelSA)
         }
         composable(ScanAdminInfo.route){
-           scannerAdminInfo(navController = navController, viewModelSA)
+           ScannerAdminInfo(navController = navController, viewModelSA)
         }
         composable(SettingOptions.route){
             SettingsOptions(navController = navController)
