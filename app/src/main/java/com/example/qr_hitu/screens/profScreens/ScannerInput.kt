@@ -23,8 +23,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
-import com.example.qr_hitu.screens.theme.md_theme_light_onPrimaryContainer
-import com.example.qr_hitu.screens.theme.md_theme_light_primaryContainer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -83,11 +81,7 @@ fun ScannerInput(navController: NavController){
                 label = { Text(text = "Escolha qual o seu problema") },
                 trailingIcon = {
                     Icon(icon, "", Modifier.clickable { expanded = !expanded })
-                },
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = md_theme_light_primaryContainer,
-                    focusedLabelColor = md_theme_light_primaryContainer
-                )
+                }
             )
             ExposedDropdownMenu(
                 expanded = expanded,
@@ -121,20 +115,6 @@ fun ScannerInput(navController: NavController){
                 keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
             )
 
-        }
-
-        if(malfunction.isNotEmpty() || malfunction == "Outro" && outro.isNotEmpty()){
-
-            Button(
-                onClick = { /*TODO*/ },
-                modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = md_theme_light_primaryContainer,
-                    contentColor = md_theme_light_onPrimaryContainer
-                )
-            ) {
-                Text("Enviar", style = MaterialTheme.typography.bodyLarge)
-            }
         }
     }
 }

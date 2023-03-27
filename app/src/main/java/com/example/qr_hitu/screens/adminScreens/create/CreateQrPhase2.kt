@@ -18,8 +18,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.screens.components.Create3
-import com.example.qr_hitu.screens.theme.md_theme_light_onPrimaryContainer
-import com.example.qr_hitu.screens.theme.md_theme_light_primaryContainer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,10 +52,6 @@ Column(
             imeAction = ImeAction.Next
         ),
         keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = md_theme_light_primaryContainer,
-            focusedLabelColor = md_theme_light_primaryContainer
-        )
     )
 
     Spacer(modifier = Modifier.padding(10.dp))
@@ -75,10 +69,6 @@ Column(
             imeAction = ImeAction.Next
         ),
         keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = md_theme_light_primaryContainer,
-            focusedLabelColor = md_theme_light_primaryContainer
-        )
     )
 
     Spacer(modifier = Modifier.padding(10.dp))
@@ -96,10 +86,6 @@ Column(
             imeAction = ImeAction.Next
         ),
         keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = md_theme_light_primaryContainer,
-            focusedLabelColor = md_theme_light_primaryContainer
-        )
     )
 
     Spacer(modifier = Modifier.padding(10.dp))
@@ -117,10 +103,6 @@ Column(
             imeAction = ImeAction.Done
         ),
         keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = md_theme_light_primaryContainer,
-            focusedLabelColor = md_theme_light_primaryContainer
-        )
     )
 
     Spacer(modifier = Modifier.padding(10.dp))
@@ -131,13 +113,9 @@ Column(
                 viewModel.setMyData2(name, processor, ram, powerSupply)
                 navController.navigate(Create3.route)
                       },
-            Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = md_theme_light_primaryContainer,
-                contentColor = md_theme_light_onPrimaryContainer
-            )
+            Modifier.fillMaxWidth()
         ) {
-            Text(text = "Continuar", style = MaterialTheme.typography.bodyLarge)
+            Text(text = "Continuar")
         }
     }
 }
