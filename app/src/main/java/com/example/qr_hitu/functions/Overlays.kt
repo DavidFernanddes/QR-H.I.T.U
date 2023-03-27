@@ -14,9 +14,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.screens.adminScreens.create.ViewModel1
 import com.example.qr_hitu.screens.adminScreens.create.ViewModel2
-import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminViewModel
 import com.example.qr_hitu.screens.components.*
 import com.example.qr_hitu.screens.theme.*
 import com.google.firebase.auth.ktx.auth
@@ -25,7 +25,7 @@ import com.google.firebase.ktx.Firebase
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewModel2: ViewModel2, viewModelSA : ScannerAdminViewModel){
+fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewModel2: ViewModel2, viewModelSA : ScannerViewModel){
 
     val scaffoldState = rememberScaffoldState()
     val navController = rememberNavController()

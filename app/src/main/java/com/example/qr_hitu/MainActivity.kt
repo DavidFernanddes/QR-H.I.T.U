@@ -16,13 +16,8 @@ import com.example.qr_hitu.functions.delDispositivo
 import com.example.qr_hitu.functions.seeDispositivo
 import com.example.qr_hitu.screens.adminScreens.create.ViewModel1
 import com.example.qr_hitu.screens.adminScreens.create.ViewModel2
-import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminViewModel
-import com.example.qr_hitu.screens.components.MalfList
-import com.example.qr_hitu.screens.components.ScanProf
+import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.screens.theme.QRHITUTheme
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 
 
 class MainActivity : ComponentActivity() {
@@ -34,7 +29,7 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 val viewModel1 = viewModel<ViewModel1>()
                 val viewModel2 = viewModel<ViewModel2>()
-                val viewModelSA = viewModel<ScannerAdminViewModel>()
+                val viewModelSA = viewModel<ScannerViewModel>()
 
                 ScaffoldLayouts(navController = navController, viewModel1, viewModel2, viewModelSA)
             }

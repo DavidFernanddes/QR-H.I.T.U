@@ -14,7 +14,7 @@ import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase1
 import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase2
 import com.example.qr_hitu.screens.menu.Manual
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminScreen
-import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminViewModel
+import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.scannerAdminInfo
 import com.example.qr_hitu.screens.menu.SettingsOptions
 import com.example.qr_hitu.screens.profScreens.ScannerTeachScreen
@@ -28,7 +28,7 @@ fun QrHituNavHost(
     startDestination: String = Login.route,
     viewModel1: ViewModel1,
     viewModel2: ViewModel2,
-    viewModelSA: ScannerAdminViewModel,
+    viewModelSA: ScannerViewModel,
     modifier: Modifier
 ){
     NavHost(
@@ -39,7 +39,7 @@ fun QrHituNavHost(
             LoginScreen(navController = navController, firestore = FirebaseFirestore.getInstance())
         }
         composable(route = ScanProf.route){
-            ScannerTeachScreen(navController = navController)
+            ScannerTeachScreen(navController = navController, viewModel = viewModelSA)
         }
         composable(ScanInput.route){
             ScannerInput(navController = navController)

@@ -1,27 +1,16 @@
 package com.example.qr_hitu.screens.adminScreens.scannerAdm
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.unit.dp
+import androidx.compose.material3.Text
 import androidx.navigation.NavController
-import com.example.qr_hitu.functions.seeDispositivo
 import androidx.compose.runtime.*
+import com.example.qr_hitu.ViewModels.ScannerViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
-fun scannerAdminInfo(navController: NavController, viewModel: ScannerAdminViewModel){
+fun scannerAdminInfo(navController: NavController, viewModel: ScannerViewModel){
 
+    viewModel.myData.value?.let { Text(it) }
+/*
     val (block, room, machine) = viewModel.myData.toString().split(",")
     val spec = seeDispositivo(block, room, machine)
     val focusManager = LocalFocusManager.current
@@ -95,5 +84,5 @@ fun scannerAdminInfo(navController: NavController, viewModel: ScannerAdminViewMo
             keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) })
         )
         */
-    }
+    }*/
 }

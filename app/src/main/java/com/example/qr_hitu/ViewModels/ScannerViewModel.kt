@@ -1,11 +1,11 @@
-package com.example.qr_hitu.screens.adminScreens.scannerAdm
+package com.example.qr_hitu.ViewModels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 
-class ScannerAdminViewModel : ViewModel() {
+class ScannerViewModel : ViewModel() {
     private val _myData = MutableLiveData<String>()
     val myData: LiveData<String> = _myData
 
