@@ -50,16 +50,11 @@ fun LoginScreen(navController: NavController, firestore: FirebaseFirestore)   {
     val uid = Firebase.auth.currentUser?.uid
 
     if (Firebase.auth.currentUser != null){
-        db.document("$uid").get().addOnCompleteListener { task ->
-            if (task.isSuccessful){
-                val document = task.result
-                if (document != null){
-                    if (document.exists()){
-                        navController.navigate(MalfList.route)
-                    }else {
-                        navController.navigate(ScanProf.route)
-                    }
-                }
+        db.document("$uid").get().addOnSuccessListener { task ->
+            if (task.exists()){
+                navController.navigate(MalfList.route)
+            }else {
+                navController.navigate(ScanProf.route)
             }
         }
     }
@@ -143,16 +138,11 @@ fun LoginScreen(navController: NavController, firestore: FirebaseFirestore)   {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d(TAG, "signInWithEmail:success")
 
-                                db.document("$uid").get().addOnCompleteListener { task ->
-                                    if (task.isSuccessful){
-                                        val document = task.result
-                                        if (document != null){
-                                            if (document.exists()){
-                                                navController.navigate(MalfList.route)
-                                            }else {
-                                                navController.navigate(ScanProf.route)
-                                            }
-                                        }
+                                db.document("$uid").get().addOnSuccessListener { task ->
+                                    if (task.exists()){
+                                        navController.navigate(MalfList.route)
+                                    }else {
+                                        navController.navigate(ScanProf.route)
                                     }
                                 }
                             } else {

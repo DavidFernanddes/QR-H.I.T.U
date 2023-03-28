@@ -28,7 +28,7 @@ fun ScannerAdminInfo(navController: NavController, viewModel: ScannerViewModel){
     val (block, room, machine) = viewModel.myData.value.toString().split(",")
     val spec = seeDispositivo(block, room, machine)
     val focusManager = LocalFocusManager.current
-    val style = MaterialTheme.typography.labelMedium
+    val style = MaterialTheme.typography.bodyLarge
     val name = spec["Nome"]
     val processor = spec["Processador"]
     val ram = spec["Ram"]
@@ -46,13 +46,15 @@ fun ScannerAdminInfo(navController: NavController, viewModel: ScannerViewModel){
 
         Spacer(modifier = Modifier.padding(30.dp))
 
-        Row() {
+        Column() {
             Text("Bloco: $block ", style = style)
+            Spacer(modifier = Modifier.padding(10.dp))
             Text("Sala: $room ", style = style)
+            Spacer(modifier = Modifier.padding(10.dp))
             Text("Máquina: $machine", style = style)
         }
 
-        Spacer(modifier = Modifier.padding(70.dp))
+        Spacer(modifier = Modifier.padding(50.dp))
 
         Text("Especificações: $name", style = MaterialTheme.typography.titleMedium)
 

@@ -21,6 +21,7 @@ import com.example.qr_hitu.screens.components.*
 import com.example.qr_hitu.screens.theme.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -223,6 +224,7 @@ fun BottomBar(navController: NavController){
 fun MenuOptions(navController: NavController){
 
     var showMenu by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
 
     IconButton(onClick = { showMenu = !showMenu }) {
         Icon(Icons.Filled.Menu ,"Menu", tint = md_theme_light_onPrimaryContainer)
@@ -248,8 +250,10 @@ fun MenuOptions(navController: NavController){
         DropdownMenuItem(
             text = { Text(text = "Sair Sessão") },
             onClick = {
-                Firebase.auth.signOut()
-                navController.navigate(Login.route)
+                scope.launch {
+                    Firebase.auth.signOut()
+                    navController.navigate(Login.route)
+                }
             },
             leadingIcon = {
                 Icon(Icons.Filled.Logout, "Logout")
