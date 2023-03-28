@@ -6,19 +6,16 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.qr_hitu.screens.adminScreens.create.*
-import com.example.qr_hitu.screens.login.LoginScreen
-import com.example.qr_hitu.screens.adminScreens.malfList.MalfList
-import com.example.qr_hitu.screens.adminScreens.create.QrCreateFinal
-import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase1
-import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase2
-import com.example.qr_hitu.screens.menu.Manual
-import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminScreen
 import com.example.qr_hitu.ViewModels.ScannerViewModel
+import com.example.qr_hitu.screens.adminScreens.create.*
+import com.example.qr_hitu.screens.adminScreens.malfList.MalfList
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminInfo
+import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminScreen
+import com.example.qr_hitu.screens.login.LoginScreen
+import com.example.qr_hitu.screens.menu.Manual
 import com.example.qr_hitu.screens.menu.SettingsOptions
-import com.example.qr_hitu.screens.profScreens.ScannerTeachScreen
 import com.example.qr_hitu.screens.profScreens.ScannerInput
+import com.example.qr_hitu.screens.profScreens.ScannerTeachScreen
 import com.google.firebase.firestore.FirebaseFirestore
 
 
@@ -42,7 +39,7 @@ fun QrHituNavHost(
             ScannerTeachScreen(navController = navController, viewModel = viewModelSA)
         }
         composable(ScanInput.route){
-            ScannerInput(navController = navController)
+            ScannerInput(navController = navController, viewModel = viewModelSA)
         }
         composable(MalfList.route){
             MalfList(navController = navController)

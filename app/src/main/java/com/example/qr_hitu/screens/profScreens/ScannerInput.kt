@@ -23,12 +23,15 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
+import com.example.qr_hitu.ViewModels.ScannerViewModel
+import com.example.qr_hitu.functions.addMalfunction
+import com.example.qr_hitu.functions.seeDispositivo
 import com.example.qr_hitu.screens.theme.md_theme_light_onPrimaryContainer
 import com.example.qr_hitu.screens.theme.md_theme_light_primaryContainer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScannerInput(navController: NavController){
+fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
 
     var outro by remember { mutableStateOf("") }
     var malfunction by remember { mutableStateOf("") }
@@ -39,6 +42,8 @@ fun ScannerInput(navController: NavController){
         "...",
         "Outro"
     )
+    val (block, room, machine) = viewModel.myData.value.toString().split(",")
+    val spec = seeDispositivo(block, room, machine)
 
     var textFiledSize by remember { mutableStateOf(Size.Zero) }
     var expanded by remember { mutableStateOf(false) }
@@ -130,7 +135,14 @@ fun ScannerInput(navController: NavController){
         if(malfunction.isNotEmpty() || malfunction == "Outro" && outro.isNotEmpty()){
 
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {
+                    if(malfunction != ""){
+                        addMalfunction(block,room,machine,malfunction)
+                    }
+                    else if (malfunction == "Outro"){
+                        addMalfunction(block,room,machine,outro)
+                    }
+                },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = md_theme_light_primaryContainer,
