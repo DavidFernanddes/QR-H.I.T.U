@@ -104,7 +104,6 @@ fun ScannerTeachScreen(navController: NavController, viewModel: ScannerViewModel
                     val barcode = barcodeList.getOrNull(0)
 
                     barcode?.rawValue?.let { value ->
-                        cameraProvider.unbindAll()
                         viewModel.setMyData(value)
                         showState.value = true
                     }

@@ -36,6 +36,9 @@ import kotlin.coroutines.suspendCoroutine
 @androidx.annotation.OptIn(androidx.camera.core.ExperimentalGetImage::class)
 @Composable
 fun ScannerAdminScreen(navController: NavController, viewModel: ScannerViewModel) {
+
+    var code by remember { mutableStateOf("") }
+
     var permission = true
     val requestPermissionLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
         permission = isGranted
@@ -95,7 +98,6 @@ fun ScannerAdminScreen(navController: NavController, viewModel: ScannerViewModel
                     val barcode = barcodeList.getOrNull(0)
 
                     barcode?.rawValue?.let { value ->
-                        cameraProvider.unbindAll()
                         viewModel.setMyData(value)
                         navController.navigate(ScanAdminInfo.route)
                     }
@@ -153,4 +155,5 @@ fun ScannerAdminScreen(navController: NavController, viewModel: ScannerViewModel
     } else {
         Text("Permission not Granted")
     }
+
 }

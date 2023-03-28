@@ -13,14 +13,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.BlendMode.Companion.Screen
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.qr_hitu.screens.components.Create2
+import com.example.qr_hitu.screens.theme.md_theme_light_onPrimaryContainer
 import com.example.qr_hitu.screens.theme.md_theme_light_primaryContainer
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -209,9 +208,13 @@ fun QrCreatePhase1(navController: NavController, viewModel : ViewModel1) {
                 onClick = {
                     viewModel.setMyData1(selectedBlock, selectedRoom, selectedMachine)
                     navController.navigate(Create2.route) },
-                Modifier.fillMaxWidth()
+                Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = md_theme_light_primaryContainer,
+                    contentColor = md_theme_light_onPrimaryContainer
+                )
             ) {
-                Text(text = "Continuar")
+                Text(text = "Continuar", style = MaterialTheme.typography.bodyLarge)
             }
         }
     }
