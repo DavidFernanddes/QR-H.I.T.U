@@ -47,8 +47,16 @@ fun QrCreatePhase1(navController: NavController, viewModel : ViewModel1) {
     } else {
         Icons.Filled.KeyboardArrowDown
     }
-    val icon2 = Icons.Filled.KeyboardArrowDown
-    val icon3 = Icons.Filled.KeyboardArrowDown
+    val icon2 = if (expanded2) {
+        Icons.Filled.KeyboardArrowUp
+    } else {
+        Icons.Filled.KeyboardArrowDown
+    }
+    val icon3 = if (expanded3) {
+        Icons.Filled.KeyboardArrowUp
+    } else {
+        Icons.Filled.KeyboardArrowDown
+    }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,

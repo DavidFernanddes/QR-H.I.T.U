@@ -6,7 +6,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
-import androidx.navigation.NavController
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.functions.seeDispositivo
 import com.example.qr_hitu.screens.theme.md_theme_light_primaryContainer
@@ -57,6 +57,8 @@ fun ScannerAdminInfo(navController: NavController, viewModel: ScannerViewModel){
         Spacer(modifier = Modifier.padding(50.dp))
 
         Text("Especificações: $name", style = MaterialTheme.typography.titleMedium)
+
+        Spacer(modifier = Modifier.padding(10.dp))
 
         Text("Processador: ")
 

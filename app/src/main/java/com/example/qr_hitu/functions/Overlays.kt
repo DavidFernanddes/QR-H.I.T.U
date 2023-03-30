@@ -41,8 +41,8 @@ fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewMo
                 destinationRoute.contains(MalfList.route) || destinationRoute.contains(ScanAdmin.route) -> TopBar1(navController = navController)
                 destinationRoute.contains(Create1.route) || destinationRoute.contains(Create2.route) -> TopBar2(navController = navController)
                 destinationRoute.contains(Create3.route) -> TopBar3(navController = navController)
-                destinationRoute.contains(ScanProf.route) || destinationRoute.contains(ScanInput.route) -> TopBarUser(navController = navController)
                 destinationRoute.contains(ScanAdminInfo.route) -> Topbar4(navController = navController)
+                destinationRoute.contains(ScanProf.route) || destinationRoute.contains(ScanInput.route) -> TopBarUser(navController = navController)
                 destinationRoute.contains(SettingOptions.route) || destinationRoute.contains(Manual.route) -> TopBarUni(navController = navController)
             }
 
@@ -67,8 +67,6 @@ fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewMo
     }
 
 }
-
-
 @SuppressLint("SuspiciousIndentation")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -77,7 +75,7 @@ fun TopBar1(navController: NavController){
     var showMenu by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
-            TopAppBar(
+        TopAppBar(
                 title = { Text(text = "Admin", color = md_theme_light_onPrimaryContainer) },
                 colors = TopAppBarDefaults.smallTopAppBarColors(md_theme_light_primaryContainer),
                 navigationIcon = {
@@ -132,7 +130,8 @@ fun Topbar4(navController: NavController){
             MenuOptions(navController = navController)
         },
         actions = {
-            IconButton(onClick = { /*TODO*/ }) {
+
+            IconButton(onClick = { navController.navigate(ScanAdminInfoUpdate.route) }) {
                 Icon(Icons.Filled.Edit, "Edit", tint = md_theme_light_onPrimaryContainer)
             }
             IconButton(onClick = { /*TODO*/ }) {

@@ -28,7 +28,7 @@ fun ScannerAdminInfoUpdate(navController: NavController, viewModel: ScannerViewM
     val (block, room, machine) = viewModel.myData.toString().split(",")
     val spec = seeDispositivo(block, room, machine)
     val focusManager = LocalFocusManager.current
-    val style = MaterialTheme.typography.titleMedium
+    val style = MaterialTheme.typography.bodyLarge
     val name = spec["Nome"]
     val processor = spec["Processador"]
     val ram = spec["Ram"]
@@ -39,7 +39,6 @@ fun ScannerAdminInfoUpdate(navController: NavController, viewModel: ScannerViewM
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
@@ -47,15 +46,20 @@ fun ScannerAdminInfoUpdate(navController: NavController, viewModel: ScannerViewM
             .padding(horizontal = 16.dp)
             .background(Color.White)
     ) {
-        Row() {
-            Text("Bloco: $block", style = style)
-            Text("Sala: $room", style = style)
+
+        Spacer(modifier = Modifier.padding(30.dp))
+
+        Column() {
+            Text("Bloco: $block ", style = style)
+            Spacer(modifier = Modifier.padding(10.dp))
+            Text("Sala: $room ", style = style)
+            Spacer(modifier = Modifier.padding(10.dp))
             Text("Máquina: $machine", style = style)
         }
 
-        Spacer(modifier = Modifier.padding(10.dp))
+        Spacer(modifier = Modifier.padding(50.dp))
 
-        Text("Especificações: $name", style = style)
+        Text("Especificações: $name", style = MaterialTheme.typography.titleMedium)
 
         Spacer(modifier = Modifier.padding(10.dp))
 
