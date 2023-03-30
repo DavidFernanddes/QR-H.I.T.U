@@ -1,5 +1,6 @@
 package com.example.qr_hitu.screens.login
 
+import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.compose.foundation.Image
@@ -35,7 +36,10 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(navController: NavController, firestore: FirebaseFirestore)   {
@@ -45,16 +49,23 @@ fun LoginScreen(navController: NavController, firestore: FirebaseFirestore)   {
     var errorMessage by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
+    val scope = rememberCoroutineScope()
 
-    val db = Firebase.firestore.collection("Admin")
-    val uid = Firebase.auth.currentUser?.uid
 
-    if (Firebase.auth.currentUser != null){
-        db.document("$uid").get().addOnSuccessListener { task ->
-            if (task.exists()){
-                navController.navigate(MalfList.route)
-            }else {
-                navController.navigate(ScanProf.route)
+    scope.launch {
+        val db = Firebase.firestore.collection("Admin")
+        val uid = Firebase.auth.currentUser?.uid
+        delay(500)
+
+        if (Firebase.auth.currentUser != null){
+            db.document("$uid").get().addOnCompleteListener { task ->
+                if (task.isSuccessful){
+                    if (task.result.exists()){
+                        navController.navigate(MalfList.route)
+                    }else {
+                        navController.navigate(ScanProf.route)
+                    }
+                }
             }
         }
     }
@@ -137,12 +148,16 @@ fun LoginScreen(navController: NavController, firestore: FirebaseFirestore)   {
                             if (task.isSuccessful) {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d(TAG, "signInWithEmail:success")
+                                val db = Firebase.firestore.collection("Admin")
+                                val uid = Firebase.auth.currentUser?.uid
 
-                                db.document("$uid").get().addOnSuccessListener { task ->
-                                    if (task.exists()){
-                                        navController.navigate(MalfList.route)
-                                    }else {
-                                        navController.navigate(ScanProf.route)
+                                db.document("$uid").get().addOnCompleteListener { task ->
+                                    if (task.isSuccessful){
+                                        if (task.result.exists()){
+                                            navController.navigate(MalfList.route)
+                                        }else {
+                                            navController.navigate(ScanProf.route)
+                                        }
                                     }
                                 }
                             } else {
