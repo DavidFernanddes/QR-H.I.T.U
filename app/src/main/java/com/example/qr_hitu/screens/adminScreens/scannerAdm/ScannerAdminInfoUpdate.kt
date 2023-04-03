@@ -57,13 +57,13 @@ fun ScannerAdminInfoUpdate(navController: NavController, viewModel: ScannerViewM
             Text("Máquina: $machine", style = style)
         }
 
-        Spacer(modifier = Modifier.padding(50.dp))
+        Spacer(modifier = Modifier.padding(40.dp))
 
         Text("Especificações: $name", style = MaterialTheme.typography.titleMedium)
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Text("Processador: $processor")
+        Text("Processador: $processor", modifier = Modifier.align(Alignment.Start))
 
         OutlinedTextField(
             value = newProcessor,
@@ -77,7 +77,7 @@ fun ScannerAdminInfoUpdate(navController: NavController, viewModel: ScannerViewM
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Text("Ram: $ram")
+        Text("Ram: $ram", modifier = Modifier.align(Alignment.Start))
 
         OutlinedTextField(
             value = newRam,
@@ -91,7 +91,7 @@ fun ScannerAdminInfoUpdate(navController: NavController, viewModel: ScannerViewM
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Text("Fonte: $powerSupply")
+        Text("Fonte: $powerSupply", modifier = Modifier.align(Alignment.Start))
 
         OutlinedTextField(
             value = newPowerSupply,
@@ -127,7 +127,7 @@ fun ScannerAdminInfoUpdate(navController: NavController, viewModel: ScannerViewM
                 )
             )
         }) {
-            Text(text = "Login")
+            Text(text = "Login", style = MaterialTheme.typography.bodyLarge)
         }
     }
 }

@@ -54,13 +54,13 @@ fun ScannerAdminInfo(navController: NavController, viewModel: ScannerViewModel){
             Text("Máquina: $machine", style = style)
         }
 
-        Spacer(modifier = Modifier.padding(50.dp))
+        Spacer(modifier = Modifier.padding(40.dp))
 
         Text("Especificações: $name", style = MaterialTheme.typography.titleMedium)
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Text("Processador: ")
+        Text("Processador: ", modifier = Modifier.align(Alignment.Start))
 
         OutlinedTextField(
             value = "$processor",
@@ -78,8 +78,9 @@ fun ScannerAdminInfo(navController: NavController, viewModel: ScannerViewModel){
             )
         )
 
+        Spacer(modifier = Modifier.padding(10.dp))
 
-        Text("Ram: ")
+        Text("Ram: ", modifier = Modifier.align(Alignment.Start))
 
         OutlinedTextField(
             value = "$ram",
@@ -97,8 +98,9 @@ fun ScannerAdminInfo(navController: NavController, viewModel: ScannerViewModel){
             )
         )
 
+        Spacer(modifier = Modifier.padding(10.dp))
 
-        Text("Fonte: ")
+        Text("Fonte: ", modifier = Modifier.align(Alignment.Start))
 
         OutlinedTextField(
             value = "$powerSupply",
