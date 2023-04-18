@@ -14,16 +14,23 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.screens.components.ScanAdminInfo
+import com.example.qr_hitu.screens.components.ScanInput
+import com.example.qr_hitu.screens.components.ScanProf
+import com.example.qr_hitu.screens.theme.md_theme_light_primary
+import com.example.qr_hitu.screens.theme.md_theme_light_primaryContainer
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
@@ -37,7 +44,8 @@ import kotlin.coroutines.suspendCoroutine
 @Composable
 fun ScannerAdminScreen(navController: NavController, viewModel: ScannerViewModel) {
 
-    var code by remember { mutableStateOf("") }
+    val showState = remember { mutableStateOf(false) }
+    val show by rememberUpdatedState(showState.value)
 
     var permission = true
     val requestPermissionLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
@@ -98,8 +106,12 @@ fun ScannerAdminScreen(navController: NavController, viewModel: ScannerViewModel
                     val barcode = barcodeList.getOrNull(0)
 
                     barcode?.rawValue?.let { value ->
-                        viewModel.setMyData(value)
-                        navController.navigate(ScanAdminInfo.route)
+                        if(!Regex("""Bloco \w+,Sala \p{all}+,\w+\w+""").containsMatchIn(value)){
+                            showState.value = true
+                        }else{
+                            viewModel.setMyData(value)
+                            navController.navigate(ScanAdminInfo.route)
+                        }
                     }
                 }
                 .addOnFailureListener {
@@ -152,8 +164,43 @@ fun ScannerAdminScreen(navController: NavController, viewModel: ScannerViewModel
 
     if (permission){
         AndroidView({ previewView }, modifier = Modifier.fillMaxSize())
+        if (show) {
+            Dialog(onDialogDismissed = {
+                viewModel.myData.value == ""
+                showState.value = false
+            })
+        }
     } else {
         Text("Permission not Granted")
+    }
+
+}
+
+@Composable
+fun Dialog(onDialogDismissed: () -> Unit) {
+    val openDialog = remember { mutableStateOf(true) }
+
+    if (openDialog.value) {
+        AlertDialog(
+            onDismissRequest = { openDialog.value = false; onDialogDismissed() },
+            title = {
+                androidx.compose.material3.Text(
+                    text = "Erro",
+                    textAlign = TextAlign.Center
+                )
+            },
+            text = {
+                androidx.compose.material3.Text(text = "QR Code Inválido !")
+            },
+            confirmButton= {
+                TextButton(onClick = { openDialog.value = false;  onDialogDismissed()}) {
+                    androidx.compose.material3.Text(text = "Fechar")
+                }
+            },
+            textContentColor = md_theme_light_primaryContainer,
+            titleContentColor = md_theme_light_primary
+
+        )
     }
 
 }

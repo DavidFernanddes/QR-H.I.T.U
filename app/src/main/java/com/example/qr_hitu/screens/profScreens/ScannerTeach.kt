@@ -47,7 +47,7 @@ fun ScannerTeachScreen(navController: NavController, viewModel: ScannerViewModel
     val requestPermissionLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
         permission = isGranted
     }
-    val showState = remember { mutableStateOf(false) }
+    val showState = remember { mutableStateOf(0) }
     val show by rememberUpdatedState(showState.value)
 
     val context = LocalContext.current as Activity
@@ -104,8 +104,12 @@ fun ScannerTeachScreen(navController: NavController, viewModel: ScannerViewModel
                     val barcode = barcodeList.getOrNull(0)
 
                     barcode?.rawValue?.let { value ->
-                        viewModel.setMyData(value)
-                        showState.value = true
+                        if(Regex("""Bloco \w+,Sala \p{all}+,\w+\w+""").containsMatchIn(value)){
+                            viewModel.setMyData(value)
+                            showState.value = 1
+                        }else{
+                            showState.value = 2
+                        }
                     }
                 }
                 .addOnFailureListener {
@@ -158,11 +162,19 @@ fun ScannerTeachScreen(navController: NavController, viewModel: ScannerViewModel
 
     if (permission){
         AndroidView({ previewView }, modifier = Modifier.fillMaxSize())
-        if (show) {
-            Dialog(onDialogDismissed = { viewModel.myData.value == ""
-                showState.value = false
-                navController.navigate(ScanProf.route)
-                }, navController)
+        when(show){
+            1 -> {
+                Dialog(onDialogDismissed = { viewModel.myData.value == ""
+                    showState.value = 0
+                    navController.navigate(ScanProf.route)
+                }, navController, Err = false)
+            }
+            2 -> {
+                Dialog(onDialogDismissed = { viewModel.myData.value == ""
+                    showState.value = 0
+                    navController.navigate(ScanProf.route)
+                }, navController, Err = true)
+            }
         }
     } else {
         androidx.compose.material.Text("Permission not Granted")
@@ -170,35 +182,58 @@ fun ScannerTeachScreen(navController: NavController, viewModel: ScannerViewModel
 }
 
 @Composable
-fun Dialog(onDialogDismissed: () -> Unit, navController: NavController ) {
+fun Dialog(onDialogDismissed: () -> Unit, navController: NavController, Err: Boolean ) {
     val openDialog = remember { mutableStateOf(true) }
 
     if (openDialog.value) {
-        AlertDialog(
-            onDismissRequest = { openDialog.value = false; onDialogDismissed() },
-            title = {
-                Text(
-                    text = "Avaria",
-                    textAlign = TextAlign.Center
-                )
-            },
-            text = {
-                Text(text = "Deseja colocar uma avaria ?")
-            },
-            confirmButton = {
-                TextButton(onClick = { openDialog.value = false; navController.navigate(ScanInput.route) }) {
-                    Text(text = "SIM")
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { openDialog.value = false;  onDialogDismissed()}) {
-                    Text(text = "NÃO")
-                }
-            },
-            textContentColor = md_theme_light_primaryContainer,
-            titleContentColor = md_theme_light_primary
+        if(!Err){
+            AlertDialog(
+                onDismissRequest = { openDialog.value = false; onDialogDismissed() },
+                title = {
+                    Text(
+                        text = "Avaria",
+                        textAlign = TextAlign.Center
+                    )
+                },
+                text = {
+                    Text(text = "Deseja colocar uma avaria ?")
+                },
+                confirmButton = {
+                    TextButton(onClick = { openDialog.value = false; navController.navigate(ScanInput.route) }) {
+                        Text(text = "SIM")
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { openDialog.value = false;  onDialogDismissed()}) {
+                        Text(text = "NÃO")
+                    }
+                },
+                textContentColor = md_theme_light_primaryContainer,
+                titleContentColor = md_theme_light_primary
 
-        )
+            )
+        }else{
+            AlertDialog(
+                onDismissRequest = { openDialog.value = false; onDialogDismissed() },
+                title = {
+                    Text(
+                        text = "Erro",
+                        textAlign = TextAlign.Center
+                    )
+                },
+                text = {
+                    Text(text = "QR Code Inválido !")
+                },
+                confirmButton= {
+                    TextButton(onClick = { openDialog.value = false;  onDialogDismissed()}) {
+                        Text(text = "Fechar")
+                    }
+                },
+                textContentColor = md_theme_light_primaryContainer,
+                titleContentColor = md_theme_light_primary
+
+            )
+        }
     }
 
 }
