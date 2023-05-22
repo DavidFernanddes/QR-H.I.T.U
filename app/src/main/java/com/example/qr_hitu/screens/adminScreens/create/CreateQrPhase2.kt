@@ -33,7 +33,6 @@ fun QrCreatePhase2(navController : NavController, viewModel : ViewModel2){
 
 Column(
     horizontalAlignment = Alignment.CenterHorizontally,
-    verticalArrangement = Arrangement.Center,
     modifier = Modifier
         .fillMaxWidth()
         .fillMaxHeight()
@@ -41,6 +40,12 @@ Column(
         .padding(horizontal = 16.dp)
         .background(Color.White)
 ) {
+    Spacer(modifier = Modifier.padding(20.dp))
+
+    Text(text = "Escreva as especificações", style = MaterialTheme.typography.titleMedium)
+
+    Spacer(modifier = Modifier.padding(10.dp))
+
     OutlinedTextField(
         value = name,
         onValueChange = { name = it },

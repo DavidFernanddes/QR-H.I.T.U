@@ -44,7 +44,6 @@ fun QrCreateFinal(navController: NavController, viewModel1 : ViewModel1, viewMod
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
@@ -52,6 +51,8 @@ fun QrCreateFinal(navController: NavController, viewModel1 : ViewModel1, viewMod
             .padding(horizontal = 16.dp)
             .background(Color.White)
     ){
+
+        Spacer(modifier = Modifier.padding(60.dp))
 
         if (myData != null) {
             content = "${myData.block},${myData.room},${myData.machine}"
@@ -72,13 +73,13 @@ fun QrCreateFinal(navController: NavController, viewModel1 : ViewModel1, viewMod
             keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
             label = { Text(text = "Escreva o nome do ficheiro") },
             placeholder = { Text(text = "Nome") },
-            colors = TextFieldDefaults.outlinedTextFieldColors(
+            colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = md_theme_light_primaryContainer,
-                focusedLabelColor = md_theme_light_primaryContainer
+                focusedLabelColor = md_theme_light_primaryContainer,
             )
         )
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(30.dp))
 
         Button(onClick = { downloadQR(content, qrName, context) },
             modifier = Modifier.fillMaxWidth(),
