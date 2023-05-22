@@ -195,7 +195,10 @@ fun BottomBar(navController: NavController){
                     }
                 )
                 NavigationBarItem(
-                    selected = navController.currentBackStackEntry?.destination?.route == ScanAdmin.route,
+                    selected =
+                            navController.currentBackStackEntry?.destination?.route == ScanAdmin.route ||
+                                navController.currentBackStackEntry?.destination?.route == ScanAdminInfo.route ||
+                                    navController.currentBackStackEntry?.destination?.route == ScanAdminInfoUpdate.route,
                     label = { Text(text = "Scanner", color = md_theme_light_onPrimaryContainer) },
                     colors = NavigationBarItemDefaults.colors(
                         indicatorColor= md_theme_light_onSecondaryContainer
