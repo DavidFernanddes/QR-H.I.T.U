@@ -15,6 +15,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
@@ -192,20 +193,21 @@ fun Dialog(onDialogDismissed: () -> Unit, navController: NavController, Err: Boo
                 title = {
                     Text(
                         text = "Avaria",
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.headlineSmall
                     )
                 },
                 text = {
-                    Text(text = "Deseja colocar uma avaria ?")
+                    Text(text = "Deseja colocar uma avaria ?", style = MaterialTheme.typography.bodyMedium)
                 },
                 confirmButton = {
                     TextButton(onClick = { openDialog.value = false; navController.navigate(ScanInput.route) }) {
-                        Text(text = "SIM")
+                        Text(text = "SIM", style = MaterialTheme.typography.labelLarge, color = md_theme_light_primary)
                     }
                 },
                 dismissButton = {
                     TextButton(onClick = { openDialog.value = false;  onDialogDismissed()}) {
-                        Text(text = "NÃO")
+                        Text(text = "NÃO", style = MaterialTheme.typography.labelLarge, color = md_theme_light_primary)
                     }
                 },
                 textContentColor = md_theme_light_primaryContainer,

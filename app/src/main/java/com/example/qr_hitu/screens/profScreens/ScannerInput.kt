@@ -1,5 +1,7 @@
 package com.example.qr_hitu.screens.profScreens
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -20,6 +22,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
@@ -27,6 +30,7 @@ import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.functions.addMalfunction
 import com.example.qr_hitu.functions.seeDispositivo
 import com.example.qr_hitu.screens.theme.md_theme_light_onPrimaryContainer
+import com.example.qr_hitu.screens.theme.md_theme_light_primary
 import com.example.qr_hitu.screens.theme.md_theme_light_primaryContainer
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -35,6 +39,10 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
 
     var outro by remember { mutableStateOf("") }
     var malfunction by remember { mutableStateOf("") }
+    val showState = remember { mutableStateOf(false) }
+    val show by rememberUpdatedState(showState.value)
+    val errState = remember { mutableStateOf(false) }
+    val err by rememberUpdatedState(errState.value)
     val defaultOptions = listOf(
         "Computador não liga",
         "Computador liga mas não têm imagem",
@@ -43,7 +51,6 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
         "Outro"
     )
     val (block, room, machine) = viewModel.myData.value.toString().split(",")
-    val spec = seeDispositivo(block, room, machine)
 
     var textFiledSize by remember { mutableStateOf(Size.Zero) }
     var expanded by remember { mutableStateOf(false) }
@@ -56,7 +63,6 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
@@ -65,7 +71,9 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
             .background(Color.White)
     ) {
 
-        Text(text = "Qual o problema ?", style = MaterialTheme.typography.titleLarge)
+        Spacer(modifier = Modifier.padding(20.dp))
+
+        Text(text = "Qual o problema ?", style = MaterialTheme.typography.titleMedium)
         
         Spacer(modifier = Modifier.padding(10.dp))
 
@@ -103,7 +111,7 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
                 defaultOptions.forEach { defaultOption ->
                     DropdownMenuItem(
                         text = { Text(text = defaultOption) },
-                        onClick = { malfunction = defaultOption },
+                        onClick = { expanded = false; malfunction = defaultOption },
                         contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                     )
                 }
@@ -113,6 +121,10 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
         Spacer(modifier = Modifier.padding(10.dp))
 
         if(malfunction == "Outro"){
+
+            Text(text = "Descreva o problema", style = MaterialTheme.typography.titleMedium)
+
+            Spacer(modifier = Modifier.padding(10.dp))
 
             OutlinedTextField(
                 value = outro,
@@ -130,17 +142,31 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
                 )
             )
 
+            Spacer(modifier = Modifier.padding(10.dp))
+
         }
 
         if(malfunction.isNotEmpty() || malfunction == "Outro" && outro.isNotEmpty()){
 
             Button(
                 onClick = {
-                    if(malfunction != ""){
-                        addMalfunction(block,room,machine,malfunction)
-                    }
-                    else if (malfunction == "Outro"){
-                        addMalfunction(block,room,machine,outro)
+                    when (malfunction) {
+                        "Outro" -> {
+                            when (outro) {
+                                "" -> {
+                                    showState.value = true
+                                    errState.value = true
+                                }
+                                else -> {
+                                    showState.value = true
+                                    addMalfunction(block,room,machine,outro)
+                                }
+                            }
+                        }
+                        else -> {
+                            showState.value = true
+                            addMalfunction(block,room,machine,malfunction)
+                        }
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
@@ -153,7 +179,61 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
             }
         }
 
+        if(show) {
+            Dialog(error = err, onDialogDismissed = { showState.value = false; errState.value = false })
+        }
+
     }
 }
 
+@Composable
+fun Dialog(error: Boolean, onDialogDismissed: () -> Unit) {
+    val openDialog = remember { mutableStateOf(true) }
 
+    if (openDialog.value) {
+        if (error) {
+            AlertDialog(
+                onDismissRequest = { openDialog.value = false; onDialogDismissed() },
+                title = {
+                    Text(
+                        text = "Erro",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.headlineSmall
+                    )
+                },
+                text = {
+                    Text(text = "Descreva a avaria !", style = MaterialTheme.typography.bodyMedium)
+                },
+                confirmButton= {
+                    TextButton(onClick = { openDialog.value = false; onDialogDismissed() }) {
+                        Text(text = "OK", style = MaterialTheme.typography.labelLarge, color = md_theme_light_primary)
+                    }
+                },
+                textContentColor = md_theme_light_primaryContainer,
+                titleContentColor = md_theme_light_primary
+            )
+        } else {
+            AlertDialog(
+                onDismissRequest = { openDialog.value = false; onDialogDismissed() },
+                title = {
+                    Text(
+                        text = "Sucesso",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.headlineSmall
+                    )
+                },
+                text = {
+                    Text(text = "Avaria Enviada !", style = MaterialTheme.typography.bodyMedium)
+                },
+                confirmButton= {
+                    TextButton(onClick = { openDialog.value = false; onDialogDismissed() }) {
+                        Text(text = "OK", style = MaterialTheme.typography.labelLarge, color = md_theme_light_primary)
+                    }
+                },
+                textContentColor = md_theme_light_primaryContainer,
+                titleContentColor = md_theme_light_primary
+
+            )
+        }
+    }
+}

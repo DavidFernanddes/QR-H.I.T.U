@@ -15,6 +15,7 @@ import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -184,22 +185,22 @@ fun Dialog(onDialogDismissed: () -> Unit) {
         AlertDialog(
             onDismissRequest = { openDialog.value = false; onDialogDismissed() },
             title = {
-                androidx.compose.material3.Text(
+                Text(
                     text = "Erro",
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.headlineSmall
                 )
             },
             text = {
-                androidx.compose.material3.Text(text = "QR Code Inválido !")
+                Text(text = "QR Code Inválido !", style = MaterialTheme.typography.bodyMedium)
             },
             confirmButton= {
                 TextButton(onClick = { openDialog.value = false;  onDialogDismissed()}) {
-                    androidx.compose.material3.Text(text = "Fechar")
+                    Text(text = "OK", style = MaterialTheme.typography.labelLarge, color = md_theme_light_primary)
                 }
             },
             textContentColor = md_theme_light_primaryContainer,
-            titleContentColor = md_theme_light_primary
-
+            titleContentColor = md_theme_light_primary,
         )
     }
 
