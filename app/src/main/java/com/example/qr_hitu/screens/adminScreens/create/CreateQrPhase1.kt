@@ -68,6 +68,12 @@ fun QrCreatePhase1(navController: NavController, viewModel : ViewModel1) {
             .background(Color.White)
     ) {
 
+        Spacer(modifier = Modifier.padding(20.dp))
+
+        Text(text = "Escolha a localização", style = MaterialTheme.typography.titleMedium)
+
+        Spacer(modifier = Modifier.padding(10.dp))
+
         ExposedDropdownMenuBox(
             expanded = expanded,
             onExpandedChange = {
@@ -110,7 +116,7 @@ fun QrCreatePhase1(navController: NavController, viewModel : ViewModel1) {
                                 "Sala ${block.last()}0.05"
                             )
                             selectedRoom = ""
-                            //expanded2 = true
+                            expanded = false
                         },
                         contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                     )
@@ -142,9 +148,9 @@ fun QrCreatePhase1(navController: NavController, viewModel : ViewModel1) {
                     trailingIcon = {
                         Icon(icon2, "", Modifier.clickable { expanded2 = !expanded2 })
                     },
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                    colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = md_theme_light_primaryContainer,
-                        focusedLabelColor = md_theme_light_primaryContainer
+                        focusedLabelColor = md_theme_light_primaryContainer,
                     )
                 )
                 ExposedDropdownMenu(
@@ -156,7 +162,7 @@ fun QrCreatePhase1(navController: NavController, viewModel : ViewModel1) {
                     rooms.forEach { room ->
                         DropdownMenuItem(
                             text = { Text(text = room) },
-                            onClick = { selectedRoom = room },
+                            onClick = { selectedRoom = room; expanded2 = false },
                             contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                         )
                     }
@@ -167,6 +173,11 @@ fun QrCreatePhase1(navController: NavController, viewModel : ViewModel1) {
         Spacer(modifier = Modifier.padding(10.dp))
 
         if(selectedRoom.isNotEmpty()){
+
+            Text(text = "Escolha uma máquina", style = MaterialTheme.typography.titleMedium)
+
+            Spacer(modifier = Modifier.padding(10.dp))
+
             ExposedDropdownMenuBox(
                 expanded = expanded3,
                 onExpandedChange = {
@@ -187,9 +198,9 @@ fun QrCreatePhase1(navController: NavController, viewModel : ViewModel1) {
                     trailingIcon = {
                         Icon(icon3, "", Modifier.clickable { expanded3 = !expanded3 })
                     },
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                    colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = md_theme_light_primaryContainer,
-                        focusedLabelColor = md_theme_light_primaryContainer
+                        focusedLabelColor = md_theme_light_primaryContainer,
                     )
                 )
                 ExposedDropdownMenu(
@@ -201,7 +212,7 @@ fun QrCreatePhase1(navController: NavController, viewModel : ViewModel1) {
                     machines.forEach { machine ->
                         DropdownMenuItem(
                             text = { Text(text = machine) },
-                            onClick = { selectedMachine = machine },
+                            onClick = { selectedMachine = machine; expanded3 = false },
                             contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                         )
                     }

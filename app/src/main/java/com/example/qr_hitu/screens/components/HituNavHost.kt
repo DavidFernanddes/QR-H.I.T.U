@@ -7,9 +7,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.qr_hitu.ViewModels.ScannerViewModel
-import com.example.qr_hitu.screens.adminScreens.create.*
+import com.example.qr_hitu.screens.adminScreens.create.QrCreateFinal
+import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase1
+import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase2
+import com.example.qr_hitu.screens.adminScreens.create.ViewModel1
+import com.example.qr_hitu.screens.adminScreens.create.ViewModel2
 import com.example.qr_hitu.screens.adminScreens.malfList.MalfList
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminInfo
+import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminInfoUpdate
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminScreen
 import com.example.qr_hitu.screens.login.LoginScreen
 import com.example.qr_hitu.screens.menu.Manual
@@ -56,8 +61,11 @@ fun QrHituNavHost(
         composable(ScanAdmin.route){
             ScannerAdminScreen(navController = navController, viewModel = viewModelSA)
         }
-        composable(ScanAdminInfo.route){
+        composable(ScannerAdminInfo.route){
            ScannerAdminInfo(navController = navController, viewModelSA)
+        }
+        composable(ScannerAdminInfoUpdate.route){
+            ScannerAdminInfoUpdate(navController = navController, viewModelSA)
         }
         composable(SettingOptions.route){
             SettingsOptions(navController = navController)

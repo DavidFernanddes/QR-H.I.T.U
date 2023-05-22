@@ -34,6 +34,8 @@ fun ScannerAdminInfo(navController: NavController, viewModel: ScannerViewModel){
     val ram = spec["Ram"]
     val powerSupply = spec["Fonte"]
 
+
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier

@@ -37,11 +37,11 @@ object  ScanAdmin: HituDestination {
     override val route = "scanner_admin"
 }
 
-object  ScanAdminInfo: HituDestination {
+object  ScannerAdminInfo: HituDestination {
     override val route = "scanner_admin_info"
 }
 
-object  ScanAdminInfoUpdate: HituDestination {
+object  ScannerAdminInfoUpdate: HituDestination {
     override val route = "scanner_admin_info_update"
 }
 

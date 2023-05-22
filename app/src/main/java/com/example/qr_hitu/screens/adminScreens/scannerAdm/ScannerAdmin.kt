@@ -26,9 +26,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.example.qr_hitu.ViewModels.ScannerViewModel
-import com.example.qr_hitu.screens.components.ScanAdminInfo
-import com.example.qr_hitu.screens.components.ScanInput
-import com.example.qr_hitu.screens.components.ScanProf
+import com.example.qr_hitu.screens.components.ScannerAdminInfo
 import com.example.qr_hitu.screens.theme.md_theme_light_primary
 import com.example.qr_hitu.screens.theme.md_theme_light_primaryContainer
 import com.google.mlkit.vision.barcode.BarcodeScanner
@@ -110,7 +108,7 @@ fun ScannerAdminScreen(navController: NavController, viewModel: ScannerViewModel
                             showState.value = true
                         }else{
                             viewModel.setMyData(value)
-                            navController.navigate(ScanAdminInfo.route)
+                            navController.navigate(ScannerAdminInfo.route)
                         }
                     }
                 }

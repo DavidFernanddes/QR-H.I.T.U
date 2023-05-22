@@ -25,7 +25,7 @@ import com.example.qr_hitu.functions.seeDispositivo
 @Composable
 fun ScannerAdminInfoUpdate(navController: NavController, viewModel: ScannerViewModel){
 
-    val (block, room, machine) = viewModel.myData.toString().split(",")
+    val (block, room, machine) = viewModel.myData.value.toString().split(",")
     val spec = seeDispositivo(block, room, machine)
     val focusManager = LocalFocusManager.current
     val style = MaterialTheme.typography.bodyLarge
@@ -106,13 +106,13 @@ fun ScannerAdminInfoUpdate(navController: NavController, viewModel: ScannerViewM
         Spacer(modifier = Modifier.padding(10.dp))
 
         Button(onClick = {
-            if(newProcessor == null){
+            if(newProcessor == ""){
                 newProcessor = "$processor"
             }
-            if(newRam == null){
+            if(newRam == ""){
                 newRam = "$ram"
             }
-            if(newPowerSupply == null){
+            if(newPowerSupply == ""){
                 newPowerSupply = "$powerSupply"
             }
             addDispositivo(
@@ -127,7 +127,7 @@ fun ScannerAdminInfoUpdate(navController: NavController, viewModel: ScannerViewM
                 )
             )
         }) {
-            Text(text = "Login", style = MaterialTheme.typography.bodyLarge)
+            Text(text = "Atualizar", style = MaterialTheme.typography.bodyLarge)
         }
     }
 }
