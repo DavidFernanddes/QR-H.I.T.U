@@ -1,7 +1,5 @@
 package com.example.qr_hitu.screens.profScreens
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -28,17 +26,20 @@ import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.functions.addMalfunction
-import com.example.qr_hitu.functions.seeDispositivo
 import com.example.qr_hitu.screens.theme.md_theme_light_onPrimaryContainer
 import com.example.qr_hitu.screens.theme.md_theme_light_primary
 import com.example.qr_hitu.screens.theme.md_theme_light_primaryContainer
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
 
+    val email = Firebase.auth.currentUser?.email.toString()
     var outro by remember { mutableStateOf("") }
     var malfunction by remember { mutableStateOf("") }
+    var urgentState by remember { mutableStateOf(false) }
     val showState = remember { mutableStateOf(false) }
     val show by rememberUpdatedState(showState.value)
     val errState = remember { mutableStateOf(false) }
@@ -146,6 +147,21 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
 
         }
 
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            RadioButton(
+                selected = urgentState,
+                onClick = {
+                    urgentState = !urgentState
+                }
+            )
+            Text(
+                text = "Urgente ?",
+                style = MaterialTheme.typography.bodyLarge
+            )
+        }
+
+        Spacer(modifier = Modifier.padding(10.dp))
+
         if(malfunction.isNotEmpty() || malfunction == "Outro" && outro.isNotEmpty()){
 
             Button(
@@ -159,13 +175,13 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
                                 }
                                 else -> {
                                     showState.value = true
-                                    addMalfunction(block,room,machine,outro)
+                                    addMalfunction(block,room,machine,outro, urgentState, email)
                                 }
                             }
                         }
                         else -> {
                             showState.value = true
-                            addMalfunction(block,room,machine,malfunction)
+                            addMalfunction(block,room,machine,malfunction, urgentState, email)
                         }
                     }
                 },

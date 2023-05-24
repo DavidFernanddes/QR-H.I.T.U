@@ -87,13 +87,17 @@ fun addMalfunction (
     block : String,
     room : String,
     machine : String,
-    malfunction : String
+    malfunction : String,
+    urgent: Boolean,
+    email: String,
 ) {
     val data = hashMapOf(
         "Bloco" to block,
         "Sala" to room,
         "Dispositivo" to machine,
-        "Avaria" to malfunction
+        "Avaria" to malfunction,
+        "Urgente" to urgent,
+        "Email" to email
     )
 
     db.collection("Avarias")
