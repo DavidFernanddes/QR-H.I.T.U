@@ -28,21 +28,48 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.R
+import com.example.qr_hitu.screens.components.Loading
 import com.example.qr_hitu.screens.components.MalfList
 import com.example.qr_hitu.screens.components.ScanProf
 import com.example.qr_hitu.screens.theme.md_theme_light_onPrimaryContainer
 import com.example.qr_hitu.screens.theme.md_theme_light_primaryContainer
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
+
+suspend fun performVerification(db: CollectionReference, uid: String?): DocumentSnapshot {
+    return withContext(Dispatchers.IO) {
+        return@withContext db.document("$uid").get().await()
+    }
+}
+fun loginVerify(navController: NavController, db: CollectionReference, uid: String?){
+    CoroutineScope(Dispatchers.Main).launch {
+        delay(1500)
+        // Perform the verification in the background using suspend functions
+        val result = performVerification(db, uid)
+
+        // Navigate to the appropriate screen based on the verification result
+        if (result.exists()) {
+            navController.navigate(MalfList.route)
+        } else {
+            navController.navigate(ScanProf.route)
+        }
+    }
+}
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(navController: NavController, firestore: FirebaseFirestore)   {
+fun LoginScreen(navController: NavController, firestore: FirebaseFirestore) {
 
     var emailValue by remember { mutableStateOf("") }
     var passwordValue by remember { mutableStateOf("") }
@@ -57,16 +84,9 @@ fun LoginScreen(navController: NavController, firestore: FirebaseFirestore)   {
         val uid = Firebase.auth.currentUser?.uid
         delay(500)
 
-        if (Firebase.auth.currentUser != null){
-            db.document("$uid").get().addOnCompleteListener { task ->
-                if (task.isSuccessful){
-                    if (task.result.exists()){
-                        navController.navigate(MalfList.route)
-                    }else {
-                        navController.navigate(ScanProf.route)
-                    }
-                }
-            }
+        if (Firebase.auth.currentUser != null) {
+            navController.navigate(Loading.route)
+            loginVerify(navController, db, uid)
         }
     }
 
@@ -103,7 +123,10 @@ fun LoginScreen(navController: NavController, firestore: FirebaseFirestore)   {
                 singleLine = true,
                 shape = MaterialTheme.shapes.large,
                 modifier = Modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email, imeAction = ImeAction.Next),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Email,
+                    imeAction = ImeAction.Next
+                ),
                 keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = md_theme_light_primaryContainer,
@@ -122,7 +145,10 @@ fun LoginScreen(navController: NavController, firestore: FirebaseFirestore)   {
                 shape = MaterialTheme.shapes.large,
                 modifier = Modifier.fillMaxWidth(),
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password,
+                    imeAction = ImeAction.Done
+                ),
                 keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
                 trailingIcon = {
                     val image = if (passwordVisible)
@@ -147,25 +173,17 @@ fun LoginScreen(navController: NavController, firestore: FirebaseFirestore)   {
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 // Sign in success, update UI with the signed-in user's information
-                                Log.d(TAG, "signInWithEmail:success")
                                 val db = Firebase.firestore.collection("Admin")
                                 val uid = Firebase.auth.currentUser?.uid
 
-                                db.document("$uid").get().addOnCompleteListener { task ->
-                                    if (task.isSuccessful){
-                                        if (task.result.exists()){
-                                            navController.navigate(MalfList.route)
-                                        }else {
-                                            navController.navigate(ScanProf.route)
-                                        }
-                                    }
-                                }
+                                navController.navigate(Loading.route)
+                                loginVerify(navController, db, uid)
+
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "signInWithEmail:failure", task.exception)
                             }
                         }
-
                 },
                 Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(

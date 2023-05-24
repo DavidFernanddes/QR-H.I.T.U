@@ -52,3 +52,7 @@ object  SettingOptions: HituDestination {
 object  Manual: HituDestination {
     override val route = "Manual"
 }
+
+object  Loading: HituDestination {
+    override val route = "loading"
+}

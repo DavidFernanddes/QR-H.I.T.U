@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.qr_hitu.ViewModels.ScannerViewModel
+import com.example.qr_hitu.screens.LoadingScreen
 import com.example.qr_hitu.screens.adminScreens.create.QrCreateFinal
 import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase1
 import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase2
@@ -73,6 +74,8 @@ fun QrHituNavHost(
         composable(Manual.route){
             Manual(navController = navController)
         }
-
+        composable(Loading.route){
+            LoadingScreen(navController = navController)
+        }
     }
 }
