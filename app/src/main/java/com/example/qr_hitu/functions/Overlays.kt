@@ -182,7 +182,7 @@ fun BottomBar(navController: NavController){
                     selected = navController.currentBackStackEntry?.destination?.route == MalfList.route,
                     label = { Text(text = "Avarias", color = md_theme_light_onPrimaryContainer) },
                     colors = NavigationBarItemDefaults.colors(
-                        indicatorColor= md_theme_light_onSecondaryContainer
+                        indicatorColor= md_theme_light_onPrimaryContainer
                     ),
                     onClick = { navController.navigate(MalfList.route) },
                     icon = {
@@ -196,7 +196,7 @@ fun BottomBar(navController: NavController){
                                     navController.currentBackStackEntry?.destination?.route == ScannerAdminInfoUpdate.route,
                     label = { Text(text = "Scanner", color = md_theme_light_onPrimaryContainer) },
                     colors = NavigationBarItemDefaults.colors(
-                        indicatorColor= md_theme_light_onSecondaryContainer
+                        indicatorColor= md_theme_light_onPrimaryContainer
                     ),
                     onClick = { navController.navigate(ScanAdmin.route) },
                     icon = {
@@ -207,7 +207,7 @@ fun BottomBar(navController: NavController){
                     selected = navController.currentBackStackEntry?.destination?.route == Create1.route,
                     label = { Text(text = "Create", color = md_theme_light_onPrimaryContainer) },
                     colors = NavigationBarItemDefaults.colors(
-                        indicatorColor= md_theme_light_onSecondaryContainer
+                        indicatorColor= md_theme_light_onPrimaryContainer
                     ),
                     onClick = { navController.navigate(Create1.route) },
                     icon = {
