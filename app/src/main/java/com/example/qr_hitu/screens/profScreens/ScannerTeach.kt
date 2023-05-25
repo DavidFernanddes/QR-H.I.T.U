@@ -28,10 +28,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.example.qr_hitu.ViewModels.ScannerViewModel
-import com.example.qr_hitu.screens.components.ScanInput
-import com.example.qr_hitu.screens.components.ScanProf
-import com.example.qr_hitu.screens.theme.md_theme_light_primary
-import com.example.qr_hitu.screens.theme.md_theme_light_primaryContainer
+import com.example.qr_hitu.components.ScanInput
+import com.example.qr_hitu.components.ScanProf
+import com.example.qr_hitu.theme.md_theme_light_primary
+import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
@@ -201,7 +201,8 @@ fun Dialog(onDialogDismissed: () -> Unit, navController: NavController, Err: Boo
                     Text(text = "Deseja colocar uma avaria ?", style = MaterialTheme.typography.bodyMedium)
                 },
                 confirmButton = {
-                    TextButton(onClick = { openDialog.value = false; navController.navigate(ScanInput.route) }) {
+                    TextButton(onClick = { openDialog.value = false; navController.navigate(
+                        ScanInput.route) }) {
                         Text(text = "SIM", style = MaterialTheme.typography.labelLarge, color = md_theme_light_primary)
                     }
                 },

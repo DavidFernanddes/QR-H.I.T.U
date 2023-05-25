@@ -1,4 +1,4 @@
-package com.example.qr_hitu.screens.components
+package com.example.qr_hitu.components
 
 
 interface HituDestination {

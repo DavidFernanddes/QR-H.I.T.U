@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.functions.seeDispositivo
-import com.example.qr_hitu.screens.theme.md_theme_light_primaryContainer
+import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -74,9 +74,9 @@ fun ScannerAdminInfo(navController: NavController, viewModel: ScannerViewModel){
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
+            colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = md_theme_light_primaryContainer,
-                focusedLabelColor = md_theme_light_primaryContainer
+                focusedLabelColor = md_theme_light_primaryContainer,
             )
         )
 
@@ -94,9 +94,9 @@ fun ScannerAdminInfo(navController: NavController, viewModel: ScannerViewModel){
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
+            colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = md_theme_light_primaryContainer,
-                focusedLabelColor = md_theme_light_primaryContainer
+                focusedLabelColor = md_theme_light_primaryContainer,
             )
         )
 
@@ -114,9 +114,9 @@ fun ScannerAdminInfo(navController: NavController, viewModel: ScannerViewModel){
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
+            colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = md_theme_light_primaryContainer,
-                focusedLabelColor = md_theme_light_primaryContainer
+                focusedLabelColor = md_theme_light_primaryContainer,
             )
         )
 

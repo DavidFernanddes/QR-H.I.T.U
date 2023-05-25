@@ -28,11 +28,11 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.R
-import com.example.qr_hitu.screens.components.Loading
-import com.example.qr_hitu.screens.components.MalfList
-import com.example.qr_hitu.screens.components.ScanProf
-import com.example.qr_hitu.screens.theme.md_theme_light_onPrimaryContainer
-import com.example.qr_hitu.screens.theme.md_theme_light_primaryContainer
+import com.example.qr_hitu.components.Loading
+import com.example.qr_hitu.components.MalfList
+import com.example.qr_hitu.components.ScanProf
+import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
+import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
@@ -185,13 +185,13 @@ fun LoginScreen(navController: NavController, firestore: FirebaseFirestore) {
                             }
                         }
                 },
-                Modifier.fillMaxWidth(),
+                Modifier.fillMaxWidth().height(50.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = md_theme_light_primaryContainer,
                     contentColor = md_theme_light_onPrimaryContainer
                 )
             ) {
-                Text(text = "Login", style = MaterialTheme.typography.bodyLarge)
+                Text(text = "Login", style = MaterialTheme.typography.labelLarge)
             }
         }
     }

@@ -17,7 +17,7 @@ import com.example.qr_hitu.functions.seeDispositivo
 import com.example.qr_hitu.screens.adminScreens.create.ViewModel1
 import com.example.qr_hitu.screens.adminScreens.create.ViewModel2
 import com.example.qr_hitu.ViewModels.ScannerViewModel
-import com.example.qr_hitu.screens.theme.QRHITUTheme
+import com.example.qr_hitu.theme.QRHITUTheme
 
 
 class MainActivity : ComponentActivity() {

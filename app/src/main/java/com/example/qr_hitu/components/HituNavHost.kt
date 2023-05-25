@@ -1,4 +1,4 @@
-package com.example.qr_hitu.screens.components
+package com.example.qr_hitu.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

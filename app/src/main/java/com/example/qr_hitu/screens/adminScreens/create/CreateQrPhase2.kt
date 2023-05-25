@@ -17,9 +17,9 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.qr_hitu.screens.components.Create3
-import com.example.qr_hitu.screens.theme.md_theme_light_onPrimaryContainer
-import com.example.qr_hitu.screens.theme.md_theme_light_primaryContainer
+import com.example.qr_hitu.components.Create3
+import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
+import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -136,13 +136,13 @@ Column(
                 viewModel.setMyData2(name, processor, ram, powerSupply)
                 navController.navigate(Create3.route)
                       },
-            Modifier.fillMaxWidth(),
+            Modifier.fillMaxWidth().height(50.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = md_theme_light_primaryContainer,
                 contentColor = md_theme_light_onPrimaryContainer
             )
         ) {
-            Text(text = "Continuar")
+            Text(text = "Continuar", style = MaterialTheme.typography.labelLarge)
         }
     }
 }

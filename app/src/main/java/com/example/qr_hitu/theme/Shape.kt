@@ -1,5 +1,5 @@
 
-package com.example.qr_hitu.screens.theme
+package com.example.qr_hitu.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Shapes

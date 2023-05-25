@@ -12,14 +12,30 @@ import androidx.compose.material3.*
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.qr_hitu.ViewModels.ScannerViewModel
+import com.example.qr_hitu.components.Create1
+import com.example.qr_hitu.components.Create2
+import com.example.qr_hitu.components.Create3
+import com.example.qr_hitu.components.Login
+import com.example.qr_hitu.components.MalfList
+import com.example.qr_hitu.components.Manual
+import com.example.qr_hitu.components.QrHituNavHost
+import com.example.qr_hitu.components.ScanAdmin
+import com.example.qr_hitu.components.ScanInput
+import com.example.qr_hitu.components.ScanProf
+import com.example.qr_hitu.components.ScannerAdminInfo
+import com.example.qr_hitu.components.ScannerAdminInfoUpdate
+import com.example.qr_hitu.components.SettingOptions
 import com.example.qr_hitu.screens.adminScreens.create.ViewModel1
 import com.example.qr_hitu.screens.adminScreens.create.ViewModel2
-import com.example.qr_hitu.screens.components.*
-import com.example.qr_hitu.screens.theme.*
+import com.example.qr_hitu.components.*
+import com.example.qr_hitu.theme.*
+import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
+import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
@@ -38,7 +54,8 @@ fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewMo
         topBar = {
             when {
                 destinationRoute.contains(ScannerAdminInfo.route) -> TopBar4(navController = navController)
-                destinationRoute.contains(MalfList.route) || destinationRoute.contains(ScanAdmin.route) || destinationRoute.contains(Create1.route) -> TopBar1(navController = navController)
+                destinationRoute.contains(MalfList.route) || destinationRoute.contains(ScanAdmin.route) || destinationRoute.contains(
+                    Create1.route) -> TopBar1(navController = navController)
                 destinationRoute.contains(Create2.route) -> TopBar2(navController = navController)
                 destinationRoute.contains(Create3.route) -> TopBar3(navController = navController)
                 destinationRoute.contains(ScanProf.route) || destinationRoute.contains(ScanInput.route) -> TopBarUser(navController = navController)
@@ -49,8 +66,6 @@ fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewMo
 
             when{
                 destinationRoute.contains(MalfList.route) || destinationRoute.contains(ScanAdmin.route) || destinationRoute.contains(Create1.route) -> BottomBar(navController = navController)
-                destinationRoute.contains(Create2.route) || destinationRoute.contains(Create3.route) -> EmptyBottomBar(navController = navController)
-                destinationRoute.contains(ScanInput.route) -> EmptyBottomBar(navController = navController)
             }
 
         },
@@ -127,7 +142,7 @@ fun TopBar4(navController: NavController){
             IconButton(onClick = { navController.navigate(ScannerAdminInfoUpdate.route) }) {
                 Icon(Icons.Filled.Edit, "Edit", tint = md_theme_light_onPrimaryContainer)
             }
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = { }) {
                 Icon(Icons.Filled.Delete, "Delete", tint = md_theme_light_onPrimaryContainer)
             }
             IconButton(onClick = { navController.popBackStack() }) {
@@ -137,6 +152,34 @@ fun TopBar4(navController: NavController){
 
     )
 
+}
+
+@Composable
+fun Dialog(error: Boolean, onDialogDismissed: () -> Unit) {
+    val openDialog = remember { mutableStateOf(true) }
+
+    if (openDialog.value) {
+            AlertDialog(
+                onDismissRequest = { openDialog.value = false; onDialogDismissed() },
+                title = {
+                    Text(
+                        text = "Erro",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.headlineSmall
+                    )
+                },
+                text = {
+                    Text(text = "Descreva a avaria !", style = MaterialTheme.typography.bodyMedium)
+                },
+                confirmButton= {
+                    TextButton(onClick = { openDialog.value = false; onDialogDismissed() }) {
+                        Text(text = "OK", style = MaterialTheme.typography.labelLarge, color = md_theme_light_primary)
+                    }
+                },
+                textContentColor = md_theme_light_primaryContainer,
+                titleContentColor = md_theme_light_primary
+            )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -162,7 +205,7 @@ fun TopBarUni(navController: NavController){
         colors = topAppBarColors(
         md_theme_light_primaryContainer
         ),
-        actions = {
+        navigationIcon = {
             IconButton(onClick = { navController.popBackStack() }) {
                 Icon(Icons.Filled.ArrowBack ,"Back", tint = md_theme_light_onPrimaryContainer)
             }
@@ -215,14 +258,6 @@ fun BottomBar(navController: NavController){
                     }
                 )
             }
-}
-
-@Composable
-fun EmptyBottomBar(navController: NavController){
-
-    BottomAppBar(
-        containerColor = md_theme_light_primaryContainer
-    ) {}
 }
 
 @Composable

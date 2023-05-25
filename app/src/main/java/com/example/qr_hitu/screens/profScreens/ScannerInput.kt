@@ -26,9 +26,9 @@ import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.functions.addMalfunction
-import com.example.qr_hitu.screens.theme.md_theme_light_onPrimaryContainer
-import com.example.qr_hitu.screens.theme.md_theme_light_primary
-import com.example.qr_hitu.screens.theme.md_theme_light_primaryContainer
+import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
+import com.example.qr_hitu.theme.md_theme_light_primary
+import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -98,9 +98,9 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
                 trailingIcon = {
                     Icon(icon, "", Modifier.clickable { expanded = !expanded })
                 },
-                colors = TextFieldDefaults.outlinedTextFieldColors(
+                colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = md_theme_light_primaryContainer,
-                    focusedLabelColor = md_theme_light_primaryContainer
+                    focusedLabelColor = md_theme_light_primaryContainer,
                 )
             )
             ExposedDropdownMenu(
@@ -137,9 +137,9 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Done),
                 keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
+                colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = md_theme_light_primaryContainer,
-                    focusedLabelColor = md_theme_light_primaryContainer
+                    focusedLabelColor = md_theme_light_primaryContainer,
                 )
             )
 
@@ -185,13 +185,13 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
                         }
                     }
                 },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().height(50.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = md_theme_light_primaryContainer,
                     contentColor = md_theme_light_onPrimaryContainer
                 )
             ) {
-                Text("Enviar", style = MaterialTheme.typography.bodyLarge)
+                Text("Enviar", style = MaterialTheme.typography.labelLarge)
             }
         }
 
@@ -248,7 +248,6 @@ fun Dialog(error: Boolean, onDialogDismissed: () -> Unit) {
                 },
                 textContentColor = md_theme_light_primaryContainer,
                 titleContentColor = md_theme_light_primary
-
             )
         }
     }
