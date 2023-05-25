@@ -16,7 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.qr_hitu.ViewModels.ScannerViewModel
+import com.example.qr_hitu.viewModels.ScannerViewModel
 import com.example.qr_hitu.components.Create1
 import com.example.qr_hitu.components.Create2
 import com.example.qr_hitu.components.Create3
@@ -30,15 +30,14 @@ import com.example.qr_hitu.components.ScanProf
 import com.example.qr_hitu.components.ScannerAdminInfo
 import com.example.qr_hitu.components.ScannerAdminInfoUpdate
 import com.example.qr_hitu.components.SettingOptions
-import com.example.qr_hitu.screens.adminScreens.create.ViewModel1
-import com.example.qr_hitu.screens.adminScreens.create.ViewModel2
+import com.example.qr_hitu.viewModels.ViewModel1
+import com.example.qr_hitu.viewModels.ViewModel2
 import com.example.qr_hitu.components.*
 import com.example.qr_hitu.theme.*
 import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
 import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import dalvik.system.DelegateLastClassLoader
 import kotlinx.coroutines.launch
 
 

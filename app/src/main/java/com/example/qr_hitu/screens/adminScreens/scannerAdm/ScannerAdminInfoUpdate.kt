@@ -17,7 +17,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.qr_hitu.ViewModels.ScannerViewModel
+import com.example.qr_hitu.viewModels.ScannerViewModel
 import com.example.qr_hitu.functions.addDispositivo
 import com.example.qr_hitu.functions.seeDispositivo
 import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer

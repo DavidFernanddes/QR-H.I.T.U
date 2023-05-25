@@ -21,6 +21,7 @@ import androidx.navigation.NavController
 import com.example.qr_hitu.components.Create2
 import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
 import com.example.qr_hitu.theme.md_theme_light_primaryContainer
+import com.example.qr_hitu.viewModels.ViewModel1
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

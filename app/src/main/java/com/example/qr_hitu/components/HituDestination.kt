@@ -21,6 +21,10 @@ object  MalfList: HituDestination {
     override val route = "malfunctions_list"
 }
 
+object  MalfInfo: HituDestination {
+    override val route = "malfunctions_info"
+}
+
 object  Create1: HituDestination {
     override val route = "create_qr_phase1"
 }

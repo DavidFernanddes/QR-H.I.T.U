@@ -24,7 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
-import com.example.qr_hitu.ViewModels.ScannerViewModel
+import com.example.qr_hitu.viewModels.ScannerViewModel
 import com.example.qr_hitu.functions.addMalfunction
 import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
 import com.example.qr_hitu.theme.md_theme_light_primary
@@ -175,7 +175,7 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
                                 }
                                 else -> {
                                     showState.value = true
-                                    addMalfunction(block,room,machine,outro, urgentState, email)
+                                    addMalfunction(block, room,machine,outro, urgentState, email)
                                 }
                             }
                         }

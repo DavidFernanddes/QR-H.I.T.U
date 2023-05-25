@@ -14,9 +14,9 @@ import com.example.qr_hitu.functions.ScaffoldLayouts
 import com.example.qr_hitu.functions.addDispositivo
 import com.example.qr_hitu.functions.delDispositivo
 import com.example.qr_hitu.functions.seeDispositivo
-import com.example.qr_hitu.screens.adminScreens.create.ViewModel1
-import com.example.qr_hitu.screens.adminScreens.create.ViewModel2
-import com.example.qr_hitu.ViewModels.ScannerViewModel
+import com.example.qr_hitu.viewModels.ViewModel1
+import com.example.qr_hitu.viewModels.ViewModel2
+import com.example.qr_hitu.viewModels.ScannerViewModel
 import com.example.qr_hitu.theme.QRHITUTheme
 
 

@@ -27,7 +27,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
-import com.example.qr_hitu.ViewModels.ScannerViewModel
+import com.example.qr_hitu.viewModels.ScannerViewModel
 import com.example.qr_hitu.components.ScanInput
 import com.example.qr_hitu.components.ScanProf
 import com.example.qr_hitu.theme.md_theme_light_primary

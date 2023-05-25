@@ -6,14 +6,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.qr_hitu.ViewModels.ScannerViewModel
+import com.example.qr_hitu.viewModels.ScannerViewModel
 import com.example.qr_hitu.screens.LoadingScreen
 import com.example.qr_hitu.screens.adminScreens.create.QrCreateFinal
 import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase1
 import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase2
-import com.example.qr_hitu.screens.adminScreens.create.ViewModel1
-import com.example.qr_hitu.screens.adminScreens.create.ViewModel2
-import com.example.qr_hitu.screens.adminScreens.malfList.MalfList
+import com.example.qr_hitu.viewModels.ViewModel1
+import com.example.qr_hitu.viewModels.ViewModel2
+import com.example.qr_hitu.screens.adminScreens.malfunctions.MalfInfo
+import com.example.qr_hitu.screens.adminScreens.malfunctions.MalfList
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminInfo
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminInfoUpdate
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminScreen
@@ -49,6 +50,9 @@ fun QrHituNavHost(
         }
         composable(MalfList.route){
             MalfList(navController = navController)
+        }
+        composable(MalfInfo.route){
+            MalfInfo(navController = navController)
         }
         composable(Create1.route){
             QrCreatePhase1(navController = navController, viewModel = viewModel1)

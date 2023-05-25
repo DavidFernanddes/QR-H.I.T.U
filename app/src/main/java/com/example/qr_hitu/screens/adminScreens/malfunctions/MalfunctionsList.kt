@@ -1,7 +1,8 @@
-package com.example.qr_hitu.screens.adminScreens.malfList
+package com.example.qr_hitu.screens.adminScreens.malfunctions
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.qr_hitu.components.MalfInfo
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -83,7 +85,8 @@ fun MalfList(navController: NavController) {
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
+                    .padding(8.dp)
+                    .clickable { navController.navigate(MalfInfo.route) },
                 shape = MaterialTheme.shapes.medium,
                 elevation = CardDefaults.cardElevation(defaultElevation = 7.dp),
                 colors = CardDefaults.cardColors(Color(0xFFd9d9d9))
@@ -118,7 +121,7 @@ fun MalfList(navController: NavController) {
                         )
                     }
                     if (item.urgent) {
-                        Icon(Icons.Filled.Error, "Urgent")
+                        Icon(Icons.Filled.Error, "Urgent",)
                     }
                 }
             }

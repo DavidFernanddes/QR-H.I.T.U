@@ -12,11 +12,11 @@ import kotlinx.coroutines.tasks.await
 val db = Firebase.firestore //  Variável que chama o serviço da firestore
 
 //Procedimento para adicionar novo dispositivo
-fun addDispositivo (
-    bloco : String, //  As variáveis bloco, sala e ident são o caminho para o documento na firestore
-    sala : String,
-    ident : String,
-    mapa : HashMap<String, String>  //  A variável mapa passa as informações a inserir
+fun addDispositivo(
+    bloco: String, //  As variáveis bloco, sala e ident são o caminho para o documento na firestore
+    sala: String,
+    ident: String,
+    mapa: HashMap<String, String>  //  A variável mapa passa as informações a inserir
 ) {
 
     //  .collection() identifica a coleção, .document() identifica o documento
@@ -30,10 +30,10 @@ fun addDispositivo (
 }
 
 //Procedimento para apagar dispositivo
-fun delDispositivo (
-    bloco : String, //  As variáveis bloco, sala e ident são o caminho para o documento na firestore
-    sala : String,
-    ident : String
+fun delDispositivo(
+    bloco: String, //  As variáveis bloco, sala e ident são o caminho para o documento na firestore
+    sala: String,
+    ident: String
 ) {
 
     //  .collection() identifica a coleção, .document() identifica o documento
@@ -48,11 +48,11 @@ fun delDispositivo (
 
 //Função para buscar informação na firestore e guardar num mapa
 @Composable
-fun seeDispositivo (
-    bloco : String, //  As variáveis bloco, sala e ident são o caminho para o documento na firestore
-    sala : String,
-    ident : String
-) : Map<String, Any> {
+fun seeDispositivo(
+    bloco: String, //  As variáveis bloco, sala e ident são o caminho para o documento na firestore
+    sala: String,
+    ident: String
+): Map<String, Any> {
 
     //  A variável collectionReference foi criada para não deixar o código muito denso
     //  .collection() identifica a coleção, .document() identifica o documento
@@ -83,11 +83,11 @@ fun seeDispositivo (
 }
 
 
-fun addMalfunction (
-    block : String,
-    room : String,
-    machine : String,
-    malfunction : String,
+fun addMalfunction(
+    block: String,
+    room: String,
+    machine: String,
+    malfunction: String,
     urgent: Boolean,
     email: String,
 ) {
@@ -101,6 +101,6 @@ fun addMalfunction (
     )
 
     db.collection("Avarias")
-        .document(machine)
+        .document("$room $machine")
         .set(data)
 }
