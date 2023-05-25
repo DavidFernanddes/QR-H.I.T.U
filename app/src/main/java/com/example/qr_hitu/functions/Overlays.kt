@@ -38,6 +38,7 @@ import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
 import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import dalvik.system.DelegateLastClassLoader
 import kotlinx.coroutines.launch
 
 
@@ -53,7 +54,7 @@ fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewMo
     Scaffold(
         topBar = {
             when {
-                destinationRoute.contains(ScannerAdminInfo.route) -> TopBar4(navController = navController)
+                destinationRoute.contains(ScannerAdminInfo.route) -> TopBar4(navController = navController, viewModelSA)
                 destinationRoute.contains(MalfList.route) || destinationRoute.contains(ScanAdmin.route) || destinationRoute.contains(
                     Create1.route) -> TopBar1(navController = navController)
                 destinationRoute.contains(Create2.route) -> TopBar2(navController = navController)
@@ -129,7 +130,11 @@ fun TopBar3(navController: NavController){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar4(navController: NavController){
+fun TopBar4(navController: NavController, viewModel: ScannerViewModel){
+
+    val showState = remember { mutableStateOf(false) }
+    val show by rememberUpdatedState(showState.value)
+    val (block, room, machine) = viewModel.myData.value.toString().split(",")
 
     TopAppBar(
         title = { Text(text = "Admin", color = md_theme_light_onPrimaryContainer) },
@@ -142,43 +147,16 @@ fun TopBar4(navController: NavController){
             IconButton(onClick = { navController.navigate(ScannerAdminInfoUpdate.route) }) {
                 Icon(Icons.Filled.Edit, "Edit", tint = md_theme_light_onPrimaryContainer)
             }
-            IconButton(onClick = { }) {
+            IconButton(onClick = { showState.value = true }) {
                 Icon(Icons.Filled.Delete, "Delete", tint = md_theme_light_onPrimaryContainer)
             }
             IconButton(onClick = { navController.popBackStack() }) {
                 Icon(Icons.Filled.ArrowBack ,"Back", tint = md_theme_light_onPrimaryContainer)
             }
-        }
-
+        },
     )
-
-}
-
-@Composable
-fun Dialog(error: Boolean, onDialogDismissed: () -> Unit) {
-    val openDialog = remember { mutableStateOf(true) }
-
-    if (openDialog.value) {
-            AlertDialog(
-                onDismissRequest = { openDialog.value = false; onDialogDismissed() },
-                title = {
-                    Text(
-                        text = "Erro",
-                        textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.headlineSmall
-                    )
-                },
-                text = {
-                    Text(text = "Descreva a avaria !", style = MaterialTheme.typography.bodyMedium)
-                },
-                confirmButton= {
-                    TextButton(onClick = { openDialog.value = false; onDialogDismissed() }) {
-                        Text(text = "OK", style = MaterialTheme.typography.labelLarge, color = md_theme_light_primary)
-                    }
-                },
-                textContentColor = md_theme_light_primaryContainer,
-                titleContentColor = md_theme_light_primary
-            )
+    if(show){
+        DelDialog(onDialogDismissed = { showState.value = false}, onDeleteClick = { delDispositivo(block, room, machine) })
     }
 }
 
@@ -300,4 +278,41 @@ fun MenuOptions(navController: NavController){
             }
         )
     }
+}
+
+@Composable
+fun DelDialog(onDialogDismissed: () -> Unit, onDeleteClick: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = { onDialogDismissed() },
+        title = {
+            Text(
+                text = "Deseja apagar está máquina ?",
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.headlineSmall
+            )
+        },
+        text = {
+            Text(text = "Esta ação é irreversível!", style = MaterialTheme.typography.bodyLarge)
+        },
+        dismissButton = {
+            TextButton(onClick = { onDialogDismissed() }) {
+                Text(
+                    text = "Não",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = md_theme_light_primary
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = { onDialogDismissed(); onDeleteClick() }) {
+                Text(
+                    text = "Sim",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = md_theme_light_primary
+                )
+            }
+        },
+        textContentColor = md_theme_light_primaryContainer,
+        titleContentColor = md_theme_light_primary
+    )
 }

@@ -56,7 +56,7 @@ fun ScannerAdminInfo(navController: NavController, viewModel: ScannerViewModel){
             Text("Máquina: $machine", style = style)
         }
 
-        Spacer(modifier = Modifier.padding(40.dp))
+        Spacer(modifier = Modifier.padding(30.dp))
 
         Text("Especificações: $name", style = MaterialTheme.typography.titleMedium)
 

@@ -198,7 +198,6 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
         if(show) {
             Dialog(error = err, onDialogDismissed = { showState.value = false; errState.value = false })
         }
-
     }
 }
 
