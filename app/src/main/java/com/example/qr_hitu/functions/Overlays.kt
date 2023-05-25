@@ -156,7 +156,7 @@ fun TopBar4(navController: NavController, viewModel: ScannerViewModel){
         },
     )
     if(show){
-        DelDialog(onDialogDismissed = { showState.value = false}, onDeleteClick = { delDispositivo(block, room, machine) })
+        DelDialog(onDialogDismissed = { showState.value = false}, onDeleteClick = { delDispositivo(block, room, machine); navController.navigate(ScanAdmin.route) })
     }
 }
 
