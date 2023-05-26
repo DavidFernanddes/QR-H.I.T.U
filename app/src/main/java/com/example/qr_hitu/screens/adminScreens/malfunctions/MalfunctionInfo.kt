@@ -1,142 +1,160 @@
 package com.example.qr_hitu.screens.adminScreens.malfunctions
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.qr_hitu.theme.md_theme_light_primary
 import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 
 @Composable
-fun MalfInfo(navController: NavController, ) {
+fun MalfInfo(navController: NavController) {
 
     //val (block, room, machine) = viewModel.myData.value.toString().split(",")
     //val spec = seeDispositivo(block, room, machine)
     val focusManager = LocalFocusManager.current
-    val style = MaterialTheme.typography.bodyLarge
+    val style = MaterialTheme.typography.titleMedium
+    var completeState by remember { mutableStateOf(false) }
 
     val name = "damn"//spec["Nome"]
     val processor = "damn"//spec["Processador"]
     val ram = "damn"//spec["Ram"]
     val powerSupply = "damn"//spec["Fonte"]
-
+    val scrollState = rememberScrollState()
 
 
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
+        horizontalAlignment = Alignment.End,
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
             .padding(horizontal = 16.dp)
             .background(Color.White)
+            .scrollable(state = scrollState, orientation = Orientation.Vertical)
     ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
-        Spacer(modifier = Modifier.padding(30.dp))
+            Spacer(modifier = Modifier.padding(30.dp))
 
-        Column() {
-            Text("Bloco:  ", style = style)
+            Column(horizontalAlignment = Alignment.Start) {
+                Text("Bloco:  Bloco E", style = style)
+                Spacer(modifier = Modifier.padding(10.dp))
+                Text("Sala:  E0.05", style = style)
+                Spacer(modifier = Modifier.padding(10.dp))
+                Text("Máquina: Computador 1", style = style)
+            }
+
+            Spacer(modifier = Modifier.padding(30.dp))
+
+            OutlinedTextField(
+                value = "I got problems",
+                onValueChange = {},
+                readOnly = true,
+                label = { Text("Avaria:") },
+                shape = MaterialTheme.shapes.large,
+                modifier = Modifier.fillMaxWidth(),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = md_theme_light_primaryContainer,
+                    focusedLabelColor = md_theme_light_primaryContainer,
+                )
+            )
+
+            Spacer(modifier = Modifier.padding(30.dp))
+
+            Text("Especificações: $name", style = MaterialTheme.typography.titleMedium)
+
             Spacer(modifier = Modifier.padding(10.dp))
-            Text("Sala:  ", style = style)
+
+            OutlinedTextField(
+                value = "$processor",
+                onValueChange = {},
+                label = { Text("Processador:") },
+                singleLine = true,
+                readOnly = true,
+                shape = MaterialTheme.shapes.large,
+                modifier = Modifier.fillMaxWidth(),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = md_theme_light_primaryContainer,
+                    focusedLabelColor = md_theme_light_primaryContainer,
+                )
+            )
+
             Spacer(modifier = Modifier.padding(10.dp))
-            Text("Máquina: ", style = style)
+
+            OutlinedTextField(
+                value = "$ram",
+                onValueChange = {},
+                singleLine = true,
+                readOnly = true,
+                label = { Text("Ram:") },
+                shape = MaterialTheme.shapes.large,
+                modifier = Modifier.fillMaxWidth(),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = md_theme_light_primaryContainer,
+                    focusedLabelColor = md_theme_light_primaryContainer,
+                )
+            )
+
+            Spacer(modifier = Modifier.padding(10.dp))
+
+            OutlinedTextField(
+                value = "$powerSupply",
+                onValueChange = {},
+                singleLine = true,
+                readOnly = true,
+                label = { Text("Fonte:") },
+                shape = MaterialTheme.shapes.large,
+                modifier = Modifier.fillMaxWidth(),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = md_theme_light_primaryContainer,
+                    focusedLabelColor = md_theme_light_primaryContainer,
+                )
+            )
         }
 
-        Spacer(modifier = Modifier.padding(30.dp))
-
-        Text("Especificações: $name", style = MaterialTheme.typography.titleMedium)
-
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Text("Processador: ", modifier = Modifier.align(Alignment.Start))
-
-        OutlinedTextField(
-            value = "$processor",
-            onValueChange = {},
-            placeholder = { Text("$processor") },
-            singleLine = true,
-            readOnly = true,
-            shape = MaterialTheme.shapes.large,
-            modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-            keyboardActions = KeyboardActions(onNext = {
-                focusManager.moveFocus(
-                    FocusDirection.Down
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            RadioButton(
+                selected = completeState,
+                onClick = {
+                    completeState = !completeState
+                },
+                colors = RadioButtonDefaults.colors(
+                    selectedColor = md_theme_light_primary
                 )
-            }),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = md_theme_light_primaryContainer,
-                focusedLabelColor = md_theme_light_primaryContainer,
             )
-        )
-
-        Spacer(modifier = Modifier.padding(10.dp))
-
-        Text("Ram: ", modifier = Modifier.align(Alignment.Start))
-
-        OutlinedTextField(
-            value = "$ram",
-            onValueChange = {},
-            placeholder = { Text("$ram") },
-            singleLine = true,
-            readOnly = true,
-            shape = MaterialTheme.shapes.large,
-            modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-            keyboardActions = KeyboardActions(onNext = {
-                focusManager.moveFocus(
-                    FocusDirection.Down
-                )
-            }),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = md_theme_light_primaryContainer,
-                focusedLabelColor = md_theme_light_primaryContainer,
+            Text(
+                text = "Resolvido",
+                style = MaterialTheme.typography.bodyLarge
             )
-        )
-
-        Spacer(modifier = Modifier.padding(10.dp))
-
-        Text("Fonte: ", modifier = Modifier.align(Alignment.Start))
-
-        OutlinedTextField(
-            value = "$powerSupply",
-            onValueChange = {},
-            placeholder = { Text("$powerSupply") },
-            singleLine = true,
-            readOnly = true,
-            shape = MaterialTheme.shapes.large,
-            modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-            keyboardActions = KeyboardActions(onNext = {
-                focusManager.moveFocus(
-                    FocusDirection.Down
-                )
-            }),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = md_theme_light_primaryContainer,
-                focusedLabelColor = md_theme_light_primaryContainer,
-            )
-        )
-
+        }
     }
 
 }

@@ -152,7 +152,10 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
                 selected = urgentState,
                 onClick = {
                     urgentState = !urgentState
-                }
+                },
+                colors = RadioButtonDefaults.colors(
+                    selectedColor = md_theme_light_primary
+                )
             )
             Text(
                 text = "Urgente ?",

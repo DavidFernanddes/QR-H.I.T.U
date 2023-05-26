@@ -30,7 +30,7 @@ fun ScannerAdminInfoUpdate(navController: NavController, viewModel: ScannerViewM
     val (block, room, machine) = viewModel.myData.value.toString().split(",")
     val spec = seeDispositivo(block, room, machine)
     val focusManager = LocalFocusManager.current
-    val style = MaterialTheme.typography.bodyLarge
+    val style = MaterialTheme.typography.titleMedium
     val name = spec["Nome"]
     val processor = spec["Processador"]
     val ram = spec["Ram"]
@@ -65,11 +65,10 @@ fun ScannerAdminInfoUpdate(navController: NavController, viewModel: ScannerViewM
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Text("Processador: $processor", modifier = Modifier.align(Alignment.Start))
-
         OutlinedTextField(
             value = newProcessor,
             onValueChange = { newProcessor = it },
+            label = { Text("Processador: $processor") },
             singleLine = true,
             shape = MaterialTheme.shapes.large,
             modifier = Modifier.fillMaxWidth(),
@@ -81,12 +80,11 @@ fun ScannerAdminInfoUpdate(navController: NavController, viewModel: ScannerViewM
         )
 
         Spacer(modifier = Modifier.padding(10.dp))
-
-        Text("Ram: $ram", modifier = Modifier.align(Alignment.Start))
 
         OutlinedTextField(
             value = newRam,
             onValueChange = { newRam = it },
+            label = { Text("Ram: $ram") },
             singleLine = true,
             shape = MaterialTheme.shapes.large,
             modifier = Modifier.fillMaxWidth(),
@@ -99,11 +97,10 @@ fun ScannerAdminInfoUpdate(navController: NavController, viewModel: ScannerViewM
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Text("Fonte: $powerSupply", modifier = Modifier.align(Alignment.Start))
-
         OutlinedTextField(
             value = newPowerSupply,
             onValueChange = { newPowerSupply = it },
+            label = { Text("Fonte: $powerSupply") },
             singleLine = true,
             shape = MaterialTheme.shapes.large,
             modifier = Modifier.fillMaxWidth(),

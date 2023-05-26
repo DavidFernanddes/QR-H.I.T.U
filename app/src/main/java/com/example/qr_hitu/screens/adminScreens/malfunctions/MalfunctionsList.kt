@@ -121,7 +121,7 @@ fun MalfList(navController: NavController) {
                         )
                     }
                     if (item.urgent) {
-                        Icon(Icons.Filled.Error, "Urgent",)
+                        Icon(Icons.Filled.Error, "Urgent", tint = Color.Red)
                     }
                 }
             }

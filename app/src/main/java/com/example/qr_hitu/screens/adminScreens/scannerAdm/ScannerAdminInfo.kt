@@ -23,12 +23,12 @@ import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScannerAdminInfo(navController: NavController, viewModel: ScannerViewModel){
+fun ScannerAdminInfo(navController: NavController, viewModel: ScannerViewModel) {
 
     val (block, room, machine) = viewModel.myData.value.toString().split(",")
     val spec = seeDispositivo(block, room, machine)
     val focusManager = LocalFocusManager.current
-    val style = MaterialTheme.typography.bodyLarge
+    val style = MaterialTheme.typography.titleMedium
     val name = spec["Nome"]
     val processor = spec["Processador"]
     val ram = spec["Ram"]
@@ -62,64 +62,38 @@ fun ScannerAdminInfo(navController: NavController, viewModel: ScannerViewModel){
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Text("Processador: ", modifier = Modifier.align(Alignment.Start))
-
         OutlinedTextField(
             value = "$processor",
             onValueChange = {},
-            placeholder = { Text("$processor") },
+            label = { Text("Processador:") },
             singleLine = true,
             readOnly = true,
             shape = MaterialTheme.shapes.large,
             modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-            keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = md_theme_light_primaryContainer,
-                focusedLabelColor = md_theme_light_primaryContainer,
-            )
         )
 
         Spacer(modifier = Modifier.padding(10.dp))
-
-        Text("Ram: ", modifier = Modifier.align(Alignment.Start))
 
         OutlinedTextField(
             value = "$ram",
             onValueChange = {},
-            placeholder = { Text("$ram") },
+            label = { Text("Ram:") },
             singleLine = true,
             readOnly = true,
             shape = MaterialTheme.shapes.large,
             modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-            keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = md_theme_light_primaryContainer,
-                focusedLabelColor = md_theme_light_primaryContainer,
-            )
         )
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Text("Fonte: ", modifier = Modifier.align(Alignment.Start))
-
         OutlinedTextField(
             value = "$powerSupply",
             onValueChange = {},
-            placeholder = { Text("$powerSupply") },
+            placeholder = { Text("Fonte:") },
             singleLine = true,
             readOnly = true,
             shape = MaterialTheme.shapes.large,
             modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-            keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = md_theme_light_primaryContainer,
-                focusedLabelColor = md_theme_light_primaryContainer,
-            )
         )
-
     }
-
 }

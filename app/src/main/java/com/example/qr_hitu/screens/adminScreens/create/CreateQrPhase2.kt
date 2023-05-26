@@ -24,128 +24,132 @@ import com.example.qr_hitu.viewModels.ViewModel2
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun QrCreatePhase2(navController : NavController, viewModel : ViewModel2){
+fun QrCreatePhase2(navController: NavController, viewModel: ViewModel2) {
 
     var name by remember { mutableStateOf("") }
     var processor by remember { mutableStateOf("") }
     var ram by remember { mutableStateOf("") }
     var powerSupply by remember { mutableStateOf("") }
     val focusManager = LocalFocusManager.current
+    var enabled by remember { mutableStateOf(false) }
 
-Column(
-    horizontalAlignment = Alignment.CenterHorizontally,
-    modifier = Modifier
-        .fillMaxWidth()
-        .fillMaxHeight()
-        .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
-        .padding(horizontal = 16.dp)
-        .background(Color.White)
-) {
-    Spacer(modifier = Modifier.padding(20.dp))
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+            .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
+            .padding(horizontal = 16.dp)
+            .background(Color.White)
+    ) {
+        Spacer(modifier = Modifier.padding(20.dp))
 
-    Text(text = "Escreva as especificações", style = MaterialTheme.typography.titleMedium)
+        Text(text = "Escreva as especificações", style = MaterialTheme.typography.titleMedium)
 
-    Spacer(modifier = Modifier.padding(10.dp))
+        Spacer(modifier = Modifier.padding(10.dp))
 
-    OutlinedTextField(
-        value = name,
-        onValueChange = { name = it },
-        label = { Text("Nome") },
-        placeholder = { Text("Nome") },
-        singleLine = true,
-        shape = MaterialTheme.shapes.large,
-        modifier = Modifier.fillMaxWidth(),
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Text,
-            imeAction = ImeAction.Next
-        ),
-        keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = md_theme_light_primaryContainer,
-            focusedLabelColor = md_theme_light_primaryContainer
-        )
-    )
-
-    Spacer(modifier = Modifier.padding(10.dp))
-
-    OutlinedTextField(
-        value = processor,
-        onValueChange = { processor = it },
-        label = { Text("Processador") },
-        placeholder = { Text("Processador") },
-        singleLine = true,
-        shape = MaterialTheme.shapes.large,
-        modifier = Modifier.fillMaxWidth(),
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Text,
-            imeAction = ImeAction.Next
-        ),
-        keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = md_theme_light_primaryContainer,
-            focusedLabelColor = md_theme_light_primaryContainer
-        )
-    )
-
-    Spacer(modifier = Modifier.padding(10.dp))
-
-    OutlinedTextField(
-        value = ram,
-        onValueChange = { ram = it },
-        label = { Text("RAM") },
-        placeholder = { Text("RAM") },
-        singleLine = true,
-        shape = MaterialTheme.shapes.large,
-        modifier = Modifier.fillMaxWidth(),
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Text,
-            imeAction = ImeAction.Next
-        ),
-        keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = md_theme_light_primaryContainer,
-            focusedLabelColor = md_theme_light_primaryContainer
-        )
-    )
-
-    Spacer(modifier = Modifier.padding(10.dp))
-
-    OutlinedTextField(
-        value = powerSupply,
-        onValueChange = { powerSupply = it },
-        label = { Text("Fonte") },
-        placeholder = { Text("Fonte") },
-        singleLine = true,
-        shape = MaterialTheme.shapes.large,
-        modifier = Modifier.fillMaxWidth(),
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Text,
-            imeAction = ImeAction.Done
-        ),
-        keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = md_theme_light_primaryContainer,
-            focusedLabelColor = md_theme_light_primaryContainer
-        )
-    )
-
-    Spacer(modifier = Modifier.padding(10.dp))
-
-    if (name.isNotEmpty() && processor.isNotEmpty() && ram.isNotEmpty() && powerSupply.isNotEmpty()) {
-        Button(
-            onClick = {
-                viewModel.setMyData2(name, processor, ram, powerSupply)
-                navController.navigate(Create3.route)
-                      },
-            Modifier.fillMaxWidth().height(50.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = md_theme_light_primaryContainer,
-                contentColor = md_theme_light_onPrimaryContainer
+        OutlinedTextField(
+            value = name,
+            onValueChange = { name = it },
+            label = { Text("Nome") },
+            placeholder = { Text("Nome") },
+            singleLine = true,
+            shape = MaterialTheme.shapes.large,
+            modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next
+            ),
+            keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = md_theme_light_primaryContainer,
+                focusedLabelColor = md_theme_light_primaryContainer
             )
-        ) {
-            Text(text = "Continuar", style = MaterialTheme.typography.labelLarge)
-        }
-    }
-}
+        )
 
+        Spacer(modifier = Modifier.padding(10.dp))
+
+        OutlinedTextField(
+            value = processor,
+            onValueChange = { processor = it },
+            label = { Text("Processador") },
+            placeholder = { Text("Processador") },
+            singleLine = true,
+            shape = MaterialTheme.shapes.large,
+            modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next
+            ),
+            keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = md_theme_light_primaryContainer,
+                focusedLabelColor = md_theme_light_primaryContainer
+            )
+        )
+
+        Spacer(modifier = Modifier.padding(10.dp))
+
+        OutlinedTextField(
+            value = ram,
+            onValueChange = { ram = it },
+            label = { Text("RAM") },
+            placeholder = { Text("RAM") },
+            singleLine = true,
+            shape = MaterialTheme.shapes.large,
+            modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next
+            ),
+            keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = md_theme_light_primaryContainer,
+                focusedLabelColor = md_theme_light_primaryContainer
+            )
+        )
+
+        Spacer(modifier = Modifier.padding(10.dp))
+
+        OutlinedTextField(
+            value = powerSupply,
+            onValueChange = { powerSupply = it },
+            label = { Text("Fonte") },
+            placeholder = { Text("Fonte") },
+            singleLine = true,
+            shape = MaterialTheme.shapes.large,
+            modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Done
+            ),
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = md_theme_light_primaryContainer,
+                focusedLabelColor = md_theme_light_primaryContainer
+            )
+        )
+
+        Spacer(modifier = Modifier.padding(10.dp))
+
+        if (name.isNotEmpty() && processor.isNotEmpty() && ram.isNotEmpty() && powerSupply.isNotEmpty()) {
+            enabled = true
+        }
+            Button(
+                onClick = {
+                    viewModel.setMyData2(name, processor, ram, powerSupply)
+                    navController.navigate(Create3.route)
+                },
+                Modifier
+                    .fillMaxWidth()
+                    .height(50.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = md_theme_light_primaryContainer,
+                    contentColor = md_theme_light_onPrimaryContainer
+                ),
+                enabled = enabled
+            ) {
+                Text(text = "Continuar", style = MaterialTheme.typography.labelLarge)
+            }
+    }
 }
