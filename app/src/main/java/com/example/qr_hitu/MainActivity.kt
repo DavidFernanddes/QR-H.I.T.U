@@ -14,6 +14,7 @@ import com.example.qr_hitu.functions.ScaffoldLayouts
 import com.example.qr_hitu.functions.addDispositivo
 import com.example.qr_hitu.functions.delDispositivo
 import com.example.qr_hitu.functions.seeDispositivo
+import com.example.qr_hitu.screens.QrHituApp
 import com.example.qr_hitu.viewModels.ViewModel1
 import com.example.qr_hitu.viewModels.ViewModel2
 import com.example.qr_hitu.viewModels.ScannerViewModel
@@ -25,13 +26,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             QRHITUTheme {
-
-                val navController = rememberNavController()
-                val viewModel1 = viewModel<ViewModel1>()
-                val viewModel2 = viewModel<ViewModel2>()
-                val viewModelSA = viewModel<ScannerViewModel>()
-
-                ScaffoldLayouts(navController = navController, viewModel1, viewModel2, viewModelSA)
+                QrHituApp()
             }
         }
     }
