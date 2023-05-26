@@ -22,8 +22,8 @@ import com.example.qr_hitu.functions.addDispositivo
 import com.example.qr_hitu.functions.downloadQR
 import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
 import com.example.qr_hitu.theme.md_theme_light_primaryContainer
-import com.example.qr_hitu.viewModels.ViewModel1
-import com.example.qr_hitu.viewModels.ViewModel2
+import com.example.qr_hitu.ViewModels.ViewModel1
+import com.example.qr_hitu.ViewModels.ViewModel2
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

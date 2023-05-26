@@ -6,13 +6,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.qr_hitu.ViewModels.MalfunctionViewModel
 import com.example.qr_hitu.viewModels.ScannerViewModel
 import com.example.qr_hitu.screens.LoadingScreen
 import com.example.qr_hitu.screens.adminScreens.create.QrCreateFinal
 import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase1
 import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase2
-import com.example.qr_hitu.viewModels.ViewModel1
-import com.example.qr_hitu.viewModels.ViewModel2
+import com.example.qr_hitu.ViewModels.ViewModel1
+import com.example.qr_hitu.ViewModels.ViewModel2
 import com.example.qr_hitu.screens.adminScreens.malfunctions.MalfInfo
 import com.example.qr_hitu.screens.adminScreens.malfunctions.MalfList
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminInfo
@@ -33,6 +34,7 @@ fun QrHituNavHost(
     viewModel1: ViewModel1,
     viewModel2: ViewModel2,
     viewModelSA: ScannerViewModel,
+    viewModelMF: MalfunctionViewModel,
     modifier: Modifier
 ){
     NavHost(
@@ -49,7 +51,7 @@ fun QrHituNavHost(
             ScannerInput(navController = navController, viewModel = viewModelSA)
         }
         composable(MalfList.route){
-            MalfList(navController = navController)
+            MalfList(navController = navController, viewModel = viewModelMF)
         }
         composable(MalfInfo.route){
             MalfInfo(navController = navController)

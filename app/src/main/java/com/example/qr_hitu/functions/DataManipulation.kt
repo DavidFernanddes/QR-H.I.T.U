@@ -104,3 +104,27 @@ fun addMalfunction(
         .document("$room $machine")
         .set(data)
 }
+
+@Composable
+fun seeMalfunction(
+    name: String,
+    room: String
+): Map<String, Any> {
+
+    val collectionReference = db.collection("Avarias")
+        .document("$room $name")
+
+    val (data, setData) = remember { mutableStateOf(mapOf<String, Any>()) }
+
+    LaunchedEffect(collectionReference) {
+        try {
+            val documentSnapshot = collectionReference.get().await()
+            setData(documentSnapshot.data ?: mapOf())
+        } catch (e: Exception) {
+            Log.e("Firestore", "Error retrieving data", e)
+        }
+    }
+
+    return data
+
+}

@@ -16,6 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.qr_hitu.ViewModels.MalfunctionViewModel
 import com.example.qr_hitu.viewModels.ScannerViewModel
 import com.example.qr_hitu.components.Create1
 import com.example.qr_hitu.components.Create2
@@ -30,8 +31,8 @@ import com.example.qr_hitu.components.ScanProf
 import com.example.qr_hitu.components.ScannerAdminInfo
 import com.example.qr_hitu.components.ScannerAdminInfoUpdate
 import com.example.qr_hitu.components.SettingOptions
-import com.example.qr_hitu.viewModels.ViewModel1
-import com.example.qr_hitu.viewModels.ViewModel2
+import com.example.qr_hitu.ViewModels.ViewModel1
+import com.example.qr_hitu.ViewModels.ViewModel2
 import com.example.qr_hitu.components.*
 import com.example.qr_hitu.theme.*
 import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
@@ -42,7 +43,7 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewModel2: ViewModel2, viewModelSA : ScannerViewModel){
+fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewModel2: ViewModel2, viewModelSA : ScannerViewModel, viewModelMF : MalfunctionViewModel){
 
     val scaffoldState = rememberScaffoldState()
     val navController = rememberNavController()
@@ -75,6 +76,7 @@ fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewMo
                 viewModel1 = viewModel1,
                 viewModel2 = viewModel2,
                 viewModelSA = viewModelSA,
+                viewModelMF = viewModelMF,
                 modifier = Modifier.padding(innerPadding)
             )
 

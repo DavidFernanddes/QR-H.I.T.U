@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.qr_hitu.ViewModels.MalfunctionViewModel
 import com.example.qr_hitu.components.MalfInfo
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -66,7 +67,7 @@ private fun fetchDataFromFirestore(setList: (List<MalfunctionDocs>) -> Unit) {
 }
 
 @Composable
-fun MalfList(navController: NavController) {
+fun MalfList(navController: NavController, viewModel: MalfunctionViewModel) {
 
     val (list, setList) = remember { mutableStateOf<List<MalfunctionDocs>>(emptyList()) }
 
@@ -86,7 +87,7 @@ fun MalfList(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp)
-                    .clickable { navController.navigate(MalfInfo.route) },
+                    .clickable { navController.navigate(MalfInfo.route); viewModel.setSelectedMal(item.machine, item.room, item.urgent) },
                 shape = MaterialTheme.shapes.medium,
                 elevation = CardDefaults.cardElevation(defaultElevation = 7.dp),
                 colors = CardDefaults.cardColors(Color(0xFFd9d9d9))

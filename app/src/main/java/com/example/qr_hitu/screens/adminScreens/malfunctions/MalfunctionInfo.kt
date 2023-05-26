@@ -30,22 +30,32 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.qr_hitu.ViewModels.MalfunctionViewModel
+import com.example.qr_hitu.functions.seeDispositivo
+import com.example.qr_hitu.functions.seeMalfunction
 import com.example.qr_hitu.theme.md_theme_light_primary
 import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 
 @Composable
-fun MalfInfo(navController: NavController) {
+fun MalfInfo(navController: NavController, viewModel: MalfunctionViewModel) {
 
-    //val (block, room, machine) = viewModel.myData.value.toString().split(",")
-    //val spec = seeDispositivo(block, room, machine)
     val focusManager = LocalFocusManager.current
     val style = MaterialTheme.typography.titleMedium
     var completeState by remember { mutableStateOf(false) }
 
-    val name = "damn"//spec["Nome"]
-    val processor = "damn"//spec["Processador"]
-    val ram = "damn"//spec["Ram"]
-    val powerSupply = "damn"//spec["Fonte"]
+    val room = viewModel.myData.value!!.room
+    val urgent = viewModel.myData.value!!.urgent
+    val machine = viewModel.myData.value!!.name
+
+    val malf = seeMalfunction(machine, room)
+    val malfDesc = malf["Avaria"]
+    val block = malf["Bloco"].toString()
+    val senderMail = malf["Email"]
+
+    val spec = seeDispositivo(block, room, machine)
+    val processor = spec["Processador"]
+    val ram = spec["Ram"]
+    val powerSupply = spec["Fonte"]
     val scrollState = rememberScrollState()
 
 
@@ -87,7 +97,7 @@ fun MalfInfo(navController: NavController) {
 
             Spacer(modifier = Modifier.padding(30.dp))
 
-            Text("Especificações: $name", style = MaterialTheme.typography.titleMedium)
+            Text("Especificações: $machine", style = MaterialTheme.typography.titleMedium)
 
             Spacer(modifier = Modifier.padding(10.dp))
 
