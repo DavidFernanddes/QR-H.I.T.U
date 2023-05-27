@@ -15,6 +15,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.functions.CreateQR
@@ -24,6 +25,10 @@ import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
 import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 import com.example.qr_hitu.ViewModels.ViewModel1
 import com.example.qr_hitu.ViewModels.ViewModel2
+import com.example.qr_hitu.screens.profScreens.malfunctionExists
+import com.example.qr_hitu.theme.md_theme_light_primary
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -31,6 +36,8 @@ fun QrCreateFinal(navController: NavController, viewModel1 : ViewModel1, viewMod
 
     var content by remember{ mutableStateOf("") }
     var qrName by remember { mutableStateOf("") }
+    val showState = remember { mutableStateOf(false) }
+    val show by rememberUpdatedState(showState.value)
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
 
@@ -58,7 +65,16 @@ fun QrCreateFinal(navController: NavController, viewModel1 : ViewModel1, viewMod
 
         if (myData != null) {
             content = "${myData.block},${myData.room},${myData.machine}"
-            addDispositivo(myData.block, myData.room, myData.machine, spec)
+            qrExists(myData.block, myData.room, myData.machine) { exists ->
+                if(!exists){
+                    addDispositivo(myData.block, myData.room, myData.machine, spec)
+                } else {
+                    showState.value = true
+                }
+            }
+        }
+        if(show){
+            ExistsDialog (onDialogDismissed = { showState.value = false })
         }
 
         CreateQR(content)
@@ -83,8 +99,10 @@ fun QrCreateFinal(navController: NavController, viewModel1 : ViewModel1, viewMod
 
         Spacer(modifier = Modifier.height(30.dp))
 
-        Button(onClick = { downloadQR(content, qrName, context) },
-            Modifier.fillMaxWidth().height(50.dp),
+        Button(onClick = { downloadQR(content, qrName) },
+            Modifier
+                .fillMaxWidth()
+                .height(50.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = md_theme_light_primaryContainer,
                 contentColor = md_theme_light_onPrimaryContainer
@@ -94,4 +112,48 @@ fun QrCreateFinal(navController: NavController, viewModel1 : ViewModel1, viewMod
         }
     }
 
+}
+
+fun qrExists(block: String, room: String, machine: String, onComplete: (Boolean) -> Unit) {
+    val firestore = Firebase.firestore.collection("Inventário")
+
+    firestore.document(block)
+        .collection(room)
+        .document(machine)
+        .get()
+        .addOnSuccessListener { documentSnapshot ->
+            val exists = documentSnapshot.exists()
+            onComplete(exists)
+        }
+        .addOnFailureListener {
+            onComplete(false)
+        }
+}
+
+@Composable
+fun ExistsDialog(onDialogDismissed: () -> Unit) {
+    val openDialog = remember { mutableStateOf(true) }
+
+    if (openDialog.value) {
+        AlertDialog(
+            onDismissRequest = { openDialog.value = false; onDialogDismissed() },
+            title = {
+                Text(
+                    text = "Qr já existente",
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.headlineSmall
+                )
+            },
+            text = {
+                Text(text = "Deseja continuar a ação ?", style = MaterialTheme.typography.bodyMedium)
+            },
+            confirmButton= {
+                TextButton(onClick = { openDialog.value = false; onDialogDismissed(); }) {
+                    Text(text = "OK", style = MaterialTheme.typography.labelLarge, color = md_theme_light_primary)
+                }
+            },
+            textContentColor = md_theme_light_primaryContainer,
+            titleContentColor = md_theme_light_primary
+        )
+    }
 }

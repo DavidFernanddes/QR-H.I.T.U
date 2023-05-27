@@ -30,7 +30,7 @@ fun CreateQR(content: String){
     }
 }
 
-fun downloadQR(content: String, qrName: String, context: Context){
+fun downloadQR(content: String, qrName: String){
 
     val barcodeEncoder = BarcodeEncoder()
     val bitmap = barcodeEncoder.encodeBitmap(content, BarcodeFormat.QR_CODE, 512, 512)
