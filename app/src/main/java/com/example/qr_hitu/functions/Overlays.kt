@@ -17,7 +17,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.qr_hitu.ViewModels.MalfunctionViewModel
-import com.example.qr_hitu.viewModels.ScannerViewModel
+import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.components.Create1
 import com.example.qr_hitu.components.Create2
 import com.example.qr_hitu.components.Create3

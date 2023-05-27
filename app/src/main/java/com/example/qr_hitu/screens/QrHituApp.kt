@@ -5,7 +5,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.example.qr_hitu.ViewModels.MalfunctionViewModel
 import com.example.qr_hitu.functions.ScaffoldLayouts
-import com.example.qr_hitu.viewModels.ScannerViewModel
+import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.ViewModels.ViewModel1
 import com.example.qr_hitu.ViewModels.ViewModel2
 

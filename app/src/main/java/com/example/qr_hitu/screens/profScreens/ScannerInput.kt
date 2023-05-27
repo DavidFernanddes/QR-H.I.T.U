@@ -24,12 +24,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
-import com.example.qr_hitu.viewModels.ScannerViewModel
 import com.example.qr_hitu.functions.addMalfunction
 import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
 import com.example.qr_hitu.theme.md_theme_light_primary
 import com.example.qr_hitu.theme.md_theme_light_primaryContainer
+import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,6 +43,8 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
     var urgentState by remember { mutableStateOf(false) }
     val showState = remember { mutableStateOf(false) }
     val show by rememberUpdatedState(showState.value)
+    val showState1 = remember { mutableStateOf(false) }
+    val show1 by rememberUpdatedState(showState1.value)
     val errState = remember { mutableStateOf(false) }
     val err by rememberUpdatedState(errState.value)
     val defaultOptions = listOf(
@@ -75,7 +78,7 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
         Spacer(modifier = Modifier.padding(20.dp))
 
         Text(text = "Qual o problema ?", style = MaterialTheme.typography.titleMedium)
-        
+
         Spacer(modifier = Modifier.padding(10.dp))
 
         ExposedDropdownMenuBox(
@@ -169,26 +172,34 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
 
             Button(
                 onClick = {
-                    when (malfunction) {
-                        "Outro" -> {
-                            when (outro) {
-                                "" -> {
-                                    showState.value = true
-                                    errState.value = true
+                    malfunctionExists(room, machine) { exists ->
+                        if(!exists){
+                            when (malfunction) {
+                                "Outro" -> {
+                                    when (outro) {
+                                        "" -> {
+                                            showState.value = true
+                                            errState.value = true
+                                        }
+                                        else -> {
+                                            showState.value = true
+                                            addMalfunction(block, room,machine,outro, urgentState, email)
+                                        }
+                                    }
                                 }
                                 else -> {
                                     showState.value = true
-                                    addMalfunction(block, room,machine,outro, urgentState, email)
+                                    addMalfunction(block,room,machine,malfunction, urgentState, email)
                                 }
                             }
-                        }
-                        else -> {
-                            showState.value = true
-                            addMalfunction(block,room,machine,malfunction, urgentState, email)
+                        } else {
+                            showState1.value = true
                         }
                     }
                 },
-                modifier = Modifier.fillMaxWidth().height(50.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = md_theme_light_primaryContainer,
                     contentColor = md_theme_light_onPrimaryContainer
@@ -197,11 +208,25 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
                 Text("Enviar", style = MaterialTheme.typography.labelLarge)
             }
         }
-
-        if(show) {
-            Dialog(error = err, onDialogDismissed = { showState.value = false; errState.value = false })
+        when{
+            show -> Dialog(error = err, onDialogDismissed = { showState.value = false; errState.value = false })
+            show1 -> ExistsDialog( onDialogDismissed = { showState1.value = false })
         }
     }
+}
+
+fun malfunctionExists(room: String, machine: String, onComplete: (Boolean) -> Unit) {
+    val firestore = Firebase.firestore.collection("Avarias")
+
+    firestore.document("$room $machine")
+        .get()
+        .addOnSuccessListener { documentSnapshot ->
+            val exists = documentSnapshot.exists()
+            onComplete(exists)
+        }
+        .addOnFailureListener {
+            onComplete(false)
+        }
 }
 
 @Composable
@@ -252,5 +277,33 @@ fun Dialog(error: Boolean, onDialogDismissed: () -> Unit) {
                 titleContentColor = md_theme_light_primary
             )
         }
+    }
+}
+
+@Composable
+fun ExistsDialog(onDialogDismissed: () -> Unit) {
+    val openDialog = remember { mutableStateOf(true) }
+
+    if (openDialog.value) {
+            AlertDialog(
+                onDismissRequest = { openDialog.value = false; onDialogDismissed() },
+                title = {
+                    Text(
+                        text = "Avaria já existente",
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.headlineSmall
+                    )
+                },
+                text = {
+                    Text(text = "Iremos resolver a avaria o mais rápido possivel", style = MaterialTheme.typography.bodyMedium)
+                },
+                confirmButton= {
+                    TextButton(onClick = { openDialog.value = false; onDialogDismissed() }) {
+                        Text(text = "OK", style = MaterialTheme.typography.labelLarge, color = md_theme_light_primary)
+                    }
+                },
+                textContentColor = md_theme_light_primaryContainer,
+                titleContentColor = md_theme_light_primary
+            )
     }
 }

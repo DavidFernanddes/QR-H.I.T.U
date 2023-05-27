@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.qr_hitu.ViewModels.MalfunctionViewModel
-import com.example.qr_hitu.viewModels.ScannerViewModel
+import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.screens.LoadingScreen
 import com.example.qr_hitu.screens.adminScreens.create.QrCreateFinal
 import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase1
