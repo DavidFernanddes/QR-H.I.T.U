@@ -54,7 +54,7 @@ fun QrHituNavHost(
             MalfList(navController = navController, viewModel = viewModelMF)
         }
         composable(MalfInfo.route){
-            MalfInfo(navController = navController)
+            MalfInfo(navController = navController, viewModel = viewModelMF)
         }
         composable(Create1.route){
             QrCreatePhase1(navController = navController, viewModel = viewModel1)

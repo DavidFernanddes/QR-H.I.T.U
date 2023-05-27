@@ -108,7 +108,7 @@ fun addMalfunction(
 @Composable
 fun seeMalfunction(
     name: String,
-    room: String
+    room: String,
 ): Map<String, Any> {
 
     val collectionReference = db.collection("Avarias")

@@ -37,6 +37,7 @@ import com.google.firebase.ktx.Firebase
 data class MalfunctionDocs(
     val machine: String,
     val room: String,
+    val block: String,
     val urgent: Boolean,
 )
 
@@ -48,10 +49,11 @@ private fun fetchDataFromFirestore(setList: (List<MalfunctionDocs>) -> Unit) {
             val itemList = documents.mapNotNull { document ->
                 val machine = document.getString("Dispositivo")
                 val room = document.getString("Sala")
+                val block = document.getString("Bloco")
                 val urgent = document.getBoolean("Urgente")
 
-                if (machine != null && room != null && urgent != null) {
-                    MalfunctionDocs(machine, room, urgent)
+                if (machine != null && room != null && block != null && urgent != null) {
+                    MalfunctionDocs(machine, room, block, urgent)
                 } else {
                     null
                 }
@@ -87,7 +89,7 @@ fun MalfList(navController: NavController, viewModel: MalfunctionViewModel) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp)
-                    .clickable { navController.navigate(MalfInfo.route); viewModel.setSelectedMal(item.machine, item.room, item.urgent) },
+                    .clickable { navController.navigate(MalfInfo.route); viewModel.setSelectedMal(item.machine, item.room, item.block, item.urgent) },
                 shape = MaterialTheme.shapes.medium,
                 elevation = CardDefaults.cardElevation(defaultElevation = 7.dp),
                 colors = CardDefaults.cardColors(Color(0xFFd9d9d9))

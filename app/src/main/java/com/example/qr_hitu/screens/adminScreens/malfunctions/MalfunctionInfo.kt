@@ -39,17 +39,16 @@ import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 @Composable
 fun MalfInfo(navController: NavController, viewModel: MalfunctionViewModel) {
 
-    val focusManager = LocalFocusManager.current
     val style = MaterialTheme.typography.titleMedium
     var completeState by remember { mutableStateOf(false) }
 
     val room = viewModel.myData.value!!.room
     val urgent = viewModel.myData.value!!.urgent
     val machine = viewModel.myData.value!!.name
+    val block = viewModel.myData.value!!.block
 
     val malf = seeMalfunction(machine, room)
     val malfDesc = malf["Avaria"]
-    val block = malf["Bloco"].toString()
     val senderMail = malf["Email"]
 
     val spec = seeDispositivo(block, room, machine)
@@ -83,7 +82,7 @@ fun MalfInfo(navController: NavController, viewModel: MalfunctionViewModel) {
             Spacer(modifier = Modifier.padding(30.dp))
 
             OutlinedTextField(
-                value = "I got problems",
+                value = "$malfDesc",
                 onValueChange = {},
                 readOnly = true,
                 label = { Text("Avaria:") },
