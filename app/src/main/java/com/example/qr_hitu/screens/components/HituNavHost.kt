@@ -20,8 +20,10 @@ import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminScreen
 import com.example.qr_hitu.screens.login.LoginScreen
 import com.example.qr_hitu.screens.menu.Manual
 import com.example.qr_hitu.screens.menu.SettingsOptions
-import com.example.qr_hitu.screens.profScreens.ScannerInput
-import com.example.qr_hitu.screens.profScreens.ScannerTeachScreen
+import com.example.qr_hitu.screens.profScreens.MissingQR.MQRLocal
+import com.example.qr_hitu.screens.profScreens.PrimaryChoice
+import com.example.qr_hitu.screens.profScreens.Scanner.ScannerInput
+import com.example.qr_hitu.screens.profScreens.Scanner.ScannerTeachScreen
 import com.google.firebase.firestore.FirebaseFirestore
 
 
@@ -76,6 +78,12 @@ fun QrHituNavHost(
         }
         composable(Loading.route){
             LoadingScreen(navController = navController)
+        }
+        composable(PrimaryChoice.route){
+            PrimaryChoice(navController = navController)
+        }
+        composable(MQRLocal.route){
+            MQRLocal(navController = navController, viewModel = viewModel1)
         }
     }
 }

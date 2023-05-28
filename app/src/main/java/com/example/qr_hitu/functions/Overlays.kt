@@ -41,7 +41,7 @@ fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewMo
                 destinationRoute.contains(MalfList.route) || destinationRoute.contains(ScanAdmin.route) || destinationRoute.contains(Create1.route) -> TopBar1(navController = navController)
                 destinationRoute.contains(Create2.route) -> TopBar2(navController = navController)
                 destinationRoute.contains(Create3.route) -> TopBar3(navController = navController)
-                destinationRoute.contains(ScanProf.route) || destinationRoute.contains(ScanInput.route) -> TopBarUser(navController = navController)
+                destinationRoute.contains(ScanProf.route) || destinationRoute.contains(ScanInput.route) || destinationRoute.contains(PrimaryChoice.route) -> TopBarUser(navController = navController)
                 destinationRoute.contains(SettingOptions.route) || destinationRoute.contains(Manual.route) -> TopBarUni(navController = navController)
             }
         },
@@ -50,7 +50,7 @@ fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewMo
             when{
                 destinationRoute.contains(MalfList.route) || destinationRoute.contains(ScanAdmin.route) || destinationRoute.contains(Create1.route) -> BottomBar(navController = navController)
                 destinationRoute.contains(Create2.route) || destinationRoute.contains(Create3.route) -> EmptyBottomBar(navController = navController)
-                destinationRoute.contains(ScanInput.route) -> EmptyBottomBar(navController = navController)
+                destinationRoute.contains(ScanInput.route) || destinationRoute.contains(PrimaryChoice.route) -> EmptyBottomBar(navController = navController)
             }
 
         },

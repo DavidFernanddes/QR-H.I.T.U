@@ -30,6 +30,7 @@ import androidx.navigation.NavController
 import com.example.qr_hitu.R
 import com.example.qr_hitu.screens.components.Loading
 import com.example.qr_hitu.screens.components.MalfList
+import com.example.qr_hitu.screens.components.PrimaryChoice
 import com.example.qr_hitu.screens.components.ScanProf
 import com.example.qr_hitu.screens.theme.md_theme_light_onPrimaryContainer
 import com.example.qr_hitu.screens.theme.md_theme_light_primaryContainer
@@ -46,22 +47,22 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
-suspend fun performVerification(db: CollectionReference, uid: String?): DocumentSnapshot {
+suspend fun performVerification(db: CollectionReference, email: String?): DocumentSnapshot {
     return withContext(Dispatchers.IO) {
-        return@withContext db.document("$uid").get().await()
+        return@withContext db.document("$email").get().await()
     }
 }
-fun loginVerify(navController: NavController, db: CollectionReference, uid: String?){
+fun loginVerify(navController: NavController, db: CollectionReference, email: String?){
     CoroutineScope(Dispatchers.Main).launch {
         delay(1500)
         // Perform the verification in the background using suspend functions
-        val result = performVerification(db, uid)
+        val result = performVerification(db, email)
 
         // Navigate to the appropriate screen based on the verification result
         if (result.exists()) {
             navController.navigate(MalfList.route)
         } else {
-            navController.navigate(ScanProf.route)
+            navController.navigate(PrimaryChoice.route)
         }
     }
 }
@@ -81,12 +82,12 @@ fun LoginScreen(navController: NavController, firestore: FirebaseFirestore) {
 
     scope.launch {
         val db = Firebase.firestore.collection("Admin")
-        val uid = Firebase.auth.currentUser?.uid
+        val email = Firebase.auth.currentUser?.email
         delay(500)
 
         if (Firebase.auth.currentUser != null) {
             navController.navigate(Loading.route)
-            loginVerify(navController, db, uid)
+            loginVerify(navController, db, email)
         }
     }
 

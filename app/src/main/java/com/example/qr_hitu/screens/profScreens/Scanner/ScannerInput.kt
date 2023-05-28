@@ -1,4 +1,4 @@
-package com.example.qr_hitu.screens.profScreens
+package com.example.qr_hitu.screens.profScreens.Scanner
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

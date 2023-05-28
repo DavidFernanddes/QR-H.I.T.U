@@ -56,3 +56,11 @@ object  Manual: HituDestination {
 object  Loading: HituDestination {
     override val route = "loading"
 }
+
+object  PrimaryChoice: HituDestination {
+    override val route = "primary_choice"
+}
+
+object MQRLocal: HituDestination {
+    override val route = "missQR_Local"
+}
