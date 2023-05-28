@@ -18,9 +18,10 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
-import com.example.qr_hitu.screens.components.Create2
-import com.example.qr_hitu.screens.theme.md_theme_light_onPrimaryContainer
-import com.example.qr_hitu.screens.theme.md_theme_light_primaryContainer
+import com.example.qr_hitu.components.Create2
+import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
+import com.example.qr_hitu.theme.md_theme_light_primaryContainer
+import com.example.qr_hitu.ViewModels.ViewModel1
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -31,7 +32,7 @@ fun QrCreatePhase1(navController: NavController, viewModel : ViewModel1) {
     var expanded3 by remember { mutableStateOf(false) }
     var expanded2 by remember { mutableStateOf(false) }
     var expanded by remember { mutableStateOf(false) }
-
+    var enabled by remember { mutableStateOf(false) }
 
     val blocks = listOf("Bloco A", "Bloco B", "Bloco C", "Bloco D", "Bloco E")
     var rooms by remember { mutableStateOf(listOf<String>()) }
@@ -94,9 +95,9 @@ fun QrCreatePhase1(navController: NavController, viewModel : ViewModel1) {
                 trailingIcon = {
                     Icon(icon, "", Modifier.clickable { expanded = !expanded })
                 },
-                colors = TextFieldDefaults.outlinedTextFieldColors(
+                colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = md_theme_light_primaryContainer,
-                    focusedLabelColor = md_theme_light_primaryContainer
+                    focusedLabelColor = md_theme_light_primaryContainer,
                 )
             )
             ExposedDropdownMenu(
@@ -222,20 +223,22 @@ fun QrCreatePhase1(navController: NavController, viewModel : ViewModel1) {
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        if(selectedMachine.isNotEmpty()) {
+        if(selectedMachine.isNotEmpty() ) {
+            enabled = true
+        }
             Button(
                 onClick = {
                     viewModel.setMyData1(selectedBlock, selectedRoom, selectedMachine)
                     navController.navigate(Create2.route) },
-                Modifier.fillMaxWidth(),
+                Modifier.fillMaxWidth().height(50.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = md_theme_light_primaryContainer,
                     contentColor = md_theme_light_onPrimaryContainer
-                )
+                ),
+                enabled = enabled
             ) {
-                Text(text = "Continuar", style = MaterialTheme.typography.bodyLarge)
+                Text(text = "Continuar", style = MaterialTheme.typography.labelLarge)
             }
-        }
     }
 }
 

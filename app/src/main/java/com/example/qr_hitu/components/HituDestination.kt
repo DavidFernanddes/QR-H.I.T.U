@@ -1,4 +1,4 @@
-package com.example.qr_hitu.screens.components
+package com.example.qr_hitu.components
 
 
 interface HituDestination {
@@ -19,6 +19,10 @@ object  ScanInput: HituDestination {
 
 object  MalfList: HituDestination {
     override val route = "malfunctions_list"
+}
+
+object  MalfInfo: HituDestination {
+    override val route = "malfunctions_info"
 }
 
 object  Create1: HituDestination {

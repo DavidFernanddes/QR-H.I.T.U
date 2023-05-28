@@ -1,4 +1,4 @@
-package com.example.qr_hitu.screens.adminScreens.create
+package com.example.qr_hitu.ViewModels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -20,15 +20,17 @@ import androidx.navigation.NavController
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.functions.addDispositivo
 import com.example.qr_hitu.functions.seeDispositivo
+import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
+import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScannerAdminInfoUpdate(navController: NavController, viewModel: ScannerViewModel){
+fun ScannerAdminInfoUpdate(navController: NavController, viewModel: ScannerViewModel) {
 
     val (block, room, machine) = viewModel.myData.value.toString().split(",")
     val spec = seeDispositivo(block, room, machine)
     val focusManager = LocalFocusManager.current
-    val style = MaterialTheme.typography.bodyLarge
+    val style = MaterialTheme.typography.titleMedium
     val name = spec["Nome"]
     val processor = spec["Processador"]
     val ram = spec["Ram"]
@@ -57,76 +59,87 @@ fun ScannerAdminInfoUpdate(navController: NavController, viewModel: ScannerViewM
             Text("Máquina: $machine", style = style)
         }
 
-        Spacer(modifier = Modifier.padding(40.dp))
+        Spacer(modifier = Modifier.padding(30.dp))
 
         Text("Especificações: $name", style = MaterialTheme.typography.titleMedium)
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Text("Processador: $processor", modifier = Modifier.align(Alignment.Start))
-
         OutlinedTextField(
             value = newProcessor,
-            onValueChange = {newProcessor = it},
+            onValueChange = { newProcessor = it },
+            label = { Text("Processador: $processor") },
             singleLine = true,
             shape = MaterialTheme.shapes.large,
             modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next
+            ),
             keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) })
         )
 
         Spacer(modifier = Modifier.padding(10.dp))
-
-        Text("Ram: $ram", modifier = Modifier.align(Alignment.Start))
 
         OutlinedTextField(
             value = newRam,
-            onValueChange = {newRam = it},
+            onValueChange = { newRam = it },
+            label = { Text("Ram: $ram") },
             singleLine = true,
             shape = MaterialTheme.shapes.large,
             modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Next),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next
+            ),
             keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) })
         )
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Text("Fonte: $powerSupply", modifier = Modifier.align(Alignment.Start))
-
         OutlinedTextField(
             value = newPowerSupply,
-            onValueChange = {newPowerSupply = it},
+            onValueChange = { newPowerSupply = it },
+            label = { Text("Fonte: $powerSupply") },
             singleLine = true,
             shape = MaterialTheme.shapes.large,
             modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Done),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Done
+            ),
             keyboardActions = KeyboardActions(onNext = { focusManager.clearFocus() })
         )
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Button(onClick = {
-            if(newProcessor == ""){
-                newProcessor = "$processor"
-            }
-            if(newRam == ""){
-                newRam = "$ram"
-            }
-            if(newPowerSupply == ""){
-                newPowerSupply = "$powerSupply"
-            }
-            addDispositivo(
-                block,
-                room,
-                machine,
-                hashMapOf(
-                    "Nome" to "$name",
-                    "Processador" to newProcessor,
-                    "Ram" to newRam,
-                    "Fonte" to newPowerSupply
+        Button(
+            onClick = {
+                when{
+                    newProcessor == "" -> newProcessor = "$processor"
+                    newRam == "" -> newRam = "$ram"
+                    newPowerSupply == "" -> newPowerSupply = "$powerSupply"
+                }
+                addDispositivo(
+                    block,
+                    room,
+                    machine,
+                    hashMapOf(
+                        "Nome" to "$name",
+                        "Processador" to newProcessor,
+                        "Ram" to newRam,
+                        "Fonte" to newPowerSupply
+                    )
                 )
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = md_theme_light_primaryContainer,
+                contentColor = md_theme_light_onPrimaryContainer
             )
-        }) {
+        ) {
             Text(text = "Atualizar", style = MaterialTheme.typography.bodyLarge)
         }
     }

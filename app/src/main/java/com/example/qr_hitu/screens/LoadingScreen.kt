@@ -29,7 +29,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.R
-import com.example.qr_hitu.screens.theme.md_theme_light_primary
+import com.example.qr_hitu.theme.md_theme_light_primary
 
 //TODO List and its contents
 @Composable

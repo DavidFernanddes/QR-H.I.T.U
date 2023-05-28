@@ -1,4 +1,4 @@
-package com.example.qr_hitu.screens.components
+package com.example.qr_hitu.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -6,14 +6,16 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.qr_hitu.ViewModels.MalfunctionViewModel
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.screens.LoadingScreen
 import com.example.qr_hitu.screens.adminScreens.create.QrCreateFinal
 import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase1
 import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase2
-import com.example.qr_hitu.screens.adminScreens.create.ViewModel1
-import com.example.qr_hitu.screens.adminScreens.create.ViewModel2
-import com.example.qr_hitu.screens.adminScreens.malfList.MalfList
+import com.example.qr_hitu.ViewModels.ViewModel1
+import com.example.qr_hitu.ViewModels.ViewModel2
+import com.example.qr_hitu.screens.adminScreens.malfunctions.MalfInfo
+import com.example.qr_hitu.screens.adminScreens.malfunctions.MalfList
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminInfo
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminInfoUpdate
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminScreen
@@ -34,6 +36,7 @@ fun QrHituNavHost(
     viewModel1: ViewModel1,
     viewModel2: ViewModel2,
     viewModelSA: ScannerViewModel,
+    viewModelMF: MalfunctionViewModel,
     modifier: Modifier
 ){
     NavHost(
@@ -50,7 +53,10 @@ fun QrHituNavHost(
             ScannerInput(navController = navController, viewModel = viewModelSA)
         }
         composable(MalfList.route){
-            MalfList(navController = navController)
+            MalfList(navController = navController, viewModel = viewModelMF)
+        }
+        composable(MalfInfo.route){
+            MalfInfo(navController = navController, viewModel = viewModelMF)
         }
         composable(Create1.route){
             QrCreatePhase1(navController = navController, viewModel = viewModel1)
