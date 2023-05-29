@@ -30,7 +30,7 @@ import androidx.navigation.NavController
 import com.example.qr_hitu.R
 import com.example.qr_hitu.components.Loading
 import com.example.qr_hitu.components.MalfList
-import com.example.qr_hitu.components.PrimaryChoice
+import com.example.qr_hitu.components.UserChoices
 import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
 import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 import com.google.firebase.auth.ktx.auth
@@ -61,7 +61,7 @@ fun loginVerify(navController: NavController, db: CollectionReference, email: St
         if (result.exists()) {
             navController.navigate(MalfList.route)
         } else {
-            navController.navigate(PrimaryChoice.route)
+            navController.navigate(UserChoices.route)
         }
     }
 }

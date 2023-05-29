@@ -24,11 +24,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
+import com.example.qr_hitu.ViewModels.ScannerViewModel
+import com.example.qr_hitu.components.UserChoices
 import com.example.qr_hitu.functions.addMalfunction
 import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
 import com.example.qr_hitu.theme.md_theme_light_primary
 import com.example.qr_hitu.theme.md_theme_light_primaryContainer
-import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -192,6 +193,7 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
                                     addMalfunction(block,room,machine,malfunction, urgentState, email)
                                 }
                             }
+                            navController.navigate(UserChoices.route)
                         } else {
                             showState1.value = true
                         }
@@ -210,7 +212,7 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
         }
         when{
             show -> Dialog(error = err, onDialogDismissed = { showState.value = false; errState.value = false })
-            show1 -> ExistsDialog( onDialogDismissed = { showState1.value = false })
+            show1 -> ExistsDialog( onDialogDismissed = { showState1.value = false; navController.navigate(UserChoices.route) })
         }
     }
 }

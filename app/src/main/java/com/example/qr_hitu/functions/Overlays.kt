@@ -1,6 +1,5 @@
 package com.example.qr_hitu.functions
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -18,25 +17,10 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.qr_hitu.ViewModels.MalfunctionViewModel
 import com.example.qr_hitu.ViewModels.ScannerViewModel
-import com.example.qr_hitu.components.Create1
-import com.example.qr_hitu.components.Create2
-import com.example.qr_hitu.components.Create3
-import com.example.qr_hitu.components.Login
-import com.example.qr_hitu.components.MalfList
-import com.example.qr_hitu.components.Manual
-import com.example.qr_hitu.components.QrHituNavHost
-import com.example.qr_hitu.components.ScanAdmin
-import com.example.qr_hitu.components.ScanInput
-import com.example.qr_hitu.components.ScanProf
-import com.example.qr_hitu.components.ScannerAdminInfo
-import com.example.qr_hitu.components.ScannerAdminInfoUpdate
-import com.example.qr_hitu.components.SettingOptions
 import com.example.qr_hitu.ViewModels.ViewModel1
 import com.example.qr_hitu.ViewModels.ViewModel2
 import com.example.qr_hitu.components.*
 import com.example.qr_hitu.theme.*
-import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
-import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
@@ -55,19 +39,21 @@ fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewMo
         topBar = {
             when {
                 destinationRoute.contains(ScannerAdminInfo.route) -> TopBar4(navController = navController, viewModelSA)
-                destinationRoute.contains(MalfList.route) || destinationRoute.contains(ScanAdmin.route) || destinationRoute.contains(Create1.route) -> TopBar1(navController = navController)
+                destinationRoute.contains(MalfList.route) || destinationRoute.contains(ScanAdmin.route) || destinationRoute.contains(AdminChoices.route) -> TopBar1(navController = navController)
+                destinationRoute.contains(Create1.route) -> TopBar5(navController = navController)
                 destinationRoute.contains(Create2.route) -> TopBar2(navController = navController)
                 destinationRoute.contains(Create3.route) -> TopBar3(navController = navController)
-                destinationRoute.contains(ScanProf.route) || destinationRoute.contains(ScanInput.route) || destinationRoute.contains(PrimaryChoice.route) -> TopBarUser(navController = navController)
+                destinationRoute.contains(UserChoices.route) -> TopBarUser1(navController = navController)
+                destinationRoute.contains(ScanProf.route) || destinationRoute.contains(MQRLocal.route) -> TopBarUser2(navController = navController)
+                destinationRoute.contains(ScanInput.route) -> TopBarUser3(navController = navController)
                 destinationRoute.contains(SettingOptions.route) || destinationRoute.contains(Manual.route) || destinationRoute.contains(MalfInfo.route) -> TopBarUni(navController = navController)
+
             }
         },
         bottomBar = {
-
             when{
-                destinationRoute.contains(MalfList.route) || destinationRoute.contains(ScanAdmin.route) || destinationRoute.contains(Create1.route) -> BottomBar(navController = navController)
+                destinationRoute.contains(MalfList.route) || destinationRoute.contains(ScanAdmin.route) || destinationRoute.contains(AdminChoices.route) -> BottomBar(navController = navController)
             }
-
         },
         scaffoldState = scaffoldState,
     ) { innerPadding ->
@@ -83,7 +69,7 @@ fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewMo
     }
 
 }
-@SuppressLint("SuspiciousIndentation")
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBar1(navController: NavController){
@@ -162,7 +148,24 @@ fun TopBar4(navController: NavController, viewModel: ScannerViewModel){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBarUser(navController: NavController){
+fun TopBar5(navController: NavController){
+    TopAppBar(
+        title = { Text(text = "Admin", color = md_theme_light_onPrimaryContainer) },
+        colors = topAppBarColors(md_theme_light_primaryContainer),
+        navigationIcon = {
+            MenuOptions(navController = navController)
+        },
+        actions = {
+            IconButton(onClick = { navController.popBackStack() }) {
+                Icon(Icons.Filled.ArrowBack ,"Back", tint = md_theme_light_onPrimaryContainer)
+            }
+        }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TopBarUser1(navController: NavController){
 
     TopAppBar(
         title = { Text(text = "*Nome do Professor*", color = md_theme_light_onPrimaryContainer) },
@@ -171,7 +174,41 @@ fun TopBarUser(navController: NavController){
            MenuOptions(navController = navController)
         }
     )
+}
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TopBarUser2(navController: NavController){
+
+    TopAppBar(
+        title = { Text(text = "*Nome do Professor*", color = md_theme_light_onPrimaryContainer) },
+        colors = topAppBarColors(md_theme_light_primaryContainer),
+        navigationIcon = {
+            MenuOptions(navController = navController)
+        },
+        actions = {
+            IconButton(onClick = { navController.popBackStack() }) {
+                Icon(Icons.Filled.ArrowBack ,"Back", tint = md_theme_light_onPrimaryContainer)
+            }
+        }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TopBarUser3(navController: NavController){
+    TopAppBar(
+        title = { Text(text = "*Nome do Professor*", color = md_theme_light_onPrimaryContainer) },
+        colors = topAppBarColors(md_theme_light_primaryContainer),
+        navigationIcon = {
+            MenuOptions(navController = navController)
+        },
+        actions = {
+            IconButton(onClick = { navController.navigate(UserChoices.route) }) {
+                Icon(Icons.Filled.Close ,"Close", tint = md_theme_light_onPrimaryContainer)
+            }
+        }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -180,9 +217,7 @@ fun TopBarUni(navController: NavController){
 
     TopAppBar(
         title = { Text(text = "", color = md_theme_light_onPrimaryContainer) },
-        colors = topAppBarColors(
-        md_theme_light_primaryContainer
-        ),
+        colors = topAppBarColors(md_theme_light_primaryContainer),
         navigationIcon = {
             IconButton(onClick = { navController.popBackStack() }) {
                 Icon(Icons.Filled.ArrowBack ,"Back", tint = md_theme_light_onPrimaryContainer)
@@ -225,12 +260,12 @@ fun BottomBar(navController: NavController){
                     }
                 )
                 NavigationBarItem(
-                    selected = navController.currentBackStackEntry?.destination?.route == Create1.route,
+                    selected = navController.currentBackStackEntry?.destination?.route == AdminChoices.route,
                     label = { Text(text = "Create", color = md_theme_light_onPrimaryContainer) },
                     colors = NavigationBarItemDefaults.colors(
                         indicatorColor= md_theme_light_onPrimaryContainer
                     ),
-                    onClick = { navController.navigate(Create1.route) },
+                    onClick = { navController.navigate(AdminChoices.route) },
                     icon = {
                         Icon(Icons.Filled.QrCode2, "Create")
                     }

@@ -41,8 +41,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
 import com.example.qr_hitu.ViewModels.ScannerViewModel
-import com.example.qr_hitu.components.PrimaryChoice
 import com.example.qr_hitu.components.ScanInput
+import com.example.qr_hitu.components.UserChoices
 import com.example.qr_hitu.functions.addMissQR
 import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
 import com.example.qr_hitu.theme.md_theme_light_primary
@@ -285,7 +285,7 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
 
             if(show){
                 AddDialog(
-                    onDialogDismissed = { showState.value = false; navController.navigate(PrimaryChoice.route) },
+                    onDialogDismissed = { showState.value = false; navController.navigate(UserChoices.route) },
                     onDialogConfirm = { showState.value = false; navController.navigate(ScanInput.route) }
                 )
             }
