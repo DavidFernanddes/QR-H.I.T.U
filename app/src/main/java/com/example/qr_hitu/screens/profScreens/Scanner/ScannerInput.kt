@@ -34,6 +34,27 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
+fun retrieveDocumentsFromFirestore(completion: (List<String>) -> Unit) {
+    // Firestore retrieval logic
+    // For example:
+    val firestore = Firebase.firestore
+    val optionsCollection = firestore.collection("Padrões")
+
+    optionsCollection.get().addOnCompleteListener { task ->
+        if (task.isSuccessful) {
+            val documents = task.result
+            val optionsFromFirestore = documents?.mapNotNull { document ->
+                document.id
+            }
+
+            completion(optionsFromFirestore.orEmpty())
+        } else {
+            // Handle the error case
+            completion(emptyList())
+        }
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
@@ -48,13 +69,13 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
     val show1 by rememberUpdatedState(showState1.value)
     val errState = remember { mutableStateOf(false) }
     val err by rememberUpdatedState(errState.value)
-    val defaultOptions = listOf(
-        "Computador não liga",
-        "Computador liga mas não têm imagem",
-        "...",
-        "...",
-        "Outro"
-    )
+
+    var combinedOptions by remember { mutableStateOf(listOf<String>()) }
+
+    retrieveDocumentsFromFirestore { optionsFromFirestore ->
+        combinedOptions = optionsFromFirestore + "Outro"
+    }
+
     val (block, room, machine) = viewModel.myData.value!!.split(",")
 
     var enabled2 by remember { mutableStateOf(false) }
@@ -119,10 +140,10 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
                     expanded = false
                 }
             ) {
-                defaultOptions.forEach { defaultOption ->
+                combinedOptions.forEach { option ->
                     DropdownMenuItem(
-                        text = { Text(text = defaultOption) },
-                        onClick = { expanded = false; malfunction = defaultOption },
+                        text = { Text(text = option) },
+                        onClick = { expanded = false; malfunction = option },
                         contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                     )
                 }
@@ -200,7 +221,6 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
                                     }
                                 }
                             }
-
                             else -> {
                                 showState.value = true
                                 addMalfunction(
@@ -213,7 +233,6 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
                                 )
                             }
                         }
-                        navController.navigate(UserChoices.route)
                     } else {
                         showState1.value = true
                     }
@@ -233,7 +252,9 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
         when {
             show -> Dialog(
                 error = err,
-                onDialogDismissed = { showState.value = false; errState.value = false })
+                onDialogDismissed = { showState.value = false; navController.navigate(UserChoices.route) },
+                onDialogDismissedError = { showState.value = false; errState.value = false; }
+            )
 
             show1 -> ExistsDialog(onDialogDismissed = {
                 showState1.value = false; navController.navigate(UserChoices.route)
@@ -257,13 +278,13 @@ fun malfunctionExists(room: String, machine: String, onComplete: (Boolean) -> Un
 }
 
 @Composable
-fun Dialog(error: Boolean, onDialogDismissed: () -> Unit) {
+fun Dialog(error: Boolean, onDialogDismissedError: () -> Unit, onDialogDismissed: () -> Unit) {
     val openDialog = remember { mutableStateOf(true) }
 
     if (openDialog.value) {
         if (error) {
             AlertDialog(
-                onDismissRequest = { openDialog.value = false; onDialogDismissed() },
+                onDismissRequest = { openDialog.value = false; onDialogDismissedError() },
                 title = {
                     Text(
                         text = "Erro",
@@ -275,7 +296,7 @@ fun Dialog(error: Boolean, onDialogDismissed: () -> Unit) {
                     Text(text = "Descreva a avaria !", style = MaterialTheme.typography.bodyMedium)
                 },
                 confirmButton = {
-                    TextButton(onClick = { openDialog.value = false; onDialogDismissed() }) {
+                    TextButton(onClick = { openDialog.value = false; onDialogDismissedError() }) {
                         Text(
                             text = "OK",
                             style = MaterialTheme.typography.labelLarge,
