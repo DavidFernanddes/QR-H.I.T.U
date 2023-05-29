@@ -61,6 +61,10 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
     var expanded2 by remember { mutableStateOf(false) }
     var expanded by remember { mutableStateOf(false) }
 
+    var enabled3 by remember { mutableStateOf(false) }
+    var enabled2 by remember { mutableStateOf(false) }
+    var enabled by remember { mutableStateOf(false) }
+
     val showState = remember { mutableStateOf(false) }
     val show by rememberUpdatedState(showState.value)
     val showErrState = remember { mutableStateOf(false) }
@@ -75,6 +79,10 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
     var selectedBlock by remember { mutableStateOf("") }
     var selectedRoom by remember { mutableStateOf("") }
     var selectedMachine by remember { mutableStateOf("") }
+
+    enabled2 = selectedRoom.isNotEmpty()
+    enabled = selectedBlock.isNotEmpty()
+    enabled3 = selectedMachine.isNotEmpty()
 
 
     val icon = if (expanded) {
@@ -118,6 +126,7 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
             OutlinedTextField(
                 value = selectedBlock,
                 readOnly = true,
+
                 onValueChange = { selectedBlock = it },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -162,133 +171,135 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        if (selectedBlock.isNotEmpty()) {
-            ExposedDropdownMenuBox(
-                expanded = expanded2,
-                onExpandedChange = {
-                    expanded2 = !expanded2
-                }
-            ) {
-                OutlinedTextField(
-                    value = selectedRoom,
-                    readOnly = true,
-                    onValueChange = { selectedRoom = it },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .menuAnchor()
-                        .onGloballyPositioned { coordinates ->
-                            textFiledSize = coordinates.size.toSize()
-                        },
-                    label = { Text(text = "Escolha uma sala") },
-                    trailingIcon = {
-                        Icon(icon2, "", Modifier.clickable { expanded2 = !expanded2 })
-                    },
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = md_theme_light_primaryContainer,
-                        focusedLabelColor = md_theme_light_primaryContainer,
-                    )
-                )
-                ExposedDropdownMenu(
-                    expanded = expanded2,
-                    onDismissRequest = {
-                        expanded2 = false
-                    }
-                ) {
-                    rooms.forEach { room ->
-                        DropdownMenuItem(
-                            text = { Text(text = room) },
-                            onClick = { selectedRoom = room; expanded2 = false },
-                            contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
-                        )
-                    }
-                }
+        ExposedDropdownMenuBox(
+            expanded = expanded2,
+            onExpandedChange = {
+                expanded2 = !expanded2
             }
-        }
-
-        Spacer(modifier = Modifier.padding(10.dp))
-
-        if (selectedRoom.isNotEmpty()) {
-
-            Text(text = "Escolha a máquina", style = MaterialTheme.typography.titleMedium)
-
-            Spacer(modifier = Modifier.padding(10.dp))
-
-            ExposedDropdownMenuBox(
-                expanded = expanded3,
-                onExpandedChange = {
-                    expanded3 = !expanded3
-                }
-            ) {
-                OutlinedTextField(
-                    value = selectedMachine,
-                    readOnly = true,
-                    onValueChange = { selectedMachine = it },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .menuAnchor()
-                        .onGloballyPositioned { coordinates ->
-                            textFiledSize = coordinates.size.toSize()
-                        },
-                    label = { Text(text = "Escolha a máquina") },
-                    trailingIcon = {
-                        Icon(icon3, "", Modifier.clickable { expanded3 = !expanded3 })
+        ) {
+            OutlinedTextField(
+                value = selectedRoom,
+                readOnly = true,
+                enabled = enabled,
+                onValueChange = { selectedRoom = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .menuAnchor()
+                    .onGloballyPositioned { coordinates ->
+                        textFiledSize = coordinates.size.toSize()
                     },
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = md_theme_light_primaryContainer,
-                        focusedLabelColor = md_theme_light_primaryContainer,
-                    )
-                )
-                ExposedDropdownMenu(
-                    expanded = expanded3,
-                    onDismissRequest = {
-                        expanded3 = false
-                    }
-                ) {
-                    machines.forEach { machine ->
-                        DropdownMenuItem(
-                            text = { Text(text = machine) },
-                            onClick = { selectedMachine = machine; expanded3 = false },
-                            contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
-                        )
-                    }
-                }
-            }
-        }
-
-        Spacer(modifier = Modifier.padding(10.dp))
-
-        if (selectedMachine.isNotEmpty()) {
-            Button(
-                onClick = {
-                    viewModel.setMyData(code = "$selectedBlock,$selectedRoom,$selectedMachine")
-                    missQrExists(selectedRoom, selectedMachine) {exists ->
-                        if (exists){
-                            showErrState.value = true
-                        } else {
-                            addMissQR(selectedBlock, selectedRoom, selectedMachine)
-                            showState.value = true
-                        }
-                    }
+                label = { Text(text = "Escolha uma sala") },
+                trailingIcon = {
+                    Icon(icon2, "", Modifier.clickable { expanded2 = !expanded2 })
                 },
-                Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = md_theme_light_primaryContainer,
-                    contentColor = md_theme_light_onPrimaryContainer
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = md_theme_light_primaryContainer,
+                    focusedLabelColor = md_theme_light_primaryContainer,
                 )
+            )
+            ExposedDropdownMenu(
+                expanded = expanded2,
+                onDismissRequest = {
+                    expanded2 = false
+                }
             ) {
-                Text(text = "Enviar", style = MaterialTheme.typography.bodyLarge)
+                rooms.forEach { room ->
+                    DropdownMenuItem(
+                        text = { Text(text = room) },
+                        enabled = enabled,
+                        onClick = { selectedRoom = room; expanded2 = false },
+                        contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
+                    )
+                }
             }
+        }
 
-            if (showErr) {
-                ExistsDialog(onDialogDismissed = { showState.value = true })
+        Spacer(modifier = Modifier.padding(10.dp))
+
+        Text(text = "Escolha a máquina", style = MaterialTheme.typography.titleMedium)
+
+        Spacer(modifier = Modifier.padding(10.dp))
+
+        ExposedDropdownMenuBox(
+            expanded = expanded3,
+            onExpandedChange = {
+                expanded3 = !expanded3
             }
-
-            if(show){
-                AddDialog(
-                    onDialogDismissed = { showState.value = false; navController.navigate(UserChoices.route) },
-                    onDialogConfirm = { showState.value = false; navController.navigate(ScanInput.route) }
+        ) {
+            OutlinedTextField(
+                value = selectedMachine,
+                readOnly = true,
+                enabled = enabled2,
+                onValueChange = { selectedMachine = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .menuAnchor()
+                    .onGloballyPositioned { coordinates ->
+                        textFiledSize = coordinates.size.toSize()
+                    },
+                label = { Text(text = "Escolha a máquina") },
+                trailingIcon = {
+                    Icon(icon3, "", Modifier.clickable { expanded3 = !expanded3 })
+                },
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = md_theme_light_primaryContainer,
+                    focusedLabelColor = md_theme_light_primaryContainer,
                 )
+            )
+            ExposedDropdownMenu(
+                expanded = expanded3,
+                onDismissRequest = {
+                    expanded3 = false
+                }
+            ) {
+                machines.forEach { machine ->
+                    DropdownMenuItem(
+                        text = { Text(text = machine) },
+                        enabled = enabled2,
+                        onClick = { selectedMachine = machine; expanded3 = false },
+                        contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
+                    )
+                }
             }
+        }
+
+        Spacer(modifier = Modifier.padding(10.dp))
+
+        Button(
+            enabled = enabled3,
+            onClick = {
+                viewModel.setMyData(code = "$selectedBlock,$selectedRoom,$selectedMachine")
+                missQrExists(selectedRoom, selectedMachine) { exists ->
+                    if (exists) {
+                        showErrState.value = true
+                    } else {
+                        addMissQR(selectedBlock, selectedRoom, selectedMachine)
+                        showState.value = true
+                    }
+                }
+            },
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = md_theme_light_primaryContainer,
+                contentColor = md_theme_light_onPrimaryContainer
+            )
+        ) {
+            Text(text = "Enviar", style = MaterialTheme.typography.bodyLarge)
+        }
+
+        if (showErr) {
+            ExistsDialog(onDialogDismissed = { showState.value = true })
+        }
+
+        if (show) {
+            AddDialog(
+                onDialogDismissed = {
+                    showState.value = false; navController.navigate(UserChoices.route)
+                },
+                onDialogConfirm = {
+                    showState.value = false; navController.navigate(ScanInput.route)
+                }
+            )
         }
     }
 }
@@ -322,7 +333,10 @@ fun AddDialog(onDialogDismissed: () -> Unit, onDialogConfirm: () -> Unit) {
                 )
             },
             text = {
-                Text(text = "Gostaria de colocar avaria ?", style = MaterialTheme.typography.bodyMedium)
+                Text(
+                    text = "Gostaria de colocar avaria ?",
+                    style = MaterialTheme.typography.bodyMedium
+                )
             },
             confirmButton = {
                 TextButton(onClick = { openDialog.value = false; onDialogConfirm() }) {
@@ -363,7 +377,10 @@ fun ExistsDialog(onDialogDismissed: () -> Unit) {
                 )
             },
             text = {
-                Text(text = "Será colocado um novo QR assim que possível", style = MaterialTheme.typography.bodyMedium)
+                Text(
+                    text = "Será colocado um novo QR assim que possível",
+                    style = MaterialTheme.typography.bodyMedium
+                )
             },
             confirmButton = {
                 TextButton(onClick = { openDialog.value = false; onDialogDismissed() }) {

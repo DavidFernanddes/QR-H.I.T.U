@@ -38,16 +38,16 @@ fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewMo
     Scaffold(
         topBar = {
             when {
-                destinationRoute.contains(ScannerAdminInfo.route) -> TopBar4(navController = navController, viewModelSA)
-                destinationRoute.contains(MalfList.route) || destinationRoute.contains(ScanAdmin.route) || destinationRoute.contains(AdminChoices.route) -> TopBar1(navController = navController)
+                destinationRoute.contains(ScannerAdminInfoUpdate.route) ->  TopBar1(navController = navController)
                 destinationRoute.contains(Create1.route) -> TopBar5(navController = navController)
                 destinationRoute.contains(Create2.route) -> TopBar2(navController = navController)
                 destinationRoute.contains(Create3.route) -> TopBar3(navController = navController)
-                destinationRoute.contains(UserChoices.route) -> TopBarUser1(navController = navController)
-                destinationRoute.contains(ScanProf.route) || destinationRoute.contains(MQRLocal.route) -> TopBarUser2(navController = navController)
                 destinationRoute.contains(ScanInput.route) -> TopBarUser3(navController = navController)
                 destinationRoute.contains(SettingOptions.route) || destinationRoute.contains(Manual.route) || destinationRoute.contains(MalfInfo.route) -> TopBarUni(navController = navController)
-
+                destinationRoute.contains(ScannerAdminInfo.route) -> TopBar4(navController = navController, viewModelSA)
+                destinationRoute.contains(MalfList.route) || destinationRoute.contains(ScanAdmin.route) || destinationRoute.contains(AdminChoices.route) -> TopBar1(navController = navController)
+                destinationRoute.contains(UserChoices.route) -> TopBarUser1(navController = navController)
+                destinationRoute.contains(ScanProf.route) || destinationRoute.contains(MQRLocal.route) -> TopBarUser2(navController = navController)
             }
         },
         bottomBar = {
@@ -136,13 +136,10 @@ fun TopBar4(navController: NavController, viewModel: ScannerViewModel){
             IconButton(onClick = { showState.value = true }) {
                 Icon(Icons.Filled.Delete, "Delete", tint = md_theme_light_onPrimaryContainer)
             }
-            IconButton(onClick = { navController.popBackStack() }) {
-                Icon(Icons.Filled.ArrowBack ,"Back", tint = md_theme_light_onPrimaryContainer)
-            }
         },
     )
     if(show){
-        DelDialog(onDialogDismissed = { showState.value = false}, onDeleteClick = { delDispositivo(block, room, machine); navController.navigate(ScanAdmin.route) })
+        DelDialog(onDialogDismissed = { showState.value = false}, onDeleteClick = { delDispositivo(block, room, machine); navController.navigate(MalfList.route) })
     }
 }
 
