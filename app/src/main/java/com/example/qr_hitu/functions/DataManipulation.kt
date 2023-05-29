@@ -82,6 +82,21 @@ fun seeDispositivo(
 
 }
 
+fun addMissQR(
+    block: String,
+    room: String,
+    machine: String,
+) {
+    val data = hashMapOf(
+        "Bloco" to block,
+        "Sala" to room,
+        "Dispositivo" to machine
+    )
+
+    db.collection("Falta QR")
+        .document("$room $machine")
+        .set(data)
+}
 
 fun addMalfunction(
     block: String,
@@ -89,8 +104,7 @@ fun addMalfunction(
     machine: String,
     malfunction: String,
     urgent: Boolean,
-    email: String,
-    missQR: Boolean
+    email: String
 ) {
     val data = hashMapOf(
         "Bloco" to block,
@@ -98,8 +112,7 @@ fun addMalfunction(
         "Dispositivo" to machine,
         "Avaria" to malfunction,
         "Urgente" to urgent,
-        "Email" to email,
-        "MissQR" to missQR
+        "Email" to email
     )
 
     db.collection("Avarias")

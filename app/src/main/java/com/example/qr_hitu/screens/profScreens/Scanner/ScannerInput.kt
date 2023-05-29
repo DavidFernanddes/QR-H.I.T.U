@@ -54,8 +54,7 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
         "...",
         "Outro"
     )
-    val (block, room, machine) = viewModel.myData.value?.qrString!!.split(",")
-    val missQR = viewModel.myData.value?.missQR!!
+    val (block, room, machine) = viewModel.myData.value!!.split(",")
 
     var textFiledSize by remember { mutableStateOf(Size.Zero) }
     var expanded by remember { mutableStateOf(false) }
@@ -184,13 +183,13 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
                                         }
                                         else -> {
                                             showState.value = true
-                                            addMalfunction(block, room, machine, outro, urgentState, email, missQR)
+                                            addMalfunction(block, room, machine, outro, urgentState, email)
                                         }
                                     }
                                 }
                                 else -> {
                                     showState.value = true
-                                    addMalfunction(block,room,machine,malfunction, urgentState, email, missQR)
+                                    addMalfunction(block,room,machine,malfunction, urgentState, email)
                                 }
                             }
                         } else {

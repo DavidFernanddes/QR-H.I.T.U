@@ -43,6 +43,7 @@ import androidx.navigation.NavController
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.components.PrimaryChoice
 import com.example.qr_hitu.components.ScanInput
+import com.example.qr_hitu.functions.addMissQR
 import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
 import com.example.qr_hitu.theme.md_theme_light_primary
 import com.example.qr_hitu.theme.md_theme_light_primaryContainer
@@ -255,7 +256,8 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
         if (selectedMachine.isNotEmpty()) {
             Button(
                 onClick = {
-                    viewModel.setMyData(code = "$selectedBlock,$selectedRoom,$selectedMachine", missQR = true)
+                    viewModel.setMyData(code = "$selectedBlock,$selectedRoom,$selectedMachine")
+                    addMissQR(selectedBlock, selectedRoom, selectedMachine)
                     showState.value = true
                 },
                 Modifier.fillMaxWidth(),
