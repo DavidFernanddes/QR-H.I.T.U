@@ -66,8 +66,6 @@ fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewMo
 
             when{
                 destinationRoute.contains(MalfList.route) || destinationRoute.contains(ScanAdmin.route) || destinationRoute.contains(Create1.route) -> BottomBar(navController = navController)
-                destinationRoute.contains(Create2.route) || destinationRoute.contains(Create3.route) -> EmptyBottomBar(navController = navController)
-                destinationRoute.contains(ScanInput.route) || destinationRoute.contains(PrimaryChoice.route) -> EmptyBottomBar(navController = navController)
             }
 
         },

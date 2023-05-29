@@ -24,7 +24,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -41,18 +40,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
-import com.example.qr_hitu.screens.adminScreens.create.ViewModel1
-import com.example.qr_hitu.screens.components.Create2
-import com.example.qr_hitu.screens.components.PrimaryChoice
-import com.example.qr_hitu.screens.components.ScanProf
-import com.example.qr_hitu.screens.theme.md_theme_light_onPrimaryContainer
-import com.example.qr_hitu.screens.theme.md_theme_light_primary
-import com.example.qr_hitu.screens.theme.md_theme_light_primaryContainer
+import com.example.qr_hitu.ViewModels.ScannerViewModel
+import com.example.qr_hitu.components.PrimaryChoice
+import com.example.qr_hitu.components.ScanInput
+import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
+import com.example.qr_hitu.theme.md_theme_light_primary
+import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MQRLocal(navController: NavController, viewModel: ViewModel1) {
+fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
 
     var textFiledSize by remember { mutableStateOf(Size.Zero) }
 
@@ -126,9 +124,9 @@ fun MQRLocal(navController: NavController, viewModel: ViewModel1) {
                 trailingIcon = {
                     Icon(icon, "", Modifier.clickable { expanded = !expanded })
                 },
-                colors = TextFieldDefaults.outlinedTextFieldColors(
+                colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = md_theme_light_primaryContainer,
-                    focusedLabelColor = md_theme_light_primaryContainer
+                    focusedLabelColor = md_theme_light_primaryContainer,
                 )
             )
             ExposedDropdownMenu(
@@ -257,8 +255,8 @@ fun MQRLocal(navController: NavController, viewModel: ViewModel1) {
         if (selectedMachine.isNotEmpty()) {
             Button(
                 onClick = {
-                    viewModel.setMyData1(selectedBlock, selectedRoom, selectedMachine)
-                    navController.navigate(Create2.route)
+                    viewModel.setMyData(code = "$selectedBlock,$selectedRoom,$selectedMachine", missQR = true)
+                    showState.value = true
                 },
                 Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
@@ -272,7 +270,7 @@ fun MQRLocal(navController: NavController, viewModel: ViewModel1) {
             if(show){
                 Dialog(
                     onDialogDismissed = { showState.value = false; navController.navigate(PrimaryChoice.route) },
-                    onDialogConfirm = { showState.value = false; navController.navigate(ScanProf.route) }
+                    onDialogConfirm = { showState.value = false; navController.navigate(ScanInput.route) }
                 )
             }
         }

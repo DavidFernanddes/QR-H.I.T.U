@@ -131,6 +131,7 @@ fun ScannerAdminInfoUpdate(navController: NavController, viewModel: ScannerViewM
                         "Fonte" to newPowerSupply
                     )
                 )
+                navController.popBackStack()
             },
             modifier = Modifier
                 .fillMaxWidth()

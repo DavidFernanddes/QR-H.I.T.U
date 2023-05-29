@@ -90,6 +90,7 @@ fun addMalfunction(
     malfunction: String,
     urgent: Boolean,
     email: String,
+    missQR: Boolean
 ) {
     val data = hashMapOf(
         "Bloco" to block,
@@ -97,7 +98,8 @@ fun addMalfunction(
         "Dispositivo" to machine,
         "Avaria" to malfunction,
         "Urgente" to urgent,
-        "Email" to email
+        "Email" to email,
+        "MissQR" to missQR
     )
 
     db.collection("Avarias")

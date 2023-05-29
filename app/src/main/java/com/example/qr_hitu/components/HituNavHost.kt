@@ -89,7 +89,7 @@ fun QrHituNavHost(
             PrimaryChoice(navController = navController)
         }
         composable(MQRLocal.route){
-            MQRLocal(navController = navController, viewModel = viewModel1)
+            MQRLocal(navController = navController, viewModel = viewModelSA)
         }
     }
 }

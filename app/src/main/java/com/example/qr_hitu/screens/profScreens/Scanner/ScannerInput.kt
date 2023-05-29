@@ -54,7 +54,8 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
         "...",
         "Outro"
     )
-    val (block, room, machine) = viewModel.myData.value.toString().split(",")
+    val (block, room, machine) = viewModel.myData.value?.qrString!!.split(",")
+    val missQR = viewModel.myData.value?.missQR!!
 
     var textFiledSize by remember { mutableStateOf(Size.Zero) }
     var expanded by remember { mutableStateOf(false) }
@@ -183,13 +184,13 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
                                         }
                                         else -> {
                                             showState.value = true
-                                            addMalfunction(block, room,machine,outro, urgentState, email)
+                                            addMalfunction(block, room, machine, outro, urgentState, email, missQR)
                                         }
                                     }
                                 }
                                 else -> {
                                     showState.value = true
-                                    addMalfunction(block,room,machine,malfunction, urgentState, email)
+                                    addMalfunction(block,room,machine,malfunction, urgentState, email, missQR)
                                 }
                             }
                         } else {
@@ -295,7 +296,7 @@ fun ExistsDialog(onDialogDismissed: () -> Unit) {
                     )
                 },
                 text = {
-                    Text(text = "Iremos resolver a avaria o mais rápido possivel", style = MaterialTheme.typography.bodyMedium)
+                    Text(text = "Estamos a resolver a avaria o mais rápido possivel", style = MaterialTheme.typography.bodyMedium)
                 },
                 confirmButton= {
                     TextButton(onClick = { openDialog.value = false; onDialogDismissed() }) {

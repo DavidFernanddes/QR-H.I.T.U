@@ -106,7 +106,7 @@ fun ScannerTeachScreen(navController: NavController, viewModel: ScannerViewModel
 
                     barcode?.rawValue?.let { value ->
                         if(Regex("""Bloco \w+,Sala \p{all}+,\w+\w+""").containsMatchIn(value)){
-                            viewModel.setMyData(value)
+                            viewModel.setMyData(code = value, missQR = false)
                             showState.value = 1
                         }else{
                             showState.value = 2
@@ -165,13 +165,13 @@ fun ScannerTeachScreen(navController: NavController, viewModel: ScannerViewModel
         AndroidView({ previewView }, modifier = Modifier.fillMaxSize())
         when(show){
             1 -> {
-                Dialog(onDialogDismissed = { viewModel.myData.value == ""
+                Dialog(onDialogDismissed = { viewModel.myData.value?.qrString == ""
                     showState.value = 0
                     navController.navigate(ScanProf.route)
                 }, navController, Err = false)
             }
             2 -> {
-                Dialog(onDialogDismissed = { viewModel.myData.value == ""
+                Dialog(onDialogDismissed = { viewModel.myData.value?.qrString == ""
                     showState.value = 0
                     navController.navigate(ScanProf.route)
                 }, navController, Err = true)

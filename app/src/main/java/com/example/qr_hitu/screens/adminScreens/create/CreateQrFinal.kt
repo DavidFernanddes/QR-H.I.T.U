@@ -25,7 +25,6 @@ import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
 import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 import com.example.qr_hitu.ViewModels.ViewModel1
 import com.example.qr_hitu.ViewModels.ViewModel2
-import com.example.qr_hitu.screens.profScreens.malfunctionExists
 import com.example.qr_hitu.theme.md_theme_light_primary
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase

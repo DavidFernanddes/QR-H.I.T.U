@@ -108,7 +108,7 @@ fun ScannerAdminScreen(navController: NavController, viewModel: ScannerViewModel
                         if(!Regex("""Bloco \w+,Sala \p{all}+,\w+\w+""").containsMatchIn(value)){
                             showState.value = true
                         }else{
-                            viewModel.setMyData(value)
+                            viewModel.setMyData(value, false)
                             navController.navigate(ScannerAdminInfo.route)
                         }
                     }
@@ -165,7 +165,7 @@ fun ScannerAdminScreen(navController: NavController, viewModel: ScannerViewModel
         AndroidView({ previewView }, modifier = Modifier.fillMaxSize())
         if (show) {
             Dialog(onDialogDismissed = {
-                viewModel.myData.value == ""
+                viewModel.myData.value?.qrString == ""
                 showState.value = false
             })
         }

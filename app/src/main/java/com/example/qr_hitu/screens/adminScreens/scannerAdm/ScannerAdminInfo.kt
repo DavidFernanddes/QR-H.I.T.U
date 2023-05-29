@@ -84,7 +84,7 @@ fun ScannerAdminInfo(navController: NavController, viewModel: ScannerViewModel) 
         OutlinedTextField(
             value = "$powerSupply",
             onValueChange = {},
-            placeholder = { Text("Fonte:") },
+            label = { Text("Fonte:") },
             singleLine = true,
             readOnly = true,
             shape = MaterialTheme.shapes.large,
