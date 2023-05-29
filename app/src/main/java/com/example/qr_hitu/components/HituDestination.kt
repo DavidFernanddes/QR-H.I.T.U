@@ -37,6 +37,14 @@ object  Create3: HituDestination {
     override val route = "create_qr_final"
 }
 
+object  ChooseQr: HituDestination {
+    override val route = "choose_qr"
+}
+
+object  TransferQr: HituDestination {
+    override val route = "transfer_qr"
+}
+
 object  AdminChoices: HituDestination {
     override val route = "admin_choices"
 }

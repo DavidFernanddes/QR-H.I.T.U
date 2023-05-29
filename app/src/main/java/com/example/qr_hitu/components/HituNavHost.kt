@@ -20,6 +20,8 @@ import com.example.qr_hitu.screens.adminScreens.malfunctions.MalfList
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminInfo
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminInfoUpdate
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminScreen
+import com.example.qr_hitu.screens.adminScreens.transfer.ChooseQr
+import com.example.qr_hitu.screens.adminScreens.transfer.TransferQr
 import com.example.qr_hitu.screens.login.LoginScreen
 import com.example.qr_hitu.screens.menu.Manual
 import com.example.qr_hitu.screens.menu.SettingsOptions
@@ -70,6 +72,12 @@ fun QrHituNavHost(
         }
         composable(Create3.route){
             QrCreateFinal(navController = navController, viewModel1 = viewModel1, viewModel2 = viewModel2)
+        }
+        composable(ChooseQr.route){
+            ChooseQr(navController = navController, viewModel = viewModel1)
+        }
+        composable(TransferQr.route){
+            TransferQr(navController = navController, viewModel = viewModel1)
         }
         composable(AdminChoices.route){
             AdminChoices(navController = navController)

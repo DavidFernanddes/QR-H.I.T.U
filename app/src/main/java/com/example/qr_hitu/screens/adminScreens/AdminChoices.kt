@@ -20,8 +20,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.qr_hitu.components.ChooseQr
 import com.example.qr_hitu.components.Create1
-import com.example.qr_hitu.components.MalfList
 import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
 import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 
@@ -35,7 +35,7 @@ fun AdminChoices(navController: NavController) {
         Alignment.CenterVertically
     ) {
         Button(
-            onClick = { navController.navigate(MalfList.route) },
+            onClick = { navController.navigate(ChooseQr.route) },
             modifier = Modifier
                 .size(150.dp),
             colors = ButtonDefaults.buttonColors(

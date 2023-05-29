@@ -39,9 +39,9 @@ fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewMo
         topBar = {
             when {
                 destinationRoute.contains(ScannerAdminInfoUpdate.route) ->  TopBar1(navController = navController)
-                destinationRoute.contains(Create1.route) -> TopBar5(navController = navController)
+                destinationRoute.contains(Create1.route) || destinationRoute.contains(ChooseQr.route) -> TopBar5(navController = navController)
                 destinationRoute.contains(Create2.route) -> TopBar2(navController = navController)
-                destinationRoute.contains(Create3.route) -> TopBar3(navController = navController)
+                destinationRoute.contains(Create3.route) || destinationRoute.contains(TransferQr.route) -> TopBar3(navController = navController)
                 destinationRoute.contains(ScanInput.route) -> TopBarUser3(navController = navController)
                 destinationRoute.contains(SettingOptions.route) || destinationRoute.contains(Manual.route) || destinationRoute.contains(MalfInfo.route) -> TopBarUni(navController = navController)
                 destinationRoute.contains(ScannerAdminInfo.route) -> TopBar4(navController = navController, viewModelSA)
