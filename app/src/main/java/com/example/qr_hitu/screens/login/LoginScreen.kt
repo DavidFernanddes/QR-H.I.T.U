@@ -174,10 +174,10 @@ fun LoginScreen(navController: NavController, firestore: FirebaseFirestore) {
                             if (task.isSuccessful) {
                                 // Sign in success, update UI with the signed-in user's information
                                 val db = Firebase.firestore.collection("Admin")
-                                val uid = Firebase.auth.currentUser?.uid
+                                val email = Firebase.auth.currentUser?.email
 
                                 navController.navigate(Loading.route)
-                                loginVerify(navController, db, uid)
+                                loginVerify(navController, db, email)
 
                             } else {
                                 // If sign in fails, display a message to the user.
