@@ -47,6 +47,8 @@ import com.example.qr_hitu.functions.addMissQR
 import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
 import com.example.qr_hitu.theme.md_theme_light_primary
 import com.example.qr_hitu.theme.md_theme_light_primaryContainer
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -61,6 +63,8 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
 
     val showState = remember { mutableStateOf(false) }
     val show by rememberUpdatedState(showState.value)
+    val showErrState = remember { mutableStateOf(false) }
+    val showErr by rememberUpdatedState(showErrState.value)
 
 
     val blocks = listOf("Bloco A", "Bloco B", "Bloco C", "Bloco D", "Bloco E")
@@ -257,8 +261,14 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
             Button(
                 onClick = {
                     viewModel.setMyData(code = "$selectedBlock,$selectedRoom,$selectedMachine")
-                    addMissQR(selectedBlock, selectedRoom, selectedMachine)
-                    showState.value = true
+                    missQrExists(selectedRoom, selectedMachine) {exists ->
+                        if (exists){
+                            showErrState.value = true
+                        } else {
+                            addMissQR(selectedBlock, selectedRoom, selectedMachine)
+                            showState.value = true
+                        }
+                    }
                 },
                 Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
@@ -269,8 +279,12 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
                 Text(text = "Enviar", style = MaterialTheme.typography.bodyLarge)
             }
 
+            if (showErr) {
+                ExistsDialog(onDialogDismissed = { showState.value = true })
+            }
+
             if(show){
-                Dialog(
+                AddDialog(
                     onDialogDismissed = { showState.value = false; navController.navigate(PrimaryChoice.route) },
                     onDialogConfirm = { showState.value = false; navController.navigate(ScanInput.route) }
                 )
@@ -279,8 +293,22 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
     }
 }
 
+fun missQrExists(room: String, machine: String, onComplete: (Boolean) -> Unit) {
+    val firestore = Firebase.firestore.collection("Falta QR")
+
+    firestore.document("$room $machine")
+        .get()
+        .addOnSuccessListener { documentSnapshot ->
+            val exists = documentSnapshot.exists()
+            onComplete(exists)
+        }
+        .addOnFailureListener {
+            onComplete(false)
+        }
+}
+
 @Composable
-fun Dialog(onDialogDismissed: () -> Unit, onDialogConfirm: () -> Unit) {
+fun AddDialog(onDialogDismissed: () -> Unit, onDialogConfirm: () -> Unit) {
     val openDialog = remember { mutableStateOf(true) }
 
     if (openDialog.value) {
@@ -309,6 +337,38 @@ fun Dialog(onDialogDismissed: () -> Unit, onDialogConfirm: () -> Unit) {
                 TextButton(onClick = { openDialog.value = false; onDialogDismissed() }) {
                     Text(
                         text = "Não",
+                        style = MaterialTheme.typography.labelLarge,
+                        color = md_theme_light_primary
+                    )
+                }
+            },
+            textContentColor = md_theme_light_primaryContainer,
+            titleContentColor = md_theme_light_primary
+        )
+    }
+}
+
+@Composable
+fun ExistsDialog(onDialogDismissed: () -> Unit) {
+    val openDialog = remember { mutableStateOf(true) }
+
+    if (openDialog.value) {
+        AlertDialog(
+            onDismissRequest = { openDialog.value = false; onDialogDismissed() },
+            title = {
+                Text(
+                    text = "Aviso já existente",
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.headlineSmall
+                )
+            },
+            text = {
+                Text(text = "Será colocado um novo QR assim que possível", style = MaterialTheme.typography.bodyMedium)
+            },
+            confirmButton = {
+                TextButton(onClick = { openDialog.value = false; onDialogDismissed() }) {
+                    Text(
+                        text = "OK",
                         style = MaterialTheme.typography.labelLarge,
                         color = md_theme_light_primary
                     )
