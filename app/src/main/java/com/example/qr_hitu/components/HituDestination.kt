@@ -37,6 +37,18 @@ object  Create3: HituDestination {
     override val route = "create_qr_final"
 }
 
+object  ChooseQr: HituDestination {
+    override val route = "choose_qr"
+}
+
+object  TransferQr: HituDestination {
+    override val route = "transfer_qr"
+}
+
+object  AdminChoices: HituDestination {
+    override val route = "admin_choices"
+}
+
 object  ScanAdmin: HituDestination {
     override val route = "scanner_admin"
 }
@@ -61,8 +73,8 @@ object  Loading: HituDestination {
     override val route = "loading"
 }
 
-object  PrimaryChoice: HituDestination {
-    override val route = "primary_choice"
+object  UserChoices: HituDestination {
+    override val route = "user_choices"
 }
 
 object MQRLocal: HituDestination {

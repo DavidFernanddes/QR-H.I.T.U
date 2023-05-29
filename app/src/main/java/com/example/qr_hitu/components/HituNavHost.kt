@@ -8,17 +8,20 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.qr_hitu.ViewModels.MalfunctionViewModel
 import com.example.qr_hitu.ViewModels.ScannerViewModel
+import com.example.qr_hitu.ViewModels.ViewModel1
+import com.example.qr_hitu.ViewModels.ViewModel2
 import com.example.qr_hitu.screens.LoadingScreen
+import com.example.qr_hitu.screens.adminScreens.AdminChoices
 import com.example.qr_hitu.screens.adminScreens.create.QrCreateFinal
 import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase1
 import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase2
-import com.example.qr_hitu.ViewModels.ViewModel1
-import com.example.qr_hitu.ViewModels.ViewModel2
 import com.example.qr_hitu.screens.adminScreens.malfunctions.MalfInfo
 import com.example.qr_hitu.screens.adminScreens.malfunctions.MalfList
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminInfo
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminInfoUpdate
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminScreen
+import com.example.qr_hitu.screens.adminScreens.transfer.ChooseQr
+import com.example.qr_hitu.screens.adminScreens.transfer.TransferQr
 import com.example.qr_hitu.screens.login.LoginScreen
 import com.example.qr_hitu.screens.menu.Manual
 import com.example.qr_hitu.screens.menu.SettingsOptions
@@ -67,6 +70,18 @@ fun QrHituNavHost(
         composable(Create3.route){
             QrCreateFinal(navController = navController, viewModel1 = viewModel1, viewModel2 = viewModel2)
         }
+        composable(Create3.route){
+            QrCreateFinal(navController = navController, viewModel1 = viewModel1, viewModel2 = viewModel2)
+        }
+        composable(ChooseQr.route){
+            ChooseQr(navController = navController, viewModel = viewModel1)
+        }
+        composable(TransferQr.route){
+            TransferQr(navController = navController, viewModel = viewModel1)
+        }
+        composable(AdminChoices.route){
+            AdminChoices(navController = navController)
+        }
         composable(ScanAdmin.route){
             ScannerAdminScreen(navController = navController, viewModel = viewModelSA)
         }
@@ -85,7 +100,7 @@ fun QrHituNavHost(
         composable(Loading.route){
             LoadingScreen(navController = navController)
         }
-        composable(PrimaryChoice.route){
+        composable(UserChoices.route){
             PrimaryChoice(navController = navController)
         }
         composable(MQRLocal.route){

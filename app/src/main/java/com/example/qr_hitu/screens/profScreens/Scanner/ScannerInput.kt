@@ -24,18 +24,40 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
+import com.example.qr_hitu.ViewModels.ScannerViewModel
+import com.example.qr_hitu.components.UserChoices
 import com.example.qr_hitu.functions.addMalfunction
 import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
 import com.example.qr_hitu.theme.md_theme_light_primary
 import com.example.qr_hitu.theme.md_theme_light_primaryContainer
-import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
+fun retrieveDocumentsFromFirestore(completion: (List<String>) -> Unit) {
+    // Firestore retrieval logic
+    // For example:
+    val firestore = Firebase.firestore
+    val optionsCollection = firestore.collection("Padrões")
+
+    optionsCollection.get().addOnCompleteListener { task ->
+        if (task.isSuccessful) {
+            val documents = task.result
+            val optionsFromFirestore = documents?.mapNotNull { document ->
+                document.id
+            }
+
+            completion(optionsFromFirestore.orEmpty())
+        } else {
+            // Handle the error case
+            completion(emptyList())
+        }
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
+fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
 
     val email = Firebase.auth.currentUser?.email.toString()
     var outro by remember { mutableStateOf("") }
@@ -47,14 +69,20 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
     val show1 by rememberUpdatedState(showState1.value)
     val errState = remember { mutableStateOf(false) }
     val err by rememberUpdatedState(errState.value)
-    val defaultOptions = listOf(
-        "Computador não liga",
-        "Computador liga mas não têm imagem",
-        "...",
-        "...",
-        "Outro"
-    )
+
+    var combinedOptions by remember { mutableStateOf(listOf<String>()) }
+
+    retrieveDocumentsFromFirestore { optionsFromFirestore ->
+        combinedOptions = optionsFromFirestore + "Outro"
+    }
+
     val (block, room, machine) = viewModel.myData.value!!.split(",")
+
+    var enabled2 by remember { mutableStateOf(false) }
+    var enabled by remember { mutableStateOf(false) }
+
+    enabled = malfunction == "Outro"
+    enabled2 = malfunction.isNotEmpty() || malfunction == "Outro" && outro.isNotEmpty()
 
     var textFiledSize by remember { mutableStateOf(Size.Zero) }
     var expanded by remember { mutableStateOf(false) }
@@ -112,10 +140,10 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
                     expanded = false
                 }
             ) {
-                defaultOptions.forEach { defaultOption ->
+                combinedOptions.forEach { option ->
                     DropdownMenuItem(
-                        text = { Text(text = defaultOption) },
-                        onClick = { expanded = false; malfunction = defaultOption },
+                        text = { Text(text = option) },
+                        onClick = { expanded = false; malfunction = option },
                         contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                     )
                 }
@@ -124,31 +152,31 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        if(malfunction == "Outro"){
+        Text(text = "Descreva o problema", style = MaterialTheme.typography.titleMedium)
 
-            Text(text = "Descreva o problema", style = MaterialTheme.typography.titleMedium)
+        Spacer(modifier = Modifier.padding(10.dp))
 
-            Spacer(modifier = Modifier.padding(10.dp))
-
-            OutlinedTextField(
-                value = outro,
-                onValueChange = { outro = it },
-                label = { Text("Outro") },
-                placeholder = { Text("Outro") },
-                singleLine = false,
-                shape = MaterialTheme.shapes.large,
-                modifier = Modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Done),
-                keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = md_theme_light_primaryContainer,
-                    focusedLabelColor = md_theme_light_primaryContainer,
-                )
+        OutlinedTextField(
+            value = outro,
+            onValueChange = { outro = it },
+            enabled = enabled,
+            label = { Text("Outro") },
+            placeholder = { Text("Outro") },
+            singleLine = false,
+            shape = MaterialTheme.shapes.large,
+            modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Done
+            ),
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = md_theme_light_primaryContainer,
+                focusedLabelColor = md_theme_light_primaryContainer,
             )
+        )
 
-            Spacer(modifier = Modifier.padding(10.dp))
-
-        }
+        Spacer(modifier = Modifier.padding(10.dp))
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             RadioButton(
@@ -168,49 +196,69 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel){
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        if(malfunction.isNotEmpty() || malfunction == "Outro" && outro.isNotEmpty()){
+        Button(
+            onClick = {
+                malfunctionExists(room, machine) { exists ->
+                    if (!exists) {
+                        when (malfunction) {
+                            "Outro" -> {
+                                when (outro) {
+                                    "" -> {
+                                        showState.value = true
+                                        errState.value = true
+                                    }
 
-            Button(
-                onClick = {
-                    malfunctionExists(room, machine) { exists ->
-                        if(!exists){
-                            when (malfunction) {
-                                "Outro" -> {
-                                    when (outro) {
-                                        "" -> {
-                                            showState.value = true
-                                            errState.value = true
-                                        }
-                                        else -> {
-                                            showState.value = true
-                                            addMalfunction(block, room, machine, outro, urgentState, email)
-                                        }
+                                    else -> {
+                                        showState.value = true
+                                        addMalfunction(
+                                            block,
+                                            room,
+                                            machine,
+                                            outro,
+                                            urgentState,
+                                            email
+                                        )
                                     }
                                 }
-                                else -> {
-                                    showState.value = true
-                                    addMalfunction(block,room,machine,malfunction, urgentState, email)
-                                }
                             }
-                        } else {
-                            showState1.value = true
+                            else -> {
+                                showState.value = true
+                                addMalfunction(
+                                    block,
+                                    room,
+                                    machine,
+                                    malfunction,
+                                    urgentState,
+                                    email
+                                )
+                            }
                         }
+                    } else {
+                        showState1.value = true
                     }
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = md_theme_light_primaryContainer,
-                    contentColor = md_theme_light_onPrimaryContainer
-                )
-            ) {
-                Text("Enviar", style = MaterialTheme.typography.labelLarge)
-            }
+                }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = md_theme_light_primaryContainer,
+                contentColor = md_theme_light_onPrimaryContainer
+            ),
+            enabled = enabled2
+        ) {
+            Text("Enviar", style = MaterialTheme.typography.labelLarge)
         }
-        when{
-            show -> Dialog(error = err, onDialogDismissed = { showState.value = false; errState.value = false })
-            show1 -> ExistsDialog( onDialogDismissed = { showState1.value = false })
+        when {
+            show -> Dialog(
+                error = err,
+                onDialogDismissed = { showState.value = false; navController.navigate(UserChoices.route) },
+                onDialogDismissedError = { showState.value = false; errState.value = false; }
+            )
+
+            show1 -> ExistsDialog(onDialogDismissed = {
+                showState1.value = false; navController.navigate(UserChoices.route)
+            })
         }
     }
 }
@@ -230,13 +278,13 @@ fun malfunctionExists(room: String, machine: String, onComplete: (Boolean) -> Un
 }
 
 @Composable
-fun Dialog(error: Boolean, onDialogDismissed: () -> Unit) {
+fun Dialog(error: Boolean, onDialogDismissedError: () -> Unit, onDialogDismissed: () -> Unit) {
     val openDialog = remember { mutableStateOf(true) }
 
     if (openDialog.value) {
         if (error) {
             AlertDialog(
-                onDismissRequest = { openDialog.value = false; onDialogDismissed() },
+                onDismissRequest = { openDialog.value = false; onDialogDismissedError() },
                 title = {
                     Text(
                         text = "Erro",
@@ -247,9 +295,13 @@ fun Dialog(error: Boolean, onDialogDismissed: () -> Unit) {
                 text = {
                     Text(text = "Descreva a avaria !", style = MaterialTheme.typography.bodyMedium)
                 },
-                confirmButton= {
-                    TextButton(onClick = { openDialog.value = false; onDialogDismissed() }) {
-                        Text(text = "OK", style = MaterialTheme.typography.labelLarge, color = md_theme_light_primary)
+                confirmButton = {
+                    TextButton(onClick = { openDialog.value = false; onDialogDismissedError() }) {
+                        Text(
+                            text = "OK",
+                            style = MaterialTheme.typography.labelLarge,
+                            color = md_theme_light_primary
+                        )
                     }
                 },
                 textContentColor = md_theme_light_primaryContainer,
@@ -268,9 +320,13 @@ fun Dialog(error: Boolean, onDialogDismissed: () -> Unit) {
                 text = {
                     Text(text = "Avaria Enviada !", style = MaterialTheme.typography.bodyMedium)
                 },
-                confirmButton= {
+                confirmButton = {
                     TextButton(onClick = { openDialog.value = false; onDialogDismissed() }) {
-                        Text(text = "OK", style = MaterialTheme.typography.labelLarge, color = md_theme_light_primary)
+                        Text(
+                            text = "OK",
+                            style = MaterialTheme.typography.labelLarge,
+                            color = md_theme_light_primary
+                        )
                     }
                 },
                 textContentColor = md_theme_light_primaryContainer,
@@ -285,25 +341,32 @@ fun ExistsDialog(onDialogDismissed: () -> Unit) {
     val openDialog = remember { mutableStateOf(true) }
 
     if (openDialog.value) {
-            AlertDialog(
-                onDismissRequest = { openDialog.value = false; onDialogDismissed() },
-                title = {
+        AlertDialog(
+            onDismissRequest = { openDialog.value = false; onDialogDismissed() },
+            title = {
+                Text(
+                    text = "Avaria já existente",
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.headlineSmall
+                )
+            },
+            text = {
+                Text(
+                    text = "Estamos a resolver a avaria o mais rápido possivel",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = { openDialog.value = false; onDialogDismissed() }) {
                     Text(
-                        text = "Avaria já existente",
-                        textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.headlineSmall
+                        text = "OK",
+                        style = MaterialTheme.typography.labelLarge,
+                        color = md_theme_light_primary
                     )
-                },
-                text = {
-                    Text(text = "Estamos a resolver a avaria o mais rápido possivel", style = MaterialTheme.typography.bodyMedium)
-                },
-                confirmButton= {
-                    TextButton(onClick = { openDialog.value = false; onDialogDismissed() }) {
-                        Text(text = "OK", style = MaterialTheme.typography.labelLarge, color = md_theme_light_primary)
-                    }
-                },
-                textContentColor = md_theme_light_primaryContainer,
-                titleContentColor = md_theme_light_primary
-            )
+                }
+            },
+            textContentColor = md_theme_light_primaryContainer,
+            titleContentColor = md_theme_light_primary
+        )
     }
 }

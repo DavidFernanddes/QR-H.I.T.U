@@ -1,4 +1,4 @@
-package com.example.qr_hitu.screens.adminScreens.create
+package com.example.qr_hitu.screens.adminScreens.transfer
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,22 +15,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
 import com.example.qr_hitu.ViewModels.ViewModel1
-import com.example.qr_hitu.components.AdminChoices
-import com.example.qr_hitu.components.Create2
+import com.example.qr_hitu.components.TransferQr
 import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
-import com.example.qr_hitu.theme.md_theme_light_primary
 import com.example.qr_hitu.theme.md_theme_light_primaryContainer
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun QrCreatePhase1(navController: NavController, viewModel: ViewModel1) {
+fun ChooseQr(navController: NavController, viewModel: ViewModel1) {
 
     val showState = remember { mutableStateOf(false) }
     val show by rememberUpdatedState(showState.value)
@@ -239,14 +234,8 @@ fun QrCreatePhase1(navController: NavController, viewModel: ViewModel1) {
 
         Button(
             onClick = {
-                qrExists(selectedBlock, selectedRoom, selectedMachine) { exists ->
-                    if (!exists) {
-                        viewModel.setMyData1(selectedBlock, selectedRoom, selectedMachine)
-                        navController.navigate(Create2.route)
-                    } else {
-                        showState.value = true
-                    }
-                }
+                viewModel.setMyData1(selectedBlock, selectedRoom, selectedMachine)
+                navController.navigate(TransferQr.route)
             },
             Modifier
                 .fillMaxWidth()
@@ -259,59 +248,5 @@ fun QrCreatePhase1(navController: NavController, viewModel: ViewModel1) {
         ) {
             Text(text = "Continuar", style = MaterialTheme.typography.labelLarge)
         }
-        if (show) {
-            ExistsDialog(
-                onDialogAccept = { showState.value = false; navController.navigate(Create2.route); viewModel.setMyData1(selectedBlock, selectedRoom, selectedMachine) },
-                onDialogReject = { showState.value = false; navController.navigate(AdminChoices.route) }
-            )
-        }
-    }
-}
-
-fun qrExists(block: String, room: String, machine: String, onComplete: (Boolean) -> Unit) {
-    val firestore = Firebase.firestore.collection("Inventário")
-
-    firestore.document(block)
-        .collection(room)
-        .document(machine)
-        .get()
-        .addOnSuccessListener { documentSnapshot ->
-            val exists = documentSnapshot.exists()
-            onComplete(exists)
-        }
-        .addOnFailureListener {
-            onComplete(false)
-        }
-}
-@Composable
-fun ExistsDialog(onDialogAccept: () -> Unit, onDialogReject: () -> Unit) {
-    val openDialog = remember { mutableStateOf(true) }
-
-    if (openDialog.value) {
-        AlertDialog(
-            onDismissRequest = { openDialog.value = false; onDialogReject() },
-            title = {
-                Text(
-                    text = "Qr já existente",
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.headlineSmall
-                )
-            },
-            text = {
-                Text(text = "Deseja continuar a ação ?", style = MaterialTheme.typography.bodyMedium)
-            },
-            confirmButton= {
-                TextButton(onClick = { openDialog.value = false; onDialogAccept(); }) {
-                    Text(text = "Sim", style = MaterialTheme.typography.labelLarge, color = md_theme_light_primary)
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { openDialog.value = false; onDialogReject(); }) {
-                    Text(text = "Não", style = MaterialTheme.typography.labelLarge, color = md_theme_light_primary)
-                }
-            },
-            textContentColor = md_theme_light_primaryContainer,
-            titleContentColor = md_theme_light_primary
-        )
     }
 }

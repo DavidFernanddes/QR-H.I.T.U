@@ -1,4 +1,4 @@
-package com.example.qr_hitu.screens.adminScreens.create
+package com.example.qr_hitu.screens.adminScreens.transfer
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -11,37 +11,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.ViewModels.ViewModel1
-import com.example.qr_hitu.ViewModels.ViewModel2
 import com.example.qr_hitu.functions.CreateQR
-import com.example.qr_hitu.functions.addDispositivo
 import com.example.qr_hitu.functions.downloadQR
 import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
 import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun QrCreateFinal(navController: NavController, viewModel1 : ViewModel1, viewModel2: ViewModel2){
+fun TransferQr(navController: NavController, viewModel : ViewModel1){
 
     var content by remember{ mutableStateOf("") }
     var qrName by remember { mutableStateOf("") }
-    val context = LocalContext.current
     val focusManager = LocalFocusManager.current
 
-    val myData = viewModel1.myData.value
-    val myData2 = viewModel2.myData.value
-    val spec = hashMapOf(
-        "Nome" to "${myData2?.name}",
-        "Processador" to "${myData2?.processor}",
-        "Ram" to "${myData2?.ram}",
-        "Fonte" to "${myData2?.powerSupply}"
-    )
+    val myData = viewModel.myData.value
 
 
     Column(
@@ -58,7 +47,6 @@ fun QrCreateFinal(navController: NavController, viewModel1 : ViewModel1, viewMod
 
         if (myData != null) {
             content = "${myData.block},${myData.room},${myData.machine}"
-            addDispositivo(myData.block, myData.room, myData.machine, spec)
         }
 
         CreateQR(content)
