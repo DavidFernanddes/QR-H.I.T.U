@@ -19,6 +19,8 @@ import androidx.navigation.NavController
 import com.example.qr_hitu.ViewModels.ViewModel1
 import com.example.qr_hitu.functions.CreateQR
 import com.example.qr_hitu.functions.downloadQR
+import com.example.qr_hitu.functions.encryptAES
+import com.example.qr_hitu.functions.encryptionKey
 import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
 import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 
@@ -46,7 +48,7 @@ fun TransferQr(navController: NavController, viewModel : ViewModel1){
         Spacer(modifier = Modifier.padding(60.dp))
 
         if (myData != null) {
-            content = "${myData.block},${myData.room},${myData.machine}"
+            content = encryptAES("${myData.block},${myData.room},${myData.machine}", encryptionKey)
         }
 
         CreateQR(content)

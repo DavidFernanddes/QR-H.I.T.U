@@ -30,6 +30,8 @@ import androidx.navigation.NavController
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.components.ScanInput
 import com.example.qr_hitu.components.ScanProf
+import com.example.qr_hitu.functions.decryptAES
+import com.example.qr_hitu.functions.encryptionKey
 import com.example.qr_hitu.theme.md_theme_light_primary
 import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 import com.google.mlkit.vision.barcode.BarcodeScanner
@@ -105,8 +107,9 @@ fun ScannerTeachScreen(navController: NavController, viewModel: ScannerViewModel
                     val barcode = barcodeList.getOrNull(0)
 
                     barcode?.rawValue?.let { value ->
-                        if(Regex("""Bloco \w+,Sala \p{all}+,\w+\w+""").containsMatchIn(value)){
-                            viewModel.setMyData(code = value)
+                        val decodedValue = decryptAES(value, encryptionKey)
+                        if(Regex("""Bloco \w+,Sala \p{all}+,\w+\w+""").containsMatchIn(decodedValue)){
+                            viewModel.setMyData(decodedValue)
                             showState.value = 1
                         }else{
                             showState.value = 2

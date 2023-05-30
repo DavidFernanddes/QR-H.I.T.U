@@ -28,6 +28,8 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.components.ScannerAdminInfo
+import com.example.qr_hitu.functions.decryptAES
+import com.example.qr_hitu.functions.encryptionKey
 import com.example.qr_hitu.theme.md_theme_light_primary
 import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 import com.google.mlkit.vision.barcode.BarcodeScanner
@@ -105,10 +107,11 @@ fun ScannerAdminScreen(navController: NavController, viewModel: ScannerViewModel
                     val barcode = barcodeList.getOrNull(0)
 
                     barcode?.rawValue?.let { value ->
-                        if(!Regex("""Bloco \w+,Sala \p{all}+,\w+\w+""").containsMatchIn(value)){
+                        val decodedValue = decryptAES(value, encryptionKey)
+                        if(!Regex("""Bloco \w+,Sala \p{all}+,\w+\w+""").containsMatchIn(decodedValue)){
                             showState.value = true
                         }else{
-                            viewModel.setMyData(value)
+                            viewModel.setMyData(decodedValue)
                             navController.navigate(ScannerAdminInfo.route)
                         }
                     }
