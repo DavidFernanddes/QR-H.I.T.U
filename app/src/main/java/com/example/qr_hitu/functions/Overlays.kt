@@ -24,7 +24,7 @@ import com.example.qr_hitu.theme.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
-
+import java.util.Locale
 
 @Composable
 fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewModel2: ViewModel2, viewModelSA : ScannerViewModel, viewModelMF : MalfunctionViewModel){
@@ -34,21 +34,20 @@ fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewMo
     val currentBackStack by navController.currentBackStackEntryAsState()
     val currentDestination = currentBackStack?.destination
     val destinationRoute = currentDestination?.route ?: Login.route
-    val email = Firebase.auth.currentUser?.email!!.split(".")[0].capitalize()
 
     Scaffold(
         topBar = {
             when {
-                destinationRoute.contains(ScannerAdminInfoUpdate.route) ->  TopBar1(navController = navController, email = email)
-                destinationRoute.contains(Create1.route) || destinationRoute.contains(ChooseQr.route) -> TopBar5(navController = navController, email = email)
-                destinationRoute.contains(Create2.route) -> TopBar2(navController = navController, email = email)
-                destinationRoute.contains(Create3.route) || destinationRoute.contains(TransferQr.route) -> TopBar3(navController = navController, email = email)
-                destinationRoute.contains(ScanInput.route) -> TopBarUser3(navController = navController, email = email)
+                destinationRoute.contains(ScannerAdminInfoUpdate.route) ->  TopBar1(navController = navController)
+                destinationRoute.contains(Create1.route) || destinationRoute.contains(ChooseQr.route) -> TopBar5(navController = navController)
+                destinationRoute.contains(Create2.route) -> TopBar2(navController = navController)
+                destinationRoute.contains(Create3.route) || destinationRoute.contains(TransferQr.route) -> TopBar3(navController = navController)
+                destinationRoute.contains(ScanInput.route) -> TopBarUser3(navController = navController)
                 destinationRoute.contains(SettingOptions.route) || destinationRoute.contains(Manual.route) || destinationRoute.contains(MalfInfo.route) -> TopBarUni(navController = navController)
-                destinationRoute.contains(ScannerAdminInfo.route) -> TopBar4(navController = navController, viewModelSA, email = email)
-                destinationRoute.contains(MalfList.route) || destinationRoute.contains(ScanAdmin.route) || destinationRoute.contains(AdminChoices.route) -> TopBar1(navController = navController, email = email)
-                destinationRoute.contains(UserChoices.route) -> TopBarUser1(navController = navController, email = email)
-                destinationRoute.contains(ScanProf.route) || destinationRoute.contains(MQRLocal.route) -> TopBarUser2(navController = navController, email = email)
+                destinationRoute.contains(ScannerAdminInfo.route) -> TopBar4(navController = navController, viewModelSA)
+                destinationRoute.contains(MalfList.route) || destinationRoute.contains(ScanAdmin.route) || destinationRoute.contains(AdminChoices.route) -> TopBar1(navController = navController)
+                destinationRoute.contains(UserChoices.route) -> TopBarUser1(navController = navController)
+                destinationRoute.contains(ScanProf.route) || destinationRoute.contains(MQRLocal.route) -> TopBarUser2(navController = navController)
             }
         },
         bottomBar = {
@@ -73,7 +72,9 @@ fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewMo
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar1(navController: NavController, email: String){
+fun TopBar1(navController: NavController){
+    val email = emailString()
+
         TopAppBar(
                 title = { Text(text = email, color = md_theme_light_onPrimaryContainer) },
                 colors = topAppBarColors(md_theme_light_primaryContainer),
@@ -85,7 +86,8 @@ fun TopBar1(navController: NavController, email: String){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar2(navController: NavController, email: String){
+fun TopBar2(navController: NavController){
+    val email = emailString()
 
     TopAppBar(
         title = { Text(text = email, color = md_theme_light_onPrimaryContainer) },
@@ -101,7 +103,8 @@ fun TopBar2(navController: NavController, email: String){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar3(navController: NavController, email: String){
+fun TopBar3(navController: NavController){
+    val email = emailString()
 
     TopAppBar(
         title = { Text(text = email, color = md_theme_light_onPrimaryContainer) },
@@ -117,7 +120,8 @@ fun TopBar3(navController: NavController, email: String){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar4(navController: NavController, viewModel: ScannerViewModel, email: String){
+fun TopBar4(navController: NavController, viewModel: ScannerViewModel){
+    val email = emailString()
 
     val showState = remember { mutableStateOf(false) }
     val show by rememberUpdatedState(showState.value)
@@ -146,7 +150,9 @@ fun TopBar4(navController: NavController, viewModel: ScannerViewModel, email: St
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar5(navController: NavController, email: String){
+fun TopBar5(navController: NavController){
+    val email = emailString()
+
     TopAppBar(
         title = { Text(text = email, color = md_theme_light_onPrimaryContainer) },
         colors = topAppBarColors(md_theme_light_primaryContainer),
@@ -163,7 +169,8 @@ fun TopBar5(navController: NavController, email: String){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBarUser1(navController: NavController, email: String){
+fun TopBarUser1(navController: NavController){
+    val email = emailString()
 
     TopAppBar(
         title = { Text(text = email, color = md_theme_light_onPrimaryContainer) },
@@ -176,7 +183,8 @@ fun TopBarUser1(navController: NavController, email: String){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBarUser2(navController: NavController, email: String){
+fun TopBarUser2(navController: NavController){
+    val email = emailString()
 
     TopAppBar(
         title = { Text(text = email, color = md_theme_light_onPrimaryContainer) },
@@ -194,7 +202,9 @@ fun TopBarUser2(navController: NavController, email: String){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBarUser3(navController: NavController, email: String){
+fun TopBarUser3(navController: NavController){
+    val email = emailString()
+
     TopAppBar(
         title = { Text(text = email, color = md_theme_light_onPrimaryContainer) },
         colors = topAppBarColors(md_theme_light_primaryContainer),
@@ -348,4 +358,13 @@ fun DelDialog(onDialogDismissed: () -> Unit, onDeleteClick: () -> Unit) {
         textContentColor = md_theme_light_primaryContainer,
         titleContentColor = md_theme_light_primary
     )
+}
+
+fun emailString (): String {
+    val email = Firebase.auth.currentUser?.email!!.split(".")[0].split("@")[0].replaceFirstChar {
+        if (it.isLowerCase()) it.titlecase(
+            Locale.getDefault()
+        ) else it.toString()
+    }
+    return email
 }
