@@ -28,35 +28,34 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.qr_hitu.functions.SettingsManager
 import com.example.qr_hitu.theme.md_theme_light_primary
 import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 @Composable
-fun SettingsOptions(navController: NavController) {
-
-    val checkedTheme by remember { mutableStateOf("Light") }
-    val checkedLanguage by remember { mutableStateOf("Português") }
-    val checkedAutoLogin = remember { mutableStateOf(false) }
-    val checkedBlockSession = remember { mutableStateOf(false) }
+fun SettingsOptions(navController: NavController, settingsManager: SettingsManager) {
 
     val showThemeState = remember { mutableStateOf(false) }
     val showTheme by rememberUpdatedState(showThemeState.value)
     val showLanguageState = remember { mutableStateOf(false) }
     val showLanguage by rememberUpdatedState(showLanguageState.value)
 
-    val lightThemeState = remember { mutableStateOf(false) }
-    val lightTheme by rememberUpdatedState(lightThemeState.value)
-    val darkThemeState = remember { mutableStateOf(false) }
-    val darkTheme by rememberUpdatedState(darkThemeState.value)
-    val systemThemeState = remember { mutableStateOf(false) }
-    val systemTheme by rememberUpdatedState(systemThemeState.value)
+    val selectedTheme = remember { mutableStateOf("") }
+    val selectedLanguage = remember { mutableStateOf("") }
+    val selectedAutoLogin = remember { mutableStateOf(false) }
+    val selectedBlockSession = remember { mutableStateOf(false) }
 
-    val languageSelectState = remember { mutableStateOf("") }
-    val languageSelect by rememberUpdatedState(languageSelectState.value)
+    selectedTheme.value = settingsManager.getSetting("Theme", "")
+    selectedLanguage.value = settingsManager.getSetting("Language", "")
+    selectedAutoLogin.value = settingsManager.getSetting("AutoLogin", "false").toBooleanStrict()
+    selectedBlockSession.value = settingsManager.getSetting("BlockSession", "false").toBooleanStrict()
 
-
+    val checkedTheme by rememberUpdatedState(selectedTheme.value)
+    val checkedLanguage by rememberUpdatedState(selectedLanguage.value)
+    val checkedAutoLogin = rememberUpdatedState(selectedAutoLogin.value)
+    val checkedBlockSession = rememberUpdatedState(selectedBlockSession.value)
 
     Column(
         modifier = Modifier
@@ -92,7 +91,7 @@ fun SettingsOptions(navController: NavController) {
 
                 Spacer(modifier = Modifier.padding(5.dp))
 
-                Text(checkedTheme)
+                Text(checkedTheme.ifBlank { "Light" })
             }
         }
 
@@ -113,7 +112,7 @@ fun SettingsOptions(navController: NavController) {
 
                 Spacer(modifier = Modifier.padding(5.dp))
 
-                Text(checkedLanguage)
+                Text(checkedLanguage.ifBlank { "Português" })
             }
         }
 
@@ -146,7 +145,8 @@ fun SettingsOptions(navController: NavController) {
             Switch(
                 checked = checkedAutoLogin.value,
                 onCheckedChange = {
-                    checkedAutoLogin.value = !checkedAutoLogin.value
+                    selectedAutoLogin.value = !checkedAutoLogin.value
+                    settingsManager.saveSetting("AutoLogin", (!checkedAutoLogin.value).toString())
                 },
                 enabled = true,
                 colors = SwitchDefaults.colors(
@@ -174,7 +174,8 @@ fun SettingsOptions(navController: NavController) {
             Switch(
                 checked = if (checkedAutoLogin.value) checkedBlockSession.value else false,
                 onCheckedChange = {
-                    checkedBlockSession.value = !checkedBlockSession.value
+                    selectedBlockSession.value = !checkedBlockSession.value
+                    settingsManager.saveSetting("BlockSession", (!checkedBlockSession.value).toString())
                 },
                 enabled = checkedAutoLogin.value,
                 colors = SwitchDefaults.colors(
@@ -231,17 +232,17 @@ fun SettingsOptions(navController: NavController) {
         if (showTheme) {
             ThemeDialog(
                 showThemeState,
-                lightTheme,
-                lightThemeState,
-                darkTheme,
-                darkThemeState,
-                systemTheme,
-                systemThemeState
+                selectedTheme,
+                settingsManager
             )
         }
 
         if (showLanguage) {
-            LanguageDialog(showLanguageState, languageSelect, languageSelectState)
+            LanguageDialog(
+                showLanguageState,
+                selectedLanguage,
+                settingsManager
+            )
         }
     }
 }
@@ -249,12 +250,8 @@ fun SettingsOptions(navController: NavController) {
 @Composable
 fun ThemeDialog(
     showThemeState: MutableState<Boolean>,
-    lightTheme: Boolean,
-    lightThemeState: MutableState<Boolean>,
-    darkTheme: Boolean,
-    darkThemeState: MutableState<Boolean>,
-    systemTheme: Boolean,
-    systemThemeState: MutableState<Boolean>
+    selectedTheme: MutableState<String>,
+    settingsManager: SettingsManager
 ) {
     AlertDialog(
         onDismissRequest = { showThemeState.value = false },
@@ -274,11 +271,10 @@ fun ThemeDialog(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     RadioButton(
-                        selected = lightTheme,
+                        selected = selectedTheme.value == "Light",
                         onClick = {
-                            lightThemeState.value = true
-                            darkThemeState.value = false
-                            systemThemeState.value = false
+                            selectedTheme.value = "Light"
+                            settingsManager.saveSetting("Theme", "Light")
                         }
                     )
                     Text("Claro")
@@ -287,11 +283,10 @@ fun ThemeDialog(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     RadioButton(
-                        selected = darkTheme,
+                        selected = selectedTheme.value == "Dark",
                         onClick = {
-                            lightThemeState.value = false
-                            darkThemeState.value = true
-                            systemThemeState.value = false
+                            selectedTheme.value = "Dark"
+                            settingsManager.saveSetting("Theme", "Dark")
                         }
                     )
                     Text("Escuro")
@@ -300,11 +295,10 @@ fun ThemeDialog(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     RadioButton(
-                        selected = systemTheme,
+                        selected = selectedTheme.value == "System",
                         onClick = {
-                            lightThemeState.value = false
-                            darkThemeState.value = false
-                            systemThemeState.value = true
+                            selectedTheme.value = "System"
+                            settingsManager.saveSetting("Theme", "System")
                         }
                     )
                     Text("Predefinido")
@@ -328,8 +322,8 @@ fun ThemeDialog(
 @Composable
 fun LanguageDialog(
     showLanguageState: MutableState<Boolean>,
-    languageSelect: String,
-    languageSelectState: MutableState<String>
+    languageSelect: MutableState<String>,
+    settingsManager: SettingsManager
 ) {
     AlertDialog(
         onDismissRequest = { showLanguageState.value = false },
@@ -349,9 +343,10 @@ fun LanguageDialog(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     RadioButton(
-                        selected = languageSelect == "Português",
+                        selected = languageSelect.value == "Português",
                         onClick = {
-                            languageSelectState.value = "Português"
+                            languageSelect.value = "Português"
+                            settingsManager.saveSetting("Language", "Português")
                         }
                     )
                     Text("Português")
@@ -360,9 +355,10 @@ fun LanguageDialog(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     RadioButton(
-                        selected = languageSelect == "Inglês",
+                        selected = languageSelect.value == "Inglês",
                         onClick = {
-                            languageSelectState.value = "Inglês"
+                            languageSelect.value = "Inglês"
+                            settingsManager.saveSetting("Language", "Inglês")
                         }
                     )
                     Text("Inglês")

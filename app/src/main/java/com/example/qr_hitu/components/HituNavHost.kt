@@ -10,6 +10,7 @@ import com.example.qr_hitu.ViewModels.MalfunctionViewModel
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.ViewModels.ViewModel1
 import com.example.qr_hitu.ViewModels.ViewModel2
+import com.example.qr_hitu.functions.SettingsManager
 import com.example.qr_hitu.screens.LoadingScreen
 import com.example.qr_hitu.screens.adminScreens.AdminChoices
 import com.example.qr_hitu.screens.adminScreens.create.QrCreateFinal
@@ -35,6 +36,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 @Composable
 fun QrHituNavHost(
     navController: NavHostController = rememberNavController(),
+    settingsManager: SettingsManager,
     startDestination: String = Login.route,
     viewModel1: ViewModel1,
     viewModel2: ViewModel2,
@@ -47,7 +49,7 @@ fun QrHituNavHost(
         startDestination = startDestination
     ){
         composable(route = Login.route){
-            LoginScreen(navController = navController, firestore = FirebaseFirestore.getInstance())
+            LoginScreen(navController = navController, settingsManager = settingsManager)
         }
         composable(route = ScanProf.route){
             ScannerTeachScreen(navController = navController, viewModel = viewModelSA)
@@ -92,7 +94,7 @@ fun QrHituNavHost(
             ScannerAdminInfoUpdate(navController = navController, viewModelSA)
         }
         composable(SettingOptions.route){
-            SettingsOptions(navController = navController)
+            SettingsOptions(navController = navController, settingsManager = settingsManager)
         }
         composable(Manual.route){
             Manual(navController = navController)

@@ -1,5 +1,6 @@
 package com.example.qr_hitu.functions
 
+import android.content.Context
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -11,6 +12,7 @@ import androidx.compose.material3.*
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -29,8 +31,10 @@ import java.util.Locale
 @Composable
 fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewModel2: ViewModel2, viewModelSA : ScannerViewModel, viewModelMF : MalfunctionViewModel){
 
+    val localContext = LocalContext
     val scaffoldState = rememberScaffoldState()
     val navController = rememberNavController()
+    val settingsManager = SettingsManager(localContext.current!!)
     val currentBackStack by navController.currentBackStackEntryAsState()
     val currentDestination = currentBackStack?.destination
     val destinationRoute = currentDestination?.route ?: Login.route
@@ -59,6 +63,7 @@ fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewMo
     ) { innerPadding ->
             QrHituNavHost(
                 navController = navController,
+                settingsManager = settingsManager,
                 viewModel1 = viewModel1,
                 viewModel2 = viewModel2,
                 viewModelSA = viewModelSA,

@@ -31,6 +31,7 @@ import com.example.qr_hitu.R
 import com.example.qr_hitu.components.Loading
 import com.example.qr_hitu.components.MalfList
 import com.example.qr_hitu.components.UserChoices
+import com.example.qr_hitu.functions.SettingsManager
 import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
 import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 import com.google.firebase.auth.ktx.auth
@@ -69,7 +70,7 @@ fun loginVerify(navController: NavController, db: CollectionReference, email: St
 @SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(navController: NavController, firestore: FirebaseFirestore) {
+fun LoginScreen(navController: NavController, settingsManager: SettingsManager) {
 
     var emailValue by remember { mutableStateOf("") }
     var passwordValue by remember { mutableStateOf("") }
@@ -80,13 +81,15 @@ fun LoginScreen(navController: NavController, firestore: FirebaseFirestore) {
 
 
     scope.launch {
-        val db = Firebase.firestore.collection("Admin")
-        val email = Firebase.auth.currentUser?.email
-        delay(500)
+        if (settingsManager.getSetting("AutoLogin", "false") == "true") {
+            val db = Firebase.firestore.collection("Admin")
+            val email = Firebase.auth.currentUser?.email
+            delay(500)
 
-        if (Firebase.auth.currentUser != null) {
-            navController.navigate(Loading.route)
-            loginVerify(navController, db, email)
+            if (Firebase.auth.currentUser != null) {
+                navController.navigate(Loading.route)
+                loginVerify(navController, db, email)
+            }
         }
     }
 
