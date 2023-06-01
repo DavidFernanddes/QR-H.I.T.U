@@ -13,7 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.fragment.app.FragmentActivity
 import androidx.core.content.ContextCompat
-
+/*
 @SuppressLint("RememberReturnType")
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable
@@ -65,3 +65,4 @@ fun FingerprintAuthentication(
             onAuthenticationError("No fingerprints enrolled.")
     }
 }
+*/

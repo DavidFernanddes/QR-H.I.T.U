@@ -2,14 +2,12 @@ package com.example.qr_hitu.screens.menu
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DividerDefaults
@@ -32,13 +30,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.functions.SettingsManager
-import com.example.qr_hitu.theme.md_theme_light_primary
-import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 @Composable
-fun SettingsOptions(navController: NavController, settingsManager: SettingsManager) {
+fun SettingsOptions(navController: NavController, settingsManager: SettingsManager, switch: MutableState<String>) {
 
     val showThemeState = remember { mutableStateOf(false) }
     val showTheme by rememberUpdatedState(showThemeState.value)
@@ -50,7 +46,7 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
     val selectedAutoLogin = remember { mutableStateOf(false) }
     val selectedBlockSession = remember { mutableStateOf(false) }
 
-    selectedTheme.value = settingsManager.getSetting("Theme", "")
+    selectedTheme.value = switch.value.ifBlank { settingsManager.getSetting("Theme", "System") }
     selectedLanguage.value = settingsManager.getSetting("Language", "")
     selectedAutoLogin.value = settingsManager.getSetting("AutoLogin", "false").toBooleanStrict()
     selectedBlockSession.value = settingsManager.getSetting("BlockSession", "false").toBooleanStrict()
@@ -259,6 +255,7 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
             ThemeDialog(
                 showThemeState,
                 selectedTheme,
+                switch,
                 settingsManager
             )
         }
@@ -277,6 +274,7 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
 fun ThemeDialog(
     showThemeState: MutableState<Boolean>,
     selectedTheme: MutableState<String>,
+    switch: MutableState<String>,
     settingsManager: SettingsManager
 ) {
 
@@ -302,6 +300,7 @@ fun ThemeDialog(
                         onClick = {
                             selectedTheme.value = "Light"
                             settingsManager.saveSetting("Theme", "Light")
+                            switch.value = "Light"
                         }
                     )
                     Text("Claro")
@@ -314,9 +313,10 @@ fun ThemeDialog(
                         onClick = {
                             selectedTheme.value = "Dark"
                             settingsManager.saveSetting("Theme", "Dark")
+                            switch.value = "Dark"
                         }
                     )
-                    Text("Escuro")
+                    Text("Dark")
                 }
                 Row(
                     verticalAlignment = Alignment.CenterVertically
@@ -326,6 +326,7 @@ fun ThemeDialog(
                         onClick = {
                             selectedTheme.value = "System"
                             settingsManager.saveSetting("Theme", "System")
+                            switch.value = "System"
                         }
                     )
                     Text("Predefinido")

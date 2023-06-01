@@ -26,12 +26,16 @@ private val DarkColors = darkColorScheme(
 
 
 @Composable
-fun QRHITUTheme(isDarkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+fun QRHITUTheme(isDarkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit, theme: String) {
 
     MaterialTheme(
         content = content,
         shapes = replyShapes,
         typography = replyTypography,
-        colorScheme = if(isDarkTheme) DarkColors else LightColors
+        colorScheme = when(theme) {
+            "Light" -> LightColors
+            "Dark" -> DarkColors
+            else -> if (isDarkTheme) DarkColors else LightColors
+        }
     )
 }

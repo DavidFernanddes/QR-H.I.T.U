@@ -1,6 +1,7 @@
 package com.example.qr_hitu.components
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -42,6 +43,7 @@ fun QrHituNavHost(
     viewModel2: ViewModel2,
     viewModelSA: ScannerViewModel,
     viewModelMF: MalfunctionViewModel,
+    switch: MutableState<String>,
     modifier: Modifier
 ){
     NavHost(
@@ -94,7 +96,7 @@ fun QrHituNavHost(
             ScannerAdminInfoUpdate(navController = navController, viewModelSA)
         }
         composable(SettingOptions.route){
-            SettingsOptions(navController = navController, settingsManager = settingsManager)
+            SettingsOptions(navController = navController, settingsManager = settingsManager, switch = switch)
         }
         composable(Manual.route){
             Manual(navController = navController)

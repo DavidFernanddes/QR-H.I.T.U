@@ -29,12 +29,11 @@ import kotlinx.coroutines.launch
 import java.util.Locale
 
 @Composable
-fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewModel2: ViewModel2, viewModelSA : ScannerViewModel, viewModelMF : MalfunctionViewModel){
+fun ScaffoldLayouts(navController: NavController, settingsManager: SettingsManager, viewModel1: ViewModel1, viewModel2: ViewModel2, viewModelSA : ScannerViewModel, viewModelMF : MalfunctionViewModel, switch: MutableState<String>){
 
     val localContext = LocalContext
     val scaffoldState = rememberScaffoldState()
     val navController = rememberNavController()
-    val settingsManager = SettingsManager(localContext.current!!)
     val currentBackStack by navController.currentBackStackEntryAsState()
     val currentDestination = currentBackStack?.destination
     val destinationRoute = currentDestination?.route ?: Login.route
@@ -68,6 +67,7 @@ fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewMo
                 viewModel2 = viewModel2,
                 viewModelSA = viewModelSA,
                 viewModelMF = viewModelMF,
+                switch = switch,
                 modifier = Modifier.padding(innerPadding)
             )
 
@@ -80,13 +80,13 @@ fun ScaffoldLayouts(navController: NavController, viewModel1: ViewModel1, viewMo
 fun TopBar1(navController: NavController){
     val email = emailString()
 
-        TopAppBar(
-                title = { Text(text = email, color = MaterialTheme.colorScheme.onPrimaryContainer) },
-                colors = topAppBarColors(MaterialTheme.colorScheme.primaryContainer),
-                navigationIcon = {
-                    MenuOptions(navController = navController)
-                }
-        )
+    TopAppBar(
+        title = { Text(text = email, color = MaterialTheme.colorScheme.onPrimaryContainer) },
+        colors = topAppBarColors(MaterialTheme.colorScheme.primaryContainer),
+        navigationIcon = {
+            MenuOptions(navController = navController)
+        }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
