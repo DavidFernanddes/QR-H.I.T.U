@@ -298,16 +298,16 @@ fun ExistsDialog(onDialogAccept: () -> Unit, onDialogReject: () -> Unit) {
             },
             confirmButton= {
                 TextButton(onClick = { openDialog.value = false; onDialogAccept(); }) {
-                    Text(text = "Sim", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                    Text(text = "Sim", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSecondary)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { openDialog.value = false; onDialogReject(); }) {
-                    Text(text = "Não", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                    Text(text = "Não", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSecondary)
                 }
             },
-            textContentColor = MaterialTheme.colorScheme.primaryContainer,
-            titleContentColor = MaterialTheme.colorScheme.primary
+            textContentColor = MaterialTheme.colorScheme.onSecondary,
+            titleContentColor = MaterialTheme.colorScheme.onSecondary
         )
     }
 }

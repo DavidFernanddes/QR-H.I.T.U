@@ -67,6 +67,7 @@ fun loginVerify(navController: NavController, db: CollectionReference, email: St
 @Composable
 fun LoginScreen(navController: NavController, settingsManager: SettingsManager) {
 
+
     var emailValue by remember { mutableStateOf("") }
     var passwordValue by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
@@ -108,12 +109,9 @@ fun LoginScreen(navController: NavController, settingsManager: SettingsManager) 
 
         Spacer(modifier = Modifier.padding(25.dp))
 
-        if(isSystemInDarkTheme()){
-            Image(painterResource(R.drawable.logo_dark), "Logo")
-        }else{
-            Image(painterResource(R.drawable.logo_light), "Logo")
-        }
 
+            //Image(painterResource(R.drawable.logo_dark), "Logo")
+            Image(painterResource(R.drawable.logo_light), "Logo")
 
         Spacer(modifier = Modifier.padding(35.dp))
 

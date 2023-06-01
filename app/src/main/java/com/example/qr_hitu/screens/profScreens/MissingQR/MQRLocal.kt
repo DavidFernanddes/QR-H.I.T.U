@@ -340,7 +340,7 @@ fun AddDialog(onDialogDismissed: () -> Unit, onDialogConfirm: () -> Unit) {
                     Text(
                         text = "Sim",
                         style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.colorScheme.onSecondary
                     )
                 }
             },
@@ -349,12 +349,12 @@ fun AddDialog(onDialogDismissed: () -> Unit, onDialogConfirm: () -> Unit) {
                     Text(
                         text = "Não",
                         style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.colorScheme.onSecondary
                     )
                 }
             },
-            textContentColor = MaterialTheme.colorScheme.primaryContainer,
-            titleContentColor = MaterialTheme.colorScheme.primary
+            textContentColor = MaterialTheme.colorScheme.onSecondary,
+            titleContentColor = MaterialTheme.colorScheme.onSecondary
         )
     }
 }

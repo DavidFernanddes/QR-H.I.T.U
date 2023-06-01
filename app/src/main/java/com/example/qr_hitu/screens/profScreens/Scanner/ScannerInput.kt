@@ -297,12 +297,12 @@ fun Dialog(error: Boolean, onDialogDismissedError: () -> Unit, onDialogDismissed
                         Text(
                             text = "OK",
                             style = MaterialTheme.typography.labelLarge,
-                            color = MaterialTheme.colorScheme.primary
+                            color = MaterialTheme.colorScheme.onSecondary
                         )
                     }
                 },
-                textContentColor = MaterialTheme.colorScheme.primaryContainer,
-                titleContentColor = MaterialTheme.colorScheme.primary
+                textContentColor = MaterialTheme.colorScheme.onSecondary,
+                titleContentColor = MaterialTheme.colorScheme.onSecondary
             )
         } else {
             AlertDialog(
@@ -322,12 +322,12 @@ fun Dialog(error: Boolean, onDialogDismissedError: () -> Unit, onDialogDismissed
                         Text(
                             text = "OK",
                             style = MaterialTheme.typography.labelLarge,
-                            color = MaterialTheme.colorScheme.primary
+                            color = MaterialTheme.colorScheme.onSecondary
                         )
                     }
                 },
-                textContentColor = MaterialTheme.colorScheme.primaryContainer,
-                titleContentColor = MaterialTheme.colorScheme.primary
+                textContentColor = MaterialTheme.colorScheme.onSecondary,
+                titleContentColor = MaterialTheme.colorScheme.onSecondary
             )
         }
     }

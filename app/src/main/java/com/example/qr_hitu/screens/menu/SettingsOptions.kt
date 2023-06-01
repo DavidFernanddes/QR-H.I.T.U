@@ -46,7 +46,7 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
     val selectedAutoLogin = remember { mutableStateOf(false) }
     val selectedBlockSession = remember { mutableStateOf(false) }
 
-    selectedTheme.value = switch.value.ifBlank { settingsManager.getSetting("Theme", "System") }
+    selectedTheme.value = switch.value.ifBlank { settingsManager.getSetting("Theme", "") }
     selectedLanguage.value = settingsManager.getSetting("Language", "")
     selectedAutoLogin.value = settingsManager.getSetting("AutoLogin", "false").toBooleanStrict()
     selectedBlockSession.value = settingsManager.getSetting("BlockSession", "false").toBooleanStrict()
@@ -68,7 +68,7 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
             "Aspeto",
             style = MaterialTheme.typography.labelLarge,
             modifier = Modifier.padding(start = 12.dp),
-            color = MaterialTheme.colorScheme.onPrimaryContainer
+            color = MaterialTheme.colorScheme.primaryContainer
         )
 
         Spacer(modifier = Modifier.padding(5.dp))
@@ -123,7 +123,7 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
             "Segurança",
             style = MaterialTheme.typography.labelLarge,
             modifier = Modifier.padding(start = 12.dp),
-            color = MaterialTheme.colorScheme.onPrimaryContainer
+            color = MaterialTheme.colorScheme.primaryContainer
         )
 
         Spacer(modifier = Modifier.padding(5.dp))
@@ -227,7 +227,7 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
             Text(
                 "Acerca de",
                 style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.onPrimaryContainer
+                color = MaterialTheme.colorScheme.primaryContainer
             )
         }
 
@@ -318,19 +318,6 @@ fun ThemeDialog(
                     )
                     Text("Dark")
                 }
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    RadioButton(
-                        selected = selectedTheme.value == "System",
-                        onClick = {
-                            selectedTheme.value = "System"
-                            settingsManager.saveSetting("Theme", "System")
-                            switch.value = "System"
-                        }
-                    )
-                    Text("Predefinido")
-                }
             }
         },
         confirmButton = {
@@ -338,12 +325,12 @@ fun ThemeDialog(
                 Text(
                     text = "OK",
                     style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.primary
+                    color = MaterialTheme.colorScheme.onSecondary
                 )
             }
         },
-        textContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-        titleContentColor = MaterialTheme.colorScheme.primary
+        textContentColor = MaterialTheme.colorScheme.onSecondary,
+        titleContentColor = MaterialTheme.colorScheme.onSecondary,
     )
 }
 

@@ -26,7 +26,7 @@ fun QrHituApp() {
     val viewModelSA = viewModel<ScannerViewModel>()
     val viewModelMF = viewModel<MalfunctionViewModel>()
     val switch = remember { mutableStateOf("") }
-    val theme by rememberUpdatedState(if (switch.value == "") { settingsManager.getSetting("Theme", "System" ) } else switch.value)
+    val theme by rememberUpdatedState(if (switch.value == "") { settingsManager.getSetting("Theme", "" ) } else switch.value)
 
     QRHITUTheme(
         content = {
