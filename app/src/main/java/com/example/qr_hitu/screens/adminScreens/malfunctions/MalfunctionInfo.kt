@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -33,8 +32,6 @@ import androidx.navigation.NavController
 import com.example.qr_hitu.ViewModels.MalfunctionViewModel
 import com.example.qr_hitu.functions.seeDispositivo
 import com.example.qr_hitu.functions.seeMalfunction
-import com.example.qr_hitu.theme.md_theme_light_primary
-import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 
 @Composable
 fun MalfInfo(navController: NavController, viewModel: MalfunctionViewModel) {
@@ -63,9 +60,9 @@ fun MalfInfo(navController: NavController, viewModel: MalfunctionViewModel) {
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .padding(horizontal = 16.dp)
-            .background(Color.White)
+            .background(MaterialTheme.colorScheme.background)
             .scrollable(state = scrollState, orientation = Orientation.Vertical)
+            .padding(horizontal = 16.dp)
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
@@ -89,8 +86,8 @@ fun MalfInfo(navController: NavController, viewModel: MalfunctionViewModel) {
                 shape = MaterialTheme.shapes.large,
                 modifier = Modifier.fillMaxWidth(),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = md_theme_light_primaryContainer,
-                    focusedLabelColor = md_theme_light_primaryContainer,
+                    focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
+                    focusedLabelColor = MaterialTheme.colorScheme.primaryContainer,
                 )
             )
 
@@ -109,8 +106,8 @@ fun MalfInfo(navController: NavController, viewModel: MalfunctionViewModel) {
                 shape = MaterialTheme.shapes.large,
                 modifier = Modifier.fillMaxWidth(),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = md_theme_light_primaryContainer,
-                    focusedLabelColor = md_theme_light_primaryContainer,
+                    focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
+                    focusedLabelColor = MaterialTheme.colorScheme.primaryContainer,
                 )
             )
 
@@ -125,8 +122,8 @@ fun MalfInfo(navController: NavController, viewModel: MalfunctionViewModel) {
                 shape = MaterialTheme.shapes.large,
                 modifier = Modifier.fillMaxWidth(),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = md_theme_light_primaryContainer,
-                    focusedLabelColor = md_theme_light_primaryContainer,
+                    focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
+                    focusedLabelColor = MaterialTheme.colorScheme.primaryContainer,
                 )
             )
 
@@ -141,8 +138,8 @@ fun MalfInfo(navController: NavController, viewModel: MalfunctionViewModel) {
                 shape = MaterialTheme.shapes.large,
                 modifier = Modifier.fillMaxWidth(),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = md_theme_light_primaryContainer,
-                    focusedLabelColor = md_theme_light_primaryContainer,
+                    focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
+                    focusedLabelColor = MaterialTheme.colorScheme.primaryContainer,
                 )
             )
         }
@@ -156,7 +153,7 @@ fun MalfInfo(navController: NavController, viewModel: MalfunctionViewModel) {
                     completeState = !completeState
                 },
                 colors = RadioButtonDefaults.colors(
-                    selectedColor = md_theme_light_primary
+                    selectedColor = MaterialTheme.colorScheme.primary
                 )
             )
             Text(

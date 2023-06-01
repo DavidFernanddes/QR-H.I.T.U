@@ -30,8 +30,6 @@ import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.components.ScannerAdminInfo
 import com.example.qr_hitu.functions.decryptAES
 import com.example.qr_hitu.functions.encryptionKey
-import com.example.qr_hitu.theme.md_theme_light_primary
-import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
@@ -197,11 +195,11 @@ fun Dialog(onDialogDismissed: () -> Unit) {
             },
             confirmButton= {
                 TextButton(onClick = { openDialog.value = false;  onDialogDismissed()}) {
-                    Text(text = "OK", style = MaterialTheme.typography.labelLarge, color = md_theme_light_primary)
+                    Text(text = "OK", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
                 }
             },
-            textContentColor = md_theme_light_primaryContainer,
-            titleContentColor = md_theme_light_primary,
+            textContentColor = MaterialTheme.colorScheme.primaryContainer,
+            titleContentColor = MaterialTheme.colorScheme.primary,
         )
     }
 

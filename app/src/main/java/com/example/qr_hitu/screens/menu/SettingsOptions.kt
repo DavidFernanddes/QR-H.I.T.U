@@ -1,12 +1,15 @@
 package com.example.qr_hitu.screens.menu
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DividerDefaults
@@ -60,6 +63,7 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp)
     ) {
         Spacer(modifier = Modifier.padding(10.dp))
@@ -67,12 +71,9 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
         Text(
             "Aspeto",
             style = MaterialTheme.typography.labelLarge,
-            modifier = Modifier.padding(start = 12.dp)
+            modifier = Modifier.padding(start = 12.dp),
+            color = MaterialTheme.colorScheme.onPrimaryContainer
         )
-
-        Spacer(modifier = Modifier.padding(5.dp))
-
-        Divider(thickness = DividerDefaults.Thickness)
 
         Spacer(modifier = Modifier.padding(5.dp))
 
@@ -87,15 +88,19 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.Start
             ) {
-                Text("Tema", style = MaterialTheme.typography.bodyLarge)
+                Text("Tema", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSecondary)
 
                 Spacer(modifier = Modifier.padding(5.dp))
 
-                Text(checkedTheme.ifBlank { "Light" })
+                Text(checkedTheme.ifBlank { "Light" }, color = MaterialTheme.colorScheme.onSecondary)
             }
         }
 
-        Spacer(modifier = Modifier.padding(10.dp))
+        Spacer(modifier = Modifier.padding(5.dp))
+
+        Divider(thickness = DividerDefaults.Thickness, color = MaterialTheme.colorScheme.primary)
+
+        Spacer(modifier = Modifier.padding(5.dp))
 
         TextButton(
             onClick = { showLanguageState.value = true },
@@ -108,25 +113,22 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.Start
             ) {
-                Text("Idioma", style = MaterialTheme.typography.bodyLarge)
+                Text("Idioma", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSecondary)
 
                 Spacer(modifier = Modifier.padding(5.dp))
 
-                Text(checkedLanguage.ifBlank { "Português" })
+                Text(checkedLanguage.ifBlank { "Português" }, color = MaterialTheme.colorScheme.onSecondary)
             }
         }
 
         Spacer(modifier = Modifier.padding(10.dp))
 
         Text(
-            "Aspeto",
+            "Segurança",
             style = MaterialTheme.typography.labelLarge,
-            modifier = Modifier.padding(start = 12.dp)
+            modifier = Modifier.padding(start = 12.dp),
+            color = MaterialTheme.colorScheme.onPrimaryContainer
         )
-
-        Spacer(modifier = Modifier.padding(5.dp))
-
-        Divider(thickness = DividerDefaults.Thickness)
 
         Spacer(modifier = Modifier.padding(5.dp))
 
@@ -139,7 +141,8 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
             Text(
                 "Auto Login",
                 style = MaterialTheme.typography.labelLarge,
-                modifier = Modifier.padding(start = 12.dp)
+                modifier = Modifier.padding(start = 12.dp),
+                color = MaterialTheme.colorScheme.onSecondary
             )
 
             Switch(
@@ -151,13 +154,17 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
                 enabled = true,
                 colors = SwitchDefaults.colors(
                     uncheckedBorderColor = Color.Transparent,
-                    checkedTrackColor = md_theme_light_primary
+                    checkedTrackColor = MaterialTheme.colorScheme.primary,
+                    checkedThumbColor = Color.White
                 )
             )
-
         }
 
-        Spacer(modifier = Modifier.padding(10.dp))
+        Spacer(modifier = Modifier.padding(5.dp))
+
+        Divider(thickness = DividerDefaults.Thickness, color = MaterialTheme.colorScheme.primary)
+
+        Spacer(modifier = Modifier.padding(5.dp))
 
         Row(
             modifier = Modifier
@@ -168,7 +175,8 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
             Text(
                 "Bloquear sessão",
                 style = MaterialTheme.typography.labelLarge,
-                modifier = Modifier.padding(start = 12.dp)
+                modifier = Modifier.padding(start = 12.dp),
+                color = MaterialTheme.colorScheme.onSecondary
             )
 
             Switch(
@@ -180,15 +188,22 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
                 enabled = checkedAutoLogin.value,
                 colors = SwitchDefaults.colors(
                     uncheckedBorderColor = Color.Transparent,
-                    checkedTrackColor = md_theme_light_primary
+                    checkedTrackColor = MaterialTheme.colorScheme.primary,
+                    checkedThumbColor = Color.White
                 )
             )
 
         }
 
-        Spacer(modifier = Modifier.padding(10.dp))
+        Spacer(modifier = Modifier.padding(5.dp))
+
+        Divider(thickness = DividerDefaults.Thickness, color = MaterialTheme.colorScheme.primary)
+
+        Spacer(modifier = Modifier.padding(5.dp))
 
         TextButton(
+            modifier = Modifier
+                .fillMaxWidth(),
             onClick = {
                 Firebase.auth.sendPasswordResetEmail(
                     Firebase.auth.currentUser?.email!!
@@ -196,14 +211,16 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
             },
             shape = MaterialTheme.shapes.small
         ) {
-            Text("Alterar palavra-passe", style = MaterialTheme.typography.bodyLarge)
+            Column (
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.Start
+            ) {
+                Text("Alterar palavra-passe", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSecondary)
+            }
         }
 
-        Spacer(modifier = Modifier.padding(5.dp))
-
-        Divider(thickness = DividerDefaults.Thickness)
-
-        Spacer(modifier = Modifier.padding(5.dp))
+        Spacer(modifier = Modifier.padding(10.dp))
 
         TextButton(
             onClick = {
@@ -211,22 +228,31 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
             },
             shape = MaterialTheme.shapes.small
         ) {
-            Text("Acerca de", style = MaterialTheme.typography.bodyLarge)
+            Text(
+                "Acerca de",
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.onPrimaryContainer
+            )
         }
 
         Spacer(modifier = Modifier.padding(5.dp))
 
-        Divider(thickness = DividerDefaults.Thickness)
-
-        Spacer(modifier = Modifier.padding(5.dp))
-
         TextButton(
+            modifier = Modifier
+                .fillMaxWidth(),
             onClick = {
 
             },
             shape = MaterialTheme.shapes.small
         ) {
-            Text("Sobre", style = MaterialTheme.typography.bodyLarge)
+            Column (
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.Start
+            ){
+                Text("Sobre", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSecondary)
+            }
+
         }
 
         if (showTheme) {
@@ -253,6 +279,7 @@ fun ThemeDialog(
     selectedTheme: MutableState<String>,
     settingsManager: SettingsManager
 ) {
+
     AlertDialog(
         onDismissRequest = { showThemeState.value = false },
         title = {
@@ -310,12 +337,12 @@ fun ThemeDialog(
                 Text(
                     text = "OK",
                     style = MaterialTheme.typography.labelLarge,
-                    color = md_theme_light_primary
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
         },
-        textContentColor = md_theme_light_primaryContainer,
-        titleContentColor = md_theme_light_primary
+        textContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+        titleContentColor = MaterialTheme.colorScheme.primary
     )
 }
 
@@ -370,11 +397,11 @@ fun LanguageDialog(
                 Text(
                     text = "OK",
                     style = MaterialTheme.typography.labelLarge,
-                    color = md_theme_light_primary
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
         },
-        textContentColor = md_theme_light_primaryContainer,
-        titleContentColor = md_theme_light_primary
+        textContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+        titleContentColor = MaterialTheme.colorScheme.primary
     )
 }

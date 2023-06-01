@@ -20,8 +20,6 @@ import androidx.navigation.NavController
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.functions.addDispositivo
 import com.example.qr_hitu.functions.seeDispositivo
-import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
-import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,8 +43,8 @@ fun ScannerAdminInfoUpdate(navController: NavController, viewModel: ScannerViewM
             .fillMaxWidth()
             .fillMaxHeight()
             .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp)
-            .background(Color.White)
     ) {
 
         Spacer(modifier = Modifier.padding(30.dp))
@@ -137,8 +135,8 @@ fun ScannerAdminInfoUpdate(navController: NavController, viewModel: ScannerViewM
                 .fillMaxWidth()
                 .height(50.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = md_theme_light_primaryContainer,
-                contentColor = md_theme_light_onPrimaryContainer
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.onPrimaryContainer
             )
         ) {
             Text(text = "Atualizar", style = MaterialTheme.typography.bodyLarge)

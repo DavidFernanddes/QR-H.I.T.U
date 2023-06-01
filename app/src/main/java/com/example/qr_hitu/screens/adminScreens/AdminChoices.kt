@@ -1,5 +1,6 @@
 package com.example.qr_hitu.screens.adminScreens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,15 +23,15 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.components.ChooseQr
 import com.example.qr_hitu.components.Create1
-import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
-import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 
 @Composable
 fun AdminChoices(navController: NavController) {
 
     Row(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(horizontal = 16.dp),
         Arrangement.Center,
         Alignment.CenterVertically
     ) {
@@ -39,8 +40,8 @@ fun AdminChoices(navController: NavController) {
             modifier = Modifier
                 .size(150.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = md_theme_light_primaryContainer,
-                contentColor = md_theme_light_onPrimaryContainer
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.onPrimaryContainer
             ),
             shape = MaterialTheme.shapes.medium
         ) {
@@ -52,12 +53,12 @@ fun AdminChoices(navController: NavController) {
                     "Download",
                     modifier = Modifier
                         .size(75.dp),
-                    tint = md_theme_light_onPrimaryContainer
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer
                 )
                 Text(
                     "Transferir",
                     style = MaterialTheme.typography.titleMedium,
-                    color = md_theme_light_onPrimaryContainer
+                    color = MaterialTheme.colorScheme.onPrimaryContainer
                 )
             }
         }
@@ -69,8 +70,8 @@ fun AdminChoices(navController: NavController) {
             modifier = Modifier
                 .size(150.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = md_theme_light_primaryContainer,
-                contentColor = md_theme_light_onPrimaryContainer
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.onPrimaryContainer
             ),
             shape = MaterialTheme.shapes.medium
         ) {
@@ -82,12 +83,12 @@ fun AdminChoices(navController: NavController) {
                     "Create",
                     modifier = Modifier
                         .size(75.dp),
-                    tint = md_theme_light_onPrimaryContainer
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer
                 )
                 Text(
                     "Criar Qr",
                     style = MaterialTheme.typography.titleMedium,
-                    color = md_theme_light_onPrimaryContainer
+                    color = MaterialTheme.colorScheme.onPrimaryContainer
                 )
             }
         }

@@ -27,9 +27,6 @@ import androidx.navigation.NavController
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.components.UserChoices
 import com.example.qr_hitu.functions.addMalfunction
-import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
-import com.example.qr_hitu.theme.md_theme_light_primary
-import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -105,7 +102,7 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
 
         Spacer(modifier = Modifier.padding(20.dp))
 
-        Text(text = "Qual o problema ?", style = MaterialTheme.typography.titleMedium)
+        Text(text = "Qual o problema ?", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondary)
 
         Spacer(modifier = Modifier.padding(10.dp))
 
@@ -130,8 +127,8 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
                     Icon(icon, "", Modifier.clickable { expanded = !expanded })
                 },
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = md_theme_light_primaryContainer,
-                    focusedLabelColor = md_theme_light_primaryContainer,
+                    focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
+                    focusedLabelColor = MaterialTheme.colorScheme.primaryContainer,
                 )
             )
             ExposedDropdownMenu(
@@ -152,7 +149,7 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Text(text = "Descreva o problema", style = MaterialTheme.typography.titleMedium)
+        Text(text = "Descreva o problema", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondary)
 
         Spacer(modifier = Modifier.padding(10.dp))
 
@@ -171,8 +168,8 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
             ),
             keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = md_theme_light_primaryContainer,
-                focusedLabelColor = md_theme_light_primaryContainer,
+                focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
+                focusedLabelColor = MaterialTheme.colorScheme.primaryContainer,
             )
         )
 
@@ -185,7 +182,7 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
                     urgentState = !urgentState
                 },
                 colors = RadioButtonDefaults.colors(
-                    selectedColor = md_theme_light_primary
+                    selectedColor = MaterialTheme.colorScheme.primary
                 )
             )
             Text(
@@ -242,8 +239,8 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
                 .fillMaxWidth()
                 .height(50.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = md_theme_light_primaryContainer,
-                contentColor = md_theme_light_onPrimaryContainer
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.onPrimaryContainer
             ),
             enabled = enabled2
         ) {
@@ -300,12 +297,12 @@ fun Dialog(error: Boolean, onDialogDismissedError: () -> Unit, onDialogDismissed
                         Text(
                             text = "OK",
                             style = MaterialTheme.typography.labelLarge,
-                            color = md_theme_light_primary
+                            color = MaterialTheme.colorScheme.primary
                         )
                     }
                 },
-                textContentColor = md_theme_light_primaryContainer,
-                titleContentColor = md_theme_light_primary
+                textContentColor = MaterialTheme.colorScheme.primaryContainer,
+                titleContentColor = MaterialTheme.colorScheme.primary
             )
         } else {
             AlertDialog(
@@ -325,12 +322,12 @@ fun Dialog(error: Boolean, onDialogDismissedError: () -> Unit, onDialogDismissed
                         Text(
                             text = "OK",
                             style = MaterialTheme.typography.labelLarge,
-                            color = md_theme_light_primary
+                            color = MaterialTheme.colorScheme.primary
                         )
                     }
                 },
-                textContentColor = md_theme_light_primaryContainer,
-                titleContentColor = md_theme_light_primary
+                textContentColor = MaterialTheme.colorScheme.primaryContainer,
+                titleContentColor = MaterialTheme.colorScheme.primary
             )
         }
     }
@@ -361,12 +358,12 @@ fun ExistsDialog(onDialogDismissed: () -> Unit) {
                     Text(
                         text = "OK",
                         style = MaterialTheme.typography.labelLarge,
-                        color = md_theme_light_primary
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
             },
-            textContentColor = md_theme_light_primaryContainer,
-            titleContentColor = md_theme_light_primary
+            textContentColor = MaterialTheme.colorScheme.primaryContainer,
+            titleContentColor = MaterialTheme.colorScheme.primary
         )
     }
 }

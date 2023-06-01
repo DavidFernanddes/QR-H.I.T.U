@@ -3,8 +3,8 @@ package com.example.qr_hitu.functions
 
 
 import android.content.Context
+import android.preference.PreferenceManager
 import androidx.core.content.edit
-import androidx.preference.PreferenceManager
 
 class SettingsManager(private val context: Context) {
     private val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)

@@ -1,5 +1,6 @@
 package com.example.qr_hitu.screens.profScreens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,17 +23,15 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.components.MQRLocal
 import com.example.qr_hitu.components.ScanProf
-import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
-import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 
 @Composable
 fun PrimaryChoice(navController: NavController) {
 
-
-
     Row(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(horizontal = 16.dp),
         Arrangement.Center,
         Alignment.CenterVertically
     ) {
@@ -41,8 +40,8 @@ fun PrimaryChoice(navController: NavController) {
             modifier = Modifier
                 .size(150.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = md_theme_light_primaryContainer,
-                contentColor = md_theme_light_onPrimaryContainer
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.onPrimaryContainer
             ),
             shape = MaterialTheme.shapes.medium
         ) {
@@ -54,12 +53,12 @@ fun PrimaryChoice(navController: NavController) {
                     "Scan",
                     modifier = Modifier
                         .size(75.dp),
-                    tint = md_theme_light_onPrimaryContainer
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer
                 )
                 Text(
                     "Scanner",
                     style = MaterialTheme.typography.titleMedium,
-                    color = md_theme_light_onPrimaryContainer
+                    color = MaterialTheme.colorScheme.onPrimaryContainer
                 )
             }
         }
@@ -71,8 +70,8 @@ fun PrimaryChoice(navController: NavController) {
             modifier = Modifier
                 .size(150.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = md_theme_light_primaryContainer,
-                contentColor = md_theme_light_onPrimaryContainer
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.onPrimaryContainer
             ),
             shape = MaterialTheme.shapes.medium
         ) {
@@ -84,12 +83,12 @@ fun PrimaryChoice(navController: NavController) {
                     "Report",
                     modifier = Modifier
                         .size(75.dp),
-                    tint = md_theme_light_onPrimaryContainer
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer
                 )
                 Text(
                     "Falta de QR",
                     style = MaterialTheme.typography.titleMedium,
-                    color = md_theme_light_onPrimaryContainer
+                    color = MaterialTheme.colorScheme.onPrimaryContainer
                 )
             }
         }

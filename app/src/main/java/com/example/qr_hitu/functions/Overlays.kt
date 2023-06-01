@@ -1,6 +1,6 @@
 package com.example.qr_hitu.functions
 
-import android.content.Context
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -81,8 +81,8 @@ fun TopBar1(navController: NavController){
     val email = emailString()
 
         TopAppBar(
-                title = { Text(text = email, color = md_theme_light_onPrimaryContainer) },
-                colors = topAppBarColors(md_theme_light_primaryContainer),
+                title = { Text(text = email, color = MaterialTheme.colorScheme.onPrimaryContainer) },
+                colors = topAppBarColors(MaterialTheme.colorScheme.primaryContainer),
                 navigationIcon = {
                     MenuOptions(navController = navController)
                 }
@@ -95,11 +95,11 @@ fun TopBar2(navController: NavController){
     val email = emailString()
 
     TopAppBar(
-        title = { Text(text = email, color = md_theme_light_onPrimaryContainer) },
-        colors = topAppBarColors(md_theme_light_primaryContainer),
+        title = { Text(text = email, color = MaterialTheme.colorScheme.onPrimaryContainer) },
+        colors = topAppBarColors(MaterialTheme.colorScheme.primaryContainer),
         navigationIcon = {
             IconButton(onClick = { navController.popBackStack() }) {
-                Icon(Icons.Filled.ArrowBack ,"Back", tint = md_theme_light_onPrimaryContainer)
+                Icon(Icons.Filled.ArrowBack ,"Back", tint = MaterialTheme.colorScheme.onPrimaryContainer)
             }
         }
     )
@@ -112,11 +112,11 @@ fun TopBar3(navController: NavController){
     val email = emailString()
 
     TopAppBar(
-        title = { Text(text = email, color = md_theme_light_onPrimaryContainer) },
-        colors = topAppBarColors(md_theme_light_primaryContainer),
+        title = { Text(text = email, color = MaterialTheme.colorScheme.onPrimaryContainer) },
+        colors = topAppBarColors(MaterialTheme.colorScheme.primaryContainer),
         navigationIcon = {
             IconButton(onClick = { navController.navigate(MalfList.route) }) {
-                Icon(Icons.Filled.Close ,"Close", tint = md_theme_light_onPrimaryContainer)
+                Icon(Icons.Filled.Close ,"Close", tint = MaterialTheme.colorScheme.onPrimaryContainer)
             }
         }
     )
@@ -133,18 +133,18 @@ fun TopBar4(navController: NavController, viewModel: ScannerViewModel){
     val (block, room, machine) = viewModel.myData.value.toString().split(",")
 
     TopAppBar(
-        title = { Text(text = email, color = md_theme_light_onPrimaryContainer) },
-        colors = topAppBarColors(md_theme_light_primaryContainer),
+        title = { Text(text = email, color = MaterialTheme.colorScheme.onPrimaryContainer) },
+        colors = topAppBarColors(MaterialTheme.colorScheme.primaryContainer),
         navigationIcon = {
             MenuOptions(navController = navController)
         },
         actions = {
 
             IconButton(onClick = { navController.navigate(ScannerAdminInfoUpdate.route) }) {
-                Icon(Icons.Filled.Edit, "Edit", tint = md_theme_light_onPrimaryContainer)
+                Icon(Icons.Filled.Edit, "Edit", tint = MaterialTheme.colorScheme.onPrimaryContainer)
             }
             IconButton(onClick = { showState.value = true }) {
-                Icon(Icons.Filled.Delete, "Delete", tint = md_theme_light_onPrimaryContainer)
+                Icon(Icons.Filled.Delete, "Delete", tint = MaterialTheme.colorScheme.onPrimaryContainer)
             }
         },
     )
@@ -159,14 +159,14 @@ fun TopBar5(navController: NavController){
     val email = emailString()
 
     TopAppBar(
-        title = { Text(text = email, color = md_theme_light_onPrimaryContainer) },
-        colors = topAppBarColors(md_theme_light_primaryContainer),
+        title = { Text(text = email, color = MaterialTheme.colorScheme.onPrimaryContainer) },
+        colors = topAppBarColors(MaterialTheme.colorScheme.primaryContainer),
         navigationIcon = {
             MenuOptions(navController = navController)
         },
         actions = {
             IconButton(onClick = { navController.popBackStack() }) {
-                Icon(Icons.Filled.ArrowBack ,"Back", tint = md_theme_light_onPrimaryContainer)
+                Icon(Icons.Filled.ArrowBack ,"Back", tint = MaterialTheme.colorScheme.onPrimaryContainer)
             }
         }
     )
@@ -178,8 +178,8 @@ fun TopBarUser1(navController: NavController){
     val email = emailString()
 
     TopAppBar(
-        title = { Text(text = email, color = md_theme_light_onPrimaryContainer) },
-        colors = topAppBarColors(md_theme_light_primaryContainer),
+        title = { Text(text = email, color = MaterialTheme.colorScheme.onPrimaryContainer) },
+        colors = topAppBarColors(MaterialTheme.colorScheme.primaryContainer),
         navigationIcon = {
            MenuOptions(navController = navController)
         }
@@ -192,14 +192,14 @@ fun TopBarUser2(navController: NavController){
     val email = emailString()
 
     TopAppBar(
-        title = { Text(text = email, color = md_theme_light_onPrimaryContainer) },
-        colors = topAppBarColors(md_theme_light_primaryContainer),
+        title = { Text(text = email, color = MaterialTheme.colorScheme.onPrimaryContainer) },
+        colors = topAppBarColors(MaterialTheme.colorScheme.primaryContainer),
         navigationIcon = {
             MenuOptions(navController = navController)
         },
         actions = {
             IconButton(onClick = { navController.popBackStack() }) {
-                Icon(Icons.Filled.ArrowBack ,"Back", tint = md_theme_light_onPrimaryContainer)
+                Icon(Icons.Filled.ArrowBack ,"Back", tint = MaterialTheme.colorScheme.onPrimaryContainer)
             }
         }
     )
@@ -211,14 +211,14 @@ fun TopBarUser3(navController: NavController){
     val email = emailString()
 
     TopAppBar(
-        title = { Text(text = email, color = md_theme_light_onPrimaryContainer) },
-        colors = topAppBarColors(md_theme_light_primaryContainer),
+        title = { Text(text = email, color = MaterialTheme.colorScheme.onPrimaryContainer) },
+        colors = topAppBarColors(MaterialTheme.colorScheme.primaryContainer),
         navigationIcon = {
             MenuOptions(navController = navController)
         },
         actions = {
             IconButton(onClick = { navController.navigate(UserChoices.route) }) {
-                Icon(Icons.Filled.Close ,"Close", tint = md_theme_light_onPrimaryContainer)
+                Icon(Icons.Filled.Close ,"Close", tint = MaterialTheme.colorScheme.onPrimaryContainer)
             }
         }
     )
@@ -229,11 +229,11 @@ fun TopBarUser3(navController: NavController){
 fun TopBarUni(navController: NavController){
 
     TopAppBar(
-        title = { Text(text = "", color = md_theme_light_onPrimaryContainer) },
-        colors = topAppBarColors(md_theme_light_primaryContainer),
+        title = { Text(text = "", color = MaterialTheme.colorScheme.onPrimaryContainer) },
+        colors = topAppBarColors(MaterialTheme.colorScheme.primaryContainer),
         navigationIcon = {
             IconButton(onClick = { navController.popBackStack() }) {
-                Icon(Icons.Filled.ArrowBack ,"Back", tint = md_theme_light_onPrimaryContainer)
+                Icon(Icons.Filled.ArrowBack ,"Back", tint = MaterialTheme.colorScheme.onPrimaryContainer)
             }
         }
     )
@@ -245,13 +245,13 @@ fun TopBarUni(navController: NavController){
 fun BottomBar(navController: NavController){
 
             BottomAppBar(
-                containerColor = md_theme_light_primaryContainer
+                containerColor = MaterialTheme.colorScheme.primaryContainer
             ) {
                 NavigationBarItem(
                     selected = navController.currentBackStackEntry?.destination?.route == MalfList.route,
-                    label = { Text(text = "Avarias", color = md_theme_light_onPrimaryContainer) },
+                    label = { Text(text = "Avarias", color = MaterialTheme.colorScheme.onPrimaryContainer) },
                     colors = NavigationBarItemDefaults.colors(
-                        indicatorColor= md_theme_light_onPrimaryContainer
+                        indicatorColor= MaterialTheme.colorScheme.onPrimaryContainer
                     ),
                     onClick = { navController.navigate(MalfList.route) },
                     icon = {
@@ -263,9 +263,9 @@ fun BottomBar(navController: NavController){
                             navController.currentBackStackEntry?.destination?.route == ScanAdmin.route ||
                                 navController.currentBackStackEntry?.destination?.route == ScannerAdminInfo.route ||
                                     navController.currentBackStackEntry?.destination?.route == ScannerAdminInfoUpdate.route,
-                    label = { Text(text = "Scanner", color = md_theme_light_onPrimaryContainer) },
+                    label = { Text(text = "Scanner", color = MaterialTheme.colorScheme.onPrimaryContainer) },
                     colors = NavigationBarItemDefaults.colors(
-                        indicatorColor= md_theme_light_onPrimaryContainer
+                        indicatorColor= MaterialTheme.colorScheme.onPrimaryContainer
                     ),
                     onClick = { navController.navigate(ScanAdmin.route) },
                     icon = {
@@ -274,9 +274,9 @@ fun BottomBar(navController: NavController){
                 )
                 NavigationBarItem(
                     selected = navController.currentBackStackEntry?.destination?.route == AdminChoices.route,
-                    label = { Text(text = "Create", color = md_theme_light_onPrimaryContainer) },
+                    label = { Text(text = "Create", color = MaterialTheme.colorScheme.onPrimaryContainer) },
                     colors = NavigationBarItemDefaults.colors(
-                        indicatorColor= md_theme_light_onPrimaryContainer
+                        indicatorColor= MaterialTheme.colorScheme.onPrimaryContainer
                     ),
                     onClick = { navController.navigate(AdminChoices.route) },
                     icon = {
@@ -293,28 +293,29 @@ fun MenuOptions(navController: NavController){
     val scope = rememberCoroutineScope()
 
     IconButton(onClick = { showMenu = !showMenu }) {
-        Icon(Icons.Filled.Menu ,"Menu", tint = md_theme_light_onPrimaryContainer)
+        Icon(Icons.Filled.Menu ,"Menu", tint = MaterialTheme.colorScheme.onPrimaryContainer)
     }
     DropdownMenu(
         expanded = showMenu,
-        onDismissRequest = { showMenu = false }
+        onDismissRequest = { showMenu = false },
+        modifier = Modifier.background(MaterialTheme.colorScheme.primaryContainer)
     ) {
         DropdownMenuItem(
-            text = { Text(text = "Definições") },
+            text = { Text(text = "Definições", color = MaterialTheme.colorScheme.onPrimaryContainer) },
             onClick = {  navController.navigate(SettingOptions.route) },
             leadingIcon = {
                 Icon(Icons.Filled.Settings, "Settings")
             }
         )
         DropdownMenuItem(
-            text = { Text(text = "Manual") },
+            text = { Text(text = "Manual", color = MaterialTheme.colorScheme.onPrimaryContainer) },
             onClick = { navController.navigate(Manual.route) },
             leadingIcon = {
                 Icon(Icons.Filled.Book, "Manual")
             }
         )
         DropdownMenuItem(
-            text = { Text(text = "Sair Sessão") },
+            text = { Text(text = "Sair Sessão", color = MaterialTheme.colorScheme.onPrimaryContainer) },
             onClick = {
                 scope.launch {
                     Firebase.auth.signOut()
@@ -347,7 +348,7 @@ fun DelDialog(onDialogDismissed: () -> Unit, onDeleteClick: () -> Unit) {
                 Text(
                     text = "Não",
                     style = MaterialTheme.typography.labelLarge,
-                    color = md_theme_light_primary
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
         },
@@ -356,12 +357,12 @@ fun DelDialog(onDialogDismissed: () -> Unit, onDeleteClick: () -> Unit) {
                 Text(
                     text = "Sim",
                     style = MaterialTheme.typography.labelLarge,
-                    color = md_theme_light_primary
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
         },
-        textContentColor = md_theme_light_primaryContainer,
-        titleContentColor = md_theme_light_primary
+        textContentColor = MaterialTheme.colorScheme.primaryContainer,
+        titleContentColor = MaterialTheme.colorScheme.primary
     )
 }
 

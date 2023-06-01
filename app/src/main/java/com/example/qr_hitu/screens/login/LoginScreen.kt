@@ -5,8 +5,8 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -16,9 +16,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
@@ -32,12 +30,9 @@ import com.example.qr_hitu.components.Loading
 import com.example.qr_hitu.components.MalfList
 import com.example.qr_hitu.components.UserChoices
 import com.example.qr_hitu.functions.SettingsManager
-import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
-import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
@@ -99,21 +94,26 @@ fun LoginScreen(navController: NavController, settingsManager: SettingsManager) 
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp)
-            .background(Color.White)
     ) {
 
         Spacer(modifier = Modifier.padding(20.dp))
 
         Text(
             text = "QR H.I.T.U",
-            style = MaterialTheme.typography.displayLarge
+            style = MaterialTheme.typography.displayLarge,
+            color = MaterialTheme.colorScheme.onSecondary
         )
 
         Spacer(modifier = Modifier.padding(25.dp))
 
-        Image(painterResource(R.drawable.logo), "Logo")
+        if(isSystemInDarkTheme()){
+            Image(painterResource(R.drawable.logo_dark), "Logo")
+        }else{
+            Image(painterResource(R.drawable.logo_light), "Logo")
+        }
+
 
         Spacer(modifier = Modifier.padding(35.dp))
 
@@ -131,9 +131,9 @@ fun LoginScreen(navController: NavController, settingsManager: SettingsManager) 
                     imeAction = ImeAction.Next
                 ),
                 keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = md_theme_light_primaryContainer,
-                    focusedLabelColor = md_theme_light_primaryContainer
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
+                    focusedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
                 )
             )
 
@@ -162,9 +162,9 @@ fun LoginScreen(navController: NavController, settingsManager: SettingsManager) 
                         Icon(imageVector = image, description)
                     }
                 },
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = md_theme_light_primaryContainer,
-                    focusedLabelColor = md_theme_light_primaryContainer
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
+                    focusedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
                 )
             )
 
@@ -188,10 +188,12 @@ fun LoginScreen(navController: NavController, settingsManager: SettingsManager) 
                             }
                         }
                 },
-                Modifier.fillMaxWidth().height(50.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .height(50.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = md_theme_light_primaryContainer,
-                    contentColor = md_theme_light_onPrimaryContainer
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary
                 )
             ) {
                 Text(text = "Login", style = MaterialTheme.typography.labelLarge)

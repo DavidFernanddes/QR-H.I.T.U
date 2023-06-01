@@ -8,35 +8,30 @@ import androidx.compose.runtime.Composable
 
 
 private val LightColors = lightColorScheme(
-    primary = md_theme_light_primary,
-    onPrimary = md_theme_light_onPrimary,
-    primaryContainer = md_theme_light_primaryContainer,
-    onPrimaryContainer = md_theme_light_onPrimaryContainer,
+    background = ThemeColors.Light.background,
+    primary = ThemeColors.Light.primary,
+    onPrimary = ThemeColors.Light.primaryText,
+    primaryContainer = ThemeColors.Light.primaryContainer,
+    onPrimaryContainer = ThemeColors.Light.containerText,
+    onSecondary = ThemeColors.Light.secondaryText
 )
 private val DarkColors = darkColorScheme(
-    primary = md_theme_dark_primary,
-    onPrimary = md_theme_dark_onPrimary,
-    primaryContainer = md_theme_dark_primaryContainer,
+    background = ThemeColors.Dark.background,
+    primary = ThemeColors.Dark.primary,
+    onPrimary = ThemeColors.Dark.primaryText,
+    primaryContainer = ThemeColors.Dark.primaryContainer,
+    onPrimaryContainer = ThemeColors.Dark.containerText,
+    onSecondary = ThemeColors.Dark.secondaryText
 )
 
 
 @Composable
-fun QRHITUTheme(useDarkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+fun QRHITUTheme(isDarkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
 
-    val colorSchemecolors = lightColorScheme()
-    /*
-    val colorSchemecolors =
-        if (!useDarkTheme) {
-            lightColorScheme()
-        } else {
-            darkColorScheme()
-        }
-
-     */
     MaterialTheme(
-        colorScheme = colorSchemecolors,
         content = content,
         shapes = replyShapes,
-        typography = replyTypography
+        typography = replyTypography,
+        colorScheme = if(isDarkTheme) DarkColors else LightColors
     )
 }

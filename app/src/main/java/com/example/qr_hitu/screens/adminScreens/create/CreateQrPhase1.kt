@@ -22,9 +22,6 @@ import androidx.navigation.NavController
 import com.example.qr_hitu.ViewModels.ViewModel1
 import com.example.qr_hitu.components.AdminChoices
 import com.example.qr_hitu.components.Create2
-import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
-import com.example.qr_hitu.theme.md_theme_light_primary
-import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -79,14 +76,13 @@ fun QrCreatePhase1(navController: NavController, viewModel: ViewModel1) {
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp)
-            .background(Color.White)
     ) {
 
         Spacer(modifier = Modifier.padding(20.dp))
 
-        Text(text = "Escolha a localização", style = MaterialTheme.typography.titleMedium)
+        Text(text = "Escolha a localização", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondary)
 
         Spacer(modifier = Modifier.padding(10.dp))
 
@@ -111,8 +107,8 @@ fun QrCreatePhase1(navController: NavController, viewModel: ViewModel1) {
                     Icon(icon, "", Modifier.clickable { expanded = !expanded })
                 },
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = md_theme_light_primaryContainer,
-                    focusedLabelColor = md_theme_light_primaryContainer,
+                    focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
+                    focusedLabelColor = MaterialTheme.colorScheme.primaryContainer,
                 )
             )
             ExposedDropdownMenu(
@@ -165,8 +161,8 @@ fun QrCreatePhase1(navController: NavController, viewModel: ViewModel1) {
                     Icon(icon2, "", Modifier.clickable { expanded2 = !expanded2 })
                 },
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = md_theme_light_primaryContainer,
-                    focusedLabelColor = md_theme_light_primaryContainer,
+                    focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
+                    focusedLabelColor = MaterialTheme.colorScheme.primaryContainer,
                 )
             )
             ExposedDropdownMenu(
@@ -188,7 +184,7 @@ fun QrCreatePhase1(navController: NavController, viewModel: ViewModel1) {
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Text(text = "Escolha uma máquina", style = MaterialTheme.typography.titleMedium)
+        Text(text = "Escolha uma máquina", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondary)
 
         Spacer(modifier = Modifier.padding(10.dp))
 
@@ -214,8 +210,8 @@ fun QrCreatePhase1(navController: NavController, viewModel: ViewModel1) {
                     Icon(icon3, "", Modifier.clickable { expanded3 = !expanded3 })
                 },
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = md_theme_light_primaryContainer,
-                    focusedLabelColor = md_theme_light_primaryContainer,
+                    focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
+                    focusedLabelColor = MaterialTheme.colorScheme.primaryContainer,
                 )
             )
             ExposedDropdownMenu(
@@ -252,8 +248,8 @@ fun QrCreatePhase1(navController: NavController, viewModel: ViewModel1) {
                 .fillMaxWidth()
                 .height(50.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = md_theme_light_primaryContainer,
-                contentColor = md_theme_light_onPrimaryContainer
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.onPrimaryContainer
             ),
             enabled = enabled3
         ) {
@@ -302,16 +298,16 @@ fun ExistsDialog(onDialogAccept: () -> Unit, onDialogReject: () -> Unit) {
             },
             confirmButton= {
                 TextButton(onClick = { openDialog.value = false; onDialogAccept(); }) {
-                    Text(text = "Sim", style = MaterialTheme.typography.labelLarge, color = md_theme_light_primary)
+                    Text(text = "Sim", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { openDialog.value = false; onDialogReject(); }) {
-                    Text(text = "Não", style = MaterialTheme.typography.labelLarge, color = md_theme_light_primary)
+                    Text(text = "Não", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
                 }
             },
-            textContentColor = md_theme_light_primaryContainer,
-            titleContentColor = md_theme_light_primary
+            textContentColor = MaterialTheme.colorScheme.primaryContainer,
+            titleContentColor = MaterialTheme.colorScheme.primary
         )
     }
 }

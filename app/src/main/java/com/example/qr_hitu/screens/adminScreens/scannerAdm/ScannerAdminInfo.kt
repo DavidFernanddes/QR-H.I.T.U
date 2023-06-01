@@ -29,16 +29,14 @@ fun ScannerAdminInfo(navController: NavController, viewModel: ScannerViewModel) 
     val ram = spec["Ram"]
     val powerSupply = spec["Fonte"]
 
-
-
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
             .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp)
-            .background(Color.White)
     ) {
 
         Spacer(modifier = Modifier.padding(30.dp))

@@ -80,8 +80,8 @@ fun MalfList(navController: NavController, viewModel: MalfunctionViewModel) {
     LazyVerticalGrid(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 2.dp)
-            .background(Color.White),
+            .background(MaterialTheme.colorScheme.background)
+            .padding(horizontal = 2.dp),
         columns = GridCells.Fixed(1)
     ) {
         items(list) { item ->
@@ -98,7 +98,6 @@ fun MalfList(navController: NavController, viewModel: MalfunctionViewModel) {
                     modifier = Modifier
                         .padding(16.dp)
                         .fillMaxWidth(),
-
                     ) {
                     if (item.machine == "Projetor") {
                         Icon(Icons.Filled.VideocamOff, "Projector")

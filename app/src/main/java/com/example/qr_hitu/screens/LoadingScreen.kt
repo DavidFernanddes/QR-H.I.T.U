@@ -29,9 +29,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.R
-import com.example.qr_hitu.theme.md_theme_light_primary
 
-//TODO List and its contents
 @Composable
 fun LoadingScreen(navController: NavController){
 
@@ -39,7 +37,8 @@ fun LoadingScreen(navController: NavController){
 
     Column (
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background),
         Arrangement.Center,
         Alignment.CenterHorizontally
             ) {
@@ -63,7 +62,6 @@ fun LoadingScreen(navController: NavController){
                 .size(200.dp)
                 .align(Alignment.Center)
 
-            // Replace with your QR code image
             Image(
                 painter = painterResource(R.drawable.qr_loading),
                 contentDescription = "QR Code",
@@ -71,7 +69,7 @@ fun LoadingScreen(navController: NavController){
             )
 
             val qrImageHeightPx = with(LocalDensity.current) { 80.dp.roundToPx() }
-            val barColor = md_theme_light_primary
+            val barColor = MaterialTheme.colorScheme.primary
             val barHeight = 5.dp
             val barWidth = 250.dp
 
@@ -87,6 +85,6 @@ fun LoadingScreen(navController: NavController){
 
         Spacer(modifier = Modifier.padding(20.dp))
 
-        Text(text = "A Iniciar Sessão...", style = MaterialTheme.typography.titleMedium)
+        Text(text = "A Iniciar Sessão...", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondary)
     }
 }

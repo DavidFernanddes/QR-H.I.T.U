@@ -2,27 +2,21 @@ package com.example.qr_hitu.screens.adminScreens.create
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.components.Create3
-import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
-import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 import com.example.qr_hitu.ViewModels.ViewModel2
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun QrCreatePhase2(navController: NavController, viewModel: ViewModel2) {
 
@@ -38,13 +32,12 @@ fun QrCreatePhase2(navController: NavController, viewModel: ViewModel2) {
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp)
-            .background(Color.White)
     ) {
         Spacer(modifier = Modifier.padding(20.dp))
 
-        Text(text = "Escreva as especificações", style = MaterialTheme.typography.titleMedium)
+        Text(text = "Escreva as especificações", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondary)
 
         Spacer(modifier = Modifier.padding(10.dp))
 
@@ -61,9 +54,9 @@ fun QrCreatePhase2(navController: NavController, viewModel: ViewModel2) {
                 imeAction = ImeAction.Next
             ),
             keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = md_theme_light_primaryContainer,
-                focusedLabelColor = md_theme_light_primaryContainer
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
+                focusedLabelColor = MaterialTheme.colorScheme.primaryContainer,
             )
         )
 
@@ -82,9 +75,9 @@ fun QrCreatePhase2(navController: NavController, viewModel: ViewModel2) {
                 imeAction = ImeAction.Next
             ),
             keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = md_theme_light_primaryContainer,
-                focusedLabelColor = md_theme_light_primaryContainer
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
+                focusedLabelColor = MaterialTheme.colorScheme.primaryContainer,
             )
         )
 
@@ -103,9 +96,9 @@ fun QrCreatePhase2(navController: NavController, viewModel: ViewModel2) {
                 imeAction = ImeAction.Next
             ),
             keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = md_theme_light_primaryContainer,
-                focusedLabelColor = md_theme_light_primaryContainer
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
+                focusedLabelColor = MaterialTheme.colorScheme.primaryContainer,
             )
         )
 
@@ -124,9 +117,9 @@ fun QrCreatePhase2(navController: NavController, viewModel: ViewModel2) {
                 imeAction = ImeAction.Done
             ),
             keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = md_theme_light_primaryContainer,
-                focusedLabelColor = md_theme_light_primaryContainer
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
+                focusedLabelColor = MaterialTheme.colorScheme.primaryContainer,
             )
         )
 
@@ -144,8 +137,8 @@ fun QrCreatePhase2(navController: NavController, viewModel: ViewModel2) {
                     .fillMaxWidth()
                     .height(50.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = md_theme_light_primaryContainer,
-                    contentColor = md_theme_light_onPrimaryContainer
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer
                 ),
                 enabled = enabled
             ) {

@@ -24,10 +24,7 @@ import com.example.qr_hitu.functions.addDispositivo
 import com.example.qr_hitu.functions.downloadQR
 import com.example.qr_hitu.functions.encryptAES
 import com.example.qr_hitu.functions.encryptionKey
-import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
-import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun QrCreateFinal(navController: NavController, viewModel1 : ViewModel1, viewModel2: ViewModel2){
 
@@ -51,9 +48,8 @@ fun QrCreateFinal(navController: NavController, viewModel1 : ViewModel1, viewMod
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp)
-            .background(Color.White)
     ){
 
         Spacer(modifier = Modifier.padding(60.dp))
@@ -78,8 +74,8 @@ fun QrCreateFinal(navController: NavController, viewModel1 : ViewModel1, viewMod
             label = { Text(text = "Escreva o nome do ficheiro") },
             placeholder = { Text(text = "Nome") },
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = md_theme_light_primaryContainer,
-                focusedLabelColor = md_theme_light_primaryContainer,
+                focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
+                focusedLabelColor = MaterialTheme.colorScheme.primaryContainer,
             )
         )
 
@@ -90,8 +86,8 @@ fun QrCreateFinal(navController: NavController, viewModel1 : ViewModel1, viewMod
                 .fillMaxWidth()
                 .height(50.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = md_theme_light_primaryContainer,
-                contentColor = md_theme_light_onPrimaryContainer
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.onPrimaryContainer
             )
         ) {
             Text("Download QR Code", style = MaterialTheme.typography.labelLarge)

@@ -44,9 +44,6 @@ import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.components.ScanInput
 import com.example.qr_hitu.components.UserChoices
 import com.example.qr_hitu.functions.addMissQR
-import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
-import com.example.qr_hitu.theme.md_theme_light_primary
-import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -113,7 +110,7 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
 
         Spacer(modifier = Modifier.padding(20.dp))
 
-        Text(text = "Qual a localização?", style = MaterialTheme.typography.titleMedium)
+        Text(text = "Escolha a localização", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondary)
 
         Spacer(modifier = Modifier.padding(10.dp))
 
@@ -139,8 +136,8 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
                     Icon(icon, "", Modifier.clickable { expanded = !expanded })
                 },
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = md_theme_light_primaryContainer,
-                    focusedLabelColor = md_theme_light_primaryContainer,
+                    focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
+                    focusedLabelColor = MaterialTheme.colorScheme.primaryContainer,
                 )
             )
             ExposedDropdownMenu(
@@ -193,8 +190,8 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
                     Icon(icon2, "", Modifier.clickable { expanded2 = !expanded2 })
                 },
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = md_theme_light_primaryContainer,
-                    focusedLabelColor = md_theme_light_primaryContainer,
+                    focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
+                    focusedLabelColor = MaterialTheme.colorScheme.primaryContainer,
                 )
             )
             ExposedDropdownMenu(
@@ -216,7 +213,7 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Text(text = "Escolha a máquina", style = MaterialTheme.typography.titleMedium)
+        Text(text = "Escolha a máquina", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondary)
 
         Spacer(modifier = Modifier.padding(10.dp))
 
@@ -242,8 +239,8 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
                     Icon(icon3, "", Modifier.clickable { expanded3 = !expanded3 })
                 },
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = md_theme_light_primaryContainer,
-                    focusedLabelColor = md_theme_light_primaryContainer,
+                    focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
+                    focusedLabelColor = MaterialTheme.colorScheme.primaryContainer,
                 )
             )
             ExposedDropdownMenu(
@@ -280,8 +277,8 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
             },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
-                containerColor = md_theme_light_primaryContainer,
-                contentColor = md_theme_light_onPrimaryContainer
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.onPrimaryContainer
             )
         ) {
             Text(text = "Enviar", style = MaterialTheme.typography.bodyLarge)
@@ -343,7 +340,7 @@ fun AddDialog(onDialogDismissed: () -> Unit, onDialogConfirm: () -> Unit) {
                     Text(
                         text = "Sim",
                         style = MaterialTheme.typography.labelLarge,
-                        color = md_theme_light_primary
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
             },
@@ -352,12 +349,12 @@ fun AddDialog(onDialogDismissed: () -> Unit, onDialogConfirm: () -> Unit) {
                     Text(
                         text = "Não",
                         style = MaterialTheme.typography.labelLarge,
-                        color = md_theme_light_primary
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
             },
-            textContentColor = md_theme_light_primaryContainer,
-            titleContentColor = md_theme_light_primary
+            textContentColor = MaterialTheme.colorScheme.primaryContainer,
+            titleContentColor = MaterialTheme.colorScheme.primary
         )
     }
 }
@@ -387,12 +384,12 @@ fun ExistsDialog(onDialogDismissed: () -> Unit) {
                     Text(
                         text = "OK",
                         style = MaterialTheme.typography.labelLarge,
-                        color = md_theme_light_primary
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
             },
-            textContentColor = md_theme_light_primaryContainer,
-            titleContentColor = md_theme_light_primary
+            textContentColor = MaterialTheme.colorScheme.primaryContainer,
+            titleContentColor = MaterialTheme.colorScheme.primary
         )
     }
 }

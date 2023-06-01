@@ -20,8 +20,6 @@ import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
 import com.example.qr_hitu.ViewModels.ViewModel1
 import com.example.qr_hitu.components.TransferQr
-import com.example.qr_hitu.theme.md_theme_light_onPrimaryContainer
-import com.example.qr_hitu.theme.md_theme_light_primaryContainer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -75,13 +73,13 @@ fun ChooseQr(navController: NavController, viewModel: ViewModel1) {
             .fillMaxWidth()
             .fillMaxHeight()
             .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp)
-            .background(Color.White)
     ) {
 
         Spacer(modifier = Modifier.padding(20.dp))
 
-        Text(text = "Escolha a localização", style = MaterialTheme.typography.titleMedium)
+        Text(text = "Escolha a localização", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondary)
 
         Spacer(modifier = Modifier.padding(10.dp))
 
@@ -106,8 +104,8 @@ fun ChooseQr(navController: NavController, viewModel: ViewModel1) {
                     Icon(icon, "", Modifier.clickable { expanded = !expanded })
                 },
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = md_theme_light_primaryContainer,
-                    focusedLabelColor = md_theme_light_primaryContainer,
+                    focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
+                    focusedLabelColor = MaterialTheme.colorScheme.primaryContainer,
                 )
             )
             ExposedDropdownMenu(
@@ -160,8 +158,8 @@ fun ChooseQr(navController: NavController, viewModel: ViewModel1) {
                     Icon(icon2, "", Modifier.clickable { expanded2 = !expanded2 })
                 },
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = md_theme_light_primaryContainer,
-                    focusedLabelColor = md_theme_light_primaryContainer,
+                    focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
+                    focusedLabelColor = MaterialTheme.colorScheme.primaryContainer,
                 )
             )
             ExposedDropdownMenu(
@@ -183,7 +181,7 @@ fun ChooseQr(navController: NavController, viewModel: ViewModel1) {
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Text(text = "Escolha uma máquina", style = MaterialTheme.typography.titleMedium)
+        Text(text = "Escolha uma máquina", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondary)
 
         Spacer(modifier = Modifier.padding(10.dp))
 
@@ -209,8 +207,8 @@ fun ChooseQr(navController: NavController, viewModel: ViewModel1) {
                     Icon(icon3, "", Modifier.clickable { expanded3 = !expanded3 })
                 },
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = md_theme_light_primaryContainer,
-                    focusedLabelColor = md_theme_light_primaryContainer,
+                    focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
+                    focusedLabelColor = MaterialTheme.colorScheme.primaryContainer,
                 )
             )
             ExposedDropdownMenu(
@@ -241,8 +239,8 @@ fun ChooseQr(navController: NavController, viewModel: ViewModel1) {
                 .fillMaxWidth()
                 .height(50.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = md_theme_light_primaryContainer,
-                contentColor = md_theme_light_onPrimaryContainer
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.onPrimaryContainer
             ),
             enabled = enabled3
         ) {
