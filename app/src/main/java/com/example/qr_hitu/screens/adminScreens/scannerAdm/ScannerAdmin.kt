@@ -128,8 +128,8 @@ fun ScannerAdminScreen(navController: NavController, viewModel: ScannerViewModel
                         if(!Regex("""Bloco \w+,Sala \p{all}+,\w+\w+""").containsMatchIn(decodedValue)){
                             showState.value = true
                         }else{
-                            if (qrSet.value.contains("$decodedValue,$date")) {
-                                qrList.remove("$decodedValue,$date")
+                            if (qrSet.value.any{ it.startsWith(decodedValue) }) {
+                                qrList.removeAll { it.startsWith(decodedValue) }
                             }
 
                             qrList.add("$decodedValue,$date")
