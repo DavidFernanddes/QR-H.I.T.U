@@ -48,14 +48,14 @@ fun ScaffoldLayouts(navController: NavController, settingsManager: SettingsManag
                 destinationRoute.contains(ScanInput.route) -> TopBarUser3(navController = navController)
                 destinationRoute.contains(SettingOptions.route) || destinationRoute.contains(Manual.route) || destinationRoute.contains(MalfInfo.route) -> TopBarUni(navController = navController)
                 destinationRoute.contains(ScannerAdminInfo.route) -> TopBar4(navController = navController, viewModelSA)
-                destinationRoute.contains(MalfList.route) || destinationRoute.contains(ScanAdmin.route) || destinationRoute.contains(AdminChoices.route) -> TopBar1(navController = navController)
+                destinationRoute.contains(MalfList.route) || destinationRoute.contains(ScanAdmin.route) || destinationRoute.contains(AdminChoices.route) || destinationRoute.contains(RecentScanList.route) -> TopBar1(navController = navController)
                 destinationRoute.contains(UserChoices.route) -> TopBarUser1(navController = navController)
                 destinationRoute.contains(ScanProf.route) || destinationRoute.contains(MQRLocal.route) -> TopBarUser2(navController = navController)
             }
         },
         bottomBar = {
             when{
-                destinationRoute.contains(MalfList.route) || destinationRoute.contains(ScanAdmin.route) || destinationRoute.contains(AdminChoices.route) -> BottomBar(navController = navController)
+                destinationRoute.contains(MalfList.route) || destinationRoute.contains(ScanAdmin.route) || destinationRoute.contains(AdminChoices.route) || destinationRoute.contains(RecentScanList.route) -> BottomBar(navController = navController)
             }
         },
         scaffoldState = scaffoldState,
@@ -256,6 +256,18 @@ fun BottomBar(navController: NavController){
                     onClick = { navController.navigate(MalfList.route) },
                     icon = {
                         Icon(Icons.Filled.FormatListBulleted, "Avarias")
+                    }
+                )
+                NavigationBarItem(
+                    selected =
+                    navController.currentBackStackEntry?.destination?.route == RecentScanList.route,
+                    label = { Text(text = "Scans Recentes", color = MaterialTheme.colorScheme.onPrimaryContainer) },
+                    colors = NavigationBarItemDefaults.colors(
+                        indicatorColor= MaterialTheme.colorScheme.onPrimaryContainer
+                    ),
+                    onClick = { navController.navigate(RecentScanList.route) },
+                    icon = {
+                        Icon(Icons.Filled.QrCodeScanner, "Scanner")
                     }
                 )
                 NavigationBarItem(

@@ -4,8 +4,10 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
+import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
@@ -28,6 +30,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.components.ScannerAdminInfo
+import com.example.qr_hitu.functions.SettingsManager
 import com.example.qr_hitu.functions.decryptAES
 import com.example.qr_hitu.functions.encryptionKey
 import com.google.mlkit.vision.barcode.BarcodeScanner
@@ -35,13 +38,26 @@ import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Date
 import java.util.concurrent.Executors
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
+@RequiresApi(Build.VERSION_CODES.O)
 @androidx.annotation.OptIn(androidx.camera.core.ExperimentalGetImage::class)
 @Composable
-fun ScannerAdminScreen(navController: NavController, viewModel: ScannerViewModel) {
+fun ScannerAdminScreen(navController: NavController, viewModel: ScannerViewModel, settingsManager: SettingsManager) {
+
+    val qrList = remember { mutableStateListOf<String>() }
+    val qrSet = remember { mutableStateOf(mutableSetOf<String>()) }
+
+    LaunchedEffect(Unit) {
+        qrList.addAll(loadListFromSettings(settingsManager))
+        qrSet.value.addAll(qrList)
+    }
 
     val showState = remember { mutableStateOf(false) }
     val show by rememberUpdatedState(showState.value)
@@ -88,6 +104,7 @@ fun ScannerAdminScreen(navController: NavController, viewModel: ScannerViewModel
         }
     }
 
+
     fun processImageProxy(
         barcodeScanner: BarcodeScanner,
         imageProxy: ImageProxy,
@@ -106,9 +123,26 @@ fun ScannerAdminScreen(navController: NavController, viewModel: ScannerViewModel
 
                     barcode?.rawValue?.let { value ->
                         val decodedValue = decryptAES(value, encryptionKey)
+                        val date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+
                         if(!Regex("""Bloco \w+,Sala \p{all}+,\w+\w+""").containsMatchIn(decodedValue)){
                             showState.value = true
                         }else{
+                            if (qrSet.value.contains("$decodedValue,$date")) {
+                                qrList.remove("$decodedValue,$date")
+                            }
+
+                            qrList.add("$decodedValue,$date")
+                            qrSet.value.add("$decodedValue,$date")
+
+                            if (qrList.size > 5) {
+                                val oldestValue = qrList.first()
+                                qrList.remove(oldestValue)
+                                qrSet.value.remove(oldestValue)
+                            }
+
+                            saveListToSettings(settingsManager, qrList)
+
                             viewModel.setMyData(decodedValue)
                             navController.navigate(ScannerAdminInfo.route)
                         }
@@ -203,4 +237,14 @@ fun Dialog(onDialogDismissed: () -> Unit) {
         )
     }
 
+}
+
+private fun loadListFromSettings(settingsManager: SettingsManager): List<String> {
+    val qrListAsString = settingsManager.getSetting("RecentsList", "")
+    return if (qrListAsString.isBlank()) emptyList() else qrListAsString.split("//")
+}
+
+private fun saveListToSettings(settingsManager: SettingsManager, qrList: List<String>) {
+    val qrListAsString = qrList.joinToString("//")
+    settingsManager.saveSetting("RecentsList", qrListAsString)
 }

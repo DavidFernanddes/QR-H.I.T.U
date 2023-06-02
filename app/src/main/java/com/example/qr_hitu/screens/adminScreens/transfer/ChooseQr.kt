@@ -72,7 +72,6 @@ fun ChooseQr(navController: NavController, viewModel: ViewModel1) {
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
             .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp)
     ) {

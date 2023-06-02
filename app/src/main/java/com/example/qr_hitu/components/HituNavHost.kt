@@ -19,6 +19,7 @@ import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase1
 import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase2
 import com.example.qr_hitu.screens.adminScreens.malfunctions.MalfInfo
 import com.example.qr_hitu.screens.adminScreens.malfunctions.MalfList
+import com.example.qr_hitu.screens.adminScreens.recentScanList.RecentScanList
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminInfo
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminInfoUpdate
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminScreen
@@ -87,7 +88,7 @@ fun QrHituNavHost(
             AdminChoices(navController = navController)
         }
         composable(ScanAdmin.route){
-            ScannerAdminScreen(navController = navController, viewModel = viewModelSA)
+            ScannerAdminScreen(navController = navController, viewModel = viewModelSA, settingsManager = settingsManager)
         }
         composable(ScannerAdminInfo.route){
            ScannerAdminInfo(navController = navController, viewModelSA)
@@ -109,6 +110,9 @@ fun QrHituNavHost(
         }
         composable(MQRLocal.route){
             MQRLocal(navController = navController, viewModel = viewModelSA)
+        }
+        composable(RecentScanList.route){
+            RecentScanList(navController = navController, settingsManager = settingsManager, viewModel = viewModelSA)
         }
     }
 }

@@ -80,3 +80,7 @@ object  UserChoices: HituDestination {
 object MQRLocal: HituDestination {
     override val route = "missQR_Local"
 }
+
+object RecentScanList: HituDestination {
+    override val route = "recentScan_List"
+}
