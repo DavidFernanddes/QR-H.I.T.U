@@ -38,19 +38,19 @@ fun ScannerAdminInfo(navController: NavController, viewModel: ScannerViewModel) 
             .padding(horizontal = 16.dp)
     ) {
 
-        Spacer(modifier = Modifier.padding(30.dp))
+        Spacer(modifier = Modifier.padding(20.dp))
 
         Column() {
-            Text("Bloco: $block ", style = style)
+            Text("Bloco: $block ", style = style, color = MaterialTheme.colorScheme.onSecondary)
             Spacer(modifier = Modifier.padding(10.dp))
-            Text("Sala: $room ", style = style)
+            Text("Sala: $room ", style = style, color = MaterialTheme.colorScheme.onSecondary)
             Spacer(modifier = Modifier.padding(10.dp))
-            Text("Máquina: $machine", style = style)
+            Text("Máquina: $machine", style = style, color = MaterialTheme.colorScheme.onSecondary)
         }
 
-        Spacer(modifier = Modifier.padding(30.dp))
+        Spacer(modifier = Modifier.padding(20.dp))
 
-        Text("Especificações: $name", style = MaterialTheme.typography.titleMedium)
+        Text("Especificações: $name", style = style, color = MaterialTheme.colorScheme.onSecondary)
 
         Spacer(modifier = Modifier.padding(10.dp))
 

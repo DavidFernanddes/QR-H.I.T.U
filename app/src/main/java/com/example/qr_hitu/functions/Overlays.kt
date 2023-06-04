@@ -261,7 +261,7 @@ fun BottomBar(navController: NavController){
                 NavigationBarItem(
                     selected =
                     navController.currentBackStackEntry?.destination?.route == RecentScanList.route,
-                    label = { Text(text = "Scans Recentes", color = MaterialTheme.colorScheme.onPrimaryContainer) },
+                    label = { Text(text = "Recentes", color = MaterialTheme.colorScheme.onPrimaryContainer) },
                     colors = NavigationBarItemDefaults.colors(
                         indicatorColor= MaterialTheme.colorScheme.onPrimaryContainer
                     ),

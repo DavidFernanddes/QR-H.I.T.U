@@ -42,24 +42,23 @@ fun ScannerAdminInfoUpdate(navController: NavController, viewModel: ScannerViewM
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .clip(RoundedCornerShape(topStart = 30.dp, topEnd = 30.dp))
             .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp)
     ) {
 
-        Spacer(modifier = Modifier.padding(30.dp))
+        Spacer(modifier = Modifier.padding(20.dp))
 
         Column() {
-            Text("Bloco: $block ", style = style)
+            Text("Bloco: $block ", style = style, color = MaterialTheme.colorScheme.onSecondary)
             Spacer(modifier = Modifier.padding(10.dp))
-            Text("Sala: $room ", style = style)
+            Text("Sala: $room ", style = style, color = MaterialTheme.colorScheme.onSecondary)
             Spacer(modifier = Modifier.padding(10.dp))
-            Text("Máquina: $machine", style = style)
+            Text("Máquina: $machine", style = style, color = MaterialTheme.colorScheme.onSecondary)
         }
 
-        Spacer(modifier = Modifier.padding(30.dp))
+        Spacer(modifier = Modifier.padding(20.dp))
 
-        Text("Especificações: $name", style = MaterialTheme.typography.titleMedium)
+        Text("Especificações: $name", style = style, color = MaterialTheme.colorScheme.onSecondary)
 
         Spacer(modifier = Modifier.padding(10.dp))
 

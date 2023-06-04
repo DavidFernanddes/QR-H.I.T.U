@@ -11,6 +11,9 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Error
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -69,14 +72,21 @@ fun MalfInfo(navController: NavController, viewModel: MalfunctionViewModel) {
             Spacer(modifier = Modifier.padding(30.dp))
 
             Column(horizontalAlignment = Alignment.Start) {
-                Text("Bloco:  Bloco E", style = style)
+                Text("Remetente: $senderMail", style = style, color = MaterialTheme.colorScheme.onSecondary)
                 Spacer(modifier = Modifier.padding(10.dp))
-                Text("Sala:  E0.05", style = style)
+                Text("Bloco:  Bloco E", style = style, color = MaterialTheme.colorScheme.onSecondary)
                 Spacer(modifier = Modifier.padding(10.dp))
-                Text("Máquina: Computador 1", style = style)
+                Text("Sala:  E0.05", style = style, color = MaterialTheme.colorScheme.onSecondary)
+                Spacer(modifier = Modifier.padding(10.dp))
+                Text("Máquina: Computador 1", style = style, color = MaterialTheme.colorScheme.onSecondary)
+                Spacer(modifier = Modifier.padding(10.dp))
+                if(urgent) Row{
+                    Text(text = "URGENTE", style = style, color = MaterialTheme.colorScheme.onSecondary)
+                    Icon(Icons.Filled.Error, "Urgent", tint = Color.Red)
+                }
             }
 
-            Spacer(modifier = Modifier.padding(30.dp))
+            Spacer(modifier = Modifier.padding(20.dp))
 
             OutlinedTextField(
                 value = "$malfDesc",
@@ -91,9 +101,9 @@ fun MalfInfo(navController: NavController, viewModel: MalfunctionViewModel) {
                 )
             )
 
-            Spacer(modifier = Modifier.padding(30.dp))
+            Spacer(modifier = Modifier.padding(20.dp))
 
-            Text("Especificações: $machine", style = MaterialTheme.typography.titleMedium)
+            Text("Especificações: $machine", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondary)
 
             Spacer(modifier = Modifier.padding(10.dp))
 
@@ -143,24 +153,26 @@ fun MalfInfo(navController: NavController, viewModel: MalfunctionViewModel) {
                 )
             )
         }
+            Spacer(modifier = Modifier.padding(10.dp))
 
-        Spacer(modifier = Modifier.padding(10.dp))
-
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            RadioButton(
-                selected = completeState,
-                onClick = {
-                    completeState = !completeState
-                },
-                colors = RadioButtonDefaults.colors(
-                    selectedColor = MaterialTheme.colorScheme.primary
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                RadioButton(
+                    selected = completeState,
+                    onClick = {
+                        completeState = !completeState
+                        //TODO REMOVE DATABASE AND CHANGE TO ANOTHER
+                        //Temporary function
+                    },
+                    colors = RadioButtonDefaults.colors(
+                        selectedColor = MaterialTheme.colorScheme.primary
+                    )
                 )
-            )
-            Text(
-                text = "Resolvido",
-                style = MaterialTheme.typography.bodyLarge
-            )
-        }
+                Text(
+                    text = "Resolvido",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSecondary
+                )
+            }
     }
 
 }

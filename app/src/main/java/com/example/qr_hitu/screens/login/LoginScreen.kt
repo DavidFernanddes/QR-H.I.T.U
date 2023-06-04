@@ -17,6 +17,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
@@ -65,7 +66,7 @@ fun loginVerify(navController: NavController, db: CollectionReference, email: St
 @SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(navController: NavController, settingsManager: SettingsManager) {
+fun LoginScreen(navController: NavController, settingsManager: SettingsManager, isDarkTheme: Boolean = isSystemInDarkTheme()) {
 
 
     var emailValue by remember { mutableStateOf("") }
@@ -74,6 +75,8 @@ fun LoginScreen(navController: NavController, settingsManager: SettingsManager) 
     var passwordVisible by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
     val scope = rememberCoroutineScope()
+    val switch = remember { mutableStateOf("") }
+    val theme by rememberUpdatedState(if (switch.value == "") { settingsManager.getSetting("Theme", "" ) } else switch.value)
 
 
     scope.launch {
@@ -109,9 +112,11 @@ fun LoginScreen(navController: NavController, settingsManager: SettingsManager) 
 
         Spacer(modifier = Modifier.padding(25.dp))
 
-
-            //Image(painterResource(R.drawable.logo_dark), "Logo")
-            Image(painterResource(R.drawable.logo_light), "Logo")
+        when(theme){
+            "Light" -> Image(painterResource(R.drawable.logo_light), "Logo")
+            "Dark" -> Image(painterResource(R.drawable.logo_dark), "Logo")
+            else -> if(isDarkTheme) Image(painterResource(R.drawable.logo_dark), "Logo") else Image(painterResource(R.drawable.logo_light), "Logo")
+        }
 
         Spacer(modifier = Modifier.padding(35.dp))
 
