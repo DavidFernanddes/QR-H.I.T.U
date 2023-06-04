@@ -21,14 +21,15 @@ import com.example.qr_hitu.functions.CreateQR
 import com.example.qr_hitu.functions.downloadQR
 import com.example.qr_hitu.functions.encryptAES
 import com.example.qr_hitu.functions.encryptionKey
+import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TransferQr(navController: NavController, viewModel : ViewModel1){
 
     var content by remember{ mutableStateOf("") }
     var qrName by remember { mutableStateOf("") }
     val focusManager = LocalFocusManager.current
+    val scope = rememberCoroutineScope()
 
     val myData = viewModel.myData.value
 
@@ -71,7 +72,16 @@ fun TransferQr(navController: NavController, viewModel : ViewModel1){
 
         Spacer(modifier = Modifier.height(30.dp))
 
-        Button(onClick = { downloadQR(content, qrName) },
+        Button(onClick = { scope.launch {
+            try {
+                downloadQR(content, qrName)
+
+            } catch (e: Exception) {
+                // Error handling code here
+                println("Error downloading QR Code: ${e.message}")
+            }
+        }
+                         },
             Modifier
                 .fillMaxWidth()
                 .height(50.dp),
@@ -85,3 +95,4 @@ fun TransferQr(navController: NavController, viewModel : ViewModel1){
     }
 
 }
+

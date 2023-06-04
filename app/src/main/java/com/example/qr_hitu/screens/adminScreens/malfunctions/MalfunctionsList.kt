@@ -16,6 +16,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Computer
 import androidx.compose.material.icons.filled.Error
+import androidx.compose.material.icons.filled.Print
 import androidx.compose.material.icons.filled.VideocamOff
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -33,6 +34,7 @@ import com.example.qr_hitu.ViewModels.MalfunctionViewModel
 import com.example.qr_hitu.components.MalfInfo
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.tasks.await
 
 data class MalfunctionDocs(
     val machine: String,
@@ -99,11 +101,18 @@ fun MalfList(navController: NavController, viewModel: MalfunctionViewModel) {
                         .padding(16.dp)
                         .fillMaxWidth(),
                     ) {
-                    if (item.machine == "Projetor") {
-                        Icon(Icons.Filled.VideocamOff, "Projector")
-                    } else {
-                        Icon(Icons.Filled.Computer, "Computer")
-                    }
+
+                    //TODO Comparação
+                    //if(item.machine == "Projetor"){
+                        if (item.machine == "Projetor") {
+                            Icon(Icons.Filled.VideocamOff, "Projector")
+                        } else if (item.machine == "Impressora"){
+                            Icon(Icons.Filled.Print, "Impressora")
+                        } else {
+                            Icon(Icons.Filled.Computer, "Computer")
+                        }
+                    //}
+
 
                     Row(
                         modifier = Modifier
