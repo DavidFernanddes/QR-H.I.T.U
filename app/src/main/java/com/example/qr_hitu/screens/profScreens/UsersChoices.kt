@@ -19,8 +19,10 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.qr_hitu.R
 import com.example.qr_hitu.components.MQRLocal
 import com.example.qr_hitu.components.ScanProf
 
@@ -56,7 +58,7 @@ fun PrimaryChoice(navController: NavController) {
                     tint = MaterialTheme.colorScheme.onPrimaryContainer
                 )
                 Text(
-                    "Scanner",
+                    stringResource(R.string.scanner),
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onPrimaryContainer
                 )
@@ -86,7 +88,7 @@ fun PrimaryChoice(navController: NavController) {
                     tint = MaterialTheme.colorScheme.onPrimaryContainer
                 )
                 Text(
-                    "Falta de QR",
+                    stringResource(R.string.missingQR),
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onPrimaryContainer
                 )

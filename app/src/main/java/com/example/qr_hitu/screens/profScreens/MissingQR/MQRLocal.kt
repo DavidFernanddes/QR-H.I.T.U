@@ -36,10 +36,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
+import com.example.qr_hitu.R
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.components.ScanInput
 import com.example.qr_hitu.components.UserChoices
@@ -109,7 +111,7 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
 
         Spacer(modifier = Modifier.padding(20.dp))
 
-        Text(text = "Escolha a localização", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondary)
+        Text(text = stringResource(R.string.mQRLocal), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondary)
 
         Spacer(modifier = Modifier.padding(10.dp))
 
@@ -130,7 +132,7 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
                     .onGloballyPositioned { coordinates ->
                         textFiledSize = coordinates.size.toSize()
                     },
-                label = { Text(text = "Escolha o bloco") },
+                label = { Text(text = stringResource(R.string.mQRBlock)) },
                 trailingIcon = {
                     Icon(icon, "", Modifier.clickable { expanded = !expanded })
                 },
@@ -184,7 +186,7 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
                     .onGloballyPositioned { coordinates ->
                         textFiledSize = coordinates.size.toSize()
                     },
-                label = { Text(text = "Escolha uma sala") },
+                label = { Text(text = stringResource(R.string.mQRRoom)) },
                 trailingIcon = {
                     Icon(icon2, "", Modifier.clickable { expanded2 = !expanded2 })
                 },
@@ -212,7 +214,7 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Text(text = "Escolha a máquina", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondary)
+        Text(text = stringResource(R.string.mQRMachine), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondary)
 
         Spacer(modifier = Modifier.padding(10.dp))
 
@@ -233,7 +235,7 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
                     .onGloballyPositioned { coordinates ->
                         textFiledSize = coordinates.size.toSize()
                     },
-                label = { Text(text = "Escolha a máquina") },
+                label = { Text(text = stringResource(R.string.mQRMachine)) },
                 trailingIcon = {
                     Icon(icon3, "", Modifier.clickable { expanded3 = !expanded3 })
                 },
@@ -280,7 +282,7 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
                 contentColor = MaterialTheme.colorScheme.onPrimaryContainer
             )
         ) {
-            Text(text = "Enviar", style = MaterialTheme.typography.bodyLarge)
+            Text(text = stringResource(R.string.mQRSend), style = MaterialTheme.typography.bodyLarge)
         }
 
         if (showErr) {

@@ -18,12 +18,14 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
+import com.example.qr_hitu.R
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.components.UserChoices
 import com.example.qr_hitu.functions.addMalfunction
@@ -101,7 +103,7 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
 
         Spacer(modifier = Modifier.padding(20.dp))
 
-        Text(text = "Qual o problema ?", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondary)
+        Text(text = stringResource(R.string.problem), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondary)
 
         Spacer(modifier = Modifier.padding(10.dp))
 
@@ -121,7 +123,7 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
                     .onGloballyPositioned { coordinates ->
                         textFiledSize = coordinates.size.toSize()
                     },
-                label = { Text(text = "Escolha qual o seu problema") },
+                label = { Text(text = stringResource(R.string.problemChoice)) },
                 trailingIcon = {
                     Icon(icon, "", Modifier.clickable { expanded = !expanded })
                 },
@@ -148,7 +150,7 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Text(text = "Descreva o problema", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondary)
+        Text(text = stringResource(R.string.problemDesc), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondary)
 
         Spacer(modifier = Modifier.padding(10.dp))
 
@@ -185,7 +187,7 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
                 )
             )
             Text(
-                text = "Urgente ?",
+                text = stringResource(R.string.urgent),
                 style = MaterialTheme.typography.bodyLarge
             )
         }
@@ -243,7 +245,7 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
             ),
             enabled = enabled2
         ) {
-            Text("Enviar", style = MaterialTheme.typography.labelLarge)
+            Text(stringResource(R.string.problemSend), style = MaterialTheme.typography.labelLarge)
         }
         when {
             show -> Dialog(

@@ -39,4 +39,22 @@
 
     //Loading
         <string name="loading">A Iniciar Sessão...</string>
+
+    //User
+        //UserChoices
+            scanner -> line 29
+            <string name="missingQR">Falta de QR</string>
+        //MalfInput
+            <string name="problem">Qual é o problema ?</string>
+            <string name="problemChoice">Escolha qual o seu problema</string>
+            <string name="problemDesc">Descreva o problema</string>
+            <string name="problemOther">Outro</string>
+            <string name="urgent">Urgente ?</string>
+            <string name="problemSend">Enviar</string>
+        //MissingQR
+            <string name="mQRLocal">Escolha a localização</string>
+            <string name="mQRBlock">Escolha o bloco</string>
+            <string name="mQRRoom">Escolha a uma sala</string>
+            <string name="mQRMachine">Escolha a máquina</string>
+            <string name="mQRSend">Enviar</string>
 </resources>
