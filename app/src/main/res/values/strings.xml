@@ -80,5 +80,9 @@
             ram -> line 71
             power -> line 72
             <string name="ScanInfoUpd">Atualizar</string>
+        //Create
+            //AdminChoice
+                <string name="transfer">Transferir</string>
+                <string name="createQR">Criar Qr</string>
 
 </resources>
