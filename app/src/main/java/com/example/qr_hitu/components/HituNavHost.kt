@@ -32,7 +32,6 @@ import com.example.qr_hitu.screens.profScreens.MissingQR.MQRLocal
 import com.example.qr_hitu.screens.profScreens.PrimaryChoice
 import com.example.qr_hitu.screens.profScreens.Scanner.ScannerInput
 import com.example.qr_hitu.screens.profScreens.Scanner.ScannerTeachScreen
-import com.google.firebase.firestore.FirebaseFirestore
 
 
 @Composable
@@ -103,7 +102,7 @@ fun QrHituNavHost(
             Manual(navController = navController)
         }
         composable(Loading.route){
-            LoadingScreen(navController = navController)
+            LoadingScreen(navController = navController, settingsManager = settingsManager)
         }
         composable(UserChoices.route){
             PrimaryChoice(navController = navController)

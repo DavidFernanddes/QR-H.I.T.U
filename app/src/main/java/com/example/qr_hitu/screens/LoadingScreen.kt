@@ -6,6 +6,7 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,7 +22,10 @@ import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
@@ -29,11 +33,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.R
+import com.example.qr_hitu.functions.SettingsManager
 
+//TODO SnackBar
 @Composable
-fun LoadingScreen(navController: NavController){
+fun LoadingScreen(navController: NavController, settingsManager: SettingsManager, isDarkTheme: Boolean = isSystemInDarkTheme()){
 
     val animationProgress = remember { Animatable(-0.5f) }
+    val switch = remember { mutableStateOf("") }
+    val theme by rememberUpdatedState(
+        if (switch.value == "") {
+            settingsManager.getSetting("Theme", "")
+        } else switch.value
+    )
 
     Column (
         modifier = Modifier
@@ -62,11 +74,28 @@ fun LoadingScreen(navController: NavController){
                 .size(200.dp)
                 .align(Alignment.Center)
 
-            Image(
-                painter = painterResource(R.drawable.qr_loading),
-                contentDescription = "QR Code",
-                modifier = Modifier.size(200.dp)
-            )
+            when (theme) {
+                "Light" -> Image(
+                    painter = painterResource(R.drawable.qr_loading_light),
+                    contentDescription = "QR Code",
+                    modifier = Modifier.size(200.dp)
+                )
+                "Dark" -> Image(
+                    painter = painterResource(R.drawable.qr_loading_dark),
+                    contentDescription = "QR Code",
+                    modifier = Modifier.size(200.dp)
+                )
+                else -> if (isDarkTheme) Image(
+                    painter = painterResource(R.drawable.qr_loading_light),
+                    contentDescription = "QR Code",
+                    modifier = Modifier.size(200.dp)
+                ) else Image(
+                    painter = painterResource(R.drawable.qr_loading_light),
+                    contentDescription = "QR Code",
+                    modifier = Modifier.size(200.dp)
+                )
+            }
+
 
             val qrImageHeightPx = with(LocalDensity.current) { 80.dp.roundToPx() }
             val barColor = MaterialTheme.colorScheme.primary

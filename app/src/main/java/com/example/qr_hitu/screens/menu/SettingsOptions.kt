@@ -33,6 +33,8 @@ import com.example.qr_hitu.functions.SettingsManager
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
+//TODO SnackBar
+
 @Composable
 fun SettingsOptions(navController: NavController, settingsManager: SettingsManager, switch: MutableState<String>) {
 
