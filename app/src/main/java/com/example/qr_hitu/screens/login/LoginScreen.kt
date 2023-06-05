@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -113,7 +114,7 @@ fun LoginScreen(
         Spacer(modifier = Modifier.padding(10.dp))
 
         Text(
-            text = "QR H.I.T.U",
+            text = stringResource(R.string.app_name),
             style = MaterialTheme.typography.displayLarge,
             color = MaterialTheme.colorScheme.onSecondary
         )
@@ -157,10 +158,10 @@ fun LoginScreen(
             OutlinedTextField(
                 value = passwordValue,
                 onValueChange = { passwordValue = it },
-                label = { Text("Password") },
+                label = { Text(stringResource(R.string.password)) },
                 singleLine = true,
                 isError = showError,
-                placeholder = { Text("Password") },
+                placeholder = { Text(stringResource(R.string.password)) },
                 shape = MaterialTheme.shapes.large,
                 modifier = Modifier.fillMaxWidth(),
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),

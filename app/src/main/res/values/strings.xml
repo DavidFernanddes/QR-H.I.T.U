@@ -32,4 +32,8 @@
             <string name="settings">Definições</string>
             <string name="manual">Manual</string>
             <string name="logout">Sair de Sessão</string>
+
+    //Login
+        <string name="password">Palavra-passe</string>
+        <string name="login">Entrar</string>
 </resources>
