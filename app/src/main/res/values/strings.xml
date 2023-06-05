@@ -71,5 +71,14 @@
             <string name="MInfRam">Ram: </string>
             <string name="MInfPower">Fonte: </string>
             <string name="MInfSend">Resolvido</string>
+        //ScanInfo / ScanInfoUpdate
+            block -> line 64
+            room -> line 65
+            machine -> line 66
+            specs -> line 69
+            processor -> line 70
+            ram -> line 71
+            power -> line 72
+            <string name="ScanInfoUpd">Atualizar</string>
 
 </resources>

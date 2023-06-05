@@ -10,8 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.qr_hitu.R
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.functions.seeDispositivo
 
@@ -41,23 +43,23 @@ fun ScannerAdminInfo(navController: NavController, viewModel: ScannerViewModel) 
         Spacer(modifier = Modifier.padding(20.dp))
 
         Column() {
-            Text("Bloco: $block ", style = style, color = MaterialTheme.colorScheme.onSecondary)
+            Text(stringResource(R.string.MInfBlock)+" "+block, style = style, color = MaterialTheme.colorScheme.onSecondary)
             Spacer(modifier = Modifier.padding(10.dp))
-            Text("Sala: $room ", style = style, color = MaterialTheme.colorScheme.onSecondary)
+            Text(stringResource(R.string.MInfRoom)+" "+room, style = style, color = MaterialTheme.colorScheme.onSecondary)
             Spacer(modifier = Modifier.padding(10.dp))
-            Text("Máquina: $machine", style = style, color = MaterialTheme.colorScheme.onSecondary)
+            Text(stringResource(R.string.MInfMachine)+" "+machine, style = style, color = MaterialTheme.colorScheme.onSecondary)
         }
 
         Spacer(modifier = Modifier.padding(20.dp))
 
-        Text("Especificações: $name", style = style, color = MaterialTheme.colorScheme.onSecondary)
+        Text(stringResource(R.string.MInfSpecs)+" "+name, style = style, color = MaterialTheme.colorScheme.onSecondary)
 
         Spacer(modifier = Modifier.padding(10.dp))
 
         OutlinedTextField(
             value = "$processor",
             onValueChange = {},
-            label = { Text("Processador:") },
+            label = { Text(stringResource(R.string.MInfProcessor)) },
             singleLine = true,
             readOnly = true,
             shape = MaterialTheme.shapes.large,
@@ -69,7 +71,7 @@ fun ScannerAdminInfo(navController: NavController, viewModel: ScannerViewModel) 
         OutlinedTextField(
             value = "$ram",
             onValueChange = {},
-            label = { Text("Ram:") },
+            label = { Text(stringResource(R.string.MInfRam)) },
             singleLine = true,
             readOnly = true,
             shape = MaterialTheme.shapes.large,
@@ -81,7 +83,7 @@ fun ScannerAdminInfo(navController: NavController, viewModel: ScannerViewModel) 
         OutlinedTextField(
             value = "$powerSupply",
             onValueChange = {},
-            label = { Text("Fonte:") },
+            label = { Text(stringResource(R.string.MInfPower)) },
             singleLine = true,
             readOnly = true,
             shape = MaterialTheme.shapes.large,
