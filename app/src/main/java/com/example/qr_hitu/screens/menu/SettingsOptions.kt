@@ -44,6 +44,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import java.util.Locale
 
+//TODO SnackBar
+
 @Composable
 fun SettingsOptions(navController: NavController, settingsManager: SettingsManager, switch: MutableState<String>) {
 

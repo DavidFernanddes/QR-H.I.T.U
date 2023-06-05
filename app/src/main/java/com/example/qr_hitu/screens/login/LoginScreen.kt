@@ -1,8 +1,6 @@
 package com.example.qr_hitu.screens.login
 
 import android.annotation.SuppressLint
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -17,7 +15,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
@@ -48,7 +45,8 @@ suspend fun performVerification(db: CollectionReference, email: String?): Docume
         return@withContext db.document("$email").get().await()
     }
 }
-fun loginVerify(navController: NavController, db: CollectionReference, email: String?){
+
+fun loginVerify(navController: NavController, db: CollectionReference, email: String?) {
     CoroutineScope(Dispatchers.Main).launch {
         delay(1500)
         // Perform the verification in the background using suspend functions
@@ -64,19 +62,29 @@ fun loginVerify(navController: NavController, db: CollectionReference, email: St
 }
 
 @SuppressLint("CoroutineCreationDuringComposition")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(navController: NavController, settingsManager: SettingsManager, isDarkTheme: Boolean = isSystemInDarkTheme()) {
+fun LoginScreen(
+    navController: NavController,
+    settingsManager: SettingsManager,
+    isDarkTheme: Boolean = isSystemInDarkTheme()
+) {
 
 
     var emailValue by remember { mutableStateOf("") }
     var passwordValue by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
+    val showSnack = remember { mutableStateOf(false) }
+    val enabled = emailValue.isNotEmpty() && passwordValue.isNotEmpty()
+    var showError by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
     val scope = rememberCoroutineScope()
     val switch = remember { mutableStateOf("") }
-    val theme by rememberUpdatedState(if (switch.value == "") { settingsManager.getSetting("Theme", "" ) } else switch.value)
+    val theme by rememberUpdatedState(
+        if (switch.value == "") {
+            settingsManager.getSetting("Theme", "")
+        } else switch.value
+    )
 
 
     scope.launch {
@@ -102,7 +110,7 @@ fun LoginScreen(navController: NavController, settingsManager: SettingsManager, 
             .padding(horizontal = 16.dp)
     ) {
 
-        Spacer(modifier = Modifier.padding(20.dp))
+        Spacer(modifier = Modifier.padding(10.dp))
 
         Text(
             text = "QR H.I.T.U",
@@ -112,10 +120,13 @@ fun LoginScreen(navController: NavController, settingsManager: SettingsManager, 
 
         Spacer(modifier = Modifier.padding(25.dp))
 
-        when(theme){
+        when (theme) {
             "Light" -> Image(painterResource(R.drawable.logo_light), "Logo")
             "Dark" -> Image(painterResource(R.drawable.logo_dark), "Logo")
-            else -> if(isDarkTheme) Image(painterResource(R.drawable.logo_dark), "Logo") else Image(painterResource(R.drawable.logo_light), "Logo")
+            else -> if (isDarkTheme) Image(
+                painterResource(R.drawable.logo_dark),
+                "Logo"
+            ) else Image(painterResource(R.drawable.logo_light), "Logo")
         }
 
         Spacer(modifier = Modifier.padding(35.dp))
@@ -127,6 +138,7 @@ fun LoginScreen(navController: NavController, settingsManager: SettingsManager, 
                 label = { Text("Email") },
                 placeholder = { Text("Email") },
                 singleLine = true,
+                isError = showError,
                 shape = MaterialTheme.shapes.large,
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(
@@ -147,6 +159,7 @@ fun LoginScreen(navController: NavController, settingsManager: SettingsManager, 
                 onValueChange = { passwordValue = it },
                 label = { Text("Password") },
                 singleLine = true,
+                isError = showError,
                 placeholder = { Text("Password") },
                 shape = MaterialTheme.shapes.large,
                 modifier = Modifier.fillMaxWidth(),
@@ -186,8 +199,8 @@ fun LoginScreen(navController: NavController, settingsManager: SettingsManager, 
                                 loginVerify(navController, db, email)
 
                             } else {
-                                // If sign in fails, display a message to the user.
-                                Log.w(TAG, "signInWithEmail:failure", task.exception)
+                                showError = true
+                                showSnack.value = true
                             }
                         }
                 },
@@ -197,10 +210,29 @@ fun LoginScreen(navController: NavController, settingsManager: SettingsManager, 
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = MaterialTheme.colorScheme.onPrimary
-                )
+                ),
+                enabled = enabled
             ) {
                 Text(text = "Login", style = MaterialTheme.typography.labelLarge)
             }
         }
+    }
+    if (showSnack.value) {
+        CustomSnackbar()
+        LaunchedEffect(Unit) {
+            delay(3000)
+            showSnack.value = false
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CustomSnackbar() {
+    Snackbar(
+        modifier = Modifier
+            .padding(16.dp)
+    ) {
+        Text(text = "Email/Password inválido", style = MaterialTheme.typography.bodyMedium)
     }
 }
