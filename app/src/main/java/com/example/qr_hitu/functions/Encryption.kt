@@ -19,7 +19,7 @@ fun encryptAES(data: String, key: String): String = runBlocking {
         val ivParams = IvParameterSpec(iv)
         cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivParams)
         val encryptedBytes = cipher.doFinal(data.toByteArray(StandardCharsets.UTF_8))
-        return@withContext android.util.Base64.encodeToString(encryptedBytes, android.util.Base64.DEFAULT)
+        return@withContext Base64.encodeToString(encryptedBytes, Base64.DEFAULT)
     }
 }
 
@@ -40,10 +40,12 @@ fun decryptAES(encryptedData: String, key: String): String = runBlocking {
 fun isEncryptedString(input: String): Boolean {
     return try {
         val decodedBytes = Base64.decode(input, Base64.DEFAULT)
-        val secretKey = SecretKeySpec(encryptionKey.toByteArray(), "AES")
-        val cipher = Cipher.getInstance("AES")
+        val secretKey = SecretKeySpec(encryptionKey.toByteArray(StandardCharsets.UTF_8), "AES")
+        val iv = ByteArray(16)
+        val ivParams = IvParameterSpec(iv)
+        val cipher = Cipher.getInstance("AES/CBC/PKCS7Padding")
 
-        cipher.init(Cipher.DECRYPT_MODE, secretKey)
+        cipher.init(Cipher.DECRYPT_MODE, secretKey, ivParams)
         cipher.doFinal(decodedBytes)
 
         true
