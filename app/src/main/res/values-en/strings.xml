@@ -70,7 +70,7 @@
             <string name="MInfSpecs">Specifications: </string>
             <string name="MInfProcessor">Processor: </string>
             <string name="MInfRam">Ram: </string>
-            <string name="MInfPower">PowerSupply: </string>
+            <string name="MInfPower">Power Supply: </string>
             <string name="MInfSend">Solved</string>
         //ScanInfo / ScanInfoUpdate
             block -> line 65
@@ -85,5 +85,30 @@
             //AdminChoice
                 <string name="transfer">Download</string>
                 <string name="createQR">Create Qr</string>
+            //Create1
+                <string name="createLocal">Choose Location</string>
+                <string name="createBlock">Choose Block</string>
+                <string name="createRoom">Choose Room</string>
+                <string name="createMachine">Choose Machine</string>
+                <string name="createContinue">Continue</string>
+            //Create2
+                <string name="createSpecs">Write the Specifications</string>
+                <string name="createName">Name</string>
+                <string name="createProcessor">Processor</string>
+                <string name="createRam">Ram</string>
+                <string name="createPower">Power Supply</string>
+                continue -> line 93
+            //CreateFinal
+                <string name="createNamePlaceholder">Write the file name</string>
+                <string name="createDownload">Download Qr Code</string>
+            //TranferChoose
+                local -> line 89
+                block -> line 90
+                room -> line 91
+                machine -> line 92
+                continue -> line 93
+            //TransferQR
+                NamePlaceholder -> line 102
+                download -> line 103
 
 </resources>

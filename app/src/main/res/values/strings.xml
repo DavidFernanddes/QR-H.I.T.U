@@ -84,5 +84,30 @@
             //AdminChoice
                 <string name="transfer">Transferir</string>
                 <string name="createQR">Criar Qr</string>
+            //Create1
+                <string name="createLocal">Escolha a localização</string>
+                <string name="createBlock">Escolha um bloco</string>
+                <string name="createRoom">Escolha uma sala</string>
+                <string name="createMachine">Escolha uma máquina</string>
+                <string name="createContinue">Continuar</string>
+            //Create2
+                <string name="createSpecs">Escreva as especificações</string>
+                <string name="createName">Nome</string>
+                <string name="createProcessor">Processador</string>
+                <string name="createRam">Ram</string>
+                <string name="createPower">Fonte</string>
+                continue -> line 92
+            //CreateFinal
+                <string name="createNamePlaceholder">Escreva o nome do ficheiro</string>
+                <string name="createDownload">Transferir Qr Code</string>
+            //TranferChoose
+                local -> line 88
+                block -> line 89
+                room -> line 90
+                machine -> line 91
+                continue -> line 92
+            //TransferQR
+                NamePlaceholder -> line 101
+                download -> line 102
 
 </resources>

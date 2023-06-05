@@ -24,10 +24,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.qr_hitu.R
 import com.example.qr_hitu.ViewModels.ViewModel1
 import com.example.qr_hitu.ViewModels.ViewModel2
 import com.example.qr_hitu.functions.CreateQR
@@ -83,8 +85,8 @@ fun QrCreateFinal(navController: NavController, viewModel1 : ViewModel1, viewMod
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
-            label = { Text(text = "Escreva o nome do ficheiro") },
-            placeholder = { Text(text = "Nome") },
+            label = { Text(text = stringResource(R.string.createNamePlaceholder)) },
+            placeholder = { Text(text = stringResource(R.string.createName)) },
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
                 focusedLabelColor = MaterialTheme.colorScheme.primaryContainer,
@@ -102,7 +104,7 @@ fun QrCreateFinal(navController: NavController, viewModel1 : ViewModel1, viewMod
                 contentColor = MaterialTheme.colorScheme.onPrimaryContainer
             )
         ) {
-            Text("Download QR Code", style = MaterialTheme.typography.labelLarge)
+            Text(stringResource(R.string.createDownload), style = MaterialTheme.typography.labelLarge)
         }
     }
 

@@ -15,9 +15,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
+import com.example.qr_hitu.R
 import com.example.qr_hitu.ViewModels.ViewModel1
 import com.example.qr_hitu.components.TransferQr
 
@@ -78,7 +80,7 @@ fun ChooseQr(navController: NavController, viewModel: ViewModel1) {
 
         Spacer(modifier = Modifier.padding(20.dp))
 
-        Text(text = "Escolha a localização", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondary)
+        Text(text = stringResource(R.string.createLocal), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondary)
 
         Spacer(modifier = Modifier.padding(10.dp))
 
@@ -98,7 +100,7 @@ fun ChooseQr(navController: NavController, viewModel: ViewModel1) {
                     .onGloballyPositioned { coordinates ->
                         textFiledSize = coordinates.size.toSize()
                     },
-                label = { Text(text = "Escolha um bloco") },
+                label = { Text(text = stringResource(R.string.createBlock)) },
                 trailingIcon = {
                     Icon(icon, "", Modifier.clickable { expanded = !expanded })
                 },
@@ -152,7 +154,7 @@ fun ChooseQr(navController: NavController, viewModel: ViewModel1) {
                     .onGloballyPositioned { coordinates ->
                         textFiledSize = coordinates.size.toSize()
                     },
-                label = { Text(text = "Escolha uma sala") },
+                label = { Text(text = stringResource(R.string.createRoom)) },
                 trailingIcon = {
                     Icon(icon2, "", Modifier.clickable { expanded2 = !expanded2 })
                 },
@@ -180,7 +182,7 @@ fun ChooseQr(navController: NavController, viewModel: ViewModel1) {
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Text(text = "Escolha uma máquina", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondary)
+        Text(text = stringResource(R.string.createMachine), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondary)
 
         Spacer(modifier = Modifier.padding(10.dp))
 
@@ -201,7 +203,7 @@ fun ChooseQr(navController: NavController, viewModel: ViewModel1) {
                     .onGloballyPositioned { coordinates ->
                         textFiledSize = coordinates.size.toSize()
                     },
-                label = { Text(text = "Escolha uma máquina") },
+                label = { Text(text = stringResource(R.string.createMachine)) },
                 trailingIcon = {
                     Icon(icon3, "", Modifier.clickable { expanded3 = !expanded3 })
                 },
@@ -243,7 +245,7 @@ fun ChooseQr(navController: NavController, viewModel: ViewModel1) {
             ),
             enabled = enabled3
         ) {
-            Text(text = "Continuar", style = MaterialTheme.typography.labelLarge)
+            Text(text = stringResource(R.string.createContinue), style = MaterialTheme.typography.labelLarge)
         }
     }
 }
