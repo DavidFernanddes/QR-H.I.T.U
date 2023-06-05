@@ -27,8 +27,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.qr_hitu.R
 import com.example.qr_hitu.ViewModels.MalfunctionViewModel
 import com.example.qr_hitu.functions.seeDispositivo
 import com.example.qr_hitu.functions.seeMalfunction
@@ -69,16 +71,16 @@ fun MalfInfo(navController: NavController, viewModel: MalfunctionViewModel) {
             Spacer(modifier = Modifier.padding(10.dp))
 
             Column(horizontalAlignment = Alignment.Start) {
-                Text("Remetente: $senderMail", style = style, color = MaterialTheme.colorScheme.onSecondary)
+                Text( stringResource(R.string.MInfSender)+" "+senderMail, style = style, color = MaterialTheme.colorScheme.onSecondary)
                 Spacer(modifier = Modifier.padding(10.dp))
-                Text("Bloco:  Bloco E", style = style, color = MaterialTheme.colorScheme.onSecondary)
+                Text(stringResource(R.string.MInfBlock)+" "+block, style = style, color = MaterialTheme.colorScheme.onSecondary)
                 Spacer(modifier = Modifier.padding(10.dp))
-                Text("Sala:  E0.05", style = style, color = MaterialTheme.colorScheme.onSecondary)
+                Text(stringResource(R.string.MInfRoom)+" "+room, style = style, color = MaterialTheme.colorScheme.onSecondary)
                 Spacer(modifier = Modifier.padding(10.dp))
-                Text("Máquina: Computador 1", style = style, color = MaterialTheme.colorScheme.onSecondary)
+                Text(stringResource(R.string.MInfMachine)+" "+machine, style = style, color = MaterialTheme.colorScheme.onSecondary)
                 Spacer(modifier = Modifier.padding(10.dp))
                 if(urgent) Row{
-                    Text(text = "URGENTE", style = style, color = MaterialTheme.colorScheme.onSecondary)
+                    Text(text = stringResource(R.string.MInfUrgent)+" ", style = style, color = MaterialTheme.colorScheme.onSecondary)
                     Icon(Icons.Filled.Error, "Urgent", tint = Color.Red)
                 }
             }
@@ -89,7 +91,7 @@ fun MalfInfo(navController: NavController, viewModel: MalfunctionViewModel) {
                 value = "$malfDesc",
                 onValueChange = {},
                 readOnly = true,
-                label = { Text("Avaria:") },
+                label = { Text(stringResource(R.string.MInfMalf)) },
                 shape = MaterialTheme.shapes.large,
                 modifier = Modifier.fillMaxWidth(),
                 colors = OutlinedTextFieldDefaults.colors(
@@ -100,14 +102,14 @@ fun MalfInfo(navController: NavController, viewModel: MalfunctionViewModel) {
 
             Spacer(modifier = Modifier.padding(20.dp))
 
-            Text("Especificações: $machine", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondary)
+            Text(stringResource(R.string.MInfSpecs)+" "+machine, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondary)
 
             Spacer(modifier = Modifier.padding(10.dp))
 
             OutlinedTextField(
                 value = "$processor",
                 onValueChange = {},
-                label = { Text("Processador:") },
+                label = { Text(stringResource(R.string.MInfProcessor)) },
                 singleLine = true,
                 readOnly = true,
                 shape = MaterialTheme.shapes.large,
@@ -125,7 +127,7 @@ fun MalfInfo(navController: NavController, viewModel: MalfunctionViewModel) {
                 onValueChange = {},
                 singleLine = true,
                 readOnly = true,
-                label = { Text("Ram:") },
+                label = { Text(stringResource(R.string.MInfRam)) },
                 shape = MaterialTheme.shapes.large,
                 modifier = Modifier.fillMaxWidth(),
                 colors = OutlinedTextFieldDefaults.colors(
@@ -141,7 +143,7 @@ fun MalfInfo(navController: NavController, viewModel: MalfunctionViewModel) {
                 onValueChange = {},
                 singleLine = true,
                 readOnly = true,
-                label = { Text("Fonte:") },
+                label = { Text(stringResource(R.string.MInfPower)) },
                 shape = MaterialTheme.shapes.large,
                 modifier = Modifier.fillMaxWidth(),
                 colors = OutlinedTextFieldDefaults.colors(
@@ -165,7 +167,7 @@ fun MalfInfo(navController: NavController, viewModel: MalfunctionViewModel) {
                     )
                 )
                 Text(
-                    text = "Resolvido",
+                    text = stringResource(R.string.MInfSend),
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSecondary
                 )

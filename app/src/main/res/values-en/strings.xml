@@ -58,4 +58,19 @@
             <string name="mQRRoom">Choose Room</string>
             <string name="mQRMachine">Choose Machine</string>
             <string name="mQRSend">Send</string>
+
+    //Admin
+        //MalfInfo
+            <string name="MInfSender">Sender: </string>
+            <string name="MInfBlock">Block: </string>
+            <string name="MInfRoom">Room: </string>
+            <string name="MInfMachine">Machine: </string>
+            <string name="MInfUrgent">Urgent</string>
+            <string name="MInfMalf">Malfunction: </string>
+            <string name="MInfSpecs">Specifications: </string>
+            <string name="MInfProcessor">Processor: </string>
+            <string name="MInfRam">Ram: </string>
+            <string name="MInfPower">PowerSupply: </string>
+            <string name="MInfSend">Solved</string>
+
 </resources>

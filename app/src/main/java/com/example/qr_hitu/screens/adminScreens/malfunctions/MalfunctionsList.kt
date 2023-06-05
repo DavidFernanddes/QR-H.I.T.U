@@ -117,7 +117,7 @@ fun MalfList(navController: NavController, viewModel: MalfunctionViewModel) {
                     Row(
                         modifier = Modifier
                             .padding(start = 5.dp)
-                            .width(270.dp),
+                            .width(240.dp),
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
                         Text(
