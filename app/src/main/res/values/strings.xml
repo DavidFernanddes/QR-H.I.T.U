@@ -22,4 +22,14 @@
             <string name="themeDTitle">Escolha o tema</string>
         //LangDialog
             <string name="langDTitle">Escolha o idioma</string>
+
+    //Navigation
+        //BottomBar
+            <string name="list">Listas</string>
+            <string name="scanner">Scanner</string>
+            <string name="create">Criar</string>
+        //Menu
+            <string name="settings">Definições</string>
+            <string name="manual">Manual</string>
+            <string name="logout">Sair de Sessão</string>
 </resources>

@@ -251,7 +251,7 @@ fun BottomBar(navController: NavController){
             ) {
                 NavigationBarItem(
                     selected = navController.currentBackStackEntry?.destination?.route == MalfList.route,
-                    label = { Text(text = stringResource(R.string.theme), color = MaterialTheme.colorScheme.onPrimaryContainer) },
+                    label = { Text(text = stringResource(R.string.list), color = MaterialTheme.colorScheme.onPrimaryContainer) },
                     colors = NavigationBarItemDefaults.colors(
                         indicatorColor= MaterialTheme.colorScheme.onPrimaryContainer
                     ),
@@ -277,7 +277,7 @@ fun BottomBar(navController: NavController){
                             navController.currentBackStackEntry?.destination?.route == ScanAdmin.route ||
                                 navController.currentBackStackEntry?.destination?.route == ScannerAdminInfo.route ||
                                     navController.currentBackStackEntry?.destination?.route == ScannerAdminInfoUpdate.route,
-                    label = { Text(text = "Scanner", color = MaterialTheme.colorScheme.onPrimaryContainer) },
+                    label = { Text(text = stringResource(R.string.scanner), color = MaterialTheme.colorScheme.onPrimaryContainer) },
                     colors = NavigationBarItemDefaults.colors(
                         indicatorColor= MaterialTheme.colorScheme.onPrimaryContainer
                     ),
@@ -288,7 +288,7 @@ fun BottomBar(navController: NavController){
                 )
                 NavigationBarItem(
                     selected = navController.currentBackStackEntry?.destination?.route == AdminChoices.route,
-                    label = { Text(text = "Create", color = MaterialTheme.colorScheme.onPrimaryContainer) },
+                    label = { Text(text = stringResource(R.string.create), color = MaterialTheme.colorScheme.onPrimaryContainer) },
                     colors = NavigationBarItemDefaults.colors(
                         indicatorColor= MaterialTheme.colorScheme.onPrimaryContainer
                     ),
@@ -315,21 +315,21 @@ fun MenuOptions(navController: NavController){
         modifier = Modifier.background(MaterialTheme.colorScheme.primaryContainer)
     ) {
         DropdownMenuItem(
-            text = { Text(text = "Definições", color = MaterialTheme.colorScheme.onPrimaryContainer) },
+            text = { Text(text = stringResource(R.string.settings), color = MaterialTheme.colorScheme.onPrimaryContainer) },
             onClick = {  navController.navigate(SettingOptions.route) },
             leadingIcon = {
                 Icon(Icons.Filled.Settings, "Settings")
             }
         )
         DropdownMenuItem(
-            text = { Text(text = "Manual", color = MaterialTheme.colorScheme.onPrimaryContainer) },
+            text = { Text(text = stringResource(R.string.manual), color = MaterialTheme.colorScheme.onPrimaryContainer) },
             onClick = { navController.navigate(Manual.route) },
             leadingIcon = {
                 Icon(Icons.Filled.Book, "Manual")
             }
         )
         DropdownMenuItem(
-            text = { Text(text = "Sair Sessão", color = MaterialTheme.colorScheme.onPrimaryContainer) },
+            text = { Text(text = stringResource(R.string.logout), color = MaterialTheme.colorScheme.onPrimaryContainer) },
             onClick = {
                 scope.launch {
                     Firebase.auth.signOut()

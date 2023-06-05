@@ -75,10 +75,6 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
     val checkedBlockSession = rememberUpdatedState(selectedBlockSession.value)
 
     val context = LocalContext.current
-    val currentLocale = Locale.getDefault()
-    val configuration = Configuration(context.resources.configuration)
-    configuration.setLocale(currentLocale)
-    val localizedContext = context.createConfigurationContext(configuration)
 
     Column(
         modifier = Modifier
