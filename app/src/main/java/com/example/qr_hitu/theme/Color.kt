@@ -20,18 +20,10 @@ sealed class ThemeColors(
     )
     object Dark : ThemeColors (
         background = Color(0xFF424242), // Dark Gray
-        primary = Color(0xFF0097A7), //Cyan 700
-        primaryContainer = Color(0xFF00838F), //Cyan 800
+        primary = Color(0xFF0988c3), //Cyan 700
+        primaryContainer = Color(0xFF026897), //Cyan 800
         primaryText = Color(0xFF000000), //Black
-        containerText = Color(0xFF80DEEA), //Cyan 200
+        containerText = Color(0xFFFFFFFF), //Cyan 200
         secondaryText = Color(0xFFFFFFFF) //White 100
     )
 }
-
-
-//Light Theme Colors
-
-val md_theme_light_primary = Color(0xFF4FC3F7) //300
-val md_theme_light_onPrimary = Color(0xFFFFFFFF) //100
-val md_theme_light_primaryContainer = Color(0xFF03A9F4) //500
-val md_theme_light_onPrimaryContainer = Color(0xFFE1F5FE) //50

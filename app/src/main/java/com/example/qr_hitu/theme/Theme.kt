@@ -37,10 +37,10 @@ fun QRHITUTheme(isDarkTheme: Boolean = isSystemInDarkTheme(), content: @Composab
             darkIcons = false
         )
         "Dark" -> systemUiController.setStatusBarColor(
-            color = Color(0xFF00838F),
+            color = Color(0xFF026897),
             darkIcons = true
         )
-        else -> if (isDarkTheme) systemUiController.setStatusBarColor(color = Color(0xFF00838F), darkIcons = true) else systemUiController.setStatusBarColor(color = Color(0xFF03A9F4), darkIcons = false)
+        else -> if (isDarkTheme) systemUiController.setStatusBarColor(color = Color(0xFF026897), darkIcons = true) else systemUiController.setStatusBarColor(color = Color(0xFF03A9F4), darkIcons = false)
     }
 
     MaterialTheme(

@@ -3,7 +3,6 @@ package com.example.qr_hitu.screens.adminScreens.malfunctions
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -27,9 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.ViewModels.MalfunctionViewModel
@@ -69,7 +66,7 @@ fun MalfInfo(navController: NavController, viewModel: MalfunctionViewModel) {
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
-            Spacer(modifier = Modifier.padding(30.dp))
+            Spacer(modifier = Modifier.padding(10.dp))
 
             Column(horizontalAlignment = Alignment.Start) {
                 Text("Remetente: $senderMail", style = style, color = MaterialTheme.colorScheme.onSecondary)

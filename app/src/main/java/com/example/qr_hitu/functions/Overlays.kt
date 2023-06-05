@@ -267,7 +267,7 @@ fun BottomBar(navController: NavController){
                     ),
                     onClick = { navController.navigate(RecentScanList.route) },
                     icon = {
-                        Icon(Icons.Filled.QrCodeScanner, "Scanner")
+                        Icon(Icons.Filled.QrCode, "Scanner")
                     }
                 )
                 NavigationBarItem(
