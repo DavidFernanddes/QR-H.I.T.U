@@ -1,6 +1,11 @@
 package com.example.qr_hitu.screens.menu
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.content.res.Configuration
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,12 +31,18 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.qr_hitu.R
 import com.example.qr_hitu.functions.SettingsManager
+import com.example.qr_hitu.functions.recreateActivity
+import com.example.qr_hitu.functions.setLocale
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import java.util.Locale
 
 @Composable
 fun SettingsOptions(navController: NavController, settingsManager: SettingsManager, switch: MutableState<String>) {
@@ -46,7 +57,12 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
     val selectedAutoLogin = remember { mutableStateOf(false) }
     val selectedBlockSession = remember { mutableStateOf(false) }
 
-    selectedTheme.value = switch.value.ifBlank { settingsManager.getSetting("Theme", "") }
+    selectedTheme.value = switch.value.ifBlank {
+        settingsManager.getSetting("Theme", "").ifBlank {
+            if (isSystemInDarkTheme()) "Dark"
+            else "Light"
+        }
+    }
     selectedLanguage.value = settingsManager.getSetting("Language", "")
     selectedAutoLogin.value = settingsManager.getSetting("AutoLogin", "false").toBooleanStrict()
     selectedBlockSession.value = settingsManager.getSetting("BlockSession", "false").toBooleanStrict()
@@ -55,6 +71,12 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
     val checkedLanguage by rememberUpdatedState(selectedLanguage.value)
     val checkedAutoLogin = rememberUpdatedState(selectedAutoLogin.value)
     val checkedBlockSession = rememberUpdatedState(selectedBlockSession.value)
+
+    val context = LocalContext.current
+    val currentLocale = Locale.getDefault()
+    val configuration = Configuration(context.resources.configuration)
+    configuration.setLocale(currentLocale)
+    val localizedContext = context.createConfigurationContext(configuration)
 
     Column(
         modifier = Modifier
@@ -65,7 +87,7 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
         Spacer(modifier = Modifier.padding(10.dp))
 
         Text(
-            "Aspeto",
+            stringResource(R.string.look),
             style = MaterialTheme.typography.labelLarge,
             modifier = Modifier.padding(start = 12.dp),
             color = MaterialTheme.colorScheme.primaryContainer
@@ -84,11 +106,11 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.Start
             ) {
-                Text("Tema", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSecondary)
+                Text(stringResource(R.string.theme), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSecondary)
 
                 Spacer(modifier = Modifier.padding(5.dp))
 
-                Text(checkedTheme.ifBlank { "Light" }, color = MaterialTheme.colorScheme.onSecondary)
+                Text(if (checkedTheme == "Light") stringResource(R.string.themeL) else stringResource(R.string.themeD), color = MaterialTheme.colorScheme.onSecondary)
             }
         }
 
@@ -109,18 +131,18 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.Start
             ) {
-                Text("Idioma", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSecondary)
+                Text(stringResource(R.string.lang), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSecondary)
 
                 Spacer(modifier = Modifier.padding(5.dp))
 
-                Text(checkedLanguage.ifBlank { "Português" }, color = MaterialTheme.colorScheme.onSecondary)
+                Text( if (checkedLanguage == "pt") stringResource(R.string.langPT) else stringResource(R.string.langEN), color = MaterialTheme.colorScheme.onSecondary)
             }
         }
 
         Spacer(modifier = Modifier.padding(10.dp))
 
         Text(
-            "Segurança",
+            stringResource(R.string.security),
             style = MaterialTheme.typography.labelLarge,
             modifier = Modifier.padding(start = 12.dp),
             color = MaterialTheme.colorScheme.primaryContainer
@@ -135,7 +157,7 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                "Auto Login",
+                stringResource(R.string.autoLogin),
                 style = MaterialTheme.typography.labelLarge,
                 modifier = Modifier.padding(start = 12.dp),
                 color = MaterialTheme.colorScheme.onSecondary
@@ -169,7 +191,7 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                "Bloquear sessão",
+                stringResource(R.string.lockSession),
                 style = MaterialTheme.typography.labelLarge,
                 modifier = Modifier.padding(start = 12.dp),
                 color = MaterialTheme.colorScheme.onSecondary
@@ -212,24 +234,18 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.Start
             ) {
-                Text("Alterar palavra-passe", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSecondary)
+                Text(stringResource(R.string.changePass), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSecondary)
             }
         }
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        TextButton(
-            onClick = {
-
-            },
-            shape = MaterialTheme.shapes.small
-        ) {
-            Text(
-                "Acerca de",
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.primaryContainer
-            )
-        }
+        Text(
+            stringResource(R.string.about),
+            style = MaterialTheme.typography.labelLarge,
+            modifier = Modifier.padding(start = 12.dp),
+            color = MaterialTheme.colorScheme.primaryContainer
+        )
 
         Spacer(modifier = Modifier.padding(5.dp))
 
@@ -246,7 +262,7 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.Start
             ){
-                Text("Sobre", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSecondary)
+                Text(stringResource(R.string.aboutApp), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSecondary)
             }
 
         }
@@ -264,7 +280,8 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
             LanguageDialog(
                 showLanguageState,
                 selectedLanguage,
-                settingsManager
+                settingsManager,
+                context
             )
         }
     }
@@ -282,7 +299,7 @@ fun ThemeDialog(
         onDismissRequest = { showThemeState.value = false },
         title = {
             Text(
-                text = "Escolha o tema",
+                text = stringResource(R.string.themeDTitle),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.headlineSmall
             )
@@ -303,7 +320,7 @@ fun ThemeDialog(
                             switch.value = "Light"
                         }
                     )
-                    Text("Claro")
+                    Text(stringResource(R.string.themeL))
                 }
                 Row(
                     verticalAlignment = Alignment.CenterVertically
@@ -316,7 +333,7 @@ fun ThemeDialog(
                             switch.value = "Dark"
                         }
                     )
-                    Text("Dark")
+                    Text(stringResource(R.string.themeD))
                 }
             }
         },
@@ -338,13 +355,14 @@ fun ThemeDialog(
 fun LanguageDialog(
     showLanguageState: MutableState<Boolean>,
     languageSelect: MutableState<String>,
-    settingsManager: SettingsManager
+    settingsManager: SettingsManager,
+    context: Context
 ) {
     AlertDialog(
         onDismissRequest = { showLanguageState.value = false },
         title = {
             Text(
-                text = " Escolha idioma",
+                text = stringResource(R.string.langDTitle),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.headlineSmall
             )
@@ -358,25 +376,29 @@ fun LanguageDialog(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     RadioButton(
-                        selected = languageSelect.value == "Português",
+                        selected = languageSelect.value == "pt",
                         onClick = {
-                            languageSelect.value = "Português"
-                            settingsManager.saveSetting("Language", "Português")
+                            languageSelect.value = "pt"
+                            settingsManager.saveSetting("Language", "pt")
+                            setLocale("pt", context)
+                            recreateActivity(context)
                         }
                     )
-                    Text("Português")
+                    Text(stringResource(R.string.langPT))
                 }
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     RadioButton(
-                        selected = languageSelect.value == "Inglês",
+                        selected = languageSelect.value == "en",
                         onClick = {
-                            languageSelect.value = "Inglês"
-                            settingsManager.saveSetting("Language", "Inglês")
+                            languageSelect.value = "en"
+                            settingsManager.saveSetting("Language", "en")
+                            setLocale("en", context)
+                            recreateActivity(context)
                         }
                     )
-                    Text("Inglês")
+                    Text(stringResource(R.string.langEN))
                 }
             }
         },
@@ -385,11 +407,11 @@ fun LanguageDialog(
                 Text(
                     text = "OK",
                     style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.primary
+                    color = MaterialTheme.colorScheme.onSecondary
                 )
             }
         },
-        textContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-        titleContentColor = MaterialTheme.colorScheme.primary
+        textContentColor = MaterialTheme.colorScheme.onSecondary,
+        titleContentColor = MaterialTheme.colorScheme.onSecondary
     )
 }

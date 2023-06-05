@@ -13,10 +13,12 @@ import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.qr_hitu.R
 import com.example.qr_hitu.ViewModels.MalfunctionViewModel
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.ViewModels.ViewModel1
@@ -249,7 +251,7 @@ fun BottomBar(navController: NavController){
             ) {
                 NavigationBarItem(
                     selected = navController.currentBackStackEntry?.destination?.route == MalfList.route,
-                    label = { Text(text = "Avarias", color = MaterialTheme.colorScheme.onPrimaryContainer) },
+                    label = { Text(text = stringResource(R.string.theme), color = MaterialTheme.colorScheme.onPrimaryContainer) },
                     colors = NavigationBarItemDefaults.colors(
                         indicatorColor= MaterialTheme.colorScheme.onPrimaryContainer
                     ),

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">QR-H.I.T.U</string>
+
+    //Settings
+        //Look
+            <string name="theme">Theme</string>
+            <string name="look">Look</string>
+            <string name="themeL">Light</string>
+            <string name="themeD">Dark</string>
+            <string name="lang">Language</string>
+            <string name="langPT">Portuguese</string>
+            <string name="langEN">English</string>
+        //Security
+            <string name="security">Security</string>
+            <string name="autoLogin">Auto Login</string>
+            <string name="lockSession">Lock Session</string>
+            <string name="changePass">Change Password</string>
+        //About
+            <string name="about">Info</string>
+            <string name="aboutApp">About</string>
+        //ThemeDialog
+            <string name="themeDTitle">Choose Theme</string>
+        //LangDialog
+            <string name="langDTitle">Choose Language</string>
+</resources>
