@@ -30,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.R
@@ -114,6 +115,6 @@ fun LoadingScreen(navController: NavController, settingsManager: SettingsManager
 
         Spacer(modifier = Modifier.padding(20.dp))
 
-        Text(text = "A Iniciar Sessão...", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondary)
+        Text(text = stringResource(R.string.loading), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondary)
     }
 }

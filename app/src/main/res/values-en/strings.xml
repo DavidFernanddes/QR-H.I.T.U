@@ -37,4 +37,7 @@
     //Login
         <string name="password">Password</string>
         <string name="login">Login</string>
+
+    //Loading
+        <string name="loading">Logging In...</string>
 </resources>

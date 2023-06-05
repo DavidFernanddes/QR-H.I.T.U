@@ -36,4 +36,7 @@
     //Login
         <string name="password">Palavra-passe</string>
         <string name="login">Entrar</string>
+
+    //Loading
+        <string name="loading">A Iniciar Sessão...</string>
 </resources>
