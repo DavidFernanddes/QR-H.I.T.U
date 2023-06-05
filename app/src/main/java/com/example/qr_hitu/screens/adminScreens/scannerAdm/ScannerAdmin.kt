@@ -33,6 +33,7 @@ import com.example.qr_hitu.components.ScannerAdminInfo
 import com.example.qr_hitu.functions.SettingsManager
 import com.example.qr_hitu.functions.decryptAES
 import com.example.qr_hitu.functions.encryptionKey
+import com.example.qr_hitu.functions.isEncryptedString
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
@@ -121,29 +122,33 @@ fun ScannerAdminScreen(navController: NavController, viewModel: ScannerViewModel
                     val barcode = barcodeList.getOrNull(0)
 
                     barcode?.rawValue?.let { value ->
-                        val decodedValue = decryptAES(value, encryptionKey)
-                        val date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+                        if (isEncryptedString(value)) {
+                            val decodedValue = decryptAES(value, encryptionKey)
+                            val date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
 
-                        if(!Regex("""Bloco \w+,Sala \p{all}+,\w+\w+""").containsMatchIn(decodedValue)){
+                            if(!Regex("""Bloco \w+,Sala \p{all}+,\w+\w+""").containsMatchIn(decodedValue)){
+                                showState.value = true
+                            }else{
+                                if (qrSet.value.any{ it.startsWith(decodedValue) }) {
+                                    qrList.removeAll { it.startsWith(decodedValue) }
+                                }
+
+                                qrList.add("$decodedValue,$date")
+                                qrSet.value.add("$decodedValue,$date")
+
+                                if (qrList.size > 5) {
+                                    val oldestValue = qrList.first()
+                                    qrList.remove(oldestValue)
+                                    qrSet.value.remove(oldestValue)
+                                }
+
+                                saveListToSettings(settingsManager, qrList)
+
+                                viewModel.setMyData(decodedValue)
+                                navController.navigate(ScannerAdminInfo.route)
+                            }
+                        } else {
                             showState.value = true
-                        }else{
-                            if (qrSet.value.any{ it.startsWith(decodedValue) }) {
-                                qrList.removeAll { it.startsWith(decodedValue) }
-                            }
-
-                            qrList.add("$decodedValue,$date")
-                            qrSet.value.add("$decodedValue,$date")
-
-                            if (qrList.size > 5) {
-                                val oldestValue = qrList.first()
-                                qrList.remove(oldestValue)
-                                qrSet.value.remove(oldestValue)
-                            }
-
-                            saveListToSettings(settingsManager, qrList)
-
-                            viewModel.setMyData(decodedValue)
-                            navController.navigate(ScannerAdminInfo.route)
                         }
                     }
                 }
@@ -220,19 +225,20 @@ fun Dialog(onDialogDismissed: () -> Unit) {
                 Text(
                     text = "Erro",
                     textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.headlineSmall
+                    style = MaterialTheme.typography.headlineSmall,
+                    color = MaterialTheme.colorScheme.onSecondary
                 )
             },
             text = {
-                Text(text = "QR Code Inválido !", style = MaterialTheme.typography.bodyMedium)
+                Text(text = "QR Code Inválido !", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSecondary)
             },
             confirmButton= {
                 TextButton(onClick = { openDialog.value = false;  onDialogDismissed()}) {
-                    Text(text = "OK", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                    Text(text = "OK", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSecondary)
                 }
             },
-            textContentColor = MaterialTheme.colorScheme.primaryContainer,
-            titleContentColor = MaterialTheme.colorScheme.primary,
+            textContentColor = MaterialTheme.colorScheme.onSecondary,
+            titleContentColor = MaterialTheme.colorScheme.onSecondary,
         )
     }
 
