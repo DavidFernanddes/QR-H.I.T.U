@@ -46,7 +46,9 @@ fun TabLayout(navController: NavController, settingsManager: SettingsManager, vi
                 settingsManager = settingsManager,
                 viewModel = viewModelSA
             )
-            2 -> missingQrList()
+            2 -> missingQrList(
+                navController = navController
+            )
         }
     }
 }

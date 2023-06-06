@@ -116,7 +116,7 @@ fun QrHituNavHost(
             RecentScanList(navController = navController, settingsManager = settingsManager, viewModel = viewModelSA)
         }
         composable(MissingQrList.route){
-            missingQrList()
+            missingQrList(navController = navController)
         }
         composable(TabScreen.route){
             TabLayout(navController = navController, viewModelSA = viewModelSA, settingsManager = settingsManager, viewModelMF = viewModelMF)
