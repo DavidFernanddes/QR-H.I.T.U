@@ -37,7 +37,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.R
+import com.example.qr_hitu.functions.LanguageDialog
 import com.example.qr_hitu.functions.SettingsManager
+import com.example.qr_hitu.functions.ThemeDialog
 import com.example.qr_hitu.functions.recreateActivity
 import com.example.qr_hitu.functions.setLocale
 import com.google.firebase.auth.ktx.auth
@@ -283,133 +285,4 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
             )
         }
     }
-}
-
-@Composable
-fun ThemeDialog(
-    showThemeState: MutableState<Boolean>,
-    selectedTheme: MutableState<String>,
-    switch: MutableState<String>,
-    settingsManager: SettingsManager
-) {
-
-    AlertDialog(
-        onDismissRequest = { showThemeState.value = false },
-        title = {
-            Text(
-                text = stringResource(R.string.themeDTitle),
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.headlineSmall
-            )
-        },
-        text = {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    RadioButton(
-                        selected = selectedTheme.value == "Light",
-                        onClick = {
-                            selectedTheme.value = "Light"
-                            settingsManager.saveSetting("Theme", "Light")
-                            switch.value = "Light"
-                        }
-                    )
-                    Text(stringResource(R.string.themeL))
-                }
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    RadioButton(
-                        selected = selectedTheme.value == "Dark",
-                        onClick = {
-                            selectedTheme.value = "Dark"
-                            settingsManager.saveSetting("Theme", "Dark")
-                            switch.value = "Dark"
-                        }
-                    )
-                    Text(stringResource(R.string.themeD))
-                }
-            }
-        },
-        confirmButton = {
-            TextButton(onClick = { showThemeState.value = false }) {
-                Text(
-                    text = "OK",
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSecondary
-                )
-            }
-        },
-        textContentColor = MaterialTheme.colorScheme.onSecondary,
-        titleContentColor = MaterialTheme.colorScheme.onSecondary,
-    )
-}
-
-@Composable
-fun LanguageDialog(
-    showLanguageState: MutableState<Boolean>,
-    languageSelect: MutableState<String>,
-    settingsManager: SettingsManager,
-    context: Context
-) {
-    AlertDialog(
-        onDismissRequest = { showLanguageState.value = false },
-        title = {
-            Text(
-                text = stringResource(R.string.langDTitle),
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.headlineSmall
-            )
-        },
-        text = {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    RadioButton(
-                        selected = languageSelect.value == "pt",
-                        onClick = {
-                            languageSelect.value = "pt"
-                            settingsManager.saveSetting("Language", "pt")
-                            setLocale("pt", context)
-                            recreateActivity(context)
-                        }
-                    )
-                    Text(stringResource(R.string.langPT))
-                }
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    RadioButton(
-                        selected = languageSelect.value == "en",
-                        onClick = {
-                            languageSelect.value = "en"
-                            settingsManager.saveSetting("Language", "en")
-                            setLocale("en", context)
-                            recreateActivity(context)
-                        }
-                    )
-                    Text(stringResource(R.string.langEN))
-                }
-            }
-        },
-        confirmButton = {
-            TextButton(onClick = { showLanguageState.value = false }) {
-                Text(
-                    text = "OK",
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSecondary
-                )
-            }
-        },
-        textContentColor = MaterialTheme.colorScheme.onSecondary,
-        titleContentColor = MaterialTheme.colorScheme.onSecondary
-    )
 }

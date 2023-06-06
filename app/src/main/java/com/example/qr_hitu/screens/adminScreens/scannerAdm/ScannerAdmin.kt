@@ -4,10 +4,8 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
-import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
@@ -30,6 +28,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.components.ScannerAdminInfo
+import com.example.qr_hitu.functions.InvalidQrDialog
 import com.example.qr_hitu.functions.SettingsManager
 import com.example.qr_hitu.functions.decryptAES
 import com.example.qr_hitu.functions.encryptionKey
@@ -39,10 +38,8 @@ import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
-import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.Date
 import java.util.concurrent.Executors
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -203,43 +200,13 @@ fun ScannerAdminScreen(navController: NavController, viewModel: ScannerViewModel
     if (permission){
         AndroidView({ previewView }, modifier = Modifier.fillMaxSize())
         if (show) {
-            Dialog(onDialogDismissed = {
+            InvalidQrDialog(onDialogDismissed = {
                 viewModel.myData.value == ""
                 showState.value = false
             })
         }
     } else {
         Text("Permission not Granted")
-    }
-
-}
-
-@Composable
-fun Dialog(onDialogDismissed: () -> Unit) {
-    val openDialog = remember { mutableStateOf(true) }
-
-    if (openDialog.value) {
-        AlertDialog(
-            onDismissRequest = { openDialog.value = false; onDialogDismissed() },
-            title = {
-                Text(
-                    text = "Erro",
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = MaterialTheme.colorScheme.onSecondary
-                )
-            },
-            text = {
-                Text(text = "QR Code Inválido !", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSecondary)
-            },
-            confirmButton= {
-                TextButton(onClick = { openDialog.value = false;  onDialogDismissed()}) {
-                    Text(text = "OK", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSecondary)
-                }
-            },
-            textContentColor = MaterialTheme.colorScheme.onSecondary,
-            titleContentColor = MaterialTheme.colorScheme.onSecondary,
-        )
     }
 
 }

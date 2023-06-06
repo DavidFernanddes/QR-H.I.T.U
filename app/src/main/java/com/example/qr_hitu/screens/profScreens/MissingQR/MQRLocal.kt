@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
@@ -32,9 +31,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -45,6 +42,8 @@ import com.example.qr_hitu.R
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.components.ScanInput
 import com.example.qr_hitu.components.UserChoices
+import com.example.qr_hitu.functions.AddMalfDialog
+import com.example.qr_hitu.functions.ExistsWarnDialog
 import com.example.qr_hitu.functions.addMissQR
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -286,11 +285,11 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
         }
 
         if (showErr) {
-            ExistsDialog(onDialogDismissed = { showState.value = true })
+            ExistsWarnDialog(onDialogDismissed = { showState.value = true })
         }
 
         if (show) {
-            AddDialog(
+            AddMalfDialog(
                 onDialogDismissed = {
                     showState.value = false; navController.navigate(UserChoices.route)
                 },
@@ -314,83 +313,4 @@ fun missQrExists(room: String, machine: String, onComplete: (Boolean) -> Unit) {
         .addOnFailureListener {
             onComplete(false)
         }
-}
-
-@Composable
-fun AddDialog(onDialogDismissed: () -> Unit, onDialogConfirm: () -> Unit) {
-    val openDialog = remember { mutableStateOf(true) }
-
-    if (openDialog.value) {
-        AlertDialog(
-            onDismissRequest = { openDialog.value = false; onDialogDismissed() },
-            title = {
-                Text(
-                    text = "Adicionar",
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.headlineSmall
-                )
-            },
-            text = {
-                Text(
-                    text = "Gostaria de colocar avaria ?",
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            },
-            confirmButton = {
-                TextButton(onClick = { openDialog.value = false; onDialogConfirm() }) {
-                    Text(
-                        text = "Sim",
-                        style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.onSecondary
-                    )
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { openDialog.value = false; onDialogDismissed() }) {
-                    Text(
-                        text = "Não",
-                        style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.onSecondary
-                    )
-                }
-            },
-            textContentColor = MaterialTheme.colorScheme.onSecondary,
-            titleContentColor = MaterialTheme.colorScheme.onSecondary
-        )
-    }
-}
-
-@Composable
-fun ExistsDialog(onDialogDismissed: () -> Unit) {
-    val openDialog = remember { mutableStateOf(true) }
-
-    if (openDialog.value) {
-        AlertDialog(
-            onDismissRequest = { openDialog.value = false; onDialogDismissed() },
-            title = {
-                Text(
-                    text = "Aviso já existente",
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.headlineSmall
-                )
-            },
-            text = {
-                Text(
-                    text = "Será colocado um novo QR assim que possível",
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            },
-            confirmButton = {
-                TextButton(onClick = { openDialog.value = false; onDialogDismissed() }) {
-                    Text(
-                        text = "OK",
-                        style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
-            },
-            textContentColor = MaterialTheme.colorScheme.primaryContainer,
-            titleContentColor = MaterialTheme.colorScheme.primary
-        )
-    }
 }

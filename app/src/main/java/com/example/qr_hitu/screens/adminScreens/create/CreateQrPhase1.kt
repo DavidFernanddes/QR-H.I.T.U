@@ -3,7 +3,6 @@ package com.example.qr_hitu.screens.adminScreens.create
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
@@ -11,12 +10,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
@@ -24,6 +20,7 @@ import com.example.qr_hitu.R
 import com.example.qr_hitu.ViewModels.ViewModel1
 import com.example.qr_hitu.components.AdminChoices
 import com.example.qr_hitu.components.Create2
+import com.example.qr_hitu.functions.ExistsInvDialog
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -258,7 +255,7 @@ fun QrCreatePhase1(navController: NavController, viewModel: ViewModel1) {
             Text(text = stringResource(R.string.createContinue), style = MaterialTheme.typography.labelLarge)
         }
         if (show) {
-            ExistsDialog(
+            ExistsInvDialog(
                 onDialogAccept = { showState.value = false; navController.navigate(Create2.route); viewModel.setMyData1(selectedBlock, selectedRoom, selectedMachine) },
                 onDialogReject = { showState.value = false; navController.navigate(AdminChoices.route) }
             )
@@ -281,35 +278,4 @@ fun qrExists(block: String, room: String, machine: String, onComplete: (Boolean)
             onComplete(false)
         }
 }
-@Composable
-fun ExistsDialog(onDialogAccept: () -> Unit, onDialogReject: () -> Unit) {
-    val openDialog = remember { mutableStateOf(true) }
 
-    if (openDialog.value) {
-        AlertDialog(
-            onDismissRequest = { openDialog.value = false; onDialogReject() },
-            title = {
-                Text(
-                    text = "Qr já existente",
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.headlineSmall
-                )
-            },
-            text = {
-                Text(text = "Deseja continuar a ação ?", style = MaterialTheme.typography.bodyMedium)
-            },
-            confirmButton= {
-                TextButton(onClick = { openDialog.value = false; onDialogAccept(); }) {
-                    Text(text = "Sim", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSecondary)
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { openDialog.value = false; onDialogReject(); }) {
-                    Text(text = "Não", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSecondary)
-                }
-            },
-            textContentColor = MaterialTheme.colorScheme.onSecondary,
-            titleContentColor = MaterialTheme.colorScheme.onSecondary
-        )
-    }
-}

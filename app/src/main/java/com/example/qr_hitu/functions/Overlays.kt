@@ -343,43 +343,6 @@ fun MenuOptions(navController: NavController){
     }
 }
 
-@Composable
-fun DelDialog(onDialogDismissed: () -> Unit, onDeleteClick: () -> Unit) {
-    AlertDialog(
-        onDismissRequest = { onDialogDismissed() },
-        title = {
-            Text(
-                text = "Deseja apagar está máquina ?",
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.headlineSmall
-            )
-        },
-        text = {
-            Text(text = "Esta ação é irreversível!", style = MaterialTheme.typography.bodyLarge)
-        },
-        dismissButton = {
-            TextButton(onClick = { onDialogDismissed() }) {
-                Text(
-                    text = "Não",
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
-        },
-        confirmButton = {
-            TextButton(onClick = { onDialogDismissed(); onDeleteClick() }) {
-                Text(
-                    text = "Sim",
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
-        },
-        textContentColor = MaterialTheme.colorScheme.primaryContainer,
-        titleContentColor = MaterialTheme.colorScheme.primary
-    )
-}
-
 fun emailString (): String {
     val email = Firebase.auth.currentUser?.email!!.split(".")[0].split("@")[0].replaceFirstChar {
         if (it.isLowerCase()) it.titlecase(

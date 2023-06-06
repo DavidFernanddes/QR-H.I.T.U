@@ -30,6 +30,7 @@ import androidx.navigation.NavController
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.components.ScanInput
 import com.example.qr_hitu.components.ScanProf
+import com.example.qr_hitu.functions.Malf_ErrorDialogs
 import com.example.qr_hitu.functions.decryptAES
 import com.example.qr_hitu.functions.encryptionKey
 import com.google.mlkit.vision.barcode.BarcodeScanner
@@ -166,79 +167,20 @@ fun ScannerTeachScreen(navController: NavController, viewModel: ScannerViewModel
         AndroidView({ previewView }, modifier = Modifier.fillMaxSize())
         when(show){
             1 -> {
-                Dialog(onDialogDismissed = { viewModel.myData.value == ""
+                Malf_ErrorDialogs(onDialogDismissed = { viewModel.myData.value == ""
                     showState.value = 0
                     navController.navigate(ScanProf.route)
                 }, navController, Err = false)
             }
             2 -> {
-                Dialog(onDialogDismissed = { viewModel.myData.value == ""
+                Malf_ErrorDialogs(onDialogDismissed = { viewModel.myData.value == ""
                     showState.value = 0
                     navController.navigate(ScanProf.route)
                 }, navController, Err = true)
             }
         }
     } else {
-        androidx.compose.material.Text("Permission not Granted")
+        Text("Permission not Granted")
     }
-}
-
-@Composable
-fun Dialog(onDialogDismissed: () -> Unit, navController: NavController, Err: Boolean ) {
-    val openDialog = remember { mutableStateOf(true) }
-
-    if (openDialog.value) {
-        if(!Err){
-            AlertDialog(
-                onDismissRequest = { openDialog.value = false; onDialogDismissed() },
-                title = {
-                    Text(
-                        text = "Avaria",
-                        textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.headlineSmall
-                    )
-                },
-                text = {
-                    Text(text = "Deseja colocar uma avaria ?", style = MaterialTheme.typography.bodyMedium)
-                },
-                confirmButton = {
-                    TextButton(onClick = { openDialog.value = false; navController.navigate(
-                        ScanInput.route) }) {
-                        Text(text = "SIM", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
-                    }
-                },
-                dismissButton = {
-                    TextButton(onClick = { openDialog.value = false;  onDialogDismissed()}) {
-                        Text(text = "NÃO", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
-                    }
-                },
-                textContentColor = MaterialTheme.colorScheme.primaryContainer,
-                titleContentColor = MaterialTheme.colorScheme.primary
-
-            )
-        }else{
-            AlertDialog(
-                onDismissRequest = { openDialog.value = false; onDialogDismissed() },
-                title = {
-                    Text(
-                        text = "Erro",
-                        textAlign = TextAlign.Center
-                    )
-                },
-                text = {
-                    Text(text = "QR Code Inválido !")
-                },
-                confirmButton= {
-                    TextButton(onClick = { openDialog.value = false;  onDialogDismissed()}) {
-                        Text(text = "Fechar")
-                    }
-                },
-                textContentColor = MaterialTheme.colorScheme.primaryContainer,
-                titleContentColor = MaterialTheme.colorScheme.primary
-
-            )
-        }
-    }
-
 }
 

@@ -3,7 +3,6 @@ package com.example.qr_hitu.screens.profScreens.Scanner
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -13,9 +12,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
@@ -28,6 +25,8 @@ import androidx.navigation.NavController
 import com.example.qr_hitu.R
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.components.UserChoices
+import com.example.qr_hitu.functions.ExistsMalfDialog
+import com.example.qr_hitu.functions.WarningDialog
 import com.example.qr_hitu.functions.addMalfunction
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -248,13 +247,13 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
             Text(stringResource(R.string.problemSend), style = MaterialTheme.typography.labelLarge)
         }
         when {
-            show -> Dialog(
+            show -> WarningDialog(
                 error = err,
                 onDialogDismissed = { showState.value = false; navController.navigate(UserChoices.route) },
                 onDialogDismissedError = { showState.value = false; errState.value = false; }
             )
 
-            show1 -> ExistsDialog(onDialogDismissed = {
+            show1 -> ExistsMalfDialog(onDialogDismissed = {
                 showState1.value = false; navController.navigate(UserChoices.route)
             })
         }
@@ -273,98 +272,4 @@ fun malfunctionExists(room: String, machine: String, onComplete: (Boolean) -> Un
         .addOnFailureListener {
             onComplete(false)
         }
-}
-
-@Composable
-fun Dialog(error: Boolean, onDialogDismissedError: () -> Unit, onDialogDismissed: () -> Unit) {
-    val openDialog = remember { mutableStateOf(true) }
-
-    if (openDialog.value) {
-        if (error) {
-            AlertDialog(
-                onDismissRequest = { openDialog.value = false; onDialogDismissedError() },
-                title = {
-                    Text(
-                        text = "Erro",
-                        textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.headlineSmall
-                    )
-                },
-                text = {
-                    Text(text = "Descreva a avaria !", style = MaterialTheme.typography.bodyMedium)
-                },
-                confirmButton = {
-                    TextButton(onClick = { openDialog.value = false; onDialogDismissedError() }) {
-                        Text(
-                            text = "OK",
-                            style = MaterialTheme.typography.labelLarge,
-                            color = MaterialTheme.colorScheme.onSecondary
-                        )
-                    }
-                },
-                textContentColor = MaterialTheme.colorScheme.onSecondary,
-                titleContentColor = MaterialTheme.colorScheme.onSecondary
-            )
-        } else {
-            AlertDialog(
-                onDismissRequest = { openDialog.value = false; onDialogDismissed() },
-                title = {
-                    Text(
-                        text = "Sucesso",
-                        textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.headlineSmall
-                    )
-                },
-                text = {
-                    Text(text = "Avaria Enviada !", style = MaterialTheme.typography.bodyMedium)
-                },
-                confirmButton = {
-                    TextButton(onClick = { openDialog.value = false; onDialogDismissed() }) {
-                        Text(
-                            text = "OK",
-                            style = MaterialTheme.typography.labelLarge,
-                            color = MaterialTheme.colorScheme.onSecondary
-                        )
-                    }
-                },
-                textContentColor = MaterialTheme.colorScheme.onSecondary,
-                titleContentColor = MaterialTheme.colorScheme.onSecondary
-            )
-        }
-    }
-}
-
-@Composable
-fun ExistsDialog(onDialogDismissed: () -> Unit) {
-    val openDialog = remember { mutableStateOf(true) }
-
-    if (openDialog.value) {
-        AlertDialog(
-            onDismissRequest = { openDialog.value = false; onDialogDismissed() },
-            title = {
-                Text(
-                    text = "Avaria já existente",
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.headlineSmall
-                )
-            },
-            text = {
-                Text(
-                    text = "Estamos a resolver a avaria o mais rápido possivel",
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            },
-            confirmButton = {
-                TextButton(onClick = { openDialog.value = false; onDialogDismissed() }) {
-                    Text(
-                        text = "OK",
-                        style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
-            },
-            textContentColor = MaterialTheme.colorScheme.primaryContainer,
-            titleContentColor = MaterialTheme.colorScheme.primary
-        )
-    }
 }
