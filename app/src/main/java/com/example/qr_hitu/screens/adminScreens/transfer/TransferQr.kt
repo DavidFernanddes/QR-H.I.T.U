@@ -16,6 +16,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,20 +32,24 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.R
 import com.example.qr_hitu.ViewModels.ViewModel1
+import com.example.qr_hitu.components.AdminChoices
 import com.example.qr_hitu.functions.CreateQR
+import com.example.qr_hitu.functions.DonwloadSnackbar
+import com.example.qr_hitu.functions.ErrorSnackbar
 import com.example.qr_hitu.functions.downloadQR
 import com.example.qr_hitu.functions.encryptAES
 import com.example.qr_hitu.functions.encryptionKey
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-
-//TODO SnackBar
 @Composable
-fun TransferQr(navController: NavController, viewModel : ViewModel1){
+fun TransferQr(navController: NavController, viewModel: ViewModel1) {
 
-    var content by remember{ mutableStateOf("") }
+    var content by remember { mutableStateOf("") }
     var qrName by remember { mutableStateOf("") }
     val focusManager = LocalFocusManager.current
     val scope = rememberCoroutineScope()
+    val showErr = remember { mutableStateOf(false) }
+    val showDone = remember { mutableStateOf(false) }
 
     val myData = viewModel.myData.value
 
@@ -57,7 +62,7 @@ fun TransferQr(navController: NavController, viewModel : ViewModel1){
             .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp)
 
-    ){
+    ) {
 
         Spacer(modifier = Modifier.padding(60.dp))
 
@@ -75,7 +80,10 @@ fun TransferQr(navController: NavController, viewModel : ViewModel1){
                 qrName = it
             },
             modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Done),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Done
+            ),
             keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
             label = { Text(text = stringResource(R.string.createNamePlaceholder)) },
             placeholder = { Text(text = "Nome") },
@@ -87,16 +95,18 @@ fun TransferQr(navController: NavController, viewModel : ViewModel1){
 
         Spacer(modifier = Modifier.height(30.dp))
 
-        Button(onClick = { scope.launch {
-            try {
-                downloadQR(content, qrName)
+        Button(
+            onClick = {
+                scope.launch {
+                    try {
+                        downloadQR(content, qrName)
 
-            } catch (e: Exception) {
-                // Error handling code here
-                println("Error downloading QR Code: ${e.message}")
-            }
-        }
-                         },
+                    } catch (e: Exception) {
+                        // Error handling code here
+                        println("Error downloading QR Code: ${e.message}")
+                    }
+                }
+            },
             Modifier
                 .fillMaxWidth()
                 .height(50.dp),
@@ -105,7 +115,28 @@ fun TransferQr(navController: NavController, viewModel : ViewModel1){
                 contentColor = MaterialTheme.colorScheme.onPrimaryContainer
             )
         ) {
-            Text(stringResource(R.string.createDownload), style = MaterialTheme.typography.labelLarge)
+            Text(
+                stringResource(R.string.createDownload),
+                style = MaterialTheme.typography.labelLarge
+            )
+        }
+    }
+    when {
+        showDone.value -> {
+            DonwloadSnackbar()
+            LaunchedEffect(Unit) {
+                delay(3000)
+                showDone.value = false
+                navController.navigate(AdminChoices.route)
+            }
+        }
+        showErr.value -> {
+            ErrorSnackbar()
+            LaunchedEffect(Unit) {
+                delay(3000)
+                showErr.value = false
+                navController.navigate(AdminChoices.route)
+            }
         }
     }
 

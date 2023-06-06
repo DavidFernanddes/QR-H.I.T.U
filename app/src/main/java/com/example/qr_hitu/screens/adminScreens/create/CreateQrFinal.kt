@@ -14,11 +14,14 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,20 +35,27 @@ import androidx.navigation.NavController
 import com.example.qr_hitu.R
 import com.example.qr_hitu.ViewModels.ViewModel1
 import com.example.qr_hitu.ViewModels.ViewModel2
+import com.example.qr_hitu.components.AdminChoices
 import com.example.qr_hitu.functions.CreateQR
+import com.example.qr_hitu.functions.DonwloadSnackbar
+import com.example.qr_hitu.functions.ErrorSnackbar
 import com.example.qr_hitu.functions.addDispositivo
 import com.example.qr_hitu.functions.downloadQR
 import com.example.qr_hitu.functions.encryptAES
 import com.example.qr_hitu.functions.encryptionKey
+import com.example.qr_hitu.screens.login.InvalidSnackbar
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-//TODO SnackBar
 @Composable
-fun QrCreateFinal(navController: NavController, viewModel1 : ViewModel1, viewModel2: ViewModel2){
+fun QrCreateFinal(navController: NavController, viewModel1: ViewModel1, viewModel2: ViewModel2) {
 
-    var content by remember{ mutableStateOf("") }
+    var content by remember { mutableStateOf("") }
     var qrName by remember { mutableStateOf("") }
-    val context = LocalContext.current
     val focusManager = LocalFocusManager.current
+    val scope = rememberCoroutineScope()
+    val showErr = remember { mutableStateOf(false) }
+    val showDone = remember { mutableStateOf(false) }
 
     val myData = viewModel1.myData.value
     val myData2 = viewModel2.myData.value
@@ -64,7 +74,7 @@ fun QrCreateFinal(navController: NavController, viewModel1 : ViewModel1, viewMod
             .fillMaxHeight()
             .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp)
-    ){
+    ) {
 
         Spacer(modifier = Modifier.padding(60.dp))
 
@@ -83,7 +93,10 @@ fun QrCreateFinal(navController: NavController, viewModel1 : ViewModel1, viewMod
                 qrName = it
             },
             modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Done),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Done
+            ),
             keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
             label = { Text(text = stringResource(R.string.createNamePlaceholder)) },
             placeholder = { Text(text = stringResource(R.string.createName)) },
@@ -95,7 +108,17 @@ fun QrCreateFinal(navController: NavController, viewModel1 : ViewModel1, viewMod
 
         Spacer(modifier = Modifier.height(30.dp))
 
-        Button(onClick = { downloadQR(content, qrName) },
+        Button(
+            onClick = {
+                scope.launch {
+                    try {
+                        downloadQR(content, qrName)
+                        showDone.value = true
+                    } catch (e: Exception) {
+                        showErr.value = true
+                    }
+                }
+            },
             Modifier
                 .fillMaxWidth()
                 .height(50.dp),
@@ -104,8 +127,28 @@ fun QrCreateFinal(navController: NavController, viewModel1 : ViewModel1, viewMod
                 contentColor = MaterialTheme.colorScheme.onPrimaryContainer
             )
         ) {
-            Text(stringResource(R.string.createDownload), style = MaterialTheme.typography.labelLarge)
+            Text(
+                stringResource(R.string.createDownload),
+                style = MaterialTheme.typography.labelLarge
+            )
         }
     }
-
+    when {
+        showDone.value -> {
+            DonwloadSnackbar()
+            LaunchedEffect(Unit) {
+                delay(3000)
+                showDone.value = false
+                navController.navigate(AdminChoices.route)
+            }
+        }
+        showErr.value -> {
+            ErrorSnackbar()
+            LaunchedEffect(Unit) {
+                delay(3000)
+                showErr.value = false
+                navController.navigate(AdminChoices.route)
+            }
+        }
+    }
 }

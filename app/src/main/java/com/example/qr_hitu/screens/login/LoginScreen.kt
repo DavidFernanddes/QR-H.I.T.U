@@ -28,6 +28,7 @@ import com.example.qr_hitu.R
 import com.example.qr_hitu.components.Loading
 import com.example.qr_hitu.components.MalfList
 import com.example.qr_hitu.components.UserChoices
+import com.example.qr_hitu.functions.InvalidSnackbar
 import com.example.qr_hitu.functions.SettingsManager
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.CollectionReference
@@ -219,21 +220,10 @@ fun LoginScreen(
         }
     }
     if (showSnack.value) {
-        CustomSnackbar()
+        InvalidSnackbar()
         LaunchedEffect(Unit) {
             delay(3000)
             showSnack.value = false
         }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun CustomSnackbar() {
-    Snackbar(
-        modifier = Modifier
-            .padding(16.dp)
-    ) {
-        Text(text = "Email/Password inválido", style = MaterialTheme.typography.bodyMedium)
     }
 }

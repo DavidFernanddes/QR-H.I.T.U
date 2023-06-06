@@ -18,11 +18,13 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,6 +39,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.R
+import com.example.qr_hitu.functions.EmailSnackbar
+import com.example.qr_hitu.functions.InvalidSnackbar
 import com.example.qr_hitu.functions.LanguageDialog
 import com.example.qr_hitu.functions.SettingsManager
 import com.example.qr_hitu.functions.ThemeDialog
@@ -44,12 +48,13 @@ import com.example.qr_hitu.functions.recreateActivity
 import com.example.qr_hitu.functions.setLocale
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.delay
 import java.util.Locale
-
-//TODO SnackBar
 
 @Composable
 fun SettingsOptions(navController: NavController, settingsManager: SettingsManager, switch: MutableState<String>) {
+
+    val showWarn = remember { mutableStateOf(false) }
 
     val showThemeState = remember { mutableStateOf(false) }
     val showTheme by rememberUpdatedState(showThemeState.value)
@@ -226,6 +231,7 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
                 Firebase.auth.sendPasswordResetEmail(
                     Firebase.auth.currentUser?.email!!
                 )
+                showWarn.value = true
             },
             shape = MaterialTheme.shapes.small
         ) {
@@ -266,23 +272,26 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
             }
 
         }
-
-        if (showTheme) {
-            ThemeDialog(
+        when {
+            showTheme -> ThemeDialog(
                 showThemeState,
                 selectedTheme,
                 switch,
                 settingsManager
             )
-        }
-
-        if (showLanguage) {
-            LanguageDialog(
+            showLanguage -> LanguageDialog(
                 showLanguageState,
                 selectedLanguage,
                 settingsManager,
                 context
             )
+            showWarn.value -> {
+                EmailSnackbar()
+                LaunchedEffect(Unit) {
+                    delay(3000)
+                    showWarn.value = false
+                }
+            }
         }
     }
 }
