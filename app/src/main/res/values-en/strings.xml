@@ -19,10 +19,6 @@
         //About
             <string name="about">Info</string>
             <string name="aboutApp">About</string>
-        //ThemeDialog
-            <string name="themeDTitle">Choose Theme</string>
-        //LangDialog
-            <string name="langDTitle">Choose Language</string>
 
     //Navigation
         //BottomBar
@@ -110,5 +106,9 @@
             //TransferQR
                 NamePlaceholder -> line 102
                 download -> line 103
-
+    //Dialogs
+        //ThemeDialog
+        <string name="themeDTitle">Choose Theme</string>
+        //LangDialog
+        <string name="langDTitle">Choose Language</string>
 </resources>
