@@ -1,4 +1,4 @@
-package com.example.qr_hitu.screens.adminScreens.malfunctions
+package com.example.qr_hitu.screens.adminScreens.tabLists.malfunctionsList
 
 import android.util.Log
 import androidx.compose.foundation.background
@@ -34,7 +34,6 @@ import com.example.qr_hitu.ViewModels.MalfunctionViewModel
 import com.example.qr_hitu.components.MalfInfo
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.tasks.await
 
 data class MalfunctionDocs(
     val machine: String,

@@ -1,4 +1,4 @@
-package com.example.qr_hitu.screens.adminScreens.recentScanList
+package com.example.qr_hitu.screens.adminScreens.tabLists.recentScanList
 
 import android.util.Log
 import androidx.compose.foundation.background
@@ -117,6 +117,4 @@ fun RecentScanList(navController: NavController, settingsManager: SettingsManage
             }
         }
     }
-
-
 }

@@ -17,21 +17,23 @@ import com.example.qr_hitu.screens.adminScreens.AdminChoices
 import com.example.qr_hitu.screens.adminScreens.create.QrCreateFinal
 import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase1
 import com.example.qr_hitu.screens.adminScreens.create.QrCreatePhase2
-import com.example.qr_hitu.screens.adminScreens.malfunctions.MalfInfo
-import com.example.qr_hitu.screens.adminScreens.malfunctions.MalfList
-import com.example.qr_hitu.screens.adminScreens.recentScanList.RecentScanList
+import com.example.qr_hitu.screens.adminScreens.tabLists.malfunctionsList.MalfInfo
+import com.example.qr_hitu.screens.adminScreens.tabLists.malfunctionsList.MalfList
+import com.example.qr_hitu.screens.adminScreens.tabLists.recentScanList.RecentScanList
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminInfo
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminInfoUpdate
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminScreen
+import com.example.qr_hitu.screens.adminScreens.tabLists.TabLayout
+import com.example.qr_hitu.screens.adminScreens.tabLists.missingQrList.missingQrList
 import com.example.qr_hitu.screens.adminScreens.transfer.ChooseQr
 import com.example.qr_hitu.screens.adminScreens.transfer.TransferQr
 import com.example.qr_hitu.screens.login.LoginScreen
 import com.example.qr_hitu.screens.menu.Manual
 import com.example.qr_hitu.screens.menu.SettingsOptions
-import com.example.qr_hitu.screens.profScreens.MissingQR.MQRLocal
+import com.example.qr_hitu.screens.profScreens.missingQr.MQRLocal
 import com.example.qr_hitu.screens.profScreens.PrimaryChoice
-import com.example.qr_hitu.screens.profScreens.Scanner.ScannerInput
-import com.example.qr_hitu.screens.profScreens.Scanner.ScannerTeachScreen
+import com.example.qr_hitu.screens.profScreens.scanner.ScannerInput
+import com.example.qr_hitu.screens.profScreens.scanner.ScannerTeachScreen
 
 
 @Composable
@@ -112,6 +114,12 @@ fun QrHituNavHost(
         }
         composable(RecentScanList.route){
             RecentScanList(navController = navController, settingsManager = settingsManager, viewModel = viewModelSA)
+        }
+        composable(MissingQrList.route){
+            missingQrList()
+        }
+        composable(TabScreen.route){
+            TabLayout(navController = navController, viewModelSA = viewModelSA, settingsManager = settingsManager, viewModelMF = viewModelMF)
         }
     }
 }

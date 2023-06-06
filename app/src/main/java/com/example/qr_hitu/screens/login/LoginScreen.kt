@@ -27,6 +27,7 @@ import androidx.navigation.NavController
 import com.example.qr_hitu.R
 import com.example.qr_hitu.components.Loading
 import com.example.qr_hitu.components.MalfList
+import com.example.qr_hitu.components.TabScreen
 import com.example.qr_hitu.components.UserChoices
 import com.example.qr_hitu.functions.InvalidSnackbar
 import com.example.qr_hitu.functions.SettingsManager
@@ -56,7 +57,7 @@ fun loginVerify(navController: NavController, db: CollectionReference, email: St
 
         // Navigate to the appropriate screen based on the verification result
         if (result.exists()) {
-            navController.navigate(MalfList.route)
+            navController.navigate(TabScreen.route)
         } else {
             navController.navigate(UserChoices.route)
         }

@@ -84,3 +84,11 @@ object MQRLocal: HituDestination {
 object RecentScanList: HituDestination {
     override val route = "recentScan_List"
 }
+
+object MissingQrList: HituDestination {
+    override val route = "missingQr_List"
+}
+
+object TabScreen: HituDestination {
+    override val route = "tab_screen"
+}

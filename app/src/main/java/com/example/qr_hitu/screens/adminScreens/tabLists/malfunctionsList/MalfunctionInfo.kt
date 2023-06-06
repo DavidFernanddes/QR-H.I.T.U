@@ -1,4 +1,4 @@
-package com.example.qr_hitu.screens.adminScreens.malfunctions
+package com.example.qr_hitu.screens.adminScreens.tabLists.malfunctionsList
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation

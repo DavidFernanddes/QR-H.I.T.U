@@ -43,7 +43,6 @@ import com.example.qr_hitu.functions.addDispositivo
 import com.example.qr_hitu.functions.downloadQR
 import com.example.qr_hitu.functions.encryptAES
 import com.example.qr_hitu.functions.encryptionKey
-import com.example.qr_hitu.screens.login.InvalidSnackbar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

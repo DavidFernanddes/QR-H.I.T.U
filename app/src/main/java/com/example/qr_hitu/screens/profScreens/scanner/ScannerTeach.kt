@@ -1,4 +1,4 @@
-package com.example.qr_hitu.screens.profScreens.Scanner
+package com.example.qr_hitu.screens.profScreens.scanner
 
 
 import android.Manifest
@@ -14,21 +14,16 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.example.qr_hitu.ViewModels.ScannerViewModel
-import com.example.qr_hitu.components.ScanInput
 import com.example.qr_hitu.components.ScanProf
 import com.example.qr_hitu.functions.Malf_ErrorDialogs
 import com.example.qr_hitu.functions.decryptAES
