@@ -24,7 +24,7 @@ import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminInfo
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminInfoUpdate
 import com.example.qr_hitu.screens.adminScreens.scannerAdm.ScannerAdminScreen
 import com.example.qr_hitu.screens.adminScreens.tabLists.TabLayout
-import com.example.qr_hitu.screens.adminScreens.tabLists.missingQrList.missingQrList
+import com.example.qr_hitu.screens.adminScreens.tabLists.missingQrList.MissingQrList
 import com.example.qr_hitu.screens.adminScreens.transfer.ChooseQr
 import com.example.qr_hitu.screens.adminScreens.transfer.TransferQr
 import com.example.qr_hitu.screens.login.LoginScreen
@@ -116,7 +116,7 @@ fun QrHituNavHost(
             RecentScanList(navController = navController, settingsManager = settingsManager, viewModel = viewModelSA)
         }
         composable(MissingQrList.route){
-            missingQrList(navController = navController)
+            MissingQrList(navController = navController)
         }
         composable(TabScreen.route){
             TabLayout(navController = navController, viewModelSA = viewModelSA, settingsManager = settingsManager, viewModelMF = viewModelMF)

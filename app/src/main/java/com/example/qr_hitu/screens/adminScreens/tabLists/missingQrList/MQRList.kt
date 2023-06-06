@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,7 +15,6 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Computer
-import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Print
 import androidx.compose.material.icons.filled.VideocamOff
 import androidx.compose.material3.Card
@@ -58,13 +56,13 @@ private fun getMissingQR(setList: (List<MissingQrDocs>) -> Unit) {
             setList(itemList)
         }
         .addOnFailureListener { exception ->
-            // Handle the failure
+
             Log.e("Firestore", "Error getting documents: ", exception)
         }
 }
 
 @Composable
-fun missingQrList(navController: NavController) {
+fun MissingQrList(navController: NavController) {
 
     val (list, setList) = remember { mutableStateOf<List<MissingQrDocs>>(emptyList()) }
 
@@ -106,7 +104,6 @@ fun missingQrList(navController: NavController) {
                             Icon(Icons.Filled.Computer, "Computer")
                         }
                     }
-
 
                     Row(
                         modifier = Modifier

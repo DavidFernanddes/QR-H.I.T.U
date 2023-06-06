@@ -101,17 +101,17 @@ fun MalfList(navController: NavController, viewModel: MalfunctionViewModel) {
                         .fillMaxWidth(),
                     ) {
 
-                    //TODO Comparação
-                    //if(item.machine == "Projetor"){
-                        if (item.machine == "Projetor") {
+                    when (item.machine) {
+                        "Projetor" -> {
                             Icon(Icons.Filled.VideocamOff, "Projector")
-                        } else if (item.machine == "Impressora"){
+                        }
+                        "Impressora" -> {
                             Icon(Icons.Filled.Print, "Impressora")
-                        } else {
+                        }
+                        else -> {
                             Icon(Icons.Filled.Computer, "Computer")
                         }
-                    //}
-
+                    }
 
                     Row(
                         modifier = Modifier

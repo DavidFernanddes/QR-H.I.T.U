@@ -1,9 +1,6 @@
 package com.example.qr_hitu.screens.adminScreens.tabLists
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
@@ -18,7 +15,7 @@ import com.example.qr_hitu.ViewModels.MalfunctionViewModel
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.functions.SettingsManager
 import com.example.qr_hitu.screens.adminScreens.tabLists.malfunctionsList.MalfList
-import com.example.qr_hitu.screens.adminScreens.tabLists.missingQrList.missingQrList
+import com.example.qr_hitu.screens.adminScreens.tabLists.missingQrList.MissingQrList
 import com.example.qr_hitu.screens.adminScreens.tabLists.recentScanList.RecentScanList
 
 @Composable
@@ -46,7 +43,7 @@ fun TabLayout(navController: NavController, settingsManager: SettingsManager, vi
                 settingsManager = settingsManager,
                 viewModel = viewModelSA
             )
-            2 -> missingQrList(
+            2 -> MissingQrList(
                 navController = navController
             )
         }
