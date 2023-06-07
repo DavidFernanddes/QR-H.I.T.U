@@ -127,7 +127,7 @@ fun MissingQrList(navController: NavController) {
                     }
                 }
                 if(show.value){
-                    DelMissingDialog(onDialogDismissed = { show.value = false}, onDeleteClick = { delMissing(item.room, item.machine) })
+                    DelMissingDialog(onDialogDismissed = { show.value = false}, onDeleteClick = { delMissing(item.room, item.machine); getMissingQR(setList) })
                 }
             }
         }

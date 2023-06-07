@@ -149,7 +149,7 @@ fun delMissing(
     sala: String,
     ident: String
 ) {
-    db.collection("Falta Qr")
+    db.collection("Falta QR")
         .document("$sala $ident")
         .delete()
 }
