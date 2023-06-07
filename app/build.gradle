@@ -101,6 +101,8 @@ dependencies {
     //System bar controller
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.27.0"
 
-    
+    implementation 'com.github.alexzhirkevich:custom-qr-generator:1.6.2'
+
+    implementation "com.google.accompanist:accompanist-drawablepainter:0.16.0"
 
 }

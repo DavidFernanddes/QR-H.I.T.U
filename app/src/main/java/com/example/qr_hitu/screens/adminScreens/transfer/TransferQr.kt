@@ -1,5 +1,6 @@
 package com.example.qr_hitu.screens.adminScreens.transfer
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -50,6 +52,7 @@ fun TransferQr(navController: NavController, viewModel: ViewModel1) {
     val scope = rememberCoroutineScope()
     val showErr = remember { mutableStateOf(false) }
     val showDone = remember { mutableStateOf(false) }
+    val enabled = qrName.isNotEmpty()
 
     val myData = viewModel.myData.value
 
@@ -70,7 +73,8 @@ fun TransferQr(navController: NavController, viewModel: ViewModel1) {
             content = encryptAES("${myData.block},${myData.room},${myData.machine}", encryptionKey)
         }
 
-        CreateQR(content)
+        val text = CreateQR(content = content)
+        Image(bitmap = text, contentDescription = "qr", Modifier.size(200.dp))
 
         Spacer(modifier = Modifier.height(20.dp))
 
@@ -90,7 +94,7 @@ fun TransferQr(navController: NavController, viewModel: ViewModel1) {
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
                 focusedLabelColor = MaterialTheme.colorScheme.primaryContainer,
-            )
+            ),
         )
 
         Spacer(modifier = Modifier.height(30.dp))
@@ -99,7 +103,7 @@ fun TransferQr(navController: NavController, viewModel: ViewModel1) {
             onClick = {
                 scope.launch {
                     try {
-                        downloadQR(content, qrName)
+                        downloadQR(text, qrName)
                         showDone.value = true
                     } catch (e: Exception) {
                         showErr.value = true
@@ -112,7 +116,8 @@ fun TransferQr(navController: NavController, viewModel: ViewModel1) {
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
                 contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-            )
+            ),
+            enabled = enabled
         ) {
             Text(
                 stringResource(R.string.createDownload),

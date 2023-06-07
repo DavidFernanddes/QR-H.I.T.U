@@ -1,5 +1,6 @@
 package com.example.qr_hitu.screens.adminScreens.create
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -14,7 +16,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -25,7 +26,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -55,6 +55,7 @@ fun QrCreateFinal(navController: NavController, viewModel1: ViewModel1, viewMode
     val scope = rememberCoroutineScope()
     val showErr = remember { mutableStateOf(false) }
     val showDone = remember { mutableStateOf(false) }
+    val enabled = qrName.isNotEmpty()
 
     val myData = viewModel1.myData.value
     val myData2 = viewModel2.myData.value
@@ -82,7 +83,8 @@ fun QrCreateFinal(navController: NavController, viewModel1: ViewModel1, viewMode
             addDispositivo(myData.block, myData.room, myData.machine, spec)
         }
 
-        CreateQR(content)
+        val text = CreateQR(content = content)
+        Image(bitmap = text, contentDescription = "qr", Modifier.size(200.dp))
 
         Spacer(modifier = Modifier.height(20.dp))
 
@@ -111,7 +113,7 @@ fun QrCreateFinal(navController: NavController, viewModel1: ViewModel1, viewMode
             onClick = {
                 scope.launch {
                     try {
-                        downloadQR(content, qrName)
+                        downloadQR(text, qrName)
                         showDone.value = true
                     } catch (e: Exception) {
                         showErr.value = true
@@ -124,7 +126,8 @@ fun QrCreateFinal(navController: NavController, viewModel1: ViewModel1, viewMode
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
                 contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-            )
+            ),
+            enabled = enabled,
         ) {
             Text(
                 stringResource(R.string.createDownload),
@@ -136,7 +139,7 @@ fun QrCreateFinal(navController: NavController, viewModel1: ViewModel1, viewMode
         showDone.value -> {
             DonwloadSnackbar()
             LaunchedEffect(Unit) {
-                delay(3000)
+                delay(2000)
                 showDone.value = false
                 navController.navigate(AdminChoices.route)
             }
@@ -144,7 +147,7 @@ fun QrCreateFinal(navController: NavController, viewModel1: ViewModel1, viewMode
         showErr.value -> {
             ErrorSnackbar()
             LaunchedEffect(Unit) {
-                delay(3000)
+                delay(2000)
                 showErr.value = false
                 navController.navigate(AdminChoices.route)
             }
