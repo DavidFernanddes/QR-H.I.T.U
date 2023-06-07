@@ -6,7 +6,9 @@ import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.qr_hitu.R
 
 //Create Qr Final
 @Composable
@@ -15,7 +17,7 @@ fun DonwloadSnackbar(){
         modifier = Modifier
             .padding(16.dp)
     ) {
-        Text(text = "Donwload realizado com sucesso", style = MaterialTheme.typography.bodyMedium)
+        Text(text = stringResource(R.string.downloadStext), style = MaterialTheme.typography.bodyMedium)
     }
 }
 
@@ -25,7 +27,7 @@ fun ErrorSnackbar(){
         modifier = Modifier
             .padding(16.dp)
     ) {
-        Text(text = "Erro no download de Qr! Por favor tente de novo", style = MaterialTheme.typography.bodyMedium)
+        Text(text = stringResource(R.string.downloadSEtext), style = MaterialTheme.typography.bodyMedium)
     }
 }
 
@@ -36,7 +38,7 @@ fun InvalidSnackbar() {
         modifier = Modifier
             .padding(16.dp)
     ) {
-        Text(text = "Email/Password inválido", style = MaterialTheme.typography.bodyMedium)
+        Text(text = stringResource(R.string.loginStext), style = MaterialTheme.typography.bodyMedium)
     }
 }
 

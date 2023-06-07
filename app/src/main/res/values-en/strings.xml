@@ -135,4 +135,13 @@
         //DelDialog
             <string name="delDtitle">Would you like delete this machine ?</string>
             <string name="delDtext">This action will be irreversible !</string>
+    //Snackbars
+        //DownloadSnackbar
+            <string name="downloadStext">Download successful !</string>
+        //ErrorDownloadSnackbar
+            <string name="downloadSEtext">Failed to download Qr! Please try again</string>
+        //LoginSnackbar
+            <string name="loginStext">Incorrect Email/Password</string>
+        //ResetPasswordSnackbar
+            <string name="resetPassStext">An email as been sent to change your password</string>
 </resources>
