@@ -56,6 +56,10 @@
             <string name="mQRSend">Enviar</string>
 
     //Admin
+        //TopTab
+            <string name="malf">Avarias</string>
+            <string name="recent">Recentes</string>
+            <string name="missingQr">Falta de Qr</string>
         //MalfInfo
             <string name="MInfSender">Remetente: </string>
             <string name="MInfBlock">Bloco: </string>

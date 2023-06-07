@@ -56,6 +56,10 @@
             <string name="mQRSend">Send</string>
 
     //Admin
+        //TopTab
+            <string name="malf">Malfunctions</string>
+            <string name="recent">Recents</string>
+            <string name="missingQr">Missing Qr</string>
         //MalfInfo
             <string name="MInfSender">Sender: </string>
             <string name="MInfBlock">Block: </string>
@@ -160,16 +164,16 @@
             <string name="adminManual">
                 In the navigation bar you have 3 options:\n
                 -> Lists;\n
-                -> scanner;\n
+                -> Scanner;\n
                 -> Create.\n\n
                 <b>Lists</b>\nThere are 3 lists within this option that you can browse through the top bar.\n
-                -> Failures - List that shows all the failures currently unresolved registered in the database, if you click on a failure you will be redirected to a screen with more information and an option to complete.\n
-                -> Recent - List with the most recent scans with a maximum of 5 QR codes, if you click it you will be redirected to a screen with more information about the device.\n
-                -> Lack of QR - List that shows all machine warnings without QR codes registered in the database.\n\n
+                -> Malfunctions - List that shows all the failures currently unresolved registered in the database, if you click on a failure you will be redirected to a screen with more information and an option to complete.\n
+                -> Recents - List with the most recent scans with a maximum of 5 QR codes, if you click it you will be redirected to a screen with more information about the device.\n
+                -> Missing QR - List that shows all machine warnings without QR codes registered in the database.\n\n
                 <b>Scanner</b>\nThis option will start the camera, once started you can scan a QR code from the application to receive more information about the machine in question.
                 Once you are on the screen about the machine, you can still delete the machine from the database or update its information.\n\n
                 <b>Create</b>\nWhen you enter this screen you have 2 choices.\n
-                -> Transfer - This option will ask you where the desired machine is located in order to transfer a QR code referring to it.
+                -> Download - This option will ask you where the desired machine is located in order to transfer a QR code referring to it.
                 This QR code will be transferred to your device\'s Downloads folder and you will have the option to choose the file name.
                 -> Create QR - This option will ask you in sequence for the desired location and information about the device, once complete the device will be added to the database and if possible transfer a QR code referring to that new machine.
                 This QR code will be transferred to your device\'s Downloads folder and you will have the option to choose the file name.

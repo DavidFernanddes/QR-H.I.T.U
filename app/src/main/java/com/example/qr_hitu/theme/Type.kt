@@ -39,7 +39,7 @@ val replyTypography = Typography(
     ),
     labelMedium = TextStyle(
         fontFamily = FontFamily.SansSerif,
-        fontSize = 12. sp,
+        fontSize = 11.5. sp,
         lineHeight = 16. sp,
         letterSpacing = 0.5.sp
     )
