@@ -48,7 +48,7 @@ suspend fun performVerification(db: CollectionReference, email: String?): Docume
     }
 }
 
-fun loginVerify(navController: NavController, db: CollectionReference, email: String?) {
+fun loginVerify(navController: NavController, db: CollectionReference, email: String?, settingsManager: SettingsManager) {
     CoroutineScope(Dispatchers.Main).launch {
         delay(1500)
         // Perform the verification in the background using suspend functions
@@ -56,6 +56,7 @@ fun loginVerify(navController: NavController, db: CollectionReference, email: St
 
         // Navigate to the appropriate screen based on the verification result
         if (result.exists()) {
+            settingsManager.saveSetting("Admin", "Admin")
             navController.navigate(TabScreen.route)
         } else {
             navController.navigate(UserChoices.route)
@@ -97,7 +98,7 @@ fun LoginScreen(
 
             if (Firebase.auth.currentUser != null) {
                 navController.navigate(Loading.route)
-                loginVerify(navController, db, email)
+                loginVerify(navController, db, email, settingsManager)
             }
         }
     }
@@ -107,7 +108,7 @@ fun LoginScreen(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp)
-            ) {
+    ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
@@ -206,7 +207,7 @@ fun LoginScreen(
                                     val email = Firebase.auth.currentUser?.email
 
                                     navController.navigate(Loading.route)
-                                    loginVerify(navController, db, email)
+                                    loginVerify(navController, db, email, settingsManager)
 
                                 } else {
                                     showError = true

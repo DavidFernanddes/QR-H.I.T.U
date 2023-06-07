@@ -147,4 +147,28 @@
             <string name="loginStext">Email/Password inválidos</string>
         //ResetPasswordSnackbar
             <string name="resetPassStext">Foi enviado email para a troca de password</string>
+    //Manual
+        //User
+            <string name="userManual">
+                O utilizador tem duas opções que pode escolher:\n
+                -> Scanner;\n
+                -> Falta QR.\n\n
+                <b>Scanner</b>\nNa opção de Scanner a câmera irá iniciar, assim que iniciada pode analizar um QR code da aplicação que estará na máquina desejada. Na tela seguinte apenas terá de escolher o problema referente ou descreve-lo e apenas se realmente necessário marcar como urgente.\n\n
+                <b>Falta QR</b>\nA opção Falta QR irá direcionar-lo para uma tela para escolher o local da máquina em que notou a falta de um QR code. Posteriormente pode também adicionar uma avaria caso seja necessário.
+            </string>
+        //Admin
+            <string name="adminManual">
+                Na barra de navegação tem 3 opções:\n
+                -> Listas;\n
+                -> Scanner;\n
+                -> Criar.\n\n
+                <b>Listas</b>\nExiste 3 listas dentro desta opção que pode navegar através da barra superior.\n
+                -> Avarias - Lista que mostra todas as avarias atualmente por resolver registadas na base de dados, se clicar em uma avaria será redirecionado para uma tela com mais informações e uma opção de completar.\n
+                -> Recentes - Lista com os scans mais recentes com máximo de 5 QR codes, se clicar será redirecionado para uma tela com mais informação sobre o dispositivo.\n
+                -> Falta de QR - Lista que mostra todos os avisos de máquinas sem QR codes registadas na base de dados.\n\n
+                <b>Scanner</b>\nEsta opção irá iniciar a câmara, assim que iniciada pode dar scan em um QR code da aplicação para receber mais informações acerca da máquina referente. Assim que estiver na tela acerca da máquina poderá ainda apagar a máquina da base de dados ou atualizar a sua informação.\n\n
+                <b>Criar</b>\nQuando entra nesta tela tem 2 escolhas.\n
+                -> Tranferir - Esta opção irá lhe pedir onde se localiza a máquina desejada para poder transferir um QR code referente a ela. Este QR code será transferido para a pasta de Downloads do seu dispositivo e terá a opção de escolhar o nome do ficheiro.
+                -> Criar QR - Esta opção irá lhe pedir em sequência a localização pretendida e a informação acerca do dispositivo, assi que completo o dispositivo será adicionado á base de dados e se possível transferir um QR code referente a essa nova máquina. Este QR code será transferido para a pasta de Downloads do seu dispositivo e terá a opção de escolher o nome do ficheiro.
+            </string>
 </resources>

@@ -42,16 +42,16 @@ fun ScaffoldLayouts(navController: NavController, settingsManager: SettingsManag
     Scaffold(
         topBar = {
             when {
-                destinationRoute.contains(ScannerAdminInfoUpdate.route) ->  TopBar1(navController = navController)
-                destinationRoute.contains(Create1.route) || destinationRoute.contains(ChooseQr.route) -> TopBar5(navController = navController)
+                destinationRoute.contains(ScannerAdminInfoUpdate.route) ->  TopBar1(navController = navController, settingsManager = settingsManager)
+                destinationRoute.contains(Create1.route) || destinationRoute.contains(ChooseQr.route) -> TopBar5(navController = navController, settingsManager = settingsManager)
                 destinationRoute.contains(Create2.route) -> TopBar2(navController = navController)
                 destinationRoute.contains(Create3.route) || destinationRoute.contains(TransferQr.route) -> TopBar3(navController = navController)
-                destinationRoute.contains(ScanInput.route) -> TopBarUser3(navController = navController)
+                destinationRoute.contains(ScanInput.route) -> TopBarUser3(navController = navController, settingsManager = settingsManager)
                 destinationRoute.contains(SettingOptions.route) || destinationRoute.contains(Manual.route) || destinationRoute.contains(MalfInfo.route) -> TopBarUni(navController = navController)
-                destinationRoute.contains(ScannerAdminInfo.route) -> TopBar4(navController = navController, viewModelSA)
-                destinationRoute.contains(ScanAdmin.route) || destinationRoute.contains(AdminChoices.route) || destinationRoute.contains(TabScreen.route) -> TopBar1(navController = navController)
-                destinationRoute.contains(UserChoices.route) -> TopBarUser1(navController = navController)
-                destinationRoute.contains(ScanProf.route) || destinationRoute.contains(MQRLocal.route) -> TopBarUser2(navController = navController)
+                destinationRoute.contains(ScannerAdminInfo.route) -> TopBar4(navController = navController, viewModelSA, settingsManager)
+                destinationRoute.contains(ScanAdmin.route) || destinationRoute.contains(AdminChoices.route) || destinationRoute.contains(TabScreen.route) -> TopBar1(navController = navController, settingsManager)
+                destinationRoute.contains(UserChoices.route) -> TopBarUser1(navController = navController, settingsManager)
+                destinationRoute.contains(ScanProf.route) || destinationRoute.contains(MQRLocal.route) -> TopBarUser2(navController = navController, settingsManager)
             }
         },
         bottomBar = {
@@ -78,14 +78,14 @@ fun ScaffoldLayouts(navController: NavController, settingsManager: SettingsManag
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar1(navController: NavController){
+fun TopBar1(navController: NavController, settingsManager: SettingsManager){
     val email = emailString()
 
     TopAppBar(
         title = { Text(text = email, color = MaterialTheme.colorScheme.onPrimaryContainer) },
         colors = topAppBarColors(MaterialTheme.colorScheme.primaryContainer),
         navigationIcon = {
-            MenuOptions(navController = navController)
+            MenuOptions(navController = navController, settingsManager = settingsManager)
         }
     )
 }
@@ -126,7 +126,7 @@ fun TopBar3(navController: NavController){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar4(navController: NavController, viewModel: ScannerViewModel){
+fun TopBar4(navController: NavController, viewModel: ScannerViewModel, settingsManager: SettingsManager){
     val email = emailString()
 
     val showState = remember { mutableStateOf(false) }
@@ -137,7 +137,7 @@ fun TopBar4(navController: NavController, viewModel: ScannerViewModel){
         title = { Text(text = email, color = MaterialTheme.colorScheme.onPrimaryContainer) },
         colors = topAppBarColors(MaterialTheme.colorScheme.primaryContainer),
         navigationIcon = {
-            MenuOptions(navController = navController)
+            MenuOptions(navController = navController, settingsManager = settingsManager)
         },
         actions = {
 
@@ -161,14 +161,14 @@ fun TopBar4(navController: NavController, viewModel: ScannerViewModel){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar5(navController: NavController){
+fun TopBar5(navController: NavController, settingsManager: SettingsManager){
     val email = emailString()
 
     TopAppBar(
         title = { Text(text = email, color = MaterialTheme.colorScheme.onPrimaryContainer) },
         colors = topAppBarColors(MaterialTheme.colorScheme.primaryContainer),
         navigationIcon = {
-            MenuOptions(navController = navController)
+            MenuOptions(navController = navController, settingsManager = settingsManager)
         },
         actions = {
             IconButton(onClick = { navController.popBackStack() }) {
@@ -180,28 +180,28 @@ fun TopBar5(navController: NavController){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBarUser1(navController: NavController){
+fun TopBarUser1(navController: NavController, settingsManager: SettingsManager){
     val email = emailString()
 
     TopAppBar(
         title = { Text(text = email, color = MaterialTheme.colorScheme.onPrimaryContainer) },
         colors = topAppBarColors(MaterialTheme.colorScheme.primaryContainer),
         navigationIcon = {
-           MenuOptions(navController = navController)
+           MenuOptions(navController = navController, settingsManager = settingsManager)
         }
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBarUser2(navController: NavController){
+fun TopBarUser2(navController: NavController, settingsManager: SettingsManager){
     val email = emailString()
 
     TopAppBar(
         title = { Text(text = email, color = MaterialTheme.colorScheme.onPrimaryContainer) },
         colors = topAppBarColors(MaterialTheme.colorScheme.primaryContainer),
         navigationIcon = {
-            MenuOptions(navController = navController)
+            MenuOptions(navController = navController, settingsManager = settingsManager)
         },
         actions = {
             IconButton(onClick = { navController.popBackStack() }) {
@@ -213,14 +213,14 @@ fun TopBarUser2(navController: NavController){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBarUser3(navController: NavController){
+fun TopBarUser3(navController: NavController, settingsManager: SettingsManager){
     val email = emailString()
 
     TopAppBar(
         title = { Text(text = email, color = MaterialTheme.colorScheme.onPrimaryContainer) },
         colors = topAppBarColors(MaterialTheme.colorScheme.primaryContainer),
         navigationIcon = {
-            MenuOptions(navController = navController)
+            MenuOptions(navController = navController, settingsManager = settingsManager)
         },
         actions = {
             IconButton(onClick = { navController.navigate(UserChoices.route) }) {
@@ -293,7 +293,7 @@ fun BottomBar(navController: NavController){
 }
 
 @Composable
-fun MenuOptions(navController: NavController){
+fun MenuOptions(navController: NavController, settingsManager: SettingsManager){
 
     var showMenu by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
@@ -325,6 +325,7 @@ fun MenuOptions(navController: NavController){
             onClick = {
                 scope.launch {
                     Firebase.auth.signOut()
+                    settingsManager.saveSetting("Admin", "User")
                     navController.navigate(Login.route)
                 }
             },
