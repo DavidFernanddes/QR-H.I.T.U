@@ -101,7 +101,7 @@ fun QrHituNavHost(
             SettingsOptions(navController = navController, settingsManager = settingsManager, switch = switch)
         }
         composable(Manual.route){
-            Manual(navController = navController)
+            Manual(navController = navController, settingsManager = settingsManager)
         }
         composable(Loading.route){
             LoadingScreen(navController = navController, settingsManager = settingsManager)
