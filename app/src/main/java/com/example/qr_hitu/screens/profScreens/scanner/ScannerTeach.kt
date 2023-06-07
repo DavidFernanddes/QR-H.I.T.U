@@ -28,6 +28,7 @@ import com.example.qr_hitu.components.ScanProf
 import com.example.qr_hitu.functions.Malf_ErrorDialogs
 import com.example.qr_hitu.functions.decryptAES
 import com.example.qr_hitu.functions.encryptionKey
+import com.example.qr_hitu.functions.isEncryptedString
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
@@ -101,11 +102,16 @@ fun ScannerTeachScreen(navController: NavController, viewModel: ScannerViewModel
                     val barcode = barcodeList.getOrNull(0)
 
                     barcode?.rawValue?.let { value ->
-                        val decodedValue = decryptAES(value, encryptionKey)
-                        if(Regex("""Bloco \w+,Sala \p{all}+,\w+\w+""").containsMatchIn(decodedValue)){
-                            viewModel.setMyData(decodedValue)
-                            showState.value = 1
-                        }else{
+                        if (isEncryptedString(value)) {
+                            val decodedValue = decryptAES(value, encryptionKey)
+
+                            if(!Regex("""Bloco \w+,Sala \p{all}+,\w+\w+""").containsMatchIn(decodedValue)){
+                                showState.value = 2
+                            }else{
+                                viewModel.setMyData(decodedValue)
+                                showState.value = 1
+                            }
+                        } else {
                             showState.value = 2
                         }
                     }

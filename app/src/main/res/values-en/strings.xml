@@ -35,7 +35,7 @@
         <string name="login">Login</string>
 
     //Loading
-        <string name="loading">Logging In...</string>
+        <string name="loading">Logging In…</string>
 
     //User
         //UserChoices
@@ -119,7 +119,7 @@
             <string name="existDtitle">Qr already exists</string>
             <string name="existDtext">Do you want to continue ?</string>
         //InvalidQrDialog
-            <string name="invalidDtext">QR Code Inválido !</string>
+            <string name="invalidDtext">Invalid QR Code !</string>
         //ExistWarnDialog
             <string name="existWDtitle">Warning already exists</string>
             <string name="existWDtext">The QR will be replaced soon !</string>
