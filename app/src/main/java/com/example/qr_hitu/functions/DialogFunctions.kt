@@ -32,22 +32,22 @@ fun ExistsInvDialog(onDialogAccept: () -> Unit, onDialogReject: () -> Unit) {
             onDismissRequest = { openDialog.value = false; onDialogReject() },
             title = {
                 Text(
-                    text = "Qr já existente",
+                    text = stringResource(R.string.existDtitle),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.headlineSmall
                 )
             },
             text = {
-                Text(text = "Deseja continuar a ação ?", style = MaterialTheme.typography.bodyMedium)
+                Text(text = stringResource(R.string.existDtext), style = MaterialTheme.typography.bodyMedium)
             },
             confirmButton= {
                 TextButton(onClick = { openDialog.value = false; onDialogAccept(); }) {
-                    Text(text = "Sim", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSecondary)
+                    Text(text = stringResource(R.string.confirm), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSecondary)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { openDialog.value = false; onDialogReject(); }) {
-                    Text(text = "Não", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSecondary)
+                    Text(text = stringResource(R.string.dismiss), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSecondary)
                 }
             },
             textContentColor = MaterialTheme.colorScheme.onSecondary,
@@ -66,7 +66,7 @@ fun InvalidQrDialog(onDialogDismissed: () -> Unit) {
             onDismissRequest = { openDialog.value = false; onDialogDismissed() },
             title = {
                 androidx.compose.material.Text(
-                    text = "Erro",
+                    text = stringResource(R.string.error),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.headlineSmall,
                     color = MaterialTheme.colorScheme.onSecondary
@@ -74,7 +74,7 @@ fun InvalidQrDialog(onDialogDismissed: () -> Unit) {
             },
             text = {
                 androidx.compose.material.Text(
-                    text = "QR Code Inválido !",
+                    text = stringResource(R.string.invalidDtext),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSecondary
                 )
@@ -104,14 +104,14 @@ fun ExistsWarnDialog(onDialogDismissed: () -> Unit) {
             onDismissRequest = { openDialog.value = false; onDialogDismissed() },
             title = {
                 Text(
-                    text = "Aviso já existente",
+                    text = stringResource(R.string.existWDtitle),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.headlineSmall
                 )
             },
             text = {
                 Text(
-                    text = "Será colocado um novo QR assim que possível",
+                    text = stringResource(R.string.existWDtext),
                     style = MaterialTheme.typography.bodyMedium
                 )
             },
@@ -139,21 +139,21 @@ fun AddMalfDialog(onDialogDismissed: () -> Unit, onDialogConfirm: () -> Unit) {
             onDismissRequest = { openDialog.value = false; onDialogDismissed() },
             title = {
                 Text(
-                    text = "Adicionar",
+                    text = stringResource(R.string.addMalfDtitle),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.headlineSmall
                 )
             },
             text = {
                 Text(
-                    text = "Gostaria de colocar avaria ?",
+                    text = stringResource(R.string.addMalfDtext),
                     style = MaterialTheme.typography.bodyMedium
                 )
             },
             confirmButton = {
                 TextButton(onClick = { openDialog.value = false; onDialogConfirm() }) {
                     Text(
-                        text = "Sim",
+                        text = stringResource(R.string.confirm),
                         style = MaterialTheme.typography.labelLarge,
                         color = MaterialTheme.colorScheme.onSecondary
                     )
@@ -162,7 +162,7 @@ fun AddMalfDialog(onDialogDismissed: () -> Unit, onDialogConfirm: () -> Unit) {
             dismissButton = {
                 TextButton(onClick = { openDialog.value = false; onDialogDismissed() }) {
                     Text(
-                        text = "Não",
+                        text = stringResource(R.string.dismiss),
                         style = MaterialTheme.typography.labelLarge,
                         color = MaterialTheme.colorScheme.onSecondary
                     )
@@ -185,23 +185,23 @@ fun Malf_ErrorDialogs(onDialogDismissed: () -> Unit, navController: NavControlle
                 onDismissRequest = { openDialog.value = false; onDialogDismissed() },
                 title = {
                     Text(
-                        text = "Avaria",
+                        text = stringResource(R.string.addMalfDtitle),
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.headlineSmall
                     )
                 },
                 text = {
-                    Text(text = "Deseja colocar uma avaria ?", style = MaterialTheme.typography.bodyMedium)
+                    Text(text = stringResource(R.string.addMalfDtext), style = MaterialTheme.typography.bodyMedium)
                 },
                 confirmButton = {
                     TextButton(onClick = { openDialog.value = false; navController.navigate(
                         ScanInput.route) }) {
-                        Text(text = "SIM", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                        Text(text = stringResource(R.string.confirm), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
                     }
                 },
                 dismissButton = {
                     TextButton(onClick = { openDialog.value = false;  onDialogDismissed()}) {
-                        Text(text = "NÃO", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                        Text(text = stringResource(R.string.dismiss), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
                     }
                 },
                 textContentColor = MaterialTheme.colorScheme.primaryContainer,
@@ -213,16 +213,16 @@ fun Malf_ErrorDialogs(onDialogDismissed: () -> Unit, navController: NavControlle
                 onDismissRequest = { openDialog.value = false; onDialogDismissed() },
                 title = {
                     Text(
-                        text = "Erro",
+                        text = stringResource(R.string.error),
                         textAlign = TextAlign.Center
                     )
                 },
                 text = {
-                    Text(text = "QR Code Inválido !")
+                    Text(text = stringResource(R.string.invalidDtext))
                 },
                 confirmButton= {
                     TextButton(onClick = { openDialog.value = false;  onDialogDismissed()}) {
-                        Text(text = "Fechar")
+                        Text(text = "OK")
                     }
                 },
                 textContentColor = MaterialTheme.colorScheme.primaryContainer,
@@ -245,13 +245,13 @@ fun WarningDialog(error: Boolean, onDialogDismissedError: () -> Unit, onDialogDi
                 onDismissRequest = { openDialog.value = false; onDialogDismissedError() },
                 title = {
                     Text(
-                        text = "Erro",
+                        text = stringResource(R.string.error),
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.headlineSmall
                     )
                 },
                 text = {
-                    Text(text = "Descreva a avaria !", style = MaterialTheme.typography.bodyMedium)
+                    Text(text = stringResource(R.string.descMalftext), style = MaterialTheme.typography.bodyMedium)
                 },
                 confirmButton = {
                     TextButton(onClick = { openDialog.value = false; onDialogDismissedError() }) {
@@ -270,13 +270,13 @@ fun WarningDialog(error: Boolean, onDialogDismissedError: () -> Unit, onDialogDi
                 onDismissRequest = { openDialog.value = false; onDialogDismissed() },
                 title = {
                     Text(
-                        text = "Sucesso",
+                        text = stringResource(R.string.success),
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.headlineSmall
                     )
                 },
                 text = {
-                    Text(text = "Avaria Enviada !", style = MaterialTheme.typography.bodyMedium)
+                    Text(text = stringResource(R.string.descMalftext2), style = MaterialTheme.typography.bodyMedium)
                 },
                 confirmButton = {
                     TextButton(onClick = { openDialog.value = false; onDialogDismissed() }) {
@@ -303,14 +303,14 @@ fun ExistsMalfDialog(onDialogDismissed: () -> Unit) {
             onDismissRequest = { openDialog.value = false; onDialogDismissed() },
             title = {
                 Text(
-                    text = "Avaria já existente",
+                    text = stringResource(R.string.existWDtitle),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.headlineSmall
                 )
             },
             text = {
                 Text(
-                    text = "Estamos a resolver a avaria o mais rápido possivel",
+                    text = stringResource(R.string.existWDtext),
                     style = MaterialTheme.typography.bodyMedium
                 )
             },
@@ -466,18 +466,18 @@ fun DelDialog(onDialogDismissed: () -> Unit, onDeleteClick: () -> Unit) {
         onDismissRequest = { onDialogDismissed() },
         title = {
             Text(
-                text = "Deseja apagar está máquina ?",
+                text = stringResource(R.string.delDtitle),
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.headlineSmall
             )
         },
         text = {
-            Text(text = "Esta ação é irreversível!", style = MaterialTheme.typography.bodyLarge)
+            Text(text = stringResource(R.string.delDtext), style = MaterialTheme.typography.bodyLarge)
         },
         dismissButton = {
             TextButton(onClick = { onDialogDismissed() }) {
                 Text(
-                    text = "Não",
+                    text = stringResource(R.string.dismiss),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.primary
                 )
@@ -486,7 +486,7 @@ fun DelDialog(onDialogDismissed: () -> Unit, onDeleteClick: () -> Unit) {
         confirmButton = {
             TextButton(onClick = { onDialogDismissed(); onDeleteClick() }) {
                 Text(
-                    text = "Sim",
+                    text = stringResource(R.string.confirm),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.primary
                 )

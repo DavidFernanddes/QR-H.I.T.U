@@ -107,8 +107,32 @@
                 NamePlaceholder -> line 102
                 download -> line 103
     //Dialogs
+            <string name="confirm">Yes</string>
+            <string name="dismiss">No</string>
+            <string name="error">Error</string>
+            <string name="success">Success</string>
         //ThemeDialog
-        <string name="themeDTitle">Choose Theme</string>
+            <string name="themeDTitle">Choose Theme</string>
         //LangDialog
-        <string name="langDTitle">Choose Language</string>
+            <string name="langDTitle">Choose Language</string>
+        //ExistInvDialog
+            <string name="existDtitle">Qr already exists</string>
+            <string name="existDtext">Do you want to continue ?</string>
+        //InvalidQrDialog
+            <string name="invalidDtext">QR Code Inválido !</string>
+        //ExistWarnDialog
+            <string name="existWDtitle">Warning already exists</string>
+            <string name="existWDtext">The QR will be replaced soon !</string>
+        //AddMalfDialog
+            <string name="addMalfDtitle">Add</string>
+            <string name="addMalfDtext">Would you like to add a malfunction ?</string>
+        //DescribeMalfDialog
+            <string name="descMalftext">Describe malfunction !</string>
+            <string name="descMalftext2">Malfunction sent !</string>
+        //ExistWarnMDialog
+            <string name="existWMDtitle">Malfunction already exists</string>
+            <string name="existWMDtext">The malfunction will be solved as soon as possible</string>
+        //DelDialog
+            <string name="delDtitle">Would you like delete this machine ?</string>
+            <string name="delDtext">This action will be irreversible !</string>
 </resources>
