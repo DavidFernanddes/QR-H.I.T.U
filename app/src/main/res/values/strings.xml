@@ -107,8 +107,41 @@
                 NamePlaceholder -> line 101
                 download -> line 102
     //Dialogs
+        <string name="confirm">Sim</string>
+        <string name="dismiss">Não</string>
+        <string name="error">Erro</string>
+        <string name="success">Sucesso</string>
         //ThemeDialog
-        <string name="themeDTitle">Escolha o tema</string>
+            <string name="themeDTitle">Escolha o tema</string>
         //LangDialog
-        <string name="langDTitle">Escolha o idioma</string>
+            <string name="langDTitle">Escolha o idioma</string>
+        //ExistInvDialog
+            <string name="existDtitle">Qr já existe</string>
+            <string name="existDtext">Deseja continuar a ação ?</string>
+        //InvalidQrDialog
+            <string name="invalidDtext">QR Code Inválido !</string>
+        //ExistWarnDialog
+            <string name="existWDtitle">Aviso já existente</string>
+            <string name="existWDtext">Será colocado um novo QR assim que possível</string>
+        //AddMalfDialog
+            <string name="addMalfDtitle">Adicionar</string>
+            <string name="addMalfDtext">Gostaria de colocar avaria ?</string>
+        //DescribeMalfDialog
+            <string name="descMalftext">Descreva a avaria !</string>
+            <string name="descMalftext2">Avaria Enviada !</string>
+        //ExistWarnMDialog
+            <string name="existWMDtitle">Avaria já existente</string>
+            <string name="existWMDtext">A avaria será resolvida o mais rápido possivel</string>
+        //DelDialog
+            <string name="delDtitle">Deseja apagar esta máquina ?</string>
+            <string name="delDtext">Esta ação é irreversível !</string>
+    //Snackbars
+        //DownloadSnackbar
+            <string name="downloadStext">Download realizado com sucesso !</string>
+        //ErrorDownloadSnackbar
+            <string name="downloadSEtext">Erro no download do Qr! Por favor tente novamente</string>
+        //LoginSnackbar
+            <string name="loginStext">Email/Password inválidos</string>
+        //ResetPasswordSnackbar
+            <string name="resetPassStext">Foi enviado email para a troca de password</string>
 </resources>
