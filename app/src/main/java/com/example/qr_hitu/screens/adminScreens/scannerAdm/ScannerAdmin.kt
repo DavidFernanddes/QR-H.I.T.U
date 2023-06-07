@@ -14,21 +14,19 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
+import com.example.qr_hitu.R
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.components.ScannerAdminInfo
-import com.example.qr_hitu.functions.InvalidQrDialog
+import com.example.qr_hitu.functions.WarningDialog
 import com.example.qr_hitu.functions.SettingsManager
 import com.example.qr_hitu.functions.decryptAES
 import com.example.qr_hitu.functions.encryptionKey
@@ -56,8 +54,8 @@ fun ScannerAdminScreen(navController: NavController, viewModel: ScannerViewModel
         qrSet.value.addAll(qrList)
     }
 
-    val showState = remember { mutableStateOf(false) }
-    val show by rememberUpdatedState(showState.value)
+
+    val show= remember { mutableStateOf(false) }
 
     var permission = true
     val requestPermissionLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
@@ -124,7 +122,7 @@ fun ScannerAdminScreen(navController: NavController, viewModel: ScannerViewModel
                             val date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
 
                             if(!Regex("""Bloco \w+,Sala \p{all}+,\w+\w+""").containsMatchIn(decodedValue)){
-                                showState.value = true
+                                show.value = true
                             }else{
                                 if (qrSet.value.any{ it.startsWith(decodedValue) }) {
                                     qrList.removeAll { it.startsWith(decodedValue) }
@@ -145,7 +143,7 @@ fun ScannerAdminScreen(navController: NavController, viewModel: ScannerViewModel
                                 navController.navigate(ScannerAdminInfo.route)
                             }
                         } else {
-                            showState.value = true
+                            show.value = true
                         }
                     }
                 }
@@ -199,11 +197,14 @@ fun ScannerAdminScreen(navController: NavController, viewModel: ScannerViewModel
 
     if (permission){
         AndroidView({ previewView }, modifier = Modifier.fillMaxSize())
-        if (show) {
-            InvalidQrDialog(onDialogDismissed = {
+        if (show.value) {
+            WarningDialog(
+                onDialogDismissed = {
                 viewModel.myData.value == ""
-                showState.value = false
-            })
+                show.value = false },
+                title = stringResource(R.string.error),
+                text = stringResource(R.string.invalidDtext)
+            )
         }
     } else {
         Text("Permission not Granted")

@@ -25,7 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,7 +39,7 @@ import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.components.ScanInput
 import com.example.qr_hitu.components.UserChoices
 import com.example.qr_hitu.functions.AddMalfDialog
-import com.example.qr_hitu.functions.ExistsWarnDialog
+import com.example.qr_hitu.functions.WarningDialog
 import com.example.qr_hitu.functions.addMissQR
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -60,10 +59,8 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
     var enabled2 by remember { mutableStateOf(false) }
     var enabled by remember { mutableStateOf(false) }
 
-    val showState = remember { mutableStateOf(false) }
-    val show by rememberUpdatedState(showState.value)
-    val showErrState = remember { mutableStateOf(false) }
-    val showErr by rememberUpdatedState(showErrState.value)
+    val show= remember { mutableStateOf(false) }
+    val showErr= remember { mutableStateOf(false) }
 
 
     val blocks = listOf("Bloco A", "Bloco B", "Bloco C", "Bloco D", "Bloco E")
@@ -265,10 +262,10 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
                 viewModel.setMyData(code = "$selectedBlock,$selectedRoom,$selectedMachine")
                 missQrExists(selectedRoom, selectedMachine) { exists ->
                     if (exists) {
-                        showErrState.value = true
+                        showErr.value = true
                     } else {
                         addMissQR(selectedBlock, selectedRoom, selectedMachine)
-                        showState.value = true
+                        show.value = true
                     }
                 }
             },
@@ -281,17 +278,21 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
             Text(text = stringResource(R.string.mQRSend), style = MaterialTheme.typography.bodyLarge)
         }
 
-        if (showErr) {
-            ExistsWarnDialog(onDialogDismissed = { showState.value = true })
+        if (showErr.value) {
+            WarningDialog(
+                onDialogDismissed = { show.value = true },
+                title = stringResource(R.string.existWDtitle),
+                text = stringResource(R.string.existWDtext)
+            )
         }
 
-        if (show) {
+        if (show.value) {
             AddMalfDialog(
                 onDialogDismissed = {
-                    showState.value = false; navController.navigate(UserChoices.route)
+                    show.value = false; navController.navigate(UserChoices.route)
                 },
                 onDialogConfirm = {
-                    showState.value = false; navController.navigate(ScanInput.route)
+                    show.value = false; navController.navigate(ScanInput.route)
                 }
             )
         }

@@ -2,6 +2,7 @@ package com.example.qr_hitu.screens.adminScreens.create
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -37,8 +38,7 @@ import com.example.qr_hitu.ViewModels.ViewModel1
 import com.example.qr_hitu.ViewModels.ViewModel2
 import com.example.qr_hitu.components.AdminChoices
 import com.example.qr_hitu.functions.CreateQR
-import com.example.qr_hitu.functions.DonwloadSnackbar
-import com.example.qr_hitu.functions.ErrorSnackbar
+import com.example.qr_hitu.functions.Snackbar
 import com.example.qr_hitu.functions.addDispositivo
 import com.example.qr_hitu.functions.downloadQR
 import com.example.qr_hitu.functions.encryptAES
@@ -67,89 +67,99 @@ fun QrCreateFinal(navController: NavController, viewModel1: ViewModel1, viewMode
     )
 
 
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
+    Box(
         modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
             .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp)
     ) {
-
-        Spacer(modifier = Modifier.padding(60.dp))
-
-        if (myData != null) {
-            content = encryptAES("${myData.block},${myData.room},${myData.machine}", encryptionKey)
-            addDispositivo(myData.block, myData.room, myData.machine, spec)
-        }
-
-        val text = CreateQR(content = content)
-        Image(bitmap = text, contentDescription = "qr", Modifier.size(200.dp))
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        OutlinedTextField(
-            value = qrName,
-            onValueChange = {
-                qrName = it
-            },
-            modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Done
-            ),
-            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
-            label = { Text(text = stringResource(R.string.createNamePlaceholder)) },
-            placeholder = { Text(text = stringResource(R.string.createName)) },
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
-                focusedLabelColor = MaterialTheme.colorScheme.primaryContainer,
-            )
-        )
-
-        Spacer(modifier = Modifier.height(30.dp))
-
-        Button(
-            onClick = {
-                scope.launch {
-                    try {
-                        downloadQR(text, qrName)
-                        showDone.value = true
-                    } catch (e: Exception) {
-                        showErr.value = true
-                    }
-                }
-            },
-            Modifier
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
                 .fillMaxWidth()
-                .height(50.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-            ),
-            enabled = enabled,
+                .fillMaxHeight()
         ) {
-            Text(
-                stringResource(R.string.createDownload),
-                style = MaterialTheme.typography.labelLarge
+
+            Spacer(modifier = Modifier.padding(60.dp))
+
+            if (myData != null) {
+                content =
+                    encryptAES("${myData.block},${myData.room},${myData.machine}", encryptionKey)
+                addDispositivo(myData.block, myData.room, myData.machine, spec)
+            }
+
+            val text = CreateQR(content = content)
+            Image(bitmap = text, contentDescription = "qr", Modifier.size(200.dp))
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            OutlinedTextField(
+                value = qrName,
+                onValueChange = {
+                    qrName = it
+                },
+                modifier = Modifier.fillMaxWidth(),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Done
+                ),
+                keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+                label = { Text(text = stringResource(R.string.createNamePlaceholder)) },
+                placeholder = { Text(text = stringResource(R.string.createName)) },
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
+                    focusedLabelColor = MaterialTheme.colorScheme.primaryContainer,
+                )
             )
-        }
-    }
-    when {
-        showDone.value -> {
-            DonwloadSnackbar()
-            LaunchedEffect(Unit) {
-                delay(2000)
-                showDone.value = false
-                navController.navigate(AdminChoices.route)
+
+            Spacer(modifier = Modifier.height(30.dp))
+
+            Button(
+                onClick = {
+                    scope.launch {
+                        try {
+                            downloadQR(text, qrName)
+                            showDone.value = true
+                        } catch (e: Exception) {
+                            showErr.value = true
+                        }
+                    }
+                },
+                Modifier
+                    .fillMaxWidth()
+                    .height(50.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                ),
+                enabled = enabled,
+            ) {
+                Text(
+                    stringResource(R.string.createDownload),
+                    style = MaterialTheme.typography.labelLarge
+                )
             }
         }
-        showErr.value -> {
-            ErrorSnackbar()
-            LaunchedEffect(Unit) {
-                delay(2000)
-                showErr.value = false
-                navController.navigate(AdminChoices.route)
+        when {
+            showDone.value -> {
+                Box(contentAlignment = Alignment.BottomCenter) {
+                    Snackbar(text = stringResource(R.string.downloadStext))
+                    LaunchedEffect(Unit) {
+                        delay(2000)
+                        showDone.value = false
+                        navController.navigate(AdminChoices.route)
+                    }
+                }
+            }
+
+            showErr.value -> {
+                Box(contentAlignment = Alignment.BottomCenter) {
+                    Snackbar(text = stringResource(R.string.downloadSEtext))
+                    LaunchedEffect(Unit) {
+                        delay(2000)
+                        showErr.value = false
+                        navController.navigate(AdminChoices.route)
+                    }
+                }
             }
         }
     }

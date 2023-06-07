@@ -26,10 +26,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.R
 import com.example.qr_hitu.components.Loading
-import com.example.qr_hitu.components.MalfList
 import com.example.qr_hitu.components.TabScreen
 import com.example.qr_hitu.components.UserChoices
-import com.example.qr_hitu.functions.InvalidSnackbar
+import com.example.qr_hitu.functions.Snackbar
 import com.example.qr_hitu.functions.SettingsManager
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.CollectionReference
@@ -103,128 +102,139 @@ fun LoginScreen(
         }
     }
 
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
+
+    Box (
         modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
             .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp)
-    ) {
-
-        Spacer(modifier = Modifier.padding(10.dp))
-
-        Text(
-            text = stringResource(R.string.app_name),
-            style = MaterialTheme.typography.displayLarge,
-            color = MaterialTheme.colorScheme.onSecondary
-        )
-
-        Spacer(modifier = Modifier.padding(25.dp))
-
-        when (theme) {
-            "Light" -> Image(painterResource(R.drawable.logo_light), "Logo")
-            "Dark" -> Image(painterResource(R.drawable.logo_dark), "Logo")
-            else -> if (isDarkTheme) Image(
-                painterResource(R.drawable.logo_dark),
-                "Logo"
-            ) else Image(painterResource(R.drawable.logo_light), "Logo")
-        }
-
-        Spacer(modifier = Modifier.padding(35.dp))
-
-        Column {
-            OutlinedTextField(
-                value = emailValue,
-                onValueChange = { emailValue = it },
-                label = { Text("Email") },
-                placeholder = { Text("Email") },
-                singleLine = true,
-                isError = showError,
-                shape = MaterialTheme.shapes.large,
-                modifier = Modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Email,
-                    imeAction = ImeAction.Next
-                ),
-                keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
-                    focusedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                )
-            )
-
-            Spacer(modifier = Modifier.padding(10.dp))
-
-            OutlinedTextField(
-                value = passwordValue,
-                onValueChange = { passwordValue = it },
-                label = { Text(stringResource(R.string.password)) },
-                singleLine = true,
-                isError = showError,
-                placeholder = { Text(stringResource(R.string.password)) },
-                shape = MaterialTheme.shapes.large,
-                modifier = Modifier.fillMaxWidth(),
-                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Password,
-                    imeAction = ImeAction.Done
-                ),
-                keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
-                trailingIcon = {
-                    val image = if (passwordVisible)
-                        Icons.Filled.Visibility
-                    else Icons.Filled.VisibilityOff
-                    val description = if (passwordVisible) "Hide password" else "Show password"
-                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                        Icon(imageVector = image, description)
-                    }
-                },
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
-                    focusedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                )
-            )
-
-            Spacer(modifier = Modifier.padding(10.dp))
-
-            Button(
-                onClick = {
-                    Firebase.auth.signInWithEmailAndPassword(emailValue, passwordValue)
-                        .addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                // Sign in success, update UI with the signed-in user's information
-                                val db = Firebase.firestore.collection("Admin")
-                                val email = Firebase.auth.currentUser?.email
-
-                                navController.navigate(Loading.route)
-                                loginVerify(navController, db, email)
-
-                            } else {
-                                showError = true
-                                showSnack.value = true
-                            }
-                        }
-                },
-                Modifier
-                    .fillMaxWidth()
-                    .height(50.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = MaterialTheme.colorScheme.onPrimary
-                ),
-                enabled = enabled
             ) {
-                Text(text = "Login", style = MaterialTheme.typography.labelLarge)
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+        ) {
+
+            Spacer(modifier = Modifier.padding(10.dp))
+
+            Text(
+                text = stringResource(R.string.app_name),
+                style = MaterialTheme.typography.displayLarge,
+                color = MaterialTheme.colorScheme.onSecondary
+            )
+
+            Spacer(modifier = Modifier.padding(25.dp))
+
+            when (theme) {
+                "Light" -> Image(painterResource(R.drawable.logo_light), "Logo")
+                "Dark" -> Image(painterResource(R.drawable.logo_dark), "Logo")
+                else -> if (isDarkTheme) Image(
+                    painterResource(R.drawable.logo_dark),
+                    "Logo"
+                ) else Image(painterResource(R.drawable.logo_light), "Logo")
+            }
+
+            Spacer(modifier = Modifier.padding(35.dp))
+
+            Column {
+                OutlinedTextField(
+                    value = emailValue,
+                    onValueChange = { emailValue = it },
+                    label = { Text("Email") },
+                    placeholder = { Text("Email") },
+                    singleLine = true,
+                    isError = showError,
+                    shape = MaterialTheme.shapes.large,
+                    modifier = Modifier.fillMaxWidth(),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Email,
+                        imeAction = ImeAction.Next
+                    ),
+                    keyboardActions = KeyboardActions(onNext = {
+                        focusManager.moveFocus(
+                            FocusDirection.Down
+                        )
+                    }),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
+                        focusedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                    )
+                )
+
+                Spacer(modifier = Modifier.padding(10.dp))
+
+                OutlinedTextField(
+                    value = passwordValue,
+                    onValueChange = { passwordValue = it },
+                    label = { Text(stringResource(R.string.password)) },
+                    singleLine = true,
+                    isError = showError,
+                    placeholder = { Text(stringResource(R.string.password)) },
+                    shape = MaterialTheme.shapes.large,
+                    modifier = Modifier.fillMaxWidth(),
+                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Password,
+                        imeAction = ImeAction.Done
+                    ),
+                    keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+                    trailingIcon = {
+                        val image = if (passwordVisible)
+                            Icons.Filled.Visibility
+                        else Icons.Filled.VisibilityOff
+                        val description = if (passwordVisible) "Hide password" else "Show password"
+                        IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                            Icon(imageVector = image, description)
+                        }
+                    },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
+                        focusedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                    )
+                )
+
+                Spacer(modifier = Modifier.padding(10.dp))
+
+                Button(
+                    onClick = {
+                        Firebase.auth.signInWithEmailAndPassword(emailValue, passwordValue)
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    val db = Firebase.firestore.collection("Admin")
+                                    val email = Firebase.auth.currentUser?.email
+
+                                    navController.navigate(Loading.route)
+                                    loginVerify(navController, db, email)
+
+                                } else {
+                                    showError = true
+                                    showSnack.value = true
+                                }
+                            }
+                    },
+                    Modifier
+                        .fillMaxWidth()
+                        .height(50.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
+                    ),
+                    enabled = enabled
+                ) {
+                    Text(text = "Login", style = MaterialTheme.typography.labelLarge)
+                }
             }
         }
-    }
-    if (showSnack.value) {
-        InvalidSnackbar()
-        LaunchedEffect(Unit) {
-            delay(3000)
-            showSnack.value = false
+        if (showSnack.value) {
+            Box(contentAlignment = Alignment.BottomCenter) {
+                Snackbar(text = stringResource(R.string.loginStext))
+                LaunchedEffect(Unit) {
+                    delay(3000)
+                    showSnack.value = false
+                }
+            }
         }
     }
 }

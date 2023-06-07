@@ -27,9 +27,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.qr_hitu.functions.DelMissingDialog
+import com.example.qr_hitu.R
+import com.example.qr_hitu.functions.DelDialog
 import com.example.qr_hitu.functions.delMissing
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -127,7 +129,12 @@ fun MissingQrList(navController: NavController) {
                     }
                 }
                 if(show.value){
-                    DelMissingDialog(onDialogDismissed = { show.value = false}, onDeleteClick = { delMissing(item.room, item.machine); getMissingQR(setList) })
+                    DelDialog(
+                        onDialogDismissed = { show.value = false},
+                        onDeleteClick = { delMissing(item.room, item.machine); getMissingQR(setList) },
+                        title = stringResource(R.string.delMDtitle),
+                        text = stringResource(R.string.delMDtext)
+                    )
                 }
             }
         }

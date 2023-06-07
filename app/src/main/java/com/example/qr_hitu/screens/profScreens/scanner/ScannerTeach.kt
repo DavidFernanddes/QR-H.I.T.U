@@ -45,8 +45,7 @@ fun ScannerTeachScreen(navController: NavController, viewModel: ScannerViewModel
     val requestPermissionLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
         permission = isGranted
     }
-    val showState = remember { mutableStateOf(0) }
-    val show by rememberUpdatedState(showState.value)
+    val show = remember { mutableStateOf(0) }
 
     val context = LocalContext.current as Activity
     val lensFacing = CameraSelector.LENS_FACING_BACK
@@ -106,13 +105,13 @@ fun ScannerTeachScreen(navController: NavController, viewModel: ScannerViewModel
                             val decodedValue = decryptAES(value, encryptionKey)
 
                             if(!Regex("""Bloco \w+,Sala \p{all}+,\w+\w+""").containsMatchIn(decodedValue)){
-                                showState.value = 2
+                                show.value = 2
                             }else{
                                 viewModel.setMyData(decodedValue)
-                                showState.value = 1
+                                show.value = 1
                             }
                         } else {
-                            showState.value = 2
+                            show.value = 2
                         }
                     }
                 }
@@ -166,16 +165,16 @@ fun ScannerTeachScreen(navController: NavController, viewModel: ScannerViewModel
 
     if (permission){
         AndroidView({ previewView }, modifier = Modifier.fillMaxSize())
-        when(show){
+        when(show.value){
             1 -> {
                 Malf_ErrorDialogs(onDialogDismissed = { viewModel.myData.value == ""
-                    showState.value = 0
+                    show.value = 0
                     navController.navigate(ScanProf.route)
                 }, navController, Err = false)
             }
             2 -> {
                 Malf_ErrorDialogs(onDialogDismissed = { viewModel.myData.value == ""
-                    showState.value = 0
+                    show.value = 0
                     navController.navigate(ScanProf.route)
                 }, navController, Err = true)
             }
