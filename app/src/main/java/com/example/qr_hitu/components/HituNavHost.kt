@@ -30,10 +30,10 @@ import com.example.qr_hitu.screens.adminScreens.transfer.TransferQr
 import com.example.qr_hitu.screens.login.LoginScreen
 import com.example.qr_hitu.screens.menu.Manual
 import com.example.qr_hitu.screens.menu.SettingsOptions
-import com.example.qr_hitu.screens.profScreens.MissingQR.MQRLocal
+import com.example.qr_hitu.screens.profScreens.missingQr.MQRLocal
 import com.example.qr_hitu.screens.profScreens.PrimaryChoice
-import com.example.qr_hitu.screens.profScreens.Scanner.ScannerInput
-import com.example.qr_hitu.screens.profScreens.Scanner.ScannerTeachScreen
+import com.example.qr_hitu.screens.profScreens.scanner.ScannerInput
+import com.example.qr_hitu.screens.profScreens.scanner.ScannerTeachScreen
 
 
 @Composable

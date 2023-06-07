@@ -8,6 +8,7 @@ import androidx.compose.runtime.remember
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
+import java.time.LocalDateTime
 
 val db = Firebase.firestore //  Variável que chama o serviço da firestore
 
@@ -151,4 +152,31 @@ fun delMissing(
     db.collection("Falta Qr")
         .document("$sala $ident")
         .delete()
+}
+
+fun completeMalfunction(
+    block: String,
+    room: String,
+    machine: String,
+    malfunction: String,
+    urgent: Boolean,
+    email: String
+) {
+
+    val collectionReference = db.collection("Avarias Completas")
+    val dateTime = LocalDateTime.now()
+    val data = hashMapOf(
+        "Bloco" to block,
+        "Sala" to room,
+        "Dispositivo" to machine,
+        "Avaria" to malfunction,
+        "Urgente" to urgent,
+        "Email" to email
+    )
+
+    collectionReference
+        .document("$room $machine $dateTime")
+        .set(data)
+
+    db.collection("Avarias").document("$room $machine").delete()
 }

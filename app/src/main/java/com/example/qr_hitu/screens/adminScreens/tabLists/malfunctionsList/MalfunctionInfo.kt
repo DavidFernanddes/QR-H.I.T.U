@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.R
 import com.example.qr_hitu.ViewModels.MalfunctionViewModel
+import com.example.qr_hitu.functions.completeMalfunction
 import com.example.qr_hitu.functions.seeDispositivo
 import com.example.qr_hitu.functions.seeMalfunction
 
@@ -159,8 +160,8 @@ fun MalfInfo(navController: NavController, viewModel: MalfunctionViewModel) {
                     selected = completeState,
                     onClick = {
                         completeState = !completeState
-                        //TODO REMOVE DATABASE AND CHANGE TO ANOTHER
-                        //Temporary function
+                        completeMalfunction(block, room, machine, malfDesc as String, urgent, senderMail as String)
+                        navController.popBackStack()
                     },
                     colors = RadioButtonDefaults.colors(
                         selectedColor = MaterialTheme.colorScheme.primary
