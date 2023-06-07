@@ -24,8 +24,8 @@ import androidx.navigation.NavController
 import com.example.qr_hitu.R
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.components.UserChoices
-import com.example.qr_hitu.functions.ExistsMalfDialog
 import com.example.qr_hitu.functions.WarningDialog
+import com.example.qr_hitu.functions.DError_Success_Dialogs
 import com.example.qr_hitu.functions.addMalfunction
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -60,12 +60,9 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
     var outro by remember { mutableStateOf("") }
     var malfunction by remember { mutableStateOf("") }
     var urgentState by remember { mutableStateOf(false) }
-    val showState = remember { mutableStateOf(false) }
-    val show by rememberUpdatedState(showState.value)
-    val showState1 = remember { mutableStateOf(false) }
-    val show1 by rememberUpdatedState(showState1.value)
-    val errState = remember { mutableStateOf(false) }
-    val err by rememberUpdatedState(errState.value)
+    val show = remember { mutableStateOf(false) }
+    val show1 = remember { mutableStateOf(false) }
+    val err = remember { mutableStateOf(false) }
 
     var combinedOptions by remember { mutableStateOf(listOf<String>()) }
 
@@ -200,12 +197,12 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
                             "Outro" -> {
                                 when (outro) {
                                     "" -> {
-                                        showState.value = true
-                                        errState.value = true
+                                        show.value = true
+                                        err.value = true
                                     }
 
                                     else -> {
-                                        showState.value = true
+                                        show.value = true
                                         addMalfunction(
                                             block,
                                             room,
@@ -218,7 +215,7 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
                                 }
                             }
                             else -> {
-                                showState.value = true
+                                show.value = true
                                 addMalfunction(
                                     block,
                                     room,
@@ -230,7 +227,7 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
                             }
                         }
                     } else {
-                        showState1.value = true
+                        show1.value = true
                     }
                 }
             },
@@ -246,15 +243,17 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
             Text(stringResource(R.string.problemSend), style = MaterialTheme.typography.labelLarge)
         }
         when {
-            show -> WarningDialog(
-                error = err,
-                onDialogDismissed = { showState.value = false; navController.navigate(UserChoices.route) },
-                onDialogDismissedError = { showState.value = false; errState.value = false; }
+            show.value -> DError_Success_Dialogs(
+                error = err.value,
+                onDialogDismissed = { show.value = false; navController.navigate(UserChoices.route) },
+                onDialogDismissedError = { show.value = false; err.value = false; }
             )
 
-            show1 -> ExistsMalfDialog(onDialogDismissed = {
-                showState1.value = false; navController.navigate(UserChoices.route)
-            })
+            show1.value -> WarningDialog(
+                onDialogDismissed = { show1.value = false; navController.navigate(UserChoices.route) },
+                title = stringResource(R.string.existWMDtitle),
+                text =  stringResource(R.string.existWMDtext)
+            )
         }
     }
 }

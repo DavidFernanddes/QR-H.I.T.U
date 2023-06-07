@@ -150,7 +150,12 @@ fun TopBar4(navController: NavController, viewModel: ScannerViewModel, settingsM
         },
     )
     if(show){
-        DelDialog(onDialogDismissed = { showState.value = false}, onDeleteClick = { delDispositivo(block, room, machine); navController.navigate(TabScreen.route) })
+        DelDialog(
+            onDialogDismissed = { showState.value = false},
+            onDeleteClick = { delDispositivo(block, room, machine); navController.navigate(TabScreen.route) },
+            title = stringResource(R.string.delDtitle),
+            text =  stringResource(R.string.delDtext)
+        )
     }
 }
 

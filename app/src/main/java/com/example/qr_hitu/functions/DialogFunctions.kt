@@ -11,8 +11,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -25,11 +23,8 @@ import com.example.qr_hitu.components.ScanInput
 //Create QR Phase 1
 @Composable
 fun ExistsInvDialog(onDialogAccept: () -> Unit, onDialogReject: () -> Unit) {
-    val openDialog = remember { mutableStateOf(true) }
-
-    if (openDialog.value) {
         AlertDialog(
-            onDismissRequest = { openDialog.value = false; onDialogReject() },
+            onDismissRequest = { onDialogReject() },
             title = {
                 Text(
                     text = stringResource(R.string.existDtitle),
@@ -41,82 +36,40 @@ fun ExistsInvDialog(onDialogAccept: () -> Unit, onDialogReject: () -> Unit) {
                 Text(text = stringResource(R.string.existDtext), style = MaterialTheme.typography.bodyMedium)
             },
             confirmButton= {
-                TextButton(onClick = { openDialog.value = false; onDialogAccept(); }) {
+                TextButton(onClick = { onDialogAccept(); }) {
                     Text(text = stringResource(R.string.confirm), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSecondary)
                 }
             },
             dismissButton = {
-                TextButton(onClick = { openDialog.value = false; onDialogReject(); }) {
+                TextButton(onClick = { onDialogReject(); }) {
                     Text(text = stringResource(R.string.dismiss), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSecondary)
                 }
             },
             textContentColor = MaterialTheme.colorScheme.onSecondary,
             titleContentColor = MaterialTheme.colorScheme.onSecondary
         )
-    }
 }
 
-//Admin Scanner
+//Missing Qr, User Scanner Input and //Admin Scanner
 @Composable
-fun InvalidQrDialog(onDialogDismissed: () -> Unit) {
-    val openDialog = remember { mutableStateOf(true) }
-
-    if (openDialog.value) {
+fun WarningDialog(onDialogDismissed: () -> Unit, title: String, text: String) {
         AlertDialog(
-            onDismissRequest = { openDialog.value = false; onDialogDismissed() },
-            title = {
-                androidx.compose.material.Text(
-                    text = stringResource(R.string.error),
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = MaterialTheme.colorScheme.onSecondary
-                )
-            },
-            text = {
-                androidx.compose.material.Text(
-                    text = stringResource(R.string.invalidDtext),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSecondary
-                )
-            },
-            confirmButton= {
-                TextButton(onClick = { openDialog.value = false;  onDialogDismissed()}) {
-                    androidx.compose.material.Text(
-                        text = "OK",
-                        style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.onSecondary
-                    )
-                }
-            },
-            textContentColor = MaterialTheme.colorScheme.onSecondary,
-            titleContentColor = MaterialTheme.colorScheme.onSecondary,
-        )
-    }
-}
-
-//Missing Qr
-@Composable
-fun ExistsWarnDialog(onDialogDismissed: () -> Unit) {
-    val openDialog = remember { mutableStateOf(true) }
-
-    if (openDialog.value) {
-        AlertDialog(
-            onDismissRequest = { openDialog.value = false; onDialogDismissed() },
+            onDismissRequest = { onDialogDismissed() },
             title = {
                 Text(
-                    text = stringResource(R.string.existWDtitle),
+                    text = title,
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.headlineSmall
                 )
             },
             text = {
                 Text(
-                    text = stringResource(R.string.existWDtext),
+                    text = text,
                     style = MaterialTheme.typography.bodyMedium
                 )
             },
             confirmButton = {
-                TextButton(onClick = { openDialog.value = false; onDialogDismissed() }) {
+                TextButton(onClick = { onDialogDismissed() }) {
                     Text(
                         text = "OK",
                         style = MaterialTheme.typography.labelLarge,
@@ -127,16 +80,12 @@ fun ExistsWarnDialog(onDialogDismissed: () -> Unit) {
             textContentColor = MaterialTheme.colorScheme.onSecondary,
             titleContentColor = MaterialTheme.colorScheme.onSecondary
         )
-    }
 }
 
 @Composable
 fun AddMalfDialog(onDialogDismissed: () -> Unit, onDialogConfirm: () -> Unit) {
-    val openDialog = remember { mutableStateOf(true) }
-
-    if (openDialog.value) {
         AlertDialog(
-            onDismissRequest = { openDialog.value = false; onDialogDismissed() },
+            onDismissRequest = { onDialogDismissed() },
             title = {
                 Text(
                     text = stringResource(R.string.addMalfDtitle),
@@ -151,7 +100,7 @@ fun AddMalfDialog(onDialogDismissed: () -> Unit, onDialogConfirm: () -> Unit) {
                 )
             },
             confirmButton = {
-                TextButton(onClick = { openDialog.value = false; onDialogConfirm() }) {
+                TextButton(onClick = { onDialogConfirm() }) {
                     Text(
                         text = stringResource(R.string.confirm),
                         style = MaterialTheme.typography.labelLarge,
@@ -160,7 +109,7 @@ fun AddMalfDialog(onDialogDismissed: () -> Unit, onDialogConfirm: () -> Unit) {
                 }
             },
             dismissButton = {
-                TextButton(onClick = { openDialog.value = false; onDialogDismissed() }) {
+                TextButton(onClick = { onDialogDismissed() }) {
                     Text(
                         text = stringResource(R.string.dismiss),
                         style = MaterialTheme.typography.labelLarge,
@@ -171,18 +120,14 @@ fun AddMalfDialog(onDialogDismissed: () -> Unit, onDialogConfirm: () -> Unit) {
             textContentColor = MaterialTheme.colorScheme.onSecondary,
             titleContentColor = MaterialTheme.colorScheme.onSecondary
         )
-    }
 }
 
 //User Scanner
 @Composable
 fun Malf_ErrorDialogs(onDialogDismissed: () -> Unit, navController: NavController, Err: Boolean ) {
-    val openDialog = remember { mutableStateOf(true) }
-
-    if (openDialog.value) {
         if(!Err){
             AlertDialog(
-                onDismissRequest = { openDialog.value = false; onDialogDismissed() },
+                onDismissRequest = { onDialogDismissed() },
                 title = {
                     Text(
                         text = stringResource(R.string.addMalfDtitle),
@@ -194,13 +139,13 @@ fun Malf_ErrorDialogs(onDialogDismissed: () -> Unit, navController: NavControlle
                     Text(text = stringResource(R.string.addMalfDtext), style = MaterialTheme.typography.bodyMedium)
                 },
                 confirmButton = {
-                    TextButton(onClick = { openDialog.value = false; navController.navigate(
-                        ScanInput.route) }) {
+                    TextButton(
+                        onClick = { navController.navigate(ScanInput.route) }) {
                         Text(text = stringResource(R.string.confirm), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSecondary)
                     }
                 },
                 dismissButton = {
-                    TextButton(onClick = { openDialog.value = false;  onDialogDismissed()}) {
+                    TextButton(onClick = { onDialogDismissed()}) {
                         Text(text = stringResource(R.string.dismiss), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSecondary)
                     }
                 },
@@ -210,7 +155,7 @@ fun Malf_ErrorDialogs(onDialogDismissed: () -> Unit, navController: NavControlle
             )
         }else{
             AlertDialog(
-                onDismissRequest = { openDialog.value = false; onDialogDismissed() },
+                onDismissRequest = { onDialogDismissed() },
                 title = {
                     Text(
                         text = stringResource(R.string.error),
@@ -221,7 +166,7 @@ fun Malf_ErrorDialogs(onDialogDismissed: () -> Unit, navController: NavControlle
                     Text(text = stringResource(R.string.invalidDtext))
                 },
                 confirmButton= {
-                    TextButton(onClick = { openDialog.value = false;  onDialogDismissed()}) {
+                    TextButton(onClick = { onDialogDismissed()}) {
                         Text(text = "OK")
                     }
                 },
@@ -230,19 +175,15 @@ fun Malf_ErrorDialogs(onDialogDismissed: () -> Unit, navController: NavControlle
 
             )
         }
-    }
-
 }
 
 //User Scanner Input
 @Composable
-fun WarningDialog(error: Boolean, onDialogDismissedError: () -> Unit, onDialogDismissed: () -> Unit) {
-    val openDialog = remember { mutableStateOf(true) }
+fun DError_Success_Dialogs(error: Boolean, onDialogDismissedError: () -> Unit, onDialogDismissed: () -> Unit) {
 
-    if (openDialog.value) {
         if (error) {
             AlertDialog(
-                onDismissRequest = { openDialog.value = false; onDialogDismissedError() },
+                onDismissRequest = { onDialogDismissedError() },
                 title = {
                     Text(
                         text = stringResource(R.string.error),
@@ -254,7 +195,7 @@ fun WarningDialog(error: Boolean, onDialogDismissedError: () -> Unit, onDialogDi
                     Text(text = stringResource(R.string.descMalftext), style = MaterialTheme.typography.bodyMedium)
                 },
                 confirmButton = {
-                    TextButton(onClick = { openDialog.value = false; onDialogDismissedError() }) {
+                    TextButton(onClick = { onDialogDismissedError() }) {
                         Text(
                             text = "OK",
                             style = MaterialTheme.typography.labelLarge,
@@ -267,7 +208,7 @@ fun WarningDialog(error: Boolean, onDialogDismissedError: () -> Unit, onDialogDi
             )
         } else {
             AlertDialog(
-                onDismissRequest = { openDialog.value = false; onDialogDismissed() },
+                onDismissRequest = { onDialogDismissed() },
                 title = {
                     Text(
                         text = stringResource(R.string.success),
@@ -279,7 +220,7 @@ fun WarningDialog(error: Boolean, onDialogDismissedError: () -> Unit, onDialogDi
                     Text(text = stringResource(R.string.descMalftext2), style = MaterialTheme.typography.bodyMedium)
                 },
                 confirmButton = {
-                    TextButton(onClick = { openDialog.value = false; onDialogDismissed() }) {
+                    TextButton(onClick = { onDialogDismissed() }) {
                         Text(
                             text = "OK",
                             style = MaterialTheme.typography.labelLarge,
@@ -291,42 +232,6 @@ fun WarningDialog(error: Boolean, onDialogDismissedError: () -> Unit, onDialogDi
                 titleContentColor = MaterialTheme.colorScheme.onSecondary
             )
         }
-    }
-}
-
-@Composable
-fun ExistsMalfDialog(onDialogDismissed: () -> Unit) {
-    val openDialog = remember { mutableStateOf(true) }
-
-    if (openDialog.value) {
-        AlertDialog(
-            onDismissRequest = { openDialog.value = false; onDialogDismissed() },
-            title = {
-                Text(
-                    text = stringResource(R.string.existWDtitle),
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.headlineSmall
-                )
-            },
-            text = {
-                Text(
-                    text = stringResource(R.string.existWDtext),
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            },
-            confirmButton = {
-                TextButton(onClick = { openDialog.value = false; onDialogDismissed() }) {
-                    Text(
-                        text = "OK",
-                        style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.onSecondary
-                    )
-                }
-            },
-            textContentColor = MaterialTheme.colorScheme.onSecondary,
-            titleContentColor = MaterialTheme.colorScheme.onSecondary
-        )
-    }
 }
 
 //Settings
@@ -459,58 +364,20 @@ fun LanguageDialog(
     )
 }
 
-//Overlays
+//Overlays and //Missing Qr List
 @Composable
-fun DelDialog(onDialogDismissed: () -> Unit, onDeleteClick: () -> Unit) {
+fun DelDialog(onDialogDismissed: () -> Unit, onDeleteClick: () -> Unit, title: String, text: String) {
     AlertDialog(
         onDismissRequest = { onDialogDismissed() },
         title = {
             Text(
-                text = stringResource(R.string.delDtitle),
+                text = title,
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.headlineSmall
             )
         },
         text = {
-            Text(text = stringResource(R.string.delDtext), style = MaterialTheme.typography.bodyLarge)
-        },
-        dismissButton = {
-            TextButton(onClick = { onDialogDismissed() }) {
-                Text(
-                    text = stringResource(R.string.dismiss),
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSecondary
-                )
-            }
-        },
-        confirmButton = {
-            TextButton(onClick = { onDialogDismissed(); onDeleteClick() }) {
-                Text(
-                    text = stringResource(R.string.confirm),
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSecondary
-                )
-            }
-        },
-        textContentColor = MaterialTheme.colorScheme.onSecondary,
-        titleContentColor = MaterialTheme.colorScheme.onSecondary
-    )
-}
-
-//Missing Qr List
-@Composable
-fun DelMissingDialog(onDialogDismissed: () -> Unit, onDeleteClick: () -> Unit) {
-    AlertDialog(
-        onDismissRequest = { onDialogDismissed() },
-        title = {
-            Text(
-                text = stringResource(R.string.delMDtitle),
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.headlineSmall
-            )
-        },
-        text = {
-            Text(text = stringResource(R.string.delMDtext), style = MaterialTheme.typography.bodyLarge)
+            Text(text = text, style = MaterialTheme.typography.bodyLarge)
         },
         dismissButton = {
             TextButton(onClick = { onDialogDismissed() }) {

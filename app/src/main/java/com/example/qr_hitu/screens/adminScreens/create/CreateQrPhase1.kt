@@ -28,8 +28,7 @@ import com.google.firebase.ktx.Firebase
 @Composable
 fun QrCreatePhase1(navController: NavController, viewModel: ViewModel1) {
 
-    val showState = remember { mutableStateOf(false) }
-    val show by rememberUpdatedState(showState.value)
+    val show  = remember { mutableStateOf(false) }
 
     var textFiledSize by remember { mutableStateOf(Size.Zero) }
 
@@ -239,7 +238,7 @@ fun QrCreatePhase1(navController: NavController, viewModel: ViewModel1) {
                         viewModel.setMyData1(selectedBlock, selectedRoom, selectedMachine)
                         navController.navigate(Create2.route)
                     } else {
-                        showState.value = true
+                        show.value = true
                     }
                 }
             },
@@ -254,10 +253,10 @@ fun QrCreatePhase1(navController: NavController, viewModel: ViewModel1) {
         ) {
             Text(text = stringResource(R.string.createContinue), style = MaterialTheme.typography.labelLarge)
         }
-        if (show) {
+        if (show.value) {
             ExistsInvDialog(
-                onDialogAccept = { showState.value = false; navController.navigate(Create2.route); viewModel.setMyData1(selectedBlock, selectedRoom, selectedMachine) },
-                onDialogReject = { showState.value = false; navController.navigate(AdminChoices.route) }
+                onDialogAccept = { show.value = false; navController.navigate(Create2.route); viewModel.setMyData1(selectedBlock, selectedRoom, selectedMachine) },
+                onDialogReject = { show.value = false; navController.navigate(AdminChoices.route) }
             )
         }
     }
