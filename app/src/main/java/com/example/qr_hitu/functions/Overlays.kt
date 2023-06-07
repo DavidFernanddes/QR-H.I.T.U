@@ -14,7 +14,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -117,7 +116,7 @@ fun TopBar3(navController: NavController){
         title = { Text(text = email, color = MaterialTheme.colorScheme.onPrimaryContainer) },
         colors = topAppBarColors(MaterialTheme.colorScheme.primaryContainer),
         navigationIcon = {
-            IconButton(onClick = { navController.navigate(MalfList.route) }) {
+            IconButton(onClick = { navController.navigate(TabScreen.route) }) {
                 Icon(Icons.Filled.Close ,"Close", tint = MaterialTheme.colorScheme.onPrimaryContainer)
             }
         }
@@ -151,7 +150,7 @@ fun TopBar4(navController: NavController, viewModel: ScannerViewModel){
         },
     )
     if(show){
-        DelDialog(onDialogDismissed = { showState.value = false}, onDeleteClick = { delDispositivo(block, room, machine); navController.navigate(MalfList.route) })
+        DelDialog(onDialogDismissed = { showState.value = false}, onDeleteClick = { delDispositivo(block, room, machine); navController.navigate(TabScreen.route) })
     }
 }
 

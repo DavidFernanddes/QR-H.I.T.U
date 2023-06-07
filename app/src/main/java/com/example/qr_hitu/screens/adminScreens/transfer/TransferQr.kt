@@ -100,10 +100,9 @@ fun TransferQr(navController: NavController, viewModel: ViewModel1) {
                 scope.launch {
                     try {
                         downloadQR(content, qrName)
-
+                        showDone.value = true
                     } catch (e: Exception) {
-                        // Error handling code here
-                        println("Error downloading QR Code: ${e.message}")
+                        showErr.value = true
                     }
                 }
             },
