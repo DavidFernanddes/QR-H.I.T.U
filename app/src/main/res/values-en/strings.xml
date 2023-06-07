@@ -135,6 +135,9 @@
         //DelDialog
             <string name="delDtitle">Would you like delete this machine ?</string>
             <string name="delDtext">This action will be irreversible !</string>
+        //DelMissingDialog
+            <string name="delMDtitle">Would you like to remove this warning ?</string>
+            <string name="delMDtext">Only withdraw if you have reset Qr !</string>
     //Snackbars
         //DownloadSnackbar
             <string name="downloadStext">Download successful !</string>

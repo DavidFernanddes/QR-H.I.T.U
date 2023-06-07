@@ -29,6 +29,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.qr_hitu.functions.DelMissingDialog
+import com.example.qr_hitu.functions.delMissing
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -65,6 +67,7 @@ private fun getMissingQR(setList: (List<MissingQrDocs>) -> Unit) {
 fun MissingQrList(navController: NavController) {
 
     val (list, setList) = remember { mutableStateOf<List<MissingQrDocs>>(emptyList()) }
+    val show = remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         getMissingQR(setList)
@@ -82,7 +85,7 @@ fun MissingQrList(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp)
-                    .clickable {  },
+                    .clickable { show.value = true },
                 shape = MaterialTheme.shapes.medium,
                 elevation = CardDefaults.cardElevation(defaultElevation = 7.dp),
                 colors = CardDefaults.cardColors(Color(0xFFd9d9d9))
@@ -122,6 +125,9 @@ fun MissingQrList(navController: NavController) {
                             modifier = Modifier.padding(bottom = 8.dp)
                         )
                     }
+                }
+                if(show.value){
+                    DelMissingDialog(onDialogDismissed = { show.value = false}, onDeleteClick = { delMissing(item.room, item.machine) })
                 }
             }
         }

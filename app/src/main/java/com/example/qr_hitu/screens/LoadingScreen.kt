@@ -87,7 +87,7 @@ fun LoadingScreen(navController: NavController, settingsManager: SettingsManager
                     modifier = Modifier.size(200.dp)
                 )
                 else -> if (isDarkTheme) Image(
-                    painter = painterResource(R.drawable.qr_loading_light),
+                    painter = painterResource(R.drawable.qr_loading_dark),
                     contentDescription = "QR Code",
                     modifier = Modifier.size(200.dp)
                 ) else Image(

@@ -135,6 +135,9 @@
         //DelDialog
             <string name="delDtitle">Deseja apagar esta máquina ?</string>
             <string name="delDtext">Esta ação é irreversível !</string>
+        //DelMissingDialog
+            <string name="delMDtitle">Deseja retirar este aviso ?</string>
+            <string name="delMDtext">Retire apenas se tiver reposto Qr !</string>
     //Snackbars
         //DownloadSnackbar
             <string name="downloadStext">Download realizado com sucesso !</string>

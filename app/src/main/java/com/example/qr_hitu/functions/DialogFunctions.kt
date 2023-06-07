@@ -120,12 +120,12 @@ fun ExistsWarnDialog(onDialogDismissed: () -> Unit) {
                     Text(
                         text = "OK",
                         style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.colorScheme.onSecondary
                     )
                 }
             },
-            textContentColor = MaterialTheme.colorScheme.primaryContainer,
-            titleContentColor = MaterialTheme.colorScheme.primary
+            textContentColor = MaterialTheme.colorScheme.onSecondary,
+            titleContentColor = MaterialTheme.colorScheme.onSecondary
         )
     }
 }
@@ -196,16 +196,16 @@ fun Malf_ErrorDialogs(onDialogDismissed: () -> Unit, navController: NavControlle
                 confirmButton = {
                     TextButton(onClick = { openDialog.value = false; navController.navigate(
                         ScanInput.route) }) {
-                        Text(text = stringResource(R.string.confirm), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                        Text(text = stringResource(R.string.confirm), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSecondary)
                     }
                 },
                 dismissButton = {
                     TextButton(onClick = { openDialog.value = false;  onDialogDismissed()}) {
-                        Text(text = stringResource(R.string.dismiss), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                        Text(text = stringResource(R.string.dismiss), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSecondary)
                     }
                 },
-                textContentColor = MaterialTheme.colorScheme.primaryContainer,
-                titleContentColor = MaterialTheme.colorScheme.primary
+                textContentColor = MaterialTheme.colorScheme.onSecondary,
+                titleContentColor = MaterialTheme.colorScheme.onSecondary
 
             )
         }else{
@@ -225,8 +225,8 @@ fun Malf_ErrorDialogs(onDialogDismissed: () -> Unit, navController: NavControlle
                         Text(text = "OK")
                     }
                 },
-                textContentColor = MaterialTheme.colorScheme.primaryContainer,
-                titleContentColor = MaterialTheme.colorScheme.primary
+                textContentColor = MaterialTheme.colorScheme.onSecondary,
+                titleContentColor = MaterialTheme.colorScheme.onSecondary
 
             )
         }
@@ -319,12 +319,12 @@ fun ExistsMalfDialog(onDialogDismissed: () -> Unit) {
                     Text(
                         text = "OK",
                         style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.colorScheme.onSecondary
                     )
                 }
             },
-            textContentColor = MaterialTheme.colorScheme.primaryContainer,
-            titleContentColor = MaterialTheme.colorScheme.primary
+            textContentColor = MaterialTheme.colorScheme.onSecondary,
+            titleContentColor = MaterialTheme.colorScheme.onSecondary
         )
     }
 }
@@ -479,7 +479,7 @@ fun DelDialog(onDialogDismissed: () -> Unit, onDeleteClick: () -> Unit) {
                 Text(
                     text = stringResource(R.string.dismiss),
                     style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.primary
+                    color = MaterialTheme.colorScheme.onSecondary
                 )
             }
         },
@@ -488,11 +488,49 @@ fun DelDialog(onDialogDismissed: () -> Unit, onDeleteClick: () -> Unit) {
                 Text(
                     text = stringResource(R.string.confirm),
                     style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.primary
+                    color = MaterialTheme.colorScheme.onSecondary
                 )
             }
         },
-        textContentColor = MaterialTheme.colorScheme.primaryContainer,
-        titleContentColor = MaterialTheme.colorScheme.primary
+        textContentColor = MaterialTheme.colorScheme.onSecondary,
+        titleContentColor = MaterialTheme.colorScheme.onSecondary
+    )
+}
+
+//Missing Qr List
+@Composable
+fun DelMissingDialog(onDialogDismissed: () -> Unit, onDeleteClick: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = { onDialogDismissed() },
+        title = {
+            Text(
+                text = stringResource(R.string.delMDtitle),
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.headlineSmall
+            )
+        },
+        text = {
+            Text(text = stringResource(R.string.delMDtext), style = MaterialTheme.typography.bodyLarge)
+        },
+        dismissButton = {
+            TextButton(onClick = { onDialogDismissed() }) {
+                Text(
+                    text = stringResource(R.string.dismiss),
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onSecondary
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = { onDialogDismissed(); onDeleteClick() }) {
+                Text(
+                    text = stringResource(R.string.confirm),
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onSecondary
+                )
+            }
+        },
+        textContentColor = MaterialTheme.colorScheme.onSecondary,
+        titleContentColor = MaterialTheme.colorScheme.onSecondary
     )
 }

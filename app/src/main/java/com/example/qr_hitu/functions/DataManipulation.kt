@@ -143,3 +143,12 @@ fun seeMalfunction(
     return data
 
 }
+
+fun delMissing(
+    sala: String,
+    ident: String
+) {
+    db.collection("Falta Qr")
+        .document("$sala $ident")
+        .delete()
+}
