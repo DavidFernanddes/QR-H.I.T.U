@@ -194,7 +194,7 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
                     )
                 )
             }
-
+/*
             Spacer(modifier = Modifier.padding(5.dp))
 
             Divider(
@@ -235,7 +235,7 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
                 )
 
             }
-
+*/
             Spacer(modifier = Modifier.padding(5.dp))
 
             Divider(
