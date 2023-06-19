@@ -92,3 +92,7 @@ object MissingQrList: HituDestination {
 object TabScreen: HituDestination {
     override val route = "tab_screen"
 }
+
+object ForgotPass: HituDestination {
+    override val route = "forgot_pass"
+}

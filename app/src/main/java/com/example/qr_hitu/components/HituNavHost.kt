@@ -27,6 +27,7 @@ import com.example.qr_hitu.screens.adminScreens.tabLists.missingQrList.MissingQr
 import com.example.qr_hitu.screens.adminScreens.tabLists.recentScanList.RecentScanList
 import com.example.qr_hitu.screens.adminScreens.transfer.ChooseQr
 import com.example.qr_hitu.screens.adminScreens.transfer.TransferQr
+import com.example.qr_hitu.screens.login.ForgotPass
 import com.example.qr_hitu.screens.login.LoginScreen
 import com.example.qr_hitu.screens.menu.Manual
 import com.example.qr_hitu.screens.menu.SettingsOptions
@@ -120,6 +121,9 @@ fun QrHituNavHost(
         }
         composable(TabScreen.route){
             TabLayout(navController = navController, viewModelSA = viewModelSA, settingsManager = settingsManager, viewModelMF = viewModelMF)
+        }
+        composable(ForgotPass.route){
+            ForgotPass(navController = navController)
         }
     }
 }

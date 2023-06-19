@@ -33,13 +33,18 @@
     //Login
         <string name="password">Palavra-passe</string>
         <string name="login">Entrar</string>
+        <string name="forgotPass">Esqueceu-se da palavra-passe?</string>
+
+    //ForgotPass
+        <string name="resetPass">Alterar palavra-passe</string>
+        <string name="send">Enviar</string>
 
     //Loading
         <string name="loading">A Iniciar Sessão...</string>
 
     //User
         //UserChoices
-            scanner -> line 29
+            scanner -> line 26
             <string name="missingQR">Falta de QR</string>
         //MalfInput
             <string name="problem">Qual é o problema ?</string>

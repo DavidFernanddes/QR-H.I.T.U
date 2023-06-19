@@ -33,6 +33,11 @@
     //Login
         <string name="password">Password</string>
         <string name="login">Login</string>
+        <string name="forgotPass">Forgot your password?</string>
+
+    //ForgotPass
+        <string name="resetPass">Reset Password</string>
+        <string name="send">Send</string>
 
     //Loading
         <string name="loading">Logging In…</string>

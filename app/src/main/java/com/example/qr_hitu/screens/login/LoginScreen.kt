@@ -25,6 +25,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.R
+import com.example.qr_hitu.components.ForgotPass
 import com.example.qr_hitu.components.Loading
 import com.example.qr_hitu.components.TabScreen
 import com.example.qr_hitu.components.UserChoices
@@ -163,7 +164,7 @@ fun LoginScreen(
                     )
                 )
 
-                Spacer(modifier = Modifier.padding(10.dp))
+                Spacer(modifier = Modifier.padding(5.dp))
 
                 OutlinedTextField(
                     value = passwordValue,
@@ -195,7 +196,30 @@ fun LoginScreen(
                     )
                 )
 
-                Spacer(modifier = Modifier.padding(10.dp))
+                Spacer(modifier = Modifier.padding(5.dp))
+
+                TextButton(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    onClick = {
+                        navController.navigate(ForgotPass.route)
+                    },
+                    shape = MaterialTheme.shapes.small
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            stringResource(R.string.forgotPass),
+                            style = MaterialTheme.typography.labelLarge,
+                            color = MaterialTheme.colorScheme.onSecondary
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.padding(5.dp))
 
                 Button(
                     onClick = {
