@@ -44,7 +44,7 @@
 
     //User
         //UserChoices
-            scanner -> line 30
+            scanner -> line 26
             <string name="missingQR">Missing QR</string>
         //MalfInput
             <string name="problem">What\'s the problem ?</string>
@@ -78,13 +78,13 @@
             <string name="MInfPower">Power Supply: </string>
             <string name="MInfSend">Solved</string>
         //ScanInfo / ScanInfoUpdate
-            block -> line 65
-            room -> line 66
-            machine -> line 67
-            specs -> line 70
-            processor -> line 71
-            ram -> line 72
-            power -> line 73
+            block -> line 70
+            room -> line 71
+            machine -> line 72
+            specs -> line 75
+            processor -> line 76
+            ram -> line 77
+            power -> line 78
             <string name="ScanInfoUpd">Update</string>
         //Create
             //AdminChoice
@@ -102,19 +102,19 @@
                 <string name="createProcessor">Processor</string>
                 <string name="createRam">Ram</string>
                 <string name="createPower">Power Supply</string>
-                continue -> line 93
+                continue -> line 98
             //CreateFinal
                 <string name="createNamePlaceholder">Write the file name</string>
                 <string name="createDownload">Download Qr Code</string>
             //TranferChoose
-                local -> line 89
-                block -> line 90
-                room -> line 91
-                machine -> line 92
-                continue -> line 93
+                local -> line 94
+                block -> line 95
+                room -> line 96
+                machine -> line 97
+                continue -> line 98
             //TransferQR
-                NamePlaceholder -> line 102
-                download -> line 103
+                NamePlaceholder -> line 107
+                download -> line 108
     //Dialogs
             <string name="confirm">Yes</string>
             <string name="dismiss">No</string>
@@ -183,4 +183,10 @@
                 -> Create QR - This option will ask you in sequence for the desired location and information about the device, once complete the device will be added to the database and if possible transfer a QR code referring to that new machine.
                 This QR code will be transferred to your device\'s Downloads folder and you will have the option to choose the file name.
             </string>
+    //About
+        <string name="appVersionT">App Version</string>
+        <string name="appVersion">QR H.I.T.U v1.0.0</string>
+        <string name="infoT">Who are we?</string>
+        <string name="info">This application was created by Alexandre Caneca and David Fernandes, we are students of Escola Secundária de Santo André of the GPSI course.\n
+        We developed this project within the scope of the PAP or Professional Aptitude Project with the aim of creating a means of improving control of the malfunctions that occur in the school in an easy and practical way.</string>
 </resources>

@@ -78,13 +78,13 @@
             <string name="MInfPower">Fonte: </string>
             <string name="MInfSend">Resolvido</string>
         //ScanInfo / ScanInfoUpdate
-            block -> line 64
-            room -> line 65
-            machine -> line 66
-            specs -> line 69
-            processor -> line 70
-            ram -> line 71
-            power -> line 72
+            block -> line 70
+            room -> line 71
+            machine -> line 72
+            specs -> line 75
+            processor -> line 76
+            ram -> line 77
+            power -> line 78
             <string name="ScanInfoUpd">Atualizar</string>
         //Create
             //AdminChoice
@@ -107,14 +107,14 @@
                 <string name="createNamePlaceholder">Escreva o nome do ficheiro</string>
                 <string name="createDownload">Transferir Qr Code</string>
             //TranferChoose
-                local -> line 88
-                block -> line 89
-                room -> line 90
-                machine -> line 91
-                continue -> line 92
+                local -> line 94
+                block -> line 95
+                room -> line 96
+                machine -> line 97
+                continue -> line 98
             //TransferQR
-                NamePlaceholder -> line 101
-                download -> line 102
+                NamePlaceholder -> line 107
+                download -> line 108
     //Dialogs
         <string name="confirm">Sim</string>
         <string name="dismiss">Não</string>
@@ -180,4 +180,10 @@
                 -> Tranferir - Esta opção irá lhe pedir onde se localiza a máquina desejada para poder transferir um QR code referente a ela. Este QR code será transferido para a pasta de Downloads do seu dispositivo e terá a opção de escolhar o nome do ficheiro.
                 -> Criar QR - Esta opção irá lhe pedir em sequência a localização pretendida e a informação acerca do dispositivo, assi que completo o dispositivo será adicionado á base de dados e se possível transferir um QR code referente a essa nova máquina. Este QR code será transferido para a pasta de Downloads do seu dispositivo e terá a opção de escolher o nome do ficheiro.
             </string>
+    //About
+        <string name="appVersionT">Versão da aplicação</string>
+        <string name="appVersion">QR H.I.T.U v1.0.0</string>
+        <string name="infoT">Quem somos?</string>
+        <string name="info">Esta aplicação foi criada por Alexandre Caneca e David Fernandes, somos alunos da Escola Secundária de Santo André do curso GPSI.\n
+        Desenvolvemos este projeto no ambito da PAP ou Projeto de Aptidão Profissional com o objetivo de criar um meio de melhorar controlo das avarias que acontecem na escola de maneira facil e prática.</string>
 </resources>

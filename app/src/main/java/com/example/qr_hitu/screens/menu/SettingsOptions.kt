@@ -32,6 +32,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.R
+import com.example.qr_hitu.components.About
 import com.example.qr_hitu.functions.LanguageDialog
 import com.example.qr_hitu.functions.SettingsManager
 import com.example.qr_hitu.functions.Snackbar
@@ -284,7 +285,7 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
                 modifier = Modifier
                     .fillMaxWidth(),
                 onClick = {
-
+                    navController.navigate(About.route)
                 },
                 shape = MaterialTheme.shapes.small
             ) {

@@ -96,3 +96,7 @@ object TabScreen: HituDestination {
 object ForgotPass: HituDestination {
     override val route = "forgot_pass"
 }
+
+object About: HituDestination {
+    override val route = "aboutScreen"
+}

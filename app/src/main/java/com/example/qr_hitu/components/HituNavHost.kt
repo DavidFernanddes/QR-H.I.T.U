@@ -29,6 +29,7 @@ import com.example.qr_hitu.screens.adminScreens.transfer.ChooseQr
 import com.example.qr_hitu.screens.adminScreens.transfer.TransferQr
 import com.example.qr_hitu.screens.login.ForgotPass
 import com.example.qr_hitu.screens.login.LoginScreen
+import com.example.qr_hitu.screens.menu.About
 import com.example.qr_hitu.screens.menu.Manual
 import com.example.qr_hitu.screens.menu.SettingsOptions
 import com.example.qr_hitu.screens.profScreens.missingQr.MQRLocal
@@ -124,6 +125,9 @@ fun QrHituNavHost(
         }
         composable(ForgotPass.route){
             ForgotPass(navController = navController)
+        }
+        composable(About.route){
+            About(navController = navController)
         }
     }
 }

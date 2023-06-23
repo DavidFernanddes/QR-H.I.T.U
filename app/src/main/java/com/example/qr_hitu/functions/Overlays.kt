@@ -47,7 +47,7 @@ fun ScaffoldLayouts(navController: NavController, settingsManager: SettingsManag
                 destinationRoute.contains(Create2.route) -> TopBar2(navController = navController)
                 destinationRoute.contains(Create3.route) || destinationRoute.contains(TransferQr.route) -> TopBar3(navController = navController)
                 destinationRoute.contains(ScanInput.route) -> TopBarUser3(navController = navController, settingsManager = settingsManager)
-                destinationRoute.contains(SettingOptions.route) || destinationRoute.contains(Manual.route) || destinationRoute.contains(MalfInfo.route) || destinationRoute.contains(ForgotPass.route) -> TopBarUni(navController = navController)
+                destinationRoute.contains(SettingOptions.route) || destinationRoute.contains(Manual.route) || destinationRoute.contains(MalfInfo.route) || destinationRoute.contains(ForgotPass.route) || destinationRoute.contains(About.route) -> TopBarUni(navController = navController)
                 destinationRoute.contains(ScannerAdminInfo.route) -> TopBar4(navController = navController, viewModelSA, settingsManager)
                 destinationRoute.contains(ScanAdmin.route) || destinationRoute.contains(AdminChoices.route) || destinationRoute.contains(TabScreen.route) -> TopBar1(navController = navController, settingsManager)
                 destinationRoute.contains(UserChoices.route) -> TopBarUser1(navController = navController, settingsManager)
