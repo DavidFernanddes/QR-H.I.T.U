@@ -27,6 +27,7 @@ import com.example.qr_hitu.components.UserChoices
 import com.example.qr_hitu.functions.WarningDialog
 import com.example.qr_hitu.functions.DError_Success_Dialogs
 import com.example.qr_hitu.functions.addMalfunction
+import com.example.qr_hitu.functions.sendEmail
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -203,6 +204,7 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
 
                                     else -> {
                                         show.value = true
+                                        sendEmail(email, block, room, machine, "uma avaria", "Avaria", malfunction, urgentState)
                                         addMalfunction(
                                             block,
                                             room,
@@ -216,6 +218,7 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
                             }
                             else -> {
                                 show.value = true
+                                sendEmail(email, block, room, machine, "uma avaria", "Avaria", malfunction, urgentState)
                                 addMalfunction(
                                     block,
                                     room,

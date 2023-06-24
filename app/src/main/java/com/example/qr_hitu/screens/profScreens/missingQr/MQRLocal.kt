@@ -41,6 +41,8 @@ import com.example.qr_hitu.components.UserChoices
 import com.example.qr_hitu.functions.AddMalfDialog
 import com.example.qr_hitu.functions.WarningDialog
 import com.example.qr_hitu.functions.addMissQR
+import com.example.qr_hitu.functions.sendEmail
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -264,6 +266,7 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
                     if (exists) {
                         showErr.value = true
                     } else {
+                        sendEmail(Firebase.auth.currentUser?.email!!, selectedBlock, selectedRoom, selectedMachine, "a falta de um QR", "Falta QR", "", false)
                         addMissQR(selectedBlock, selectedRoom, selectedMachine)
                         show.value = true
                     }
