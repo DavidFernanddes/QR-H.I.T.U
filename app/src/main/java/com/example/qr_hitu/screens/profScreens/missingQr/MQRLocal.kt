@@ -64,6 +64,7 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
     val show= remember { mutableStateOf(false) }
     val showErr= remember { mutableStateOf(false) }
 
+    val sendE = remember { mutableStateOf(false) }
 
     val blocks = listOf("Bloco A", "Bloco B", "Bloco C", "Bloco D", "Bloco E")
     var rooms by remember { mutableStateOf(listOf<String>()) }
@@ -266,7 +267,7 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
                     if (exists) {
                         showErr.value = true
                     } else {
-                        sendEmail(Firebase.auth.currentUser?.email!!, selectedBlock, selectedRoom, selectedMachine, "a falta de um QR", "Falta QR", "", false)
+                        sendE.value = true
                         addMissQR(selectedBlock, selectedRoom, selectedMachine)
                         show.value = true
                     }
@@ -279,6 +280,11 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
             )
         ) {
             Text(text = stringResource(R.string.mQRSend), style = MaterialTheme.typography.bodyLarge)
+        }
+
+        if (sendE.value){
+            sendEmail(Firebase.auth.currentUser?.email!!, selectedBlock, selectedRoom, selectedMachine, "a falta de um QR", "Falta QR", "", false)
+            sendE.value = false
         }
 
         if (showErr.value) {

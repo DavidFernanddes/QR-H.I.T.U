@@ -9,11 +9,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 import java.util.Properties
 import javax.mail.Authenticator
 import javax.mail.Message
@@ -24,7 +22,7 @@ import javax.mail.Transport
 import javax.mail.internet.InternetAddress
 import javax.mail.internet.MimeMessage
 
-@OptIn(DelicateCoroutinesApi::class)
+@Composable
 @SuppressLint("CoroutineCreationDuringComposition")
 fun sendEmail(
     email: String,
@@ -36,6 +34,9 @@ fun sendEmail(
     desc: String,
     urgent: Boolean
 ) {
+    val receivers = remember { mutableStateOf("") }
+    val sendE = remember { mutableStateOf(false) }
+
     val props = Properties().apply {
         put("mail.smtp.host", "smtp-mail.outlook.com") // Set the SMTP server
         put("mail.smtp.port", "587") // Set the SMTP server port
@@ -66,26 +67,30 @@ fun sendEmail(
 
     Firebase.firestore.collection("Admin").get().addOnCompleteListener {
         it.result.documents.forEach{ doc ->
+            receivers.value = receivers.value+doc.id+"/"
+        }
+        Log.d("emails", receivers.value)
+
+        for (x in receivers.value.split("/").indices){
             val message = MimeMessage(session).apply {
                 setFrom(InternetAddress("qr.hitu@outlook.pt"))
                 setRecipients(
-                    Message.RecipientType.TO, InternetAddress.parse(doc.id)
+                    Message.RecipientType.TO, InternetAddress.parse(receivers.value.split("/")[x])
                 )
                 subject = "$title - QR H.I.T.U."
                 setText(text)
             }
 
             send(message)
-
         }
     }
-
 }
 
 fun send(message: MimeMessage) {
     GlobalScope.launch(Dispatchers.IO) {
         try {
             Transport.send(message)
+            Log.d("email send", "Email sent!")
             // Email sent successfully
         } catch (e: MessagingException) {
             Log.d("email error", e.message.toString())

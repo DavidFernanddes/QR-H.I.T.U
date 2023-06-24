@@ -57,6 +57,8 @@ fun retrieveDocumentsFromFirestore(completion: (List<String>) -> Unit) {
 @Composable
 fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
 
+    val sendE = remember { mutableStateOf(false) }
+
     val email = Firebase.auth.currentUser?.email.toString()
     var outro by remember { mutableStateOf("") }
     var malfunction by remember { mutableStateOf("") }
@@ -204,7 +206,7 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
 
                                     else -> {
                                         show.value = true
-                                        sendEmail(email, block, room, machine, "uma avaria", "Avaria", malfunction, urgentState)
+                                        sendE.value = true
                                         addMalfunction(
                                             block,
                                             room,
@@ -218,7 +220,7 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
                             }
                             else -> {
                                 show.value = true
-                                sendEmail(email, block, room, machine, "uma avaria", "Avaria", malfunction, urgentState)
+                                sendE.value = true
                                 addMalfunction(
                                     block,
                                     room,
@@ -245,6 +247,16 @@ fun ScannerInput(navController: NavController, viewModel: ScannerViewModel) {
         ) {
             Text(stringResource(R.string.problemSend), style = MaterialTheme.typography.labelLarge)
         }
+
+        if (sendE.value){
+            when(malfunction){
+                "Outro" -> sendEmail(email, block, room, machine, "uma avaria", "Avaria", outro, urgentState)
+                else -> sendEmail(email, block, room, machine, "uma avaria", "Avaria", malfunction, urgentState)
+            }
+            sendE.value = false
+        }
+
+
         when {
             show.value -> DError_Success_Dialogs(
                 error = err.value,
