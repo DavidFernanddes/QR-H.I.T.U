@@ -186,4 +186,6 @@
         <string name="infoT">Quem somos?</string>
         <string name="info">Esta aplicação foi criada por Alexandre Caneca e David Fernandes, somos alunos da Escola Secundária de Santo André do curso GPSI.\n
         Desenvolvemos este projeto no ambito da PAP ou Projeto de Aptidão Profissional com o objetivo de criar um meio de melhorar controlo das avarias que acontecem na escola de maneira facil e prática.</string>
+    //WifiWarn
+        <string name="noWifi">Sem Internet!</string>
 </resources>

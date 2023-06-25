@@ -30,7 +30,7 @@ fun QrHituApp() {
     val viewModelMF = viewModel<MalfunctionViewModel>()
     val switch = remember { mutableStateOf("") }
     val theme by rememberUpdatedState(if (switch.value == "") { settingsManager.getSetting("Theme", "" ) } else switch.value)
-    setLocale(if (settingsManager.getSetting("Language", "") == "pt") "pt" else "en", localContext)
+    setLocale(if (settingsManager.getSetting("Language", "pt") == "pt") "pt" else "en", localContext)
 
     QRHITUTheme(
         content = {

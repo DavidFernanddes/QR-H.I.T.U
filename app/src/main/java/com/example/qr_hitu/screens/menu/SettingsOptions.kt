@@ -60,7 +60,7 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
             else "Light"
         }
     }
-    selectedLanguage.value = settingsManager.getSetting("Language", "")
+    selectedLanguage.value = settingsManager.getSetting("Language", "pt")
     selectedAutoLogin.value = settingsManager.getSetting("AutoLogin", "false").toBooleanStrict()
     selectedBlockSession.value = settingsManager.getSetting("BlockSession", "false").toBooleanStrict()
 

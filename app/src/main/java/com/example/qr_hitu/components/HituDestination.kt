@@ -100,3 +100,7 @@ object ForgotPass: HituDestination {
 object About: HituDestination {
     override val route = "aboutScreen"
 }
+
+object WifiWarn: HituDestination {
+    override val route = "wifiWarn"
+}
