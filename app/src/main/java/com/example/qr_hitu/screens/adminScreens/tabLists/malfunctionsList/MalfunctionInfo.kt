@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.R
 import com.example.qr_hitu.ViewModels.MalfunctionViewModel
+import com.example.qr_hitu.functions.CompleteMalfDialog
 import com.example.qr_hitu.functions.completeMalfunction
 import com.example.qr_hitu.functions.seeDispositivo
 import com.example.qr_hitu.functions.seeMalfunction
@@ -41,6 +42,7 @@ fun MalfInfo(navController: NavController, viewModel: MalfunctionViewModel) {
 
     val style = MaterialTheme.typography.titleMedium
     var completeState by remember { mutableStateOf(false) }
+    var show by remember { mutableStateOf(false) }
 
     val room = viewModel.myData.value!!.room
     val urgent = viewModel.myData.value!!.urgent
@@ -72,16 +74,36 @@ fun MalfInfo(navController: NavController, viewModel: MalfunctionViewModel) {
             Spacer(modifier = Modifier.padding(10.dp))
 
             Column(horizontalAlignment = Alignment.Start) {
-                Text( stringResource(R.string.MInfSender)+" "+senderMail, style = style, color = MaterialTheme.colorScheme.onSecondary)
+                Text(
+                    stringResource(R.string.MInfSender) + " " + senderMail,
+                    style = style,
+                    color = MaterialTheme.colorScheme.onSecondary
+                )
                 Spacer(modifier = Modifier.padding(10.dp))
-                Text(stringResource(R.string.MInfBlock)+" "+block, style = style, color = MaterialTheme.colorScheme.onSecondary)
+                Text(
+                    stringResource(R.string.MInfBlock) + " " + block,
+                    style = style,
+                    color = MaterialTheme.colorScheme.onSecondary
+                )
                 Spacer(modifier = Modifier.padding(10.dp))
-                Text(stringResource(R.string.MInfRoom)+" "+room, style = style, color = MaterialTheme.colorScheme.onSecondary)
+                Text(
+                    stringResource(R.string.MInfRoom) + " " + room,
+                    style = style,
+                    color = MaterialTheme.colorScheme.onSecondary
+                )
                 Spacer(modifier = Modifier.padding(10.dp))
-                Text(stringResource(R.string.MInfMachine)+" "+machine, style = style, color = MaterialTheme.colorScheme.onSecondary)
+                Text(
+                    stringResource(R.string.MInfMachine) + " " + machine,
+                    style = style,
+                    color = MaterialTheme.colorScheme.onSecondary
+                )
                 Spacer(modifier = Modifier.padding(10.dp))
-                if(urgent) Row{
-                    Text(text = stringResource(R.string.MInfUrgent)+" ", style = style, color = MaterialTheme.colorScheme.onSecondary)
+                if (urgent) Row {
+                    Text(
+                        text = stringResource(R.string.MInfUrgent) + " ",
+                        style = style,
+                        color = MaterialTheme.colorScheme.onSecondary
+                    )
                     Icon(Icons.Filled.Error, "Urgent", tint = Color.Red)
                 }
             }
@@ -103,7 +125,11 @@ fun MalfInfo(navController: NavController, viewModel: MalfunctionViewModel) {
 
             Spacer(modifier = Modifier.padding(20.dp))
 
-            Text(stringResource(R.string.MInfSpecs)+" "+machine, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondary)
+            Text(
+                stringResource(R.string.MInfSpecs) + " " + machine,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSecondary
+            )
 
             Spacer(modifier = Modifier.padding(10.dp))
 
@@ -153,26 +179,46 @@ fun MalfInfo(navController: NavController, viewModel: MalfunctionViewModel) {
                 )
             )
         }
-            Spacer(modifier = Modifier.padding(10.dp))
 
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                RadioButton(
-                    selected = completeState,
-                    onClick = {
-                        completeState = !completeState
-                        completeMalfunction(block, room, machine, malfDesc as String, urgent, senderMail as String)
-                        navController.popBackStack()
-                    },
-                    colors = RadioButtonDefaults.colors(
-                        selectedColor = MaterialTheme.colorScheme.primary
+        Spacer(modifier = Modifier.padding(10.dp))
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            RadioButton(
+                selected = completeState,
+                onClick = {
+                    show = true
+                },
+                colors = RadioButtonDefaults.colors(
+                    selectedColor = MaterialTheme.colorScheme.primary
+                )
+            )
+            Text(
+                text = stringResource(R.string.MInfSend),
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSecondary
+            )
+        }
+
+        if (show) {
+            CompleteMalfDialog(
+                onDialogDismissed = {
+                    show = false
+                },
+                onDialogConfirm = {
+                    completeState = !completeState
+                    completeMalfunction(
+                        block,
+                        room,
+                        machine,
+                        malfDesc as String,
+                        urgent,
+                        senderMail as String
                     )
-                )
-                Text(
-                    text = stringResource(R.string.MInfSend),
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSecondary
-                )
-            }
+                    navController.popBackStack()
+                }
+            )
+        }
+
     }
 
 }

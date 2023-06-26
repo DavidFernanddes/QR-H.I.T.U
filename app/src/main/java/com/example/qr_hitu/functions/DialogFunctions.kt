@@ -401,3 +401,44 @@ fun DelDialog(onDialogDismissed: () -> Unit, onDeleteClick: () -> Unit, title: S
         titleContentColor = MaterialTheme.colorScheme.onSecondary
     )
 }
+
+
+@Composable
+fun CompleteMalfDialog(onDialogDismissed: () -> Unit, onDialogConfirm: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = { onDialogDismissed() },
+        title = {
+            Text(
+                text = stringResource(R.string.compMDtitle),
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.headlineSmall
+            )
+        },
+        text = {
+            Text(
+                text = stringResource(R.string.compMDtext),
+                style = MaterialTheme.typography.bodyMedium
+            )
+        },
+        confirmButton = {
+            TextButton(onClick = { onDialogConfirm() }) {
+                Text(
+                    text = stringResource(R.string.confirm),
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onSecondary
+                )
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = { onDialogDismissed() }) {
+                Text(
+                    text = stringResource(R.string.dismiss),
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onSecondary
+                )
+            }
+        },
+        textContentColor = MaterialTheme.colorScheme.onSecondary,
+        titleContentColor = MaterialTheme.colorScheme.onSecondary
+    )
+}

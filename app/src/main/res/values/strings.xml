@@ -147,6 +147,9 @@
         //DelMissingDialog
             <string name="delMDtitle">Deseja retirar este aviso ?</string>
             <string name="delMDtext">Retire apenas se tiver reposto Qr !</string>
+        //CompleteMalfDialog
+            <string name="compMDtitle">Completar</string>
+            <string name="compMDtext">Gostaria de fechar este alerta?</string>
     //Snackbars
         //DownloadSnackbar
             <string name="downloadStext">Download realizado com sucesso !</string>

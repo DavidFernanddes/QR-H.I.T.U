@@ -147,6 +147,9 @@
         //DelMissingDialog
             <string name="delMDtitle">Would you like to remove this warning ?</string>
             <string name="delMDtext">Only withdraw if you have reset Qr !</string>
+        //CompleteMalfDialog
+            <string name="compMDtitle">Complete</string>
+            <string name="compMDtext">Would you like to close this warning ?</string>
     //Snackbars
         //DownloadSnackbar
             <string name="downloadStext">Download successful !</string>
