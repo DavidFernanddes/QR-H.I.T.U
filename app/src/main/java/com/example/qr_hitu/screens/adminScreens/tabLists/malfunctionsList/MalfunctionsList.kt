@@ -1,6 +1,5 @@
 package com.example.qr_hitu.screens.adminScreens.tabLists.malfunctionsList
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -32,52 +31,22 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.ViewModels.MalfunctionViewModel
 import com.example.qr_hitu.components.MalfInfo
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.example.qr_hitu.functions.MalfunctionDocs
+import com.example.qr_hitu.functions.fetchMalfList
 
-data class MalfunctionDocs(
-    val machine: String,
-    val room: String,
-    val block: String,
-    val urgent: Boolean,
-)
-
-private fun fetchDataFromFirestore(setList: (List<MalfunctionDocs>) -> Unit) {
-    val firestore = Firebase.firestore
-    firestore.collection("Avarias")
-        .get()
-        .addOnSuccessListener { documents ->
-            val itemList = documents.mapNotNull { document ->
-                val machine = document.getString("Dispositivo")
-                val room = document.getString("Sala")
-                val block = document.getString("Bloco")
-                val urgent = document.getBoolean("Urgente")
-
-                if (machine != null && room != null && block != null && urgent != null) {
-                    MalfunctionDocs(machine, room, block, urgent)
-                } else {
-                    null
-                }
-            }
-
-            val sortedList = itemList.sortedByDescending { it.urgent }
-            setList(sortedList)
-        }
-        .addOnFailureListener { exception ->
-            // Handle the failure
-            Log.e("Firestore", "Error getting documents: ", exception)
-        }
-}
-
+//  Tela com a lista de todas os alertas de avarias guardados na base de dados
 @Composable
 fun MalfList(navController: NavController, viewModel: MalfunctionViewModel) {
 
+    //  Variáveis para guardar a lista de avarias
     val (list, setList) = remember { mutableStateOf<List<MalfunctionDocs>>(emptyList()) }
 
+    //  Abre Coroutine
     LaunchedEffect(Unit) {
-        fetchDataFromFirestore(setList)
+        fetchMalfList(setList)  //  Chama a função fetchMalfList e guarda o resultado em setList
     }
 
+    //  Cria uma lista vertical
     LazyVerticalGrid(
         modifier = Modifier
             .fillMaxSize()
@@ -85,6 +54,7 @@ fun MalfList(navController: NavController, viewModel: MalfunctionViewModel) {
             .padding(horizontal = 2.dp),
         columns = GridCells.Fixed(1)
     ) {
+        //  Para cada avaria na lista irá criar um Card com as informações pedidas
         items(list) { item ->
             Card(
                 modifier = Modifier
@@ -101,6 +71,7 @@ fun MalfList(navController: NavController, viewModel: MalfunctionViewModel) {
                         .fillMaxWidth(),
                     ) {
 
+                    //  Condição para mudar o icon
                     when (item.machine) {
                         "Projetor" -> {
                             Icon(Icons.Filled.VideocamOff, "Projector")
@@ -130,6 +101,7 @@ fun MalfList(navController: NavController, viewModel: MalfunctionViewModel) {
                             modifier = Modifier.padding(bottom = 8.dp)
                         )
                     }
+                    //  Se for urgente mostra icon de urgent
                     if (item.urgent) {
                         Icon(Icons.Filled.Error, "Urgent", tint = Color.Red)
                     }

@@ -41,22 +41,26 @@ import com.example.qr_hitu.functions.seeMalfunction
 fun MalfInfo(navController: NavController, viewModel: MalfunctionViewModel) {
 
     val style = MaterialTheme.typography.titleMedium
+    //  Estado de completo
     var completeState by remember { mutableStateOf(false) }
+    //  Mostra Dialog
     var show by remember { mutableStateOf(false) }
 
+    //  Variáveis com o local e urgência
     val room = viewModel.myData.value!!.room
     val urgent = viewModel.myData.value!!.urgent
     val machine = viewModel.myData.value!!.name
     val block = viewModel.myData.value!!.block
 
+    //  Variáveis com as informações do computador, avaria e quem alertou a avaria
     val malf = seeMalfunction(machine, room)
     val malfDesc = malf["Avaria"]
     val senderMail = malf["Email"]
-
     val spec = seeDispositivo(block, room, machine)
     val processor = spec["Processador"]
     val ram = spec["Ram"]
     val powerSupply = spec["Fonte"]
+
     val scrollState = rememberScrollState()
 
 
@@ -98,6 +102,7 @@ fun MalfInfo(navController: NavController, viewModel: MalfunctionViewModel) {
                     color = MaterialTheme.colorScheme.onSecondary
                 )
                 Spacer(modifier = Modifier.padding(10.dp))
+                //  Condição para verificar urgência
                 if (urgent) Row {
                     Text(
                         text = stringResource(R.string.MInfUrgent) + " ",
@@ -199,12 +204,14 @@ fun MalfInfo(navController: NavController, viewModel: MalfunctionViewModel) {
             )
         }
 
+        //  Mostrar Dialog
         if (show) {
             CompleteMalfDialog(
                 onDialogDismissed = {
                     show = false
                 },
                 onDialogConfirm = {
+                    //  Caso aceite vai voltar para a tela da lista de avarias e apagar a avaria da firestore
                     completeState = !completeState
                     completeMalfunction(
                         block,

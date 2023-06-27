@@ -1,3 +1,5 @@
+@file:Suppress("UNUSED_PARAMETER")
+
 package com.example.qr_hitu.screens
 
 import androidx.compose.animation.core.Animatable
@@ -36,11 +38,14 @@ import androidx.navigation.NavController
 import com.example.qr_hitu.R
 import com.example.qr_hitu.functions.SettingsManager
 
-//TODO SnackBar
+
+//  Tela de loading enquanto faz log in
 @Composable
 fun LoadingScreen(navController: NavController, settingsManager: SettingsManager, isDarkTheme: Boolean = isSystemInDarkTheme()){
 
+    //  Estado com o progresso da animação
     val animationProgress = remember { Animatable(-0.5f) }
+    //  Verificações do tema para definir qual imagem usar no loading
     val switch = remember { mutableStateOf("") }
     val theme by rememberUpdatedState(
         if (switch.value == "") {
@@ -52,10 +57,12 @@ fun LoadingScreen(navController: NavController, settingsManager: SettingsManager
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
-        Arrangement.Center,
-        Alignment.CenterHorizontally
-            ) {
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        //  Abre Coroutine
         LaunchedEffect(Unit) {
+            //  A animação funciona apenas enquanto estiver na tela
             while (true) {
                 animationProgress.animateTo(
                     targetValue = 0.5f,
@@ -71,10 +78,7 @@ fun LoadingScreen(navController: NavController, settingsManager: SettingsManager
         Box(
             contentAlignment = Alignment.Center
         ) {
-            val qrImageModifier = Modifier
-                .size(200.dp)
-                .align(Alignment.Center)
-
+            //  Condição do tema
             when (theme) {
                 "Light" -> Image(
                     painter = painterResource(R.drawable.qr_loading_light),
@@ -97,12 +101,13 @@ fun LoadingScreen(navController: NavController, settingsManager: SettingsManager
                 )
             }
 
-
+            //  Variáveis com o aspeto da animação
             val qrImageHeightPx = with(LocalDensity.current) { 80.dp.roundToPx() }
             val barColor = MaterialTheme.colorScheme.primary
             val barHeight = 5.dp
             val barWidth = 250.dp
 
+            //  Linha animada
             Box(
                 modifier = Modifier
                     .width(barWidth)

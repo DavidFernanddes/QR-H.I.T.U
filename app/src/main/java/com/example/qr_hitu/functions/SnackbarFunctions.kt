@@ -8,9 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
-//Create Qr Final/Transfer Qr, Login and Settings
+//  Base de SnackBar usada
+
+//  Create Qr Final/Transfer Qr, Login and Settings
 @Composable
-fun Snackbar(text: String){
+fun snackbar(text: String){
     Snackbar(
         modifier = Modifier
             .padding(16.dp)

@@ -41,45 +41,62 @@ import com.example.qr_hitu.components.UserChoices
 import com.example.qr_hitu.functions.AddMalfDialog
 import com.example.qr_hitu.functions.WarningDialog
 import com.example.qr_hitu.functions.addMissQR
-import com.example.qr_hitu.functions.sendEmail
+import com.example.qr_hitu.functions.SendEmail
+import com.example.qr_hitu.functions.existentPcs
+import com.example.qr_hitu.functions.missQrExists
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 
+//  Tela para escolher qual o dispositivo que falta o QR Code
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
 
     var textFiledSize by remember { mutableStateOf(Size.Zero) }
 
+    //  Estados para verificar se a dropbox está expandida
     var expanded3 by remember { mutableStateOf(false) }
     var expanded2 by remember { mutableStateOf(false) }
     var expanded by remember { mutableStateOf(false) }
 
+    //  Ativa os componentes
     var enabled3 by remember { mutableStateOf(false) }
     var enabled2 by remember { mutableStateOf(false) }
     var enabled by remember { mutableStateOf(false) }
 
-    val show= remember { mutableStateOf(false) }
-    val showErr= remember { mutableStateOf(false) }
+    //  Mostra Dialog
+    val show = remember { mutableStateOf(false) }
+    val showErr = remember { mutableStateOf(false) }
 
+    //  Envia email de aviso aos admins
     val sendE = remember { mutableStateOf(false) }
 
-    val blocks = listOf("Bloco A", "Bloco B", "Bloco C", "Bloco D", "Bloco E")
+    //  Informações para as dropboxes
+    val blocks = listOf(/*"Bloco A", "Bloco B", "Bloco C", "Bloco D", */"Bloco E")
     var rooms by remember { mutableStateOf(listOf<String>()) }
-    val machines =
-        listOf("Computador 1", "Computador 2", "Computador 3", "Computador 4", "Computador 5")
+    val (machines, setMachines) = remember { mutableStateOf(listOf<String>()) }
 
+    //  Informação selecionada pelo utilizador
     var selectedBlock by remember { mutableStateOf("") }
     var selectedRoom by remember { mutableStateOf("") }
+    var room by remember { mutableStateOf("") }
     var selectedMachine by remember { mutableStateOf("") }
 
-    enabled2 = selectedRoom.isNotEmpty()
+    //  Condições para ativar os componentes
     enabled = selectedBlock.isNotEmpty()
+    if ((selectedRoom.isNotBlank() && machines.isEmpty()) || room != selectedRoom) {
+        room = selectedRoom
+        //  Função para ir á firestore buscar quais computadores aquela sala tem
+        existentPcs(block = selectedBlock, room = selectedRoom, setMachines = setMachines)
+        if (machines.isEmpty()) {
+            enabled2 = true
+        }
+    }
     enabled3 = selectedMachine.isNotEmpty()
 
 
+    //  Condição para verificar qual icon utilizar dependendo se a dropbox está aberta ou não
     val icon = if (expanded) {
         Icons.Filled.KeyboardArrowUp
     } else {
@@ -262,11 +279,12 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
         Button(
             enabled = enabled3,
             onClick = {
-                viewModel.setMyData(code = "$selectedBlock,$selectedRoom,$selectedMachine")
+                //  Verifica se já existe aviso, caso não exista Mostra o Dialog de sucesso e envia email, caso exista mostra Dialog de erro
                 missQrExists(selectedRoom, selectedMachine) { exists ->
                     if (exists) {
                         showErr.value = true
                     } else {
+                        viewModel.setMyData(code = "$selectedBlock,$selectedRoom,$selectedMachine")
                         sendE.value = true
                         addMissQR(selectedBlock, selectedRoom, selectedMachine)
                         show.value = true
@@ -282,42 +300,34 @@ fun MQRLocal(navController: NavController, viewModel: ScannerViewModel) {
             Text(text = stringResource(R.string.mQRSend), style = MaterialTheme.typography.bodyLarge)
         }
 
+        //  Condição para enviar email
         if (sendE.value){
-            sendEmail(Firebase.auth.currentUser?.email!!, selectedBlock, selectedRoom, selectedMachine, "a falta de um QR", "Falta QR", "", false)
+            SendEmail(Firebase.auth.currentUser?.email!!, selectedBlock, selectedRoom, selectedMachine, "a falta de um QR", "Falta QR", "", false)
             sendE.value = false
         }
 
+        //  Mostra Dialog de erro
         if (showErr.value) {
             WarningDialog(
-                onDialogDismissed = { show.value = true },
+                //  Mostra Dialog de adicionar avaria
+                onDialogDismissed = { show.value = true; showErr.value = false },
                 title = stringResource(R.string.existWDtitle),
                 text = stringResource(R.string.existWDtext)
             )
         }
 
+        //  Mostra Dialog de adicionar avaria
         if (show.value) {
             AddMalfDialog(
                 onDialogDismissed = {
+                    //  Envia para a tela de escolha
                     show.value = false; navController.navigate(UserChoices.route)
                 },
                 onDialogConfirm = {
+                    //  Envia para a tela de avaria
                     show.value = false; navController.navigate(ScanInput.route)
                 }
             )
         }
     }
-}
-
-fun missQrExists(room: String, machine: String, onComplete: (Boolean) -> Unit) {
-    val firestore = Firebase.firestore.collection("Falta QR")
-
-    firestore.document("$room $machine")
-        .get()
-        .addOnSuccessListener { documentSnapshot ->
-            val exists = documentSnapshot.exists()
-            onComplete(exists)
-        }
-        .addOnFailureListener {
-            onComplete(false)
-        }
 }

@@ -1,3 +1,5 @@
+@file:Suppress("UNUSED_PARAMETER")
+
 package com.example.qr_hitu.screens.menu
 
 import androidx.compose.foundation.background
@@ -15,6 +17,7 @@ import androidx.navigation.NavController
 import com.example.qr_hitu.R
 
 
+//  Tela com a versão da aplicação e um pequeno texto sobre nós
 @Composable
 fun About(navController: NavController) {
     

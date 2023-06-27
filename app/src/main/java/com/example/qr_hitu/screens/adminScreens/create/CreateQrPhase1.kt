@@ -21,38 +21,46 @@ import com.example.qr_hitu.ViewModels.ViewModel1
 import com.example.qr_hitu.components.AdminChoices
 import com.example.qr_hitu.components.Create2
 import com.example.qr_hitu.functions.ExistsInvDialog
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.example.qr_hitu.functions.qrExists
 
+
+//  Tela inicial para criar QR Code
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun QrCreatePhase1(navController: NavController, viewModel: ViewModel1) {
 
+    //  Mostra Dialog
     val show  = remember { mutableStateOf(false) }
 
     var textFiledSize by remember { mutableStateOf(Size.Zero) }
 
+    //  Se dropbox está expandida ou não
     var expanded3 by remember { mutableStateOf(false) }
     var expanded2 by remember { mutableStateOf(false) }
     var expanded by remember { mutableStateOf(false) }
 
+    //  Se o componente referido está ativo
     var enabled3 by remember { mutableStateOf(false) }
     var enabled2 by remember { mutableStateOf(false) }
     var enabled by remember { mutableStateOf(false) }
 
-    val blocks = listOf("Bloco A", "Bloco B", "Bloco C", "Bloco D", "Bloco E")
+    //  Lista com os blocos, salas e máquinas
+    val blocks = listOf(/*"Bloco A", "Bloco B", "Bloco C", "Bloco D", */"Bloco E")
     var rooms by remember { mutableStateOf(listOf<String>()) }
     val machines =
         listOf("Computador 1", "Computador 2", "Computador 3", "Computador 4", "Computador 5")
 
+    //  Bloco/Sala/Máquina selecionada
     var selectedBlock by remember { mutableStateOf("") }
     var selectedRoom by remember { mutableStateOf("") }
     var selectedMachine by remember { mutableStateOf("") }
 
+    //  Ativa componente seguinte caso o anterior já esteja preenchido
     enabled = selectedBlock.isNotEmpty()
     enabled2 = selectedRoom.isNotEmpty()
     enabled3 = selectedMachine.isNotEmpty()
 
+    //  Diz qual icon usar na dropbox dependendo se ele está expandida ou não
     val icon = if (expanded) {
         Icons.Filled.KeyboardArrowUp
     } else {
@@ -68,6 +76,7 @@ fun QrCreatePhase1(navController: NavController, viewModel: ViewModel1) {
     } else {
         Icons.Filled.KeyboardArrowDown
     }
+
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -233,11 +242,14 @@ fun QrCreatePhase1(navController: NavController, viewModel: ViewModel1) {
 
         Button(
             onClick = {
+                //  Verifica se o QR Code existe
                 qrExists(selectedBlock, selectedRoom, selectedMachine) { exists ->
                     if (!exists) {
+                        //  Guarda as informações e passa para a próxima fase
                         viewModel.setMyData1(selectedBlock, selectedRoom, selectedMachine)
                         navController.navigate(Create2.route)
                     } else {
+                        //  Mostra Dialog de erro
                         show.value = true
                     }
                 }
@@ -253,28 +265,13 @@ fun QrCreatePhase1(navController: NavController, viewModel: ViewModel1) {
         ) {
             Text(text = stringResource(R.string.createContinue), style = MaterialTheme.typography.labelLarge)
         }
+
+        //  Condição para mostrar Dialog
         if (show.value) {
             ExistsInvDialog(
-                onDialogAccept = { show.value = false; navController.navigate(Create2.route); viewModel.setMyData1(selectedBlock, selectedRoom, selectedMachine) },
-                onDialogReject = { show.value = false; navController.navigate(AdminChoices.route) }
+                onDialogConfirm = { show.value = false; navController.navigate(Create2.route); viewModel.setMyData1(selectedBlock, selectedRoom, selectedMachine) },
+                onDialogDismiss = { show.value = false; navController.navigate(AdminChoices.route) }
             )
         }
     }
 }
-
-fun qrExists(block: String, room: String, machine: String, onComplete: (Boolean) -> Unit) {
-    val firestore = Firebase.firestore.collection("Inventário")
-
-    firestore.document(block)
-        .collection(room)
-        .document(machine)
-        .get()
-        .addOnSuccessListener { documentSnapshot ->
-            val exists = documentSnapshot.exists()
-            onComplete(exists)
-        }
-        .addOnFailureListener {
-            onComplete(false)
-        }
-}
-

@@ -2,16 +2,13 @@ package com.example.qr_hitu.screens.adminScreens.scannerAdm
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -23,18 +20,26 @@ import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.functions.addDispositivo
 import com.example.qr_hitu.functions.seeDispositivo
 
-@OptIn(ExperimentalMaterial3Api::class)
+
+//  Tela para atualizar as informações de respetivo QR
 @Composable
 fun ScannerAdminInfoUpdate(navController: NavController, viewModel: ScannerViewModel) {
 
+    //  Informações vindas do QR Code
     val (block, room, machine) = viewModel.myData.value.toString().split(",")
+    //  Vai buscar as especificações
     val spec = seeDispositivo(block, room, machine)
+
     val focusManager = LocalFocusManager.current
+
     val style = MaterialTheme.typography.titleMedium
+    //  Variáveis das especificações
     val name = spec["Nome"]
     val processor = spec["Processador"]
     val ram = spec["Ram"]
     val powerSupply = spec["Fonte"]
+    //  Estados que guardam oq a pessoa escrever
+    var newName by remember { mutableStateOf("") }
     var newProcessor by remember { mutableStateOf("") }
     var newRam by remember { mutableStateOf("") }
     var newPowerSupply by remember { mutableStateOf("") }
@@ -50,7 +55,7 @@ fun ScannerAdminInfoUpdate(navController: NavController, viewModel: ScannerViewM
 
         Spacer(modifier = Modifier.padding(20.dp))
 
-        Column() {
+        Column {
             Text(stringResource(R.string.MInfBlock) +" "+block, style = style, color = MaterialTheme.colorScheme.onSecondary)
             Spacer(modifier = Modifier.padding(10.dp))
             Text(stringResource(R.string.MInfRoom)+" "+room, style = style, color = MaterialTheme.colorScheme.onSecondary)
@@ -60,7 +65,23 @@ fun ScannerAdminInfoUpdate(navController: NavController, viewModel: ScannerViewM
 
         Spacer(modifier = Modifier.padding(20.dp))
 
-        Text(stringResource(R.string.MInfSpecs)+" "+name, style = style, color = MaterialTheme.colorScheme.onSecondary)
+        Text(stringResource(R.string.MInfSpecs), style = style, color = MaterialTheme.colorScheme.onSecondary)
+
+        Spacer(modifier = Modifier.padding(10.dp))
+
+        OutlinedTextField(
+            value = newName,
+            onValueChange = { newName = it },
+            label = { Text(stringResource(R.string.ScanInfoMN)+" "+name) },
+            singleLine = true,
+            shape = MaterialTheme.shapes.large,
+            modifier = Modifier.fillMaxWidth(),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next
+            ),
+            keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) })
+        )
 
         Spacer(modifier = Modifier.padding(10.dp))
 
@@ -114,22 +135,25 @@ fun ScannerAdminInfoUpdate(navController: NavController, viewModel: ScannerViewM
 
         Button(
             onClick = {
-                when{
-                    newProcessor == "" -> newProcessor = "$processor"
-                    newRam == "" -> newRam = "$ram"
-                    newPowerSupply == "" -> newPowerSupply = "$powerSupply"
-                }
+                //  Condição para verificar se o utilizador alterou algum campo
+                //  Caso não vai a informação antiga
+                newName = newName.ifBlank { name.toString() }
+                newProcessor = newProcessor.ifBlank { processor.toString() }
+                newRam = newRam.ifBlank { ram.toString() }
+                newPowerSupply = newPowerSupply.ifBlank { powerSupply.toString() }
+                //  Adiciona o dispositivo "novo"
                 addDispositivo(
                     block,
                     room,
                     machine,
                     hashMapOf(
-                        "Nome" to "$name",
+                        "Nome" to newName,
                         "Processador" to newProcessor,
                         "Ram" to newRam,
                         "Fonte" to newPowerSupply
                     )
                 )
+                //  Volta para trás
                 navController.popBackStack()
             },
             modifier = Modifier

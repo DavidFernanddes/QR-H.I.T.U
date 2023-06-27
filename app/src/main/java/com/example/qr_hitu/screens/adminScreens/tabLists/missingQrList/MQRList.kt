@@ -1,6 +1,7 @@
+@file:Suppress("UNUSED_PARAMETER")
+
 package com.example.qr_hitu.screens.adminScreens.tabLists.missingQrList
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -32,49 +33,26 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.R
 import com.example.qr_hitu.functions.DelDialog
+import com.example.qr_hitu.functions.MissingQrDocs
 import com.example.qr_hitu.functions.delMissing
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.example.qr_hitu.functions.getMissingQR
 
-data class MissingQrDocs(
-    val machine: String,
-    val room: String,
-    val block: String,
-)
 
-private fun getMissingQR(setList: (List<MissingQrDocs>) -> Unit) {
-    val db = Firebase.firestore.collection("Falta QR").get()
-        .addOnSuccessListener {
-            val itemList = it.mapNotNull { document ->
-                val machine = document.getString("Dispositivo")
-                val room = document.getString("Sala")
-                val block = document.getString("Bloco")
-
-                if (machine != null && room != null && block != null) {
-                    MissingQrDocs(machine, room, block)
-                } else {
-                    null
-                }
-            }
-
-            setList(itemList)
-        }
-        .addOnFailureListener { exception ->
-
-            Log.e("Firestore", "Error getting documents: ", exception)
-        }
-}
-
+//  Tela com a lista de alertas de falta de QR
 @Composable
 fun MissingQrList(navController: NavController) {
 
+    //  Estado para guardar a lista de falta de QR
     val (list, setList) = remember { mutableStateOf<List<MissingQrDocs>>(emptyList()) }
+    //  Mostrar Dialog
     val show = remember { mutableStateOf(false) }
 
+    //  Abre Coroutine
     LaunchedEffect(Unit) {
-        getMissingQR(setList)
+        getMissingQR(setList)   //  Chama a função que consegue a lista e guarda no estado
     }
 
+    //  Cria um lista vertical
     LazyVerticalGrid(
         modifier = Modifier
             .fillMaxSize()
@@ -82,6 +60,7 @@ fun MissingQrList(navController: NavController) {
             .padding(horizontal = 2.dp),
         columns = GridCells.Fixed(1)
     ) {
+        //  Para cada alerta na lista cria um Card com as informações necessárias
         items(list) { item ->
             Card(
                 modifier = Modifier
@@ -98,6 +77,7 @@ fun MissingQrList(navController: NavController) {
                         .fillMaxWidth(),
                 ) {
 
+                    //  Condição para verificar qual icon colocar
                     when (item.machine) {
                         "Projetor" -> {
                             Icon(Icons.Filled.VideocamOff, "Projector")
@@ -128,9 +108,11 @@ fun MissingQrList(navController: NavController) {
                         )
                     }
                 }
+                //  Mostra Dialog
                 if(show.value){
                     DelDialog(
                         onDialogDismissed = { show.value = false},
+                        //  Apaga alerta e atualiza a lista
                         onDeleteClick = { delMissing(item.room, item.machine); getMissingQR(setList) },
                         title = stringResource(R.string.delMDtitle),
                         text = stringResource(R.string.delMDtext)

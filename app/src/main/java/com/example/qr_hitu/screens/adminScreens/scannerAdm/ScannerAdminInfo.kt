@@ -1,15 +1,13 @@
+@file:Suppress("UNUSED_PARAMETER")
+
 package com.example.qr_hitu.screens.adminScreens.scannerAdm
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -18,14 +16,17 @@ import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.functions.seeDispositivo
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+//  Tela com as informações do QR lido
 @Composable
 fun ScannerAdminInfo(navController: NavController, viewModel: ScannerViewModel) {
 
+    //  Informações vindas do QR Code
     val (block, room, machine) = viewModel.myData.value.toString().split(",")
+    //  Vai buscar as especificações á firestore
     val spec = seeDispositivo(block, room, machine)
-    val focusManager = LocalFocusManager.current
+
     val style = MaterialTheme.typography.titleMedium
+    //  Variáveis das especificações
     val name = spec["Nome"]
     val processor = spec["Processador"]
     val ram = spec["Ram"]
@@ -42,7 +43,7 @@ fun ScannerAdminInfo(navController: NavController, viewModel: ScannerViewModel) 
 
         Spacer(modifier = Modifier.padding(20.dp))
 
-        Column() {
+        Column {
             Text(stringResource(R.string.MInfBlock)+" "+block, style = style, color = MaterialTheme.colorScheme.onSecondary)
             Spacer(modifier = Modifier.padding(10.dp))
             Text(stringResource(R.string.MInfRoom)+" "+room, style = style, color = MaterialTheme.colorScheme.onSecondary)

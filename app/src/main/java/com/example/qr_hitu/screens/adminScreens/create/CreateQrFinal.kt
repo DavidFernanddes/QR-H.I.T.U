@@ -37,8 +37,8 @@ import com.example.qr_hitu.R
 import com.example.qr_hitu.ViewModels.ViewModel1
 import com.example.qr_hitu.ViewModels.ViewModel2
 import com.example.qr_hitu.components.AdminChoices
-import com.example.qr_hitu.functions.CreateQR
-import com.example.qr_hitu.functions.Snackbar
+import com.example.qr_hitu.functions.createQR
+import com.example.qr_hitu.functions.snackbar
 import com.example.qr_hitu.functions.addDispositivo
 import com.example.qr_hitu.functions.downloadQR
 import com.example.qr_hitu.functions.encryptAES
@@ -46,19 +46,27 @@ import com.example.qr_hitu.functions.encryptionKey
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+//  Tela final para criar QR Code
 @Composable
 fun QrCreateFinal(navController: NavController, viewModel1: ViewModel1, viewModel2: ViewModel2) {
 
+    //  Conteúdo e nome do QR Code
     var content by remember { mutableStateOf("") }
     var qrName by remember { mutableStateOf("") }
+
     val focusManager = LocalFocusManager.current
+    //  Coroutine
     val scope = rememberCoroutineScope()
+    //  Mostrar SnackBars
     val showErr = remember { mutableStateOf(false) }
     val showDone = remember { mutableStateOf(false) }
+    //  Verifica se a pessoa já escreveu um nome para o ficheiro
     val enabled = qrName.isNotEmpty()
 
+    //  Dados vindos das telas CreateQrPhase 1 e 2
     val myData = viewModel1.myData.value
     val myData2 = viewModel2.myData.value
+    //  Map das informações para guardar na db
     val spec = hashMapOf(
         "Nome" to "${myData2?.name}",
         "Processador" to "${myData2?.processor}",
@@ -81,17 +89,19 @@ fun QrCreateFinal(navController: NavController, viewModel1: ViewModel1, viewMode
 
             Spacer(modifier = Modifier.padding(60.dp))
 
+            //  Verifica se a data está vazia antes de adicionar á base de dados
             if (myData != null) {
-                content =
-                    encryptAES("${myData.block},${myData.room},${myData.machine}", encryptionKey)
+                content = encryptAES("${myData.block},${myData.room},${myData.machine}", encryptionKey)
                 addDispositivo(myData.block, myData.room, myData.machine, spec)
             }
 
-            val text = CreateQR(content = content)
-            Image(bitmap = text, contentDescription = "qr", Modifier.size(200.dp))
+            //  Cria o bitmap
+            val bitmap = createQR(content = content)
+            Image(bitmap = bitmap, contentDescription = "qr", Modifier.size(200.dp))
 
             Spacer(modifier = Modifier.height(20.dp))
 
+            //  TextField para escrever o nome do ficheiro
             OutlinedTextField(
                 value = qrName,
                 onValueChange = {
@@ -113,13 +123,17 @@ fun QrCreateFinal(navController: NavController, viewModel1: ViewModel1, viewMode
 
             Spacer(modifier = Modifier.height(30.dp))
 
+            //  Boão para fazer download, apenas está ativo se o utilizador já tiver escrito um nome
             Button(
                 onClick = {
+                    //  Abre coroutine
                     scope.launch {
                         try {
-                            downloadQR(text, qrName)
+                            //  Faz download do QR Code e mostra a snackbar de sucesso
+                            downloadQR(bitmap, qrName)
                             showDone.value = true
                         } catch (e: Exception) {
+                            //  Caso falhe mostra snackbar de erro
                             showErr.value = true
                         }
                     }
@@ -139,11 +153,14 @@ fun QrCreateFinal(navController: NavController, viewModel1: ViewModel1, viewMode
                 )
             }
         }
+        //  Condição para chamar a snackbar de sucesso ou de erro
         when {
             showDone.value -> {
                 Box(contentAlignment = Alignment.BottomCenter) {
-                    Snackbar(text = stringResource(R.string.downloadStext))
+                    snackbar(text = stringResource(R.string.downloadStext))
+                    //  Abre coroutine
                     LaunchedEffect(Unit) {
+                        //  Dá um delay de 2 segundos antes de fechar a snackbar e enviar o utilizador para a tela de escolha inicial
                         delay(2000)
                         showDone.value = false
                         navController.navigate(AdminChoices.route)
@@ -153,11 +170,12 @@ fun QrCreateFinal(navController: NavController, viewModel1: ViewModel1, viewMode
 
             showErr.value -> {
                 Box(contentAlignment = Alignment.BottomCenter) {
-                    Snackbar(text = stringResource(R.string.downloadSEtext))
+                    snackbar(text = stringResource(R.string.downloadSEtext))
+                    //  Abre coroutine
                     LaunchedEffect(Unit) {
+                        //  Dá delay de 2 segundos antes de fechar a snackbar de erro
                         delay(2000)
                         showErr.value = false
-                        navController.navigate(AdminChoices.route)
                     }
                 }
             }

@@ -27,44 +27,16 @@ import androidx.navigation.NavController
 import com.example.qr_hitu.R
 import com.example.qr_hitu.components.ForgotPass
 import com.example.qr_hitu.components.Loading
-import com.example.qr_hitu.components.TabScreen
-import com.example.qr_hitu.components.UserChoices
-import com.example.qr_hitu.functions.Snackbar
+import com.example.qr_hitu.functions.snackbar
 import com.example.qr_hitu.functions.SettingsManager
+import com.example.qr_hitu.functions.loginVerify
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 
-suspend fun performVerification(db: CollectionReference, email: String?): DocumentSnapshot {
-    return withContext(Dispatchers.IO) {
-        return@withContext db.document("$email").get().await()
-    }
-}
 
-fun loginVerify(navController: NavController, db: CollectionReference, email: String?, settingsManager: SettingsManager) {
-    CoroutineScope(Dispatchers.Main).launch {
-        delay(1500)
-        // Perform the verification in the background using suspend functions
-        val result = performVerification(db, email)
-
-        // Navigate to the appropriate screen based on the verification result
-        if (result.exists()) {
-            settingsManager.saveSetting("Admin", "Admin")
-            navController.navigate(TabScreen.route)
-        } else {
-            navController.navigate(UserChoices.route)
-        }
-    }
-}
-
+//  Tela de Login
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun LoginScreen(
@@ -73,16 +45,22 @@ fun LoginScreen(
     isDarkTheme: Boolean = isSystemInDarkTheme()
 ) {
 
-
+    //  Estados para guardar o email e a password
     var emailValue by remember { mutableStateOf("") }
     var passwordValue by remember { mutableStateOf("") }
-    var errorMessage by remember { mutableStateOf("") }
+    //  Estado para verificar se tem de mostrar a palavra-passe ou não
     var passwordVisible by remember { mutableStateOf(false) }
+    //  Mostra Snackbar
     val showSnack = remember { mutableStateOf(false) }
+    //  Ativa componente se o email e password estiverem preenchidos
     val enabled = emailValue.isNotEmpty() && passwordValue.isNotEmpty()
+    //  Mostra Snackbar de erro
     var showError by remember { mutableStateOf(false) }
+
     val focusManager = LocalFocusManager.current
+    //  Coroutine
     val scope = rememberCoroutineScope()
+    //  Variável de tema para trocar icon
     val switch = remember { mutableStateOf("") }
     val theme by rememberUpdatedState(
         if (switch.value == "") {
@@ -90,16 +68,20 @@ fun LoginScreen(
         } else switch.value
     )
 
-
+    //  Abre Coroutine
     scope.launch {
+        //  Verifica se o utilizador tem a opção autoLogin ativa
         if (settingsManager.getSetting("AutoLogin", "false") == "true") {
-            val db = Firebase.firestore.collection("Admin")
+            //  Vai buscar o email do utilizador atual
             val email = Firebase.auth.currentUser?.email
+            //  Delay de 0.5 segundos
             delay(500)
 
+            //  Caso exista utilizador atual
             if (Firebase.auth.currentUser != null) {
+                //  Envia para a tela de Loading e verifica se é admin ou user
                 navController.navigate(Loading.route)
-                loginVerify(navController, db, email, settingsManager)
+                loginVerify(navController, email, settingsManager)
             }
         }
     }
@@ -128,6 +110,7 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.padding(25.dp))
 
+            //  Verifica o tema para mostrar qual logo mostrar
             when (theme) {
                 "Light" -> Image(painterResource(R.drawable.logo_light), "Logo")
                 "Dark" -> Image(painterResource(R.drawable.logo_dark), "Logo")
@@ -186,6 +169,7 @@ fun LoginScreen(
                             Icons.Filled.Visibility
                         else Icons.Filled.VisibilityOff
                         val description = if (passwordVisible) "Hide password" else "Show password"
+                        //  Mostra palavra-passe
                         IconButton(onClick = { passwordVisible = !passwordVisible }) {
                             Icon(imageVector = image, description)
                         }
@@ -202,6 +186,7 @@ fun LoginScreen(
                     modifier = Modifier
                         .fillMaxWidth(),
                     onClick = {
+                        //  Envia para a tela de alteração de palavra-passe
                         navController.navigate(ForgotPass.route)
                     },
                     shape = MaterialTheme.shapes.small
@@ -223,17 +208,19 @@ fun LoginScreen(
 
                 Button(
                     onClick = {
+                        //  Dá log in no utilizador
                         Firebase.auth.signInWithEmailAndPassword(emailValue, passwordValue)
                             .addOnCompleteListener { task ->
+                                //  Caso esteja tudo certo passa para a verificação se é admin ou não
                                 if (task.isSuccessful) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    val db = Firebase.firestore.collection("Admin")
                                     val email = Firebase.auth.currentUser?.email
 
+                                    //  Envia o utilizador para a tela de Loading
                                     navController.navigate(Loading.route)
-                                    loginVerify(navController, db, email, settingsManager)
+                                    loginVerify(navController, email, settingsManager)
 
                                 } else {
+                                    //  Caso dê erro mostra SnackBar de erro
                                     showError = true
                                     showSnack.value = true
                                 }
@@ -252,10 +239,13 @@ fun LoginScreen(
                 }
             }
         }
+
+        //  Condição para ver se tem de mostrar a Snackbar
         if (showSnack.value) {
             Box(contentAlignment = Alignment.BottomCenter) {
-                Snackbar(text = stringResource(R.string.loginStext))
+                snackbar(text = stringResource(R.string.loginStext))
                 LaunchedEffect(Unit) {
+                    //  Dá delay de 3 segundos e desliga a SnackBar
                     delay(3000)
                     showSnack.value = false
                 }

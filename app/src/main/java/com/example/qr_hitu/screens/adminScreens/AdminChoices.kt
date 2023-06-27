@@ -26,6 +26,8 @@ import com.example.qr_hitu.R
 import com.example.qr_hitu.components.ChooseQr
 import com.example.qr_hitu.components.Create1
 
+
+//  Tela de escolha entre transferir um QR Code já existente ou criar um novo
 @Composable
 fun AdminChoices(navController: NavController) {
 
@@ -38,6 +40,7 @@ fun AdminChoices(navController: NavController) {
         Alignment.CenterVertically
     ) {
         Button(
+            //  Envia para a opção de tranferir
             onClick = { navController.navigate(ChooseQr.route) },
             modifier = Modifier
                 .size(150.dp),
@@ -68,6 +71,7 @@ fun AdminChoices(navController: NavController) {
         Spacer(modifier = Modifier.padding(10.dp))
 
         Button(
+            //  Envia para a opção de criar um novo
             onClick = { navController.navigate(Create1.route) },
             modifier = Modifier
                 .size(150.dp),

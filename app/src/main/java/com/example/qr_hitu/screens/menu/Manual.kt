@@ -1,14 +1,13 @@
+@file:Suppress("UNUSED_PARAMETER")
+
 package com.example.qr_hitu.screens.menu
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,6 +20,7 @@ import com.example.qr_hitu.R
 import com.example.qr_hitu.functions.SettingsManager
 
 
+//  Tela com um Manual básico de o que faz/como usar a app
 @Composable
 fun Manual(navController: NavController, settingsManager: SettingsManager) {
 

@@ -1,11 +1,7 @@
 package com.example.qr_hitu.functions
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
@@ -16,13 +12,10 @@ import androidx.compose.material3.*
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import com.example.qr_hitu.R
 import com.example.qr_hitu.ViewModels.MalfunctionViewModel
 import com.example.qr_hitu.ViewModels.ScannerViewModel
@@ -35,18 +28,23 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 import java.util.Locale
 
-@Composable
-fun ScaffoldLayouts(navController: NavController, settingsManager: SettingsManager, viewModel1: ViewModel1, viewModel2: ViewModel2, viewModelSA : ScannerViewModel, viewModelMF : MalfunctionViewModel, switch: MutableState<String>){
+//  Neste ficheiro está a Scaffold que engloba a aplicação toda e também a bottom bar e todas as topbars
 
-    val localContext = LocalContext
+
+//  Função com a Scaffold da app
+@Composable
+fun ScaffoldLayouts(navController: NavHostController, settingsManager: SettingsManager, viewModel1: ViewModel1, viewModel2: ViewModel2, viewModelSA : ScannerViewModel, viewModelMF : MalfunctionViewModel, switch: MutableState<String>){
+
+    //  state da Scaffold
     val scaffoldState = rememberScaffoldState()
-    val navController = rememberNavController()
+    // navegação
     val currentBackStack by navController.currentBackStackEntryAsState()
     val currentDestination = currentBackStack?.destination
     val destinationRoute = currentDestination?.route ?: Login.route
 
     Scaffold(
         topBar = {
+            //  Condição que verifica em que ecrã estamos e chama a topbar indicada
             when {
                 destinationRoute.contains(ScannerAdminInfoUpdate.route) ->  TopBar1(navController = navController, settingsManager = settingsManager)
                 destinationRoute.contains(Create1.route) || destinationRoute.contains(ChooseQr.route) -> TopBar5(navController = navController, settingsManager = settingsManager)
@@ -61,12 +59,14 @@ fun ScaffoldLayouts(navController: NavController, settingsManager: SettingsManag
             }
         },
         bottomBar = {
+            //  Condição para apenas chamar a bottombar quando necessário
             when{
                 destinationRoute.contains(TabScreen.route) || destinationRoute.contains(ScanAdmin.route) || destinationRoute.contains(AdminChoices.route) -> BottomBar(navController = navController)
             }
         },
         scaffoldState = scaffoldState,
     ) { innerPadding ->
+            //  Navegador da aplicação
             QrHituNavHost(
                 navController = navController,
                 settingsManager = settingsManager,
@@ -77,10 +77,10 @@ fun ScaffoldLayouts(navController: NavController, settingsManager: SettingsManag
                 switch = switch,
                 modifier = Modifier.padding(innerPadding)
             )
-
     }
 
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -255,47 +255,46 @@ fun TopBarUni(navController: NavController){
 
 @Composable
 fun BottomBar(navController: NavController){
-
-            BottomAppBar(
-                containerColor = MaterialTheme.colorScheme.primaryContainer
-            ) {
-                NavigationBarItem(
-                    selected = navController.currentBackStackEntry?.destination?.route == TabScreen.route,
-                    label = { Text(text = stringResource(R.string.list), color = MaterialTheme.colorScheme.onPrimaryContainer) },
-                    colors = NavigationBarItemDefaults.colors(
-                        indicatorColor= MaterialTheme.colorScheme.onPrimaryContainer
-                    ),
-                    onClick = { navController.navigate(TabScreen.route) },
-                    icon = {
-                        Icon(Icons.Filled.FormatListBulleted, "Listas")
-                    }
-                )
-                NavigationBarItem(
-                    selected =
-                            navController.currentBackStackEntry?.destination?.route == ScanAdmin.route ||
-                                navController.currentBackStackEntry?.destination?.route == ScannerAdminInfo.route ||
-                                    navController.currentBackStackEntry?.destination?.route == ScannerAdminInfoUpdate.route,
-                    label = { Text(text = stringResource(R.string.scanner), color = MaterialTheme.colorScheme.onPrimaryContainer) },
-                    colors = NavigationBarItemDefaults.colors(
-                        indicatorColor= MaterialTheme.colorScheme.onPrimaryContainer
-                    ),
-                    onClick = { navController.navigate(ScanAdmin.route) },
-                    icon = {
-                        Icon(Icons.Filled.QrCodeScanner, "Scanner")
-                    }
-                )
-                NavigationBarItem(
-                    selected = navController.currentBackStackEntry?.destination?.route == AdminChoices.route,
-                    label = { Text(text = stringResource(R.string.create), color = MaterialTheme.colorScheme.onPrimaryContainer) },
-                    colors = NavigationBarItemDefaults.colors(
-                        indicatorColor= MaterialTheme.colorScheme.onPrimaryContainer
-                    ),
-                    onClick = { navController.navigate(AdminChoices.route) },
-                    icon = {
-                        Icon(Icons.Filled.QrCode2, "Create")
-                    }
-                )
+    BottomAppBar(
+        containerColor = MaterialTheme.colorScheme.primaryContainer
+    ) {
+        NavigationBarItem(
+            selected = navController.currentBackStackEntry?.destination?.route == TabScreen.route,
+            label = { Text(text = stringResource(R.string.list), color = MaterialTheme.colorScheme.onPrimaryContainer) },
+            colors = NavigationBarItemDefaults.colors(
+                indicatorColor= MaterialTheme.colorScheme.onPrimaryContainer
+            ),
+            onClick = { navController.navigate(TabScreen.route) },
+            icon = {
+                Icon(Icons.Filled.FormatListBulleted, "Listas")
             }
+        )
+        NavigationBarItem(
+            selected =
+            navController.currentBackStackEntry?.destination?.route == ScanAdmin.route ||
+                    navController.currentBackStackEntry?.destination?.route == ScannerAdminInfo.route ||
+                    navController.currentBackStackEntry?.destination?.route == ScannerAdminInfoUpdate.route,
+            label = { Text(text = stringResource(R.string.scanner), color = MaterialTheme.colorScheme.onPrimaryContainer) },
+            colors = NavigationBarItemDefaults.colors(
+                indicatorColor= MaterialTheme.colorScheme.onPrimaryContainer
+            ),
+            onClick = { navController.navigate(ScanAdmin.route) },
+            icon = {
+                Icon(Icons.Filled.QrCodeScanner, "Scanner")
+            }
+        )
+        NavigationBarItem(
+            selected = navController.currentBackStackEntry?.destination?.route == AdminChoices.route,
+            label = { Text(text = stringResource(R.string.create), color = MaterialTheme.colorScheme.onPrimaryContainer) },
+            colors = NavigationBarItemDefaults.colors(
+                indicatorColor= MaterialTheme.colorScheme.onPrimaryContainer
+            ),
+            onClick = { navController.navigate(AdminChoices.route) },
+            icon = {
+                Icon(Icons.Filled.QrCode2, "Create")
+            }
+        )
+    }
 }
 
 @Composable
@@ -342,11 +341,15 @@ fun MenuOptions(navController: NavController, settingsManager: SettingsManager){
     }
 }
 
+
+//  Função para retirar o nome do utilizador apartir do email (isto contando que o email está no formato x.y@outlook.pt)
 fun emailString (): String {
+    //  Pega no email do utilizador separa e torna a primeira letra em maiúscula
     val email = Firebase.auth.currentUser?.email!!.split(".")[0].split("@")[0].replaceFirstChar {
         if (it.isLowerCase()) it.titlecase(
             Locale.getDefault()
         ) else it.toString()
     }
+    //  Retorna a string
     return email
 }

@@ -26,6 +26,8 @@ import com.example.qr_hitu.R
 import com.example.qr_hitu.components.MQRLocal
 import com.example.qr_hitu.components.ScanProf
 
+
+//  Tela de escolha para o user com opção de adicionar nova avaria ou alertar falta de QR Code
 @Composable
 fun PrimaryChoice(navController: NavController) {
 
@@ -38,6 +40,7 @@ fun PrimaryChoice(navController: NavController) {
         Alignment.CenterVertically
     ) {
         Button(
+            //  Envia para tela da camara
             onClick = { navController.navigate(ScanProf.route) },
             modifier = Modifier
                 .size(150.dp),
@@ -68,6 +71,7 @@ fun PrimaryChoice(navController: NavController) {
         Spacer(modifier = Modifier.padding(10.dp))
 
         Button(
+            //  Envia para a tela de alerta de falta de QR Code
             onClick = { navController.navigate(MQRLocal.route) },
             modifier = Modifier
                 .size(150.dp),

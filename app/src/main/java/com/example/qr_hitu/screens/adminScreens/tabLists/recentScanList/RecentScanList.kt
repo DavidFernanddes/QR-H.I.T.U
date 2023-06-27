@@ -1,6 +1,5 @@
 package com.example.qr_hitu.screens.adminScreens.tabLists.recentScanList
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -16,7 +15,6 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Computer
-import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.VideocamOff
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -34,19 +32,19 @@ import androidx.navigation.NavController
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.components.ScannerAdminInfo
 import com.example.qr_hitu.functions.SettingsManager
+import com.example.qr_hitu.functions.loadListFromSettings
 
-private fun loadListFromSettings(settingsManager: SettingsManager): List<String> {
-    val qrListAsString = settingsManager.getSetting("RecentsList", "")
-    return if (qrListAsString.isBlank()) emptyList() else qrListAsString.split("//")
-}
 
+//  Tela com a lista dos 5 ultimos QRs lidos pelo utilizador
 @Composable
 fun RecentScanList(navController: NavController, settingsManager: SettingsManager, viewModel: ScannerViewModel) {
 
+    //  Estado que guarda a lista
     val (list, setList) = remember { mutableStateOf<List<String>>(emptyList()) }
 
+    //  Abre Coroutine
     LaunchedEffect(Unit) {
-        setList(loadListFromSettings(settingsManager).reversed())
+        setList(loadListFromSettings(settingsManager).reversed())   //  Vai buscar a lista ás settings e guarda no estado
     }
 
     LazyVerticalGrid(
@@ -56,16 +54,21 @@ fun RecentScanList(navController: NavController, settingsManager: SettingsManage
             .padding(horizontal = 2.dp),
         columns = GridCells.Fixed(1)
     ) {
+        //  Para cada item na lista cria um Card com as informações necessárias
         items(list) { item ->
+            //  Pega nos valores guardados numa string
             val itemElements = item.split(",")
+            //  Verifica se está a retornar a quantidade certa de campos
             if (itemElements.size >= 4) {
-                val (block, room, machine, date) = itemElements.take(4)
+                //  Apenas é necessário os room, machine, date por isso o primeiro campo está marcado como _
+                val (_, room, machine, date) = itemElements.take(4)
 
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp)
                         .clickable {
+                            //  Envia para a tela que mostra as especificações
                             navController.navigate(ScannerAdminInfo.route)
                             viewModel.setMyData(item)
                         },
@@ -79,6 +82,7 @@ fun RecentScanList(navController: NavController, settingsManager: SettingsManage
                             .fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
+                        //  Verifica qual icon deve ser usado
                         if (machine == "Projetor") {
                             Icon(Icons.Filled.VideocamOff, "Projector")
                         } else {

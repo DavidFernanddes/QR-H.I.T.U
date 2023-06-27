@@ -2,6 +2,7 @@ package com.example.qr_hitu.screens.login
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,6 +22,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,16 +36,22 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.R
-import com.example.qr_hitu.functions.downloadQR
+import com.example.qr_hitu.functions.snackbar
+import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
 
 
+//  Tela que pede o email ao utilizador caso ele tenha se esquecido da palavra-passe
 @Composable
 fun ForgotPass(navController: NavController) {
 
+    //  Estado para guardar o email
     var email by remember { mutableStateOf("") }
+    //  Mostrar Snackbar
+    var show by remember { mutableStateOf(false) }
+
     val focusManager = LocalFocusManager.current
 
     Column(
@@ -88,8 +96,8 @@ fun ForgotPass(navController: NavController) {
 
         Button(
             onClick = {
-                Firebase.auth.sendPasswordResetEmail(email)
-                navController.popBackStack()
+                //  Mostra Snackbar
+                show = true
             },
             Modifier
                 .fillMaxWidth()
@@ -104,6 +112,22 @@ fun ForgotPass(navController: NavController) {
                 stringResource(R.string.send),
                 style = MaterialTheme.typography.labelLarge
             )
+        }
+    }
+
+    //  Condição para mostrar Snackbar
+    if (show) {
+        Box(contentAlignment = Alignment.BottomCenter) {
+            snackbar(text = stringResource(R.string.resetPassStext))
+            //  Abre Coroutine
+            LaunchedEffect(Unit) {
+                //  Envia email
+                Firebase.auth.sendPasswordResetEmail(email)
+                //  Dá um delay de 2 segundos e volta para trás
+                delay(2000)
+                show = false
+                navController.popBackStack()
+            }
         }
     }
 }

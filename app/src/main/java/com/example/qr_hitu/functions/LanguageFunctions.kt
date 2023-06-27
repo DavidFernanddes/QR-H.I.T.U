@@ -1,12 +1,13 @@
 package com.example.qr_hitu.functions
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.content.res.Configuration
 import java.util.Locale
 
+//  Funções para troca de lingua
 
+
+//  Define o Locale que indica ao código qual stringResource tem de usar
 fun setLocale(language: String, context: Context) {
     val locale = Locale(language)
     Locale.setDefault(locale)
@@ -14,12 +15,4 @@ fun setLocale(language: String, context: Context) {
     val configuration = Configuration(resources.configuration)
     configuration.setLocale(locale)
     resources.updateConfiguration(configuration, resources.displayMetrics)
-}
-
-fun recreateActivity(context: Context) {
-    val activity = context as Activity
-    val intent = Intent(context, activity::class.java)
-    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-    context.startActivity(intent)
-    activity.finish()
 }

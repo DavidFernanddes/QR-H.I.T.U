@@ -36,25 +36,34 @@ import androidx.navigation.NavController
 import com.example.qr_hitu.R
 import com.example.qr_hitu.ViewModels.ViewModel1
 import com.example.qr_hitu.components.AdminChoices
-import com.example.qr_hitu.functions.CreateQR
-import com.example.qr_hitu.functions.Snackbar
+import com.example.qr_hitu.functions.createQR
+import com.example.qr_hitu.functions.snackbar
 import com.example.qr_hitu.functions.downloadQR
 import com.example.qr_hitu.functions.encryptAES
 import com.example.qr_hitu.functions.encryptionKey
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+
+//  Tela de download do QR Code requisitado
 @Composable
 fun TransferQr(navController: NavController, viewModel: ViewModel1) {
 
+    //  Conteúdo do QR Code
     var content by remember { mutableStateOf("") }
+    //  Nome do ficheiro
     var qrName by remember { mutableStateOf("") }
+
     val focusManager = LocalFocusManager.current
+    //  Coroutine
     val scope = rememberCoroutineScope()
+    //  Mostrar Snackbar de sucesso/erro
     val showErr = remember { mutableStateOf(false) }
     val showDone = remember { mutableStateOf(false) }
+    //  Ativa o componente caso o ficheiro já tenha nome
     val enabled = qrName.isNotEmpty()
 
+    //  Dados vindos da tela anterior
     val myData = viewModel.myData.value
 
 
@@ -72,11 +81,13 @@ fun TransferQr(navController: NavController, viewModel: ViewModel1) {
 
             Spacer(modifier = Modifier.padding(60.dp))
 
+            //  Verifica se os dados não vieram vazios
             if (myData != null) {
+                //  Encripta o conteúdo
                 content = encryptAES("${myData.block},${myData.room},${myData.machine}", encryptionKey)
             }
 
-            val text = CreateQR(content = content)
+            val text = createQR(content = content)
             Image(bitmap = text, contentDescription = "qr", Modifier.size(200.dp))
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -104,11 +115,15 @@ fun TransferQr(navController: NavController, viewModel: ViewModel1) {
 
             Button(
                 onClick = {
+                    //  Abre Coroutine
                     scope.launch {
                         try {
+                            //  Faz download da imagem para a pasta de downloads
                             downloadQR(text, qrName)
+                            //  Mostra Snackbar de erro
                             showDone.value = true
                         } catch (e: Exception) {
+                            //  Caso de erro mostra Snackbar de erro
                             showErr.value = true
                         }
                     }
@@ -128,11 +143,14 @@ fun TransferQr(navController: NavController, viewModel: ViewModel1) {
                 )
             }
         }
+        //  Condição para mostrar a Snackbar certa
         when {
             showDone.value -> {
                 Box(contentAlignment = Alignment.BottomCenter) {
-                    Snackbar(text = stringResource(R.string.downloadStext))
+                    snackbar(text = stringResource(R.string.downloadStext))
+                    //  Abre Coroutine
                     LaunchedEffect(Unit) {
+                        //  Dá um delay de 2 segundos e depois envia o utilizador para a tela de escolha
                         delay(2000)
                         showDone.value = false
                         navController.navigate(AdminChoices.route)
@@ -142,11 +160,12 @@ fun TransferQr(navController: NavController, viewModel: ViewModel1) {
 
             showErr.value -> {
                 Box(contentAlignment = Alignment.BottomCenter) {
-                    Snackbar(text = stringResource(R.string.downloadSEtext))
+                    snackbar(text = stringResource(R.string.downloadSEtext))
+                    //  Abre Coroutine
                     LaunchedEffect(Unit) {
+                        //  Dá um delay de 2 segundos
                         delay(2000)
                         showErr.value = false
-                        navController.navigate(AdminChoices.route)
                     }
                 }
             }

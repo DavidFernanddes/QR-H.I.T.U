@@ -19,14 +19,18 @@ import com.example.qr_hitu.R
 import com.example.qr_hitu.components.Create3
 import com.example.qr_hitu.ViewModels.ViewModel2
 
+//  Tela intermediária para criar QR Code
 @Composable
 fun QrCreatePhase2(navController: NavController, viewModel: ViewModel2) {
 
+    //  especificações
     var name by remember { mutableStateOf("") }
     var processor by remember { mutableStateOf("") }
     var ram by remember { mutableStateOf("") }
     var powerSupply by remember { mutableStateOf("") }
+
     val focusManager = LocalFocusManager.current
+    //  Ativa botão se todos os campos estiverem preenchidos
     var enabled by remember { mutableStateOf(false) }
 
     Column(
@@ -127,24 +131,27 @@ fun QrCreatePhase2(navController: NavController, viewModel: ViewModel2) {
 
         Spacer(modifier = Modifier.padding(10.dp))
 
+        //  Verifica se já todos os campos estão preenchidos
         if (name.isNotEmpty() && processor.isNotEmpty() && ram.isNotEmpty() && powerSupply.isNotEmpty()) {
             enabled = true
         }
-            Button(
-                onClick = {
-                    viewModel.setMyData2(name, processor, ram, powerSupply)
-                    navController.navigate(Create3.route)
-                },
-                Modifier
-                    .fillMaxWidth()
-                    .height(50.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                ),
-                enabled = enabled
-            ) {
-                Text(text = stringResource(R.string.createContinue), style = MaterialTheme.typography.labelLarge)
-            }
+
+        Button(
+            onClick = {
+                //  Guarda as informações e passa para a próxima fase
+                viewModel.setMyData2(name, processor, ram, powerSupply)
+                navController.navigate(Create3.route)
+            },
+            Modifier
+                .fillMaxWidth()
+                .height(50.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+            ),
+            enabled = enabled
+        ) {
+            Text(text = stringResource(R.string.createContinue), style = MaterialTheme.typography.labelLarge)
+        }
     }
 }

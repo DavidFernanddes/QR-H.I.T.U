@@ -3,7 +3,6 @@ package com.example.qr_hitu.screens.adminScreens.transfer
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
@@ -11,9 +10,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -22,37 +19,49 @@ import androidx.navigation.NavController
 import com.example.qr_hitu.R
 import com.example.qr_hitu.ViewModels.ViewModel1
 import com.example.qr_hitu.components.TransferQr
+import com.example.qr_hitu.functions.existentPcs
 
+//  Tela para o utilizador escolher o local onde está o QR que deseja fazer download
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChooseQr(navController: NavController, viewModel: ViewModel1) {
 
-    val showState = remember { mutableStateOf(false) }
-    val show by rememberUpdatedState(showState.value)
-
     var textFiledSize by remember { mutableStateOf(Size.Zero) }
 
+    //  Variáveis para verificar se a dropbox está expandida
     var expanded3 by remember { mutableStateOf(false) }
     var expanded2 by remember { mutableStateOf(false) }
     var expanded by remember { mutableStateOf(false) }
 
+    //  Variáveis para verificar se os componentes estão ativos
     var enabled3 by remember { mutableStateOf(false) }
     var enabled2 by remember { mutableStateOf(false) }
     var enabled by remember { mutableStateOf(false) }
 
-    val blocks = listOf("Bloco A", "Bloco B", "Bloco C", "Bloco D", "Bloco E")
+    //  Informação das dropboxes
+    val blocks = listOf(/*"Bloco A", "Bloco B", "Bloco C", "Bloco D", */"Bloco E")
     var rooms by remember { mutableStateOf(listOf<String>()) }
-    val machines =
-        listOf("Computador 1", "Computador 2", "Computador 3", "Computador 4", "Computador 5")
+    val (machines, setMachines) = remember { mutableStateOf(listOf<String>()) }
 
+    //  Informação selecionada pelo utilizador
     var selectedBlock by remember { mutableStateOf("") }
     var selectedRoom by remember { mutableStateOf("") }
+    var room by remember { mutableStateOf("") }
     var selectedMachine by remember { mutableStateOf("") }
 
+    //  Condições para ativar os componentes
     enabled = selectedBlock.isNotEmpty()
-    enabled2 = selectedRoom.isNotEmpty()
+    if ((selectedRoom.isNotBlank() && machines.isEmpty()) || room != selectedRoom) {
+        room = selectedRoom
+        //  Função para ir á firestore buscar quais computadores aquela sala tem
+        existentPcs(block = selectedBlock, room = selectedRoom, setMachines = setMachines)
+        if (machines.isEmpty()) {
+            enabled2 = true
+        }
+    }
     enabled3 = selectedMachine.isNotEmpty()
 
+    //  Dependendo se a dropbox está aberta mostra um icon diferente
     val icon = if (expanded) {
         Icons.Filled.KeyboardArrowUp
     } else {
@@ -193,7 +202,7 @@ fun ChooseQr(navController: NavController, viewModel: ViewModel1) {
             }
         ) {
             OutlinedTextField(
-                value = selectedMachine,
+                value = if (machines.contains(selectedMachine)) selectedMachine else "",
                 readOnly = true,
                 enabled = enabled2,
                 onValueChange = { selectedMachine = it },
@@ -233,6 +242,7 @@ fun ChooseQr(navController: NavController, viewModel: ViewModel1) {
 
         Button(
             onClick = {
+                //  Guarda a informação e vai para a tela de download
                 viewModel.setMyData1(selectedBlock, selectedRoom, selectedMachine)
                 navController.navigate(TransferQr.route)
             },

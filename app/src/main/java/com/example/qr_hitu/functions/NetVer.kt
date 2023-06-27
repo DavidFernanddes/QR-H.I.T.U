@@ -1,3 +1,5 @@
+@file:Suppress("UNUSED_PARAMETER")
+
 package com.example.qr_hitu.functions
 
 import android.content.Context
@@ -13,9 +15,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.WifiOff
-import androidx.compose.material.icons.outlined.WifiOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -33,13 +33,17 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 
+//  Este ficheiro tem toda a logística para perceber se o utilizador tem conexão á internet ou não
 
+
+//  Class com os 2 estados de conexão
 sealed class ConnectionState {
     object Available : ConnectionState()
     object Unavailable : ConnectionState()
 }
 
 
+//  Variável que guarda estado da conexão
 val Context.currentConnectivityState: ConnectionState
     get() {
         val connectivityManager =
@@ -47,6 +51,7 @@ val Context.currentConnectivityState: ConnectionState
         return getCurrentConnectivityState(connectivityManager)
     }
 
+//  Função para conseguir o estado da conexão
 private fun getCurrentConnectivityState(
     connectivityManager: ConnectivityManager
 ): ConnectionState {
@@ -56,15 +61,17 @@ private fun getCurrentConnectivityState(
             ?: false
     }
 
+    //  Se verificar que está conectado retorna Available senão retorna Unavailable
     return if (connected) ConnectionState.Available else ConnectionState.Unavailable
 }
 
 
+//  Observa o estado da conexão em flow
 @ExperimentalCoroutinesApi
 fun Context.observeConnectivityAsFlow() = callbackFlow {
     val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-    val callback = NetworkCallback { connectionState -> trySend(connectionState) }
+    val callback = networkCallback { connectionState -> trySend(connectionState) }
 
     val networkRequest = NetworkRequest.Builder()
         .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
@@ -72,18 +79,17 @@ fun Context.observeConnectivityAsFlow() = callbackFlow {
 
     connectivityManager.registerNetworkCallback(networkRequest, callback)
 
-    // Set current state
     val currentState = getCurrentConnectivityState(connectivityManager)
     trySend(currentState)
 
-    // Remove callback when not used
     awaitClose {
-        // Remove listeners
         connectivityManager.unregisterNetworkCallback(callback)
     }
 }
 
-fun NetworkCallback(callback: (ConnectionState) -> Unit): ConnectivityManager.NetworkCallback {
+
+//  Retorna ConnectionState.Available ou Connection.State Unavailable
+fun networkCallback(callback: (ConnectionState) -> Unit): ConnectivityManager.NetworkCallback {
     return object : ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network: Network) {
             callback(ConnectionState.Available)
@@ -96,19 +102,19 @@ fun NetworkCallback(callback: (ConnectionState) -> Unit): ConnectivityManager.Ne
 }
 
 
+//  Pega no valor conseguido em context.observeConnectivityAsFlow e transforma num estado
 @ExperimentalCoroutinesApi
 @Composable
 fun connectivityState(): State<ConnectionState> {
     val context = LocalContext.current
 
-    // Creates a State<ConnectionState> with current connectivity state as initial value
     return produceState(initialValue = context.currentConnectivityState) {
-        // In a coroutine, can make suspend calls
         context.observeConnectivityAsFlow().collect { value = it }
     }
 }
 
 
+//  Tela com aviso de falta de conexão
 @Composable
 fun WifiWarn(navController: NavController) {
 

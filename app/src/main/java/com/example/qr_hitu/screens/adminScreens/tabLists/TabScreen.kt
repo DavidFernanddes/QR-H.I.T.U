@@ -1,7 +1,6 @@
 package com.example.qr_hitu.screens.adminScreens.tabLists
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -11,10 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qr_hitu.R
 import com.example.qr_hitu.ViewModels.MalfunctionViewModel
@@ -24,13 +20,18 @@ import com.example.qr_hitu.screens.adminScreens.tabLists.malfunctionsList.MalfLi
 import com.example.qr_hitu.screens.adminScreens.tabLists.missingQrList.MissingQrList
 import com.example.qr_hitu.screens.adminScreens.tabLists.recentScanList.RecentScanList
 
+//  Tela com uma TopTab para dar acesso a cada uma das 3 listas da app
 @Composable
 fun TabLayout(navController: NavController, settingsManager: SettingsManager, viewModelSA: ScannerViewModel, viewModelMF: MalfunctionViewModel) {
 
+    //  Estado da toptab
     var state by remember { mutableStateOf(0) }
+    //  Titulos das tabs
     val titles = listOf(stringResource(R.string.malf), stringResource(R.string.recent), stringResource(R.string.missingQR))
+
     Column {
         TabRow(selectedTabIndex = state) {
+            //  Cria os 3 titulos na toptab e verifica qual tem de estar ativo
             titles.forEachIndexed { index, title ->
                 Tab(
                     selected = state == index,
@@ -39,6 +40,7 @@ fun TabLayout(navController: NavController, settingsManager: SettingsManager, vi
                 )
             }
         }
+        //  Condição para mostrar a lista selecionada
         when (state) {
             0 -> MalfList(
                 navController = navController,

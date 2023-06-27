@@ -86,6 +86,7 @@
             ram -> line 77
             power -> line 78
             <string name="ScanInfoUpd">Atualizar</string>
+            <string name="ScanInfoMN">Nome: </string>
         //Create
             //AdminChoice
                 <string name="transfer">Transferir</string>
@@ -102,19 +103,19 @@
                 <string name="createProcessor">Processador</string>
                 <string name="createRam">Ram</string>
                 <string name="createPower">Fonte</string>
-                continue -> line 92
+                continue -> line 99
             //CreateFinal
                 <string name="createNamePlaceholder">Escreva o nome do ficheiro</string>
                 <string name="createDownload">Transferir Qr Code</string>
             //TranferChoose
-                local -> line 94
-                block -> line 95
-                room -> line 96
-                machine -> line 97
-                continue -> line 98
+                local -> line 95
+                block -> line 96
+                room -> line 97
+                machine -> line 98
+                continue -> line 99
             //TransferQR
-                NamePlaceholder -> line 107
-                download -> line 108
+                NamePlaceholder -> line 108
+                download -> line 109
     //Dialogs
         <string name="confirm">Sim</string>
         <string name="dismiss">Não</string>

@@ -1,39 +1,17 @@
+@file:Suppress("UNUSED_PARAMETER")
+
 package com.example.qr_hitu.components
 
-import androidx.compose.animation.core.animate
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Arrangement
+
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.Icon
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.WifiOff
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.qr_hitu.R
 import com.example.qr_hitu.ViewModels.MalfunctionViewModel
 import com.example.qr_hitu.ViewModels.ScannerViewModel
 import com.example.qr_hitu.ViewModels.ViewModel1
@@ -66,8 +44,10 @@ import com.example.qr_hitu.screens.profScreens.missingQr.MQRLocal
 import com.example.qr_hitu.screens.profScreens.PrimaryChoice
 import com.example.qr_hitu.screens.profScreens.scanner.ScannerInput
 import com.example.qr_hitu.screens.profScreens.scanner.ScannerTeachScreen
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-
+//Função de navegação da app
+@OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 fun QrHituNavHost(
     navController: NavHostController = rememberNavController(),
@@ -80,12 +60,16 @@ fun QrHituNavHost(
     switch: MutableState<String>,
     modifier: Modifier
 ){
+    //Variáveis usadas para o controlo de conexão á internet da app
     val netstate by connectivityState()
     val isConnected = netstate === ConnectionState.Available
 
+    //Inicio da UI
+    //Coluna que contém o navegador ou NavHost
+    Column {
 
-    Column() {
-
+        //NavHost é oq controla a navegação da app, nesta função contém todas as telas com a respetiva função para cada
+        //É aqui que é ligado os objetos definidos na ficheiro HituDestination a cada ecrã
         NavHost(
             navController = navController,
             startDestination = startDestination
@@ -171,13 +155,18 @@ fun QrHituNavHost(
         }
     }
 
+    //Condição que verifica se a varíavel isConnected == fales
     if (!isConnected) {
+        //Para evitar repetição temos esta condição que verifica se o utilizador já está ou não na tela de erro por falta de internet
         if (navController.currentDestination!!.route != WifiWarn.route) {
+            //Navegação
             navController.navigate(WifiWarn.route)
         }
     }
+    //Condição para que assim que o utilizador voltar a ter internet e ainda esteja na tela de erro voltar para trás
     if (navController.currentDestination!!.route == WifiWarn.route) {
         if (isConnected) {
+            //Navegação
             navController.popBackStack()
         }
     }

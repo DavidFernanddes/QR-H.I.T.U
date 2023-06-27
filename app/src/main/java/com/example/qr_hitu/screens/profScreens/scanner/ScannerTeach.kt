@@ -1,6 +1,5 @@
 package com.example.qr_hitu.screens.profScreens.scanner
 
-
 import android.Manifest
 import android.app.Activity
 import android.content.Context
@@ -38,15 +37,21 @@ import java.util.concurrent.Executors
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
+
+//  Tela com a camara do utilizador para dar scan nos QR Codes
 @androidx.annotation.OptIn(androidx.camera.core.ExperimentalGetImage::class)
 @Composable
 fun ScannerTeachScreen(navController: NavController, viewModel: ScannerViewModel){
+    //  Pede permissão para usar a camara
     var permission = true
     val requestPermissionLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
         permission = isGranted
     }
+
+    //  Mostrar Dialog
     val show = remember { mutableStateOf(0) }
 
+    //  Definições para a camara
     val context = LocalContext.current as Activity
     val lensFacing = CameraSelector.LENS_FACING_BACK
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -66,6 +71,7 @@ fun ScannerTeachScreen(navController: NavController, viewModel: ScannerViewModel
         ).build()
     val scanner = BarcodeScanning.getClient(options)
 
+    //  Procedimento para pedir permissão ao utilizador para poder usar a camara
     fun requestCameraPermission() {
         when {
             ContextCompat.checkSelfPermission(
@@ -84,10 +90,10 @@ fun ScannerTeachScreen(navController: NavController, viewModel: ScannerViewModel
         }
     }
 
+    //  Procedimento para analisar imagem
     fun processImageProxy(
         barcodeScanner: BarcodeScanner,
-        imageProxy: ImageProxy,
-        cameraProvider: ProcessCameraProvider
+        imageProxy: ImageProxy
     ) {
         imageProxy.image?.let { image ->
             val inputImage =
@@ -95,40 +101,45 @@ fun ScannerTeachScreen(navController: NavController, viewModel: ScannerViewModel
                     image,
                     imageProxy.imageInfo.rotationDegrees
                 )
-
+            //  Processa a imagem
             barcodeScanner.process(inputImage)
                 .addOnSuccessListener { barcodeList ->
                     val barcode = barcodeList.getOrNull(0)
-
+                    //  Código do QR
                     barcode?.rawValue?.let { value ->
+                        //  Condição que verifica se o valor no QR está encriptado
                         if (isEncryptedString(value)) {
+                            //  Desencripta o valor no QR
                             val decodedValue = decryptAES(value, encryptionKey)
-
+                            //  Verifica se o conteúdo não coincide
                             if(!Regex("""Bloco \w+,Sala \p{all}+,\w+\w+""").containsMatchIn(decodedValue)){
+                                //  Mostra Dialog de erro
                                 show.value = 2
                             }else{
+                                //  Guarda os dados do QR e mostra Dialog
                                 viewModel.setMyData(decodedValue)
                                 show.value = 1
                             }
                         } else {
+                            //  Mostra Dialog de erro
                             show.value = 2
                         }
                     }
                 }
-                .addOnFailureListener {
-
-                }
                 .addOnCompleteListener {
+                    //  Fecha o procedimento
                     imageProxy.image?.close()
                     imageProxy.close()
                 }
         }
     }
 
+    //  Coroutine para pedir permissão para usar a camara
     LaunchedEffect(key1 = true) {
         requestCameraPermission()
     }
 
+    //  Função para conseguir o cameraProvider
     suspend fun Context.getCameraProvider(): ProcessCameraProvider =
         suspendCoroutine { continuation ->
             ProcessCameraProvider.getInstance(this).also { cameraProvider ->
@@ -138,6 +149,7 @@ fun ScannerTeachScreen(navController: NavController, viewModel: ScannerViewModel
             }
         }
 
+    //  Coroutine que inicia a camara
     LaunchedEffect(key1 = permission) {
         val cameraProvider = context.getCameraProvider()
         cameraProvider.unbindAll()
@@ -150,37 +162,43 @@ fun ScannerTeachScreen(navController: NavController, viewModel: ScannerViewModel
 
         preview.setSurfaceProvider(previewView.surfaceProvider)
 
+        //  Verifica se existe QR Code e envia para a função de tratamento dos respetivo
         analysisUseCase.setAnalyzer(
             Executors.newSingleThreadExecutor()
         ) { imageProxy ->
-            processImageProxy(scanner, imageProxy, cameraProvider)
+            processImageProxy(scanner, imageProxy)
         }
     }
 
+    //  Coroutine que ativa sempre que esta tela saí da composição
     DisposableEffect(Unit){
         onDispose {
-            cameraExecutor.shutdown()
+            //  Se trocarmos de tela ativa
+            //  Esta condição foi necessária para evitar que sempre que um dialog abra a camara tenha de reiniciar
+            if (navController.currentDestination!!.route != ScanProf.route) {
+                cameraExecutor.shutdown()
+            }
         }
     }
 
+    //  Condição que verifica a permissão
     if (permission){
         AndroidView({ previewView }, modifier = Modifier.fillMaxSize())
+        //  Condição para mostrar Dialog de erro ou perguntar se quer adicionar avaria
         when(show.value){
             1 -> {
-                Malf_ErrorDialogs(onDialogDismissed = { viewModel.myData.value == ""
+                Malf_ErrorDialogs(onDialogDismissed = {
                     show.value = 0
                     navController.navigate(ScanProf.route)
                 }, navController, Err = false)
             }
             2 -> {
-                Malf_ErrorDialogs(onDialogDismissed = { viewModel.myData.value == ""
+                Malf_ErrorDialogs(onDialogDismissed = {
                     show.value = 0
                     navController.navigate(ScanProf.route)
                 }, navController, Err = true)
             }
         }
-    } else {
-        Text("Permission not Granted")
     }
 }
 

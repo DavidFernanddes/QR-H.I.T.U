@@ -1,6 +1,6 @@
 package com.example.qr_hitu.components
 
-
+//Neste ficheiro é definido objetos que fazem referência a cada ecrã da aplicação para serem utilizados na navegação
 interface HituDestination {
     val route: String
 }
