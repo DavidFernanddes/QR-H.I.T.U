@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "110555536250",
+    "firebase_url": "https://pap-scanner-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "pap-scanner",
+    "storage_bucket": "pap-scanner.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:110555536250:android:b3177b01fcf68c873d54c3",
+        "android_client_info": {
+          "package_name": "com.example.qr_hitu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "110555536250-7r3oij551hqjdr3r326n93p4tgmnbne5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFDbpcSx7PtERyv_SdBSZn0qaHV6VCzus"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "110555536250-7r3oij551hqjdr3r326n93p4tgmnbne5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

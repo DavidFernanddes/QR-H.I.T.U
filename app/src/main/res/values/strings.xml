@@ -1,3 +1,195 @@
 <resources>
     <string name="app_name">QR-H.I.T.U</string>
+
+    //Settings
+        //Look
+            <string name="theme">Tema</string>
+            <string name="look">Aspeto</string>
+            <string name="themeL">Claro</string>
+            <string name="themeD">Escuro</string>
+            <string name="lang">Idioma</string>
+            <string name="langPT">Português</string>
+            <string name="langEN">Inglês</string>
+        //Security
+            <string name="security">Segurança</string>
+            <string name="autoLogin">Login Automático</string>
+            <string name="lockSession">Bloquear Sessão</string>
+            <string name="changePass">Alterar Palavra-passe</string>
+        //About
+            <string name="about">Acerca de</string>
+            <string name="aboutApp">Sobre</string>
+
+
+    //Navigation
+        //BottomBar
+            <string name="list">Listas</string>
+            <string name="scanner">Scanner</string>
+            <string name="create">Criar</string>
+        //Menu
+            <string name="settings">Definições</string>
+            <string name="manual">Manual</string>
+            <string name="logout">Sair de Sessão</string>
+
+    //Login
+        <string name="password">Palavra-passe</string>
+        <string name="login">Entrar</string>
+        <string name="forgotPass">Esqueceu-se da palavra-passe?</string>
+
+    //ForgotPass
+        <string name="resetPass">Alterar palavra-passe</string>
+        <string name="send">Enviar</string>
+
+    //Loading
+        <string name="loading">A Iniciar Sessão...</string>
+
+    //User
+        //UserChoices
+            scanner -> line 26
+            <string name="missingQR">Falta de QR</string>
+        //MalfInput
+            <string name="problem">Qual é o problema ?</string>
+            <string name="problemChoice">Escolha qual o seu problema</string>
+            <string name="problemDesc">Descreva o problema</string>
+            <string name="problemOther">Outro</string>
+            <string name="urgent">Urgente ?</string>
+            <string name="problemSend">Enviar</string>
+        //MissingQR
+            <string name="mQRLocal">Escolha a localização</string>
+            <string name="mQRBlock">Escolha o bloco</string>
+            <string name="mQRRoom">Escolha a uma sala</string>
+            <string name="mQRMachine">Escolha a máquina</string>
+            <string name="mQRSend">Enviar</string>
+
+    //Admin
+        //TopTab
+            <string name="malf">Avarias</string>
+            <string name="recent">Recentes</string>
+            <string name="missingQr">Falta de Qr</string>
+        //MalfInfo
+            <string name="MInfSender">Remetente: </string>
+            <string name="MInfBlock">Bloco: </string>
+            <string name="MInfRoom">Sala: </string>
+            <string name="MInfMachine">Máquina: </string>
+            <string name="MInfUrgent">Urgente</string>
+            <string name="MInfMalf">Avaria: </string>
+            <string name="MInfSpecs">Especificações: </string>
+            <string name="MInfProcessor">Processador: </string>
+            <string name="MInfRam">Ram: </string>
+            <string name="MInfPower">Fonte: </string>
+            <string name="MInfSend">Resolvido</string>
+        //ScanInfo / ScanInfoUpdate
+            block -> line 70
+            room -> line 71
+            machine -> line 72
+            specs -> line 75
+            processor -> line 76
+            ram -> line 77
+            power -> line 78
+            <string name="ScanInfoUpd">Atualizar</string>
+            <string name="ScanInfoMN">Nome: </string>
+        //Create
+            //AdminChoice
+                <string name="transfer">Transferir</string>
+                <string name="createQR">Criar Qr</string>
+            //Create1
+                <string name="createLocal">Escolha a localização</string>
+                <string name="createBlock">Escolha um bloco</string>
+                <string name="createRoom">Escolha uma sala</string>
+                <string name="createMachine">Escolha uma máquina</string>
+                <string name="createContinue">Continuar</string>
+            //Create2
+                <string name="createSpecs">Escreva as especificações</string>
+                <string name="createName">Nome</string>
+                <string name="createProcessor">Processador</string>
+                <string name="createRam">Ram</string>
+                <string name="createPower">Fonte</string>
+                continue -> line 99
+            //CreateFinal
+                <string name="createNamePlaceholder">Escreva o nome do ficheiro</string>
+                <string name="createDownload">Transferir Qr Code</string>
+            //TranferChoose
+                local -> line 95
+                block -> line 96
+                room -> line 97
+                machine -> line 98
+                continue -> line 99
+            //TransferQR
+                NamePlaceholder -> line 108
+                download -> line 109
+    //Dialogs
+        <string name="confirm">Sim</string>
+        <string name="dismiss">Não</string>
+        <string name="error">Erro</string>
+        <string name="success">Sucesso</string>
+        //ThemeDialog
+            <string name="themeDTitle">Escolha o tema</string>
+        //LangDialog
+            <string name="langDTitle">Escolha o idioma</string>
+        //ExistInvDialog
+            <string name="existDtitle">Qr já existe</string>
+            <string name="existDtext">Deseja continuar a ação ?</string>
+        //InvalidQrDialog
+            <string name="invalidDtext">QR Code Inválido !</string>
+        //ExistWarnDialog
+            <string name="existWDtitle">Aviso já existente</string>
+            <string name="existWDtext">Será colocado um novo QR assim que possível</string>
+        //AddMalfDialog
+            <string name="addMalfDtitle">Adicionar</string>
+            <string name="addMalfDtext">Gostaria de colocar avaria ?</string>
+        //DescribeMalfDialog
+            <string name="descMalftext">Descreva a avaria !</string>
+            <string name="descMalftext2">Avaria Enviada !</string>
+        //ExistWarnMDialog
+            <string name="existWMDtitle">Avaria já existente</string>
+            <string name="existWMDtext">A avaria será resolvida o mais rápido possivel</string>
+        //DelDialog
+            <string name="delDtitle">Deseja apagar esta máquina ?</string>
+            <string name="delDtext">Esta ação é irreversível !</string>
+        //DelMissingDialog
+            <string name="delMDtitle">Deseja retirar este aviso ?</string>
+            <string name="delMDtext">Retire apenas se tiver reposto Qr !</string>
+        //CompleteMalfDialog
+            <string name="compMDtitle">Completar</string>
+            <string name="compMDtext">Gostaria de fechar este alerta?</string>
+    //Snackbars
+        //DownloadSnackbar
+            <string name="downloadStext">Download realizado com sucesso !</string>
+        //ErrorDownloadSnackbar
+            <string name="downloadSEtext">Erro no download do Qr! Por favor tente novamente</string>
+        //LoginSnackbar
+            <string name="loginStext">Email/Password inválidos</string>
+        //ResetPasswordSnackbar
+            <string name="resetPassStext">Foi enviado email para a troca de password</string>
+    //Manual
+        //User
+            <string name="userManual">
+                O utilizador tem duas opções que pode escolher:\n
+                -> Scanner;\n
+                -> Falta QR.\n\n
+                <b>Scanner</b>\nNa opção de Scanner a câmera irá iniciar, assim que iniciada pode analizar um QR code da aplicação que estará na máquina desejada. Na tela seguinte apenas terá de escolher o problema referente ou descreve-lo e apenas se realmente necessário marcar como urgente.\n\n
+                <b>Falta QR</b>\nA opção Falta QR irá direcionar-lo para uma tela para escolher o local da máquina em que notou a falta de um QR code. Posteriormente pode também adicionar uma avaria caso seja necessário.
+            </string>
+        //Admin
+            <string name="adminManual">
+                Na barra de navegação tem 3 opções:\n
+                -> Listas;\n
+                -> Scanner;\n
+                -> Criar.\n\n
+                <b>Listas</b>\nExiste 3 listas dentro desta opção que pode navegar através da barra superior.\n
+                -> Avarias - Lista que mostra todas as avarias atualmente por resolver registadas na base de dados, se clicar em uma avaria será redirecionado para uma tela com mais informações e uma opção de completar.\n
+                -> Recentes - Lista com os scans mais recentes com máximo de 5 QR codes, se clicar será redirecionado para uma tela com mais informação sobre o dispositivo.\n
+                -> Falta de QR - Lista que mostra todos os avisos de máquinas sem QR codes registadas na base de dados.\n\n
+                <b>Scanner</b>\nEsta opção irá iniciar a câmara, assim que iniciada pode dar scan em um QR code da aplicação para receber mais informações acerca da máquina referente. Assim que estiver na tela acerca da máquina poderá ainda apagar a máquina da base de dados ou atualizar a sua informação.\n\n
+                <b>Criar</b>\nQuando entra nesta tela tem 2 escolhas.\n
+                -> Tranferir - Esta opção irá lhe pedir onde se localiza a máquina desejada para poder transferir um QR code referente a ela. Este QR code será transferido para a pasta de Downloads do seu dispositivo e terá a opção de escolhar o nome do ficheiro.
+                -> Criar QR - Esta opção irá lhe pedir em sequência a localização pretendida e a informação acerca do dispositivo, assi que completo o dispositivo será adicionado á base de dados e se possível transferir um QR code referente a essa nova máquina. Este QR code será transferido para a pasta de Downloads do seu dispositivo e terá a opção de escolher o nome do ficheiro.
+            </string>
+    //About
+        <string name="appVersionT">Versão da aplicação</string>
+        <string name="appVersion">QR H.I.T.U v1.0.0</string>
+        <string name="infoT">Quem somos?</string>
+        <string name="info">Esta aplicação foi criada por Alexandre Caneca e David Fernandes, somos alunos da Escola Secundária de Santo André do curso GPSI.\n
+        Desenvolvemos este projeto no ambito da PAP ou Projeto de Aptidão Profissional com o objetivo de criar um meio de melhorar controlo das avarias que acontecem na escola de maneira facil e prática.</string>
+    //WifiWarn
+        <string name="noWifi">Sem Internet!</string>
 </resources>
