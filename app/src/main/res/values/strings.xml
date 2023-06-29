@@ -190,7 +190,7 @@
             </string>
     //About
         <string name="appVersionT">Versão da aplicação</string>
-        <string name="appVersion">QR H.I.T.U v1.0.0</string>
+        <string name="appVersion">QR H.I.T.U v1.0.1</string>
         <string name="infoT">Quem somos?</string>
         <string name="info">Esta aplicação foi criada por Alexandre Caneca e David Fernandes, somos alunos da Escola Secundária de Santo André do curso GPSI.\n
         Desenvolvemos este projeto no ambito da PAP ou Projeto de Aptidão Profissional com o objetivo de criar um meio de melhorar controlo das avarias que acontecem na escola de maneira facil e prática.</string>
