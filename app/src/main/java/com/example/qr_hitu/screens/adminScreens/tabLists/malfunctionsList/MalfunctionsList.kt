@@ -48,7 +48,7 @@ fun MalfList(navController: NavController, viewModel: MalfunctionViewModel) {
     LaunchedEffect(Unit) {
         fetchMalfList(setList)  //  Chama a função fetchMalfList e guarda o resultado em setList
     }
-
+    
     //  Caso não exista itens a apresentar
     if(list.isEmpty()){
         EmptyListScreen(text = stringResource(R.string.malfListText))
@@ -117,6 +117,4 @@ fun MalfList(navController: NavController, viewModel: MalfunctionViewModel) {
             }
         }
     }
-
-
 }

@@ -127,6 +127,4 @@ fun MissingQrList(navController: NavController) {
             }
         }
     }
-
-
 }
