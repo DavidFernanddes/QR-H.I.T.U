@@ -65,6 +65,10 @@
             <string name="malf">Malfunctions</string>
             <string name="recent">Recents</string>
             <string name="missingQr">Missing Qr</string>
+        //EmptyList
+            <string name="malfListText">There is no malfunctions</string>
+            <string name="recentListText">No recent scan detected</string>
+            <string name="missingListText">There is no missing Qr\'s</string>
         //MalfInfo
             <string name="MInfSender">Sender: </string>
             <string name="MInfBlock">Block: </string>
@@ -78,13 +82,13 @@
             <string name="MInfPower">Power Supply: </string>
             <string name="MInfSend">Solved</string>
         //ScanInfo / ScanInfoUpdate
-            block -> line 70
-            room -> line 71
-            machine -> line 72
-            specs -> line 75
-            processor -> line 76
-            ram -> line 77
-            power -> line 78
+            block -> line 74
+            room -> line 75
+            machine -> line 76
+            specs -> line 79
+            processor -> line 80
+            ram -> line 81
+            power -> line 82
             <string name="ScanInfoUpd">Update</string>
             <string name="ScanInfoMN">Nome: </string>
         //Create
@@ -103,19 +107,19 @@
                 <string name="createProcessor">Processor</string>
                 <string name="createRam">Ram</string>
                 <string name="createPower">Power Supply</string>
-                continue -> line 99
+                continue -> line 103
             //CreateFinal
                 <string name="createNamePlaceholder">Write the file name</string>
                 <string name="createDownload">Download Qr Code</string>
             //TranferChoose
-                local -> line 95
-                block -> line 96
-                room -> line 97
-                machine -> line 98
-                continue -> line 99
-            //TransferQR
-                NamePlaceholder -> line 108
-                download -> line 109
+                local -> line 99
+                block -> line 100
+                room -> line 101
+                machine -> line 102
+                continue -> line 103
+                //TransferQR
+                NamePlaceholder -> line 112
+                download -> line 113
     //Dialogs
             <string name="confirm">Yes</string>
             <string name="dismiss">No</string>
