@@ -190,7 +190,7 @@ fun SettingsOptions(navController: NavController, settingsManager: SettingsManag
                             selectedAutoLogin.value = !selectedAutoLogin.value
                             settingsManager.saveSetting(
                                 "AutoLogin",
-                                (!selectedAutoLogin.value).toString()
+                                (selectedAutoLogin.value).toString()
                             )
                         },
                         enabled = true,

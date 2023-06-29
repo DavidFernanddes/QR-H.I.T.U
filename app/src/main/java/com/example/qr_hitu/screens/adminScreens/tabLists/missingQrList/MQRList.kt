@@ -36,6 +36,7 @@ import com.example.qr_hitu.functions.DelDialog
 import com.example.qr_hitu.functions.MissingQrDocs
 import com.example.qr_hitu.functions.delMissing
 import com.example.qr_hitu.functions.getMissingQR
+import com.example.qr_hitu.screens.adminScreens.tabLists.EmptyListScreen
 
 
 //  Tela com a lista de alertas de falta de QR
@@ -52,73 +53,80 @@ fun MissingQrList(navController: NavController) {
         getMissingQR(setList)   //  Chama a função que consegue a lista e guarda no estado
     }
 
-    //  Cria um lista vertical
-    LazyVerticalGrid(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .padding(horizontal = 2.dp),
-        columns = GridCells.Fixed(1)
-    ) {
-        //  Para cada alerta na lista cria um Card com as informações necessárias
-        items(list) { item ->
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-                    .clickable { show.value = true },
-                shape = MaterialTheme.shapes.medium,
-                elevation = CardDefaults.cardElevation(defaultElevation = 7.dp),
-                colors = CardDefaults.cardColors(Color(0xFFd9d9d9))
-            ) {
-                Row(
+    //  Caso não exista itens a apresentar
+    if(list.isEmpty()){
+        EmptyListScreen(text = stringResource(R.string.missingListText))
+    } else {
+        //  Cria um lista vertical
+        LazyVerticalGrid(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+                .padding(horizontal = 2.dp),
+            columns = GridCells.Fixed(1)
+        ) {
+            //  Para cada alerta na lista cria um Card com as informações necessárias
+            items(list) { item ->
+                Card(
                     modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                        .clickable { show.value = true },
+                    shape = MaterialTheme.shapes.medium,
+                    elevation = CardDefaults.cardElevation(defaultElevation = 7.dp),
+                    colors = CardDefaults.cardColors(Color(0xFFd9d9d9))
                 ) {
-
-                    //  Condição para verificar qual icon colocar
-                    when (item.machine) {
-                        "Projetor" -> {
-                            Icon(Icons.Filled.VideocamOff, "Projector")
-                        }
-                        "Impressora" -> {
-                            Icon(Icons.Filled.Print, "Impressora")
-                        }
-                        else -> {
-                            Icon(Icons.Filled.Computer, "Computer")
-                        }
-                    }
-
                     Row(
                         modifier = Modifier
-                            .padding(start = 5.dp)
-                            .width(280.dp),
-                        horizontalArrangement = Arrangement.SpaceEvenly
+                            .padding(16.dp)
+                            .fillMaxWidth(),
                     ) {
-                        Text(
-                            text = item.machine,
-                            style = MaterialTheme.typography.bodyMedium,
-                            modifier = Modifier.padding(bottom = 8.dp)
-                        )
-                        Text(
-                            text = item.room,
-                            style = MaterialTheme.typography.bodyMedium,
-                            modifier = Modifier.padding(bottom = 8.dp)
+
+                        //  Condição para verificar qual icon colocar
+                        when (item.machine) {
+                            "Projetor" -> {
+                                Icon(Icons.Filled.VideocamOff, "Projector")
+                            }
+                            "Impressora" -> {
+                                Icon(Icons.Filled.Print, "Impressora")
+                            }
+                            else -> {
+                                Icon(Icons.Filled.Computer, "Computer")
+                            }
+                        }
+
+                        Row(
+                            modifier = Modifier
+                                .padding(start = 5.dp)
+                                .width(280.dp),
+                            horizontalArrangement = Arrangement.SpaceEvenly
+                        ) {
+                            Text(
+                                text = item.machine,
+                                style = MaterialTheme.typography.bodyMedium,
+                                modifier = Modifier.padding(bottom = 8.dp)
+                            )
+                            Text(
+                                text = item.room,
+                                style = MaterialTheme.typography.bodyMedium,
+                                modifier = Modifier.padding(bottom = 8.dp)
+                            )
+                        }
+                    }
+                    //  Mostra Dialog
+                    if(show.value){
+                        DelDialog(
+                            onDialogDismissed = { show.value = false},
+                            //  Apaga alerta e atualiza a lista
+                            onDeleteClick = { delMissing(item.room, item.machine); getMissingQR(setList) },
+                            title = stringResource(R.string.delMDtitle),
+                            text = stringResource(R.string.delMDtext)
                         )
                     }
-                }
-                //  Mostra Dialog
-                if(show.value){
-                    DelDialog(
-                        onDialogDismissed = { show.value = false},
-                        //  Apaga alerta e atualiza a lista
-                        onDeleteClick = { delMissing(item.room, item.machine); getMissingQR(setList) },
-                        title = stringResource(R.string.delMDtitle),
-                        text = stringResource(R.string.delMDtext)
-                    )
                 }
             }
         }
     }
+
+
 }
