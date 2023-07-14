@@ -117,12 +117,12 @@ fun RecentScanList(navController: NavController, settingsManager: SettingsManage
                                         modifier = Modifier.padding(bottom = 8.dp)
                                     )
                                 }
+                                Text(
+                                    text = "Visto a: $date",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    modifier = Modifier.padding(bottom = 8.dp)
+                                )
                             }
-                            Text(
-                                text = "Visto a: $date",
-                                style = MaterialTheme.typography.bodyMedium,
-                                modifier = Modifier.padding(bottom = 8.dp)
-                            )
                         }
                     }
                 }
